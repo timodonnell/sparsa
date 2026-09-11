@@ -1,6 +1,6 @@
 {
-  "observed_utc": "2026-09-11T09:01:26.079001+00:00",
-  "running_gpu_hours": 44.69407111111111,
+  "observed_utc": "2026-09-11T10:19:16.060274+00:00",
+  "running_gpu_hours": 55.07180666666667,
   "unmeasured_started_attempts": 0,
   "estimated_finished_attempts": 1,
   "jobs": [
@@ -132,7 +132,7 @@
       "state": "running",
       "submitted_ms": 1789108596564,
       "finished_ms": null,
-      "wall_seconds": 8689.515,
+      "wall_seconds": 13359.496,
       "preemptions": 3,
       "failures": 0,
       "tasks": [
@@ -187,10 +187,10 @@
               "state": "running",
               "start_ms": 1789116320008,
               "finish_ms": null,
-              "running_seconds": 966.071,
-              "accounted_end_ms": 1789117286079,
+              "running_seconds": 5636.052,
+              "accounted_end_ms": 1789121956060,
               "end_source": "observation_time",
-              "running_gpu_hours": 2.1468244444444444,
+              "running_gpu_hours": 12.52456,
               "node": "gb975c0",
               "terminal_reason": ""
             }

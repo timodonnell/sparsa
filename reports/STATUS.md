@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 09:34 UTC: implementation and pilots complete; production
-main training is running and has reached step 44000. Final test/de novo
+Status at 2026-09-11 10:19 UTC: implementation and pilots complete; production
+main training is running and has reached step 50000 (half of the main schedule). Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -38,7 +38,10 @@ evaluation has not been run.
   Step 40000 reaches 0.227092 (long-range 0.188067).
   Step 42000 reaches 0.230962 (long-range 0.190309).
   Step 44000 reaches 0.233189 (long-range 0.192339).
-  The raw selection is now step 44000; selection uses overall R-precision.
+  Step 46000 reaches 0.233958 (long-range 0.190635).
+  Step 48000 reaches 0.233856 (long-range 0.191529).
+  Step 50000 reaches 0.236671 (long-range 0.192298).
+  The raw selection is now step 50000; selection uses overall R-precision.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -75,8 +78,8 @@ evaluation has not been run.
   remain live. Attempt 2 was also preempted; attempt 3 subsequently obtained
   eight batch H100s, restored step 38000, and advanced past step 38100. See
   `resume_38000_verification.json`. Continue discovering current pods by label.
-- The original approximate 11 a.m. Eastern completion estimate is now conditional
-  on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
+- Completion time depends on batch capacity. Keep priority at batch and allow
+  Iris to schedule any retries.
   Final artifacts will preserve resume provenance; completion elapsed time is
   for the final attempt, not total campaign compute or wall-clock time.
 
