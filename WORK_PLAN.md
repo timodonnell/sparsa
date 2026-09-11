@@ -35,11 +35,11 @@ architecture-search loop uses the same data and scoring contracts, with fixed
 short training budgets and two-seed confirmation. Completion requires actual
 training and measured evaluation results.
 
-## Execution status (2026-09-11 17:05 UTC)
+## Execution status (2026-09-11)
 
 Stages 1–4 and the main 100,000-step training run are complete. Stage 5 continues
 with a 3,000-step crop-1024 finetune on eight batch H100s, initialized from the
 main validation best at step 96000. Held-out evaluation and final artifacts
-(stage 6) remain pending. The separate architecture search is confirming a
-shared-weight refinement candidate. See
+(stage 6) remain pending. The separate eight-trial architecture search finished;
+none of the four candidate ideas met its promotion rule. See
 `reports/STATUS.md` and the machine-readable pilot reports for exact evidence.

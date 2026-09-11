@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 17:13 UTC: main training completed all 100,000 steps.
-Long-sequence finetuning has started from the main validation best, step 96000.
+Main training completed all 100,000 steps. Long-sequence finetuning has reached
+step 2000, initialized from the main validation best at step 96000.
 Final test/de novo evaluation has not been run.
 
 ## Current production job
@@ -15,8 +15,9 @@ Final test/de novo evaluation has not been run.
 - The first 100 training steps and recovery checkpoint passed; this initial
   interval averaged 0.90 s/step on the sampled proteins. See
   `long_startup_verification.json`; throughput varies with sequence lengths.
-- First validation, step 500: R-precision **0.246513**, long-range **0.206910**.
-  This is slightly above the main run's best original readout. Selection across
+- Best finetuning validation so far, step 1000: R-precision **0.247565**,
+  long-range **0.206730**. Step 2000 scored **0.247250** overall and **0.209661**
+  long-range. Selection across
   original, capped, and averaged candidates is still pending; this does not yet
   establish that the finetune beats the best main-run readout. See
   `long_validation_progress.json`.
@@ -254,16 +255,19 @@ visible in the final report.
 
 ## Separate architecture search
 
-The 32 H100-hour reserved search campaign is running on four batch H100s per
-trial. Both matched-budget baseline seeds completed (0.149292 and 0.151978
+The 32 H100-hour reserved search campaign has finished. All eight trials on four
+batch H100s succeeded, using 13.1386 H100-hours of recorded running resource time.
+Both matched-budget baseline seeds completed (0.149292 and 0.151978
 R-precision after 3000 steps). Candidate c001, sequence-attention features in the
 pair trunk, improved both seeds by about 0.0026 on average, but its paired 95%
 interval crossed zero, so it was not promoted. Candidate c002, shared row/column attention in the pair trunk, scored
 0.150449 on seed 17: a 0.001157 gain, below the 0.002 screening threshold. It was
 not advanced to confirmation. Candidate c003, bilinear sequence-to-pair features,
 scored 0.150309: a 0.001017 gain, also below the screening threshold. Candidate
-c004, two passes through the pair trunk with shared weights, scored 0.152717:
-a 0.003425 gain. Its second-seed confirmation is running; it has not been
-promoted. All 32 reserved H100-hours are now assigned to trials. See
-`autoresearch_progress.json`. These short-run scores are not comparisons against
+c004, two passes through the pair trunk with shared weights, scored 0.152717
+and 0.153062 on the two seeds. Its mean gain of 0.002254 also had a paired interval
+crossing zero, so it was not promoted. The original architecture remains the
+search champion. Its runnable source and checkpoint references were exported;
+all eight trial model sources were verified in S3, and the CPU bridge was stopped.
+See `AUTORESEARCH.md` and `autoresearch_progress.json`. These short-run scores are not comparisons against
 the production run's much larger training budget. Only validation guides search.

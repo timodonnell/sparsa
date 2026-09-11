@@ -1,0 +1,79 @@
+{
+  "observed_utc": "2026-09-11T17:34:28.437509+00:00",
+  "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
+  "completed_trial_sources": [
+    {
+      "trial": "c000-s17",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c000-s17",
+      "model_sha256": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c000-s17/model.py",
+      "verified": true,
+      "source_bytes": 8415,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c000-s37",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c000-s37",
+      "model_sha256": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c000-s37/model.py",
+      "verified": true,
+      "source_bytes": 8415,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c001-s17",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c001-s17",
+      "model_sha256": "e75f4d7be925259ab76ec34ead5a7fbd2a90dd10f7987371c6aa1b9d69a0bb5a",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c001-s17/model.py",
+      "verified": true,
+      "source_bytes": 9773,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c001-s37",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c001-s37",
+      "model_sha256": "e75f4d7be925259ab76ec34ead5a7fbd2a90dd10f7987371c6aa1b9d69a0bb5a",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c001-s37/model.py",
+      "verified": true,
+      "source_bytes": 9773,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c002-s17",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c002-s17",
+      "model_sha256": "6fab03e0bf37671d578b404a87c23e43ac89ee175dae3fe0b91c870166cb55ac",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c002-s17/model.py",
+      "verified": true,
+      "source_bytes": 11150,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c003-s17",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c003-s17",
+      "model_sha256": "1c4defcf419c030e5b03adb51eae9fa355aaacda0222c6ef7ed546bd12a715b0",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c003-s17/model.py",
+      "verified": true,
+      "source_bytes": 9084,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c004-s17",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s17",
+      "model_sha256": "f5eaf81542eb5bb57b61bc8f8272324b4403cca9bd8fa9f567cd578de077c283",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s17/model.py",
+      "verified": true,
+      "source_bytes": 8206,
+      "verified_utc": "2026-09-11T17:23:10.272964+00:00"
+    },
+    {
+      "trial": "c004-s37",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s37",
+      "model_sha256": "f5eaf81542eb5bb57b61bc8f8272324b4403cca9bd8fa9f567cd578de077c283",
+      "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s37/model.py",
+      "verified": true,
+      "source_bytes": 8206,
+      "verified_utc": "2026-09-11T17:34:28.437509+00:00"
+    }
+  ],
+  "scope": "All eight completed trials have stored model source hashes matching local collected results and S3 result manifests."
+}

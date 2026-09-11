@@ -1,7 +1,7 @@
 {
-  "observed_utc": "2026-09-11T16:59:00.031717+00:00",
+  "observed_utc": "2026-09-11T17:37:59.264347+00:00",
   "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
-  "stage": "running",
+  "stage": "budget_exhausted",
   "champion": "c000",
   "budget_gpu_hours": 32.0,
   "trials": [
@@ -182,11 +182,27 @@
     },
     {
       "id": "c004-s37",
-      "state": "submitted",
+      "state": "completed",
       "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37",
       "reserved_gpu_hours": 4.0,
       "observation": {
-        "state": "not_found"
+        "state": "succeeded",
+        "gpu_hours": 2.288994444444444,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb95c40",
+            "terminal_reason": "",
+            "running_seconds": 2060.095,
+            "accounted_end_ms": 1789147985631,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
       }
     }
   ],
@@ -336,7 +352,7 @@
       "id": "c004",
       "parent": "c000",
       "hypothesis": "Run the existing 16-block pair trunk twice with shared weights, giving 32 pair updates and eight triangle updates without adding parameters. Repeated refinement may improve macro and long-range R-precision by revisiting local contact motifs after global shared-neighbor propagation. This tests recurrence rather than the previously rejected feature-injection and axial-attention mechanisms. Performance under the fixed recipe is unmeasured.",
-      "status": "confirming",
+      "status": "rejected",
       "model_config": {
         "sequence_dim": 512,
         "sequence_layers": 12,
@@ -350,14 +366,44 @@
         "pair_recycles": 2
       },
       "source_hash": "a625f86ff77ed712fcf1e815bf5a34ce9a9729e3b48075ed9d456ab74fb30068",
+      "decision": {
+        "accepted": false,
+        "mean_gain": 0.0022544789394081007,
+        "long_gain": 0.002270949379377795,
+        "seed_gains": [
+          0.003425005678346781,
+          0.0010839522004694204
+        ],
+        "paired_ci95": [
+          -0.0004454794024459991,
+          0.005181382826266593
+        ],
+        "interpretation": "Validation search evidence; adaptive selection makes this interval descriptive, not confirmatory."
+      },
       "metrics": {
         "17": {
           "r_precision": 0.15271656812768764,
           "long_r_precision": 0.10983110775167164,
           "parameters": 39994657,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s17/checkpoints/step-3000.pt"
+        },
+        "37": {
+          "r_precision": 0.15306227321844731,
+          "long_r_precision": 0.11404489929148011,
+          "parameters": 39994657,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s37/checkpoints/step-3000.pt"
         }
       }
     }
-  ]
+  ],
+  "export": {
+    "path": "/data/sparsa-runtime/outputs/autoresearch-v1/champion-export",
+    "champion": "c000",
+    "files_sha256": {
+      "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+      "champion.json": "cdb84143faa36b2c1d95be15145efeefa8f45f306ef8c5a6aa19518611ff32a1",
+      "search_protocol.json": "8c51c4a871398e294adf3b319d3fde98b1cfceaad91916a1638427f2200a08c0"
+    },
+    "contains": "Runnable source and checkpoint references; weights remain in the referenced S3 trial artifacts."
+  }
 }

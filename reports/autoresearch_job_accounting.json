@@ -1,0 +1,298 @@
+{
+  "observed_utc": "2026-09-11T17:36:21.427279+00:00",
+  "running_gpu_hours": 13.138593333333333,
+  "unmeasured_started_attempts": 0,
+  "estimated_finished_attempts": 1,
+  "jobs": [
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789134646071,
+      "finished_ms": 1789135852024,
+      "wall_seconds": 1205.953,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s17/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "f8a743c91f1fa588",
+              "state": "succeeded",
+              "start_ms": 1789134656997,
+              "finish_ms": 1789135852024,
+              "running_seconds": 1195.027,
+              "accounted_end_ms": 1789135852024,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 1.327807777777778,
+              "node": "gb960f0",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s37",
+      "state": "succeeded",
+      "submitted_ms": 1789135989309,
+      "finished_ms": 1789137198927,
+      "wall_seconds": 1209.618,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s37/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "7b6d903bed1e854c",
+              "state": "succeeded",
+              "start_ms": 1789135997921,
+              "finish_ms": 1789137198927,
+              "running_seconds": 1201.006,
+              "accounted_end_ms": 1789137198927,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 1.3344511111111113,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c001-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789137461874,
+      "finished_ms": 1789138732565,
+      "wall_seconds": 1270.691,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c001-s17/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "f553d259c86938be",
+              "state": "succeeded",
+              "start_ms": 1789137466837,
+              "finish_ms": 1789138732565,
+              "running_seconds": 1265.728,
+              "accounted_end_ms": 1789138732565,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 1.4063644444444445,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c001-s37",
+      "state": "succeeded",
+      "submitted_ms": 1789138818343,
+      "finished_ms": 1789140084491,
+      "wall_seconds": 1266.148,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c001-s37/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "b4fa9f8e833d73fe",
+              "state": "succeeded",
+              "start_ms": 1789138826371,
+              "finish_ms": 1789140084491,
+              "running_seconds": 1258.12,
+              "accounted_end_ms": 1789140084491,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 1.3979111111111109,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c002-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789140409830,
+      "finished_ms": 1789141997788,
+      "wall_seconds": 1587.958,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c002-s17/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "3c88135bf8a7603f",
+              "state": "succeeded",
+              "start_ms": 1789140418359,
+              "finish_ms": 1789141997788,
+              "running_seconds": 1579.429,
+              "accounted_end_ms": 1789141997788,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 1.7549211111111112,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c003-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789142278154,
+      "finished_ms": 1789143490807,
+      "wall_seconds": 1212.653,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c003-s17/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "b743d4e2ab98b433",
+              "state": "succeeded",
+              "start_ms": 1789142285590,
+              "finish_ms": 1789143490807,
+              "running_seconds": 1205.217,
+              "accounted_end_ms": 1789143490807,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 1.3391300000000002,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789143735287,
+      "finished_ms": 1789145805158,
+      "wall_seconds": 2069.871,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "b4b0405d239c1b1a",
+              "state": "succeeded",
+              "start_ms": 1789143745046,
+              "finish_ms": 1789145805158,
+              "running_seconds": 2060.112,
+              "accounted_end_ms": 1789145805158,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 2.2890133333333336,
+              "node": "gb95e20",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37",
+      "state": "succeeded",
+      "submitted_ms": 1789145916066,
+      "finished_ms": 1789147985631,
+      "wall_seconds": 2069.565,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "6d6f5e3c46dccbda",
+              "state": "succeeded",
+              "start_ms": 1789145925536,
+              "finish_ms": 1789147985631,
+              "running_seconds": 2060.095,
+              "accounted_end_ms": 1789147985631,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 2.288994444444444,
+              "node": "gb95c40",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0",
+      "state": "killed",
+      "submitted_ms": 1789135873066,
+      "finished_ms": 1789148085770,
+      "wall_seconds": 12212.704,
+      "preemptions": 1,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0/0",
+          "state": "killed",
+          "gpu_count": 0,
+          "gpu_variant": null,
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "e7e990b26b85944f",
+              "state": "killed",
+              "start_ms": 1789135880941,
+              "finish_ms": null,
+              "running_seconds": 12204.829,
+              "accounted_end_ms": 1789148085770,
+              "end_source": "job_finish_fallback",
+              "running_gpu_hours": 0.0,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timing_definition": "Iris attempt started_at through finished_at; a missing final-attempt finish uses the job finish as a labelled estimate, or observation time only for a still-running attempt.",
+  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing."
+}
