@@ -87,6 +87,10 @@ def main():
     )
     args = parser.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
+    eval_every = cfg.get("eval_every", 1000)
+    checkpoint_every = cfg.get("checkpoint_every", eval_every)
+    if eval_every <= 0 or checkpoint_every <= 0:
+        raise ValueError("Evaluation and checkpoint intervals must be positive")
     if args.resume and args.init_from:
         raise ValueError("Choose resume or init-from")
     fs, out_path = storage(args.out)
@@ -321,11 +325,13 @@ def main():
                 # Emit to the task log immediately; flush history to S3 at
                 # checkpoints, keeping network writes out of the training loop.
                 last_log = now
-        if step % cfg.get("eval_every", 1000) == 0 or step == steps:
+        evaluate_now = step % eval_every == 0 or step == steps
+        if evaluate_now or step % checkpoint_every == 0:
             if world > 1:
                 dist.barrier()
             result = None
-            if rank == 0:
+            improved = False
+            if evaluate_now and rank == 0:
                 result = evaluate(
                     ema,
                     val,
@@ -336,12 +342,13 @@ def main():
                 result.update(step=step, seconds=time.monotonic() - start_time)
                 print("VALIDATION " + json.dumps(result), flush=True)
                 write_json(result, args.out + f"/validation/step-{step}.json")
-            if world > 1:
+            if evaluate_now and world > 1:
                 objects = [result]
                 dist.broadcast_object_list(objects, src=0)
                 result = objects[0]
-            improved = result["r_precision"] > best
-            best = max(best, result["r_precision"])
+            if evaluate_now:
+                improved = result["r_precision"] > best
+                best = max(best, result["r_precision"])
             rng = {
                 "cpu": torch.get_rng_state(),
                 "cuda": torch.cuda.get_rng_state(),
@@ -381,6 +388,13 @@ def main():
                         {"checkpoint": uri, "step": step, "validation": result},
                         args.out + "/best.json",
                     )
+                print(
+                    "CHECKPOINT "
+                    + json.dumps(
+                        {"step": step, "validated": evaluate_now, "checkpoint": uri}
+                    ),
+                    flush=True,
+                )
             if world > 1:
                 dist.barrier()
     if rank == 0:

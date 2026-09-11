@@ -12,6 +12,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", required=True)
     parser.add_argument("--config", required=True)
+    parser.add_argument(
+        "--out", help="Existing run URI for a replacement job; defaults to the job name"
+    )
     parser.add_argument("--gpus", type=int, default=4)
     parser.add_argument("--timeout", type=int, default=43200)
     parser.add_argument("--resume")
@@ -27,7 +30,10 @@ def main():
     if args.gpus not in (1, 2, 4, 8):
         raise ValueError("Single-node training supports 1, 2, 4, or 8 GPUs")
     root = Path(__file__).resolve().parents[1]
-    out = f"s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/{args.name}"
+    out = (
+        args.out
+        or f"s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/{args.name}"
+    )
     cmd = [
         args.iris,
         "--config",

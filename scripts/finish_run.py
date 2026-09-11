@@ -21,6 +21,7 @@ from pathlib import Path
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", required=True)
+    parser.add_argument("--training-job")
     parser.add_argument("--profile-job")
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
@@ -32,6 +33,8 @@ def main():
         raise ValueError("Expected a short Sparsa run name")
     if args.profile_job and not args.profile_job.startswith("/bizon/sparsa-"):
         raise ValueError("Expected a Sparsa profiling job")
+    if args.training_job and not args.training_job.startswith("/bizon/sparsa-"):
+        raise ValueError("Expected a Sparsa training job")
     root = Path(__file__).resolve().parents[1]
     local = root / "outputs" / args.name
     local.mkdir(parents=True, exist_ok=True)
@@ -133,8 +136,9 @@ def main():
         if state.get("stage") == "recovered":
             print("Artifacts already recovered:", state["artifacts"], flush=True)
             return
-        record("waiting_for_training")
-        wait_job(f"/bizon/sparsa-{args.name}")
+        training_job = args.training_job or f"/bizon/sparsa-{args.name}"
+        record("waiting_for_training", training_job=training_job)
+        wait_job(training_job)
         if args.profile_job:
             record("waiting_for_long_profile", profile_job=args.profile_job)
             wait_job(args.profile_job)
