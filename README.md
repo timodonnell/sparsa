@@ -93,9 +93,11 @@ silently relabeled as the latest MarinFold release.
 
 The later exp232 step-363000 reference is included separately for the 97
 validation and 19 de novo proteins; its saved results do not cover this test set.
-After training, `scripts/final_evaluate.py` selects between the original distance
-embeddings and a cap at the largest trained separation using validation only.
-It saves that readout in the inference checkpoint before scoring held-out sets.
+After training, `scripts/final_evaluate.py` rechecks the best original readout and
+evaluates a cap at the largest trained separation at every saved checkpoint,
+using validation only. It saves the selected checkpoint and readout before
+scoring held-out sets. `scripts/select_readout.py` can run this validation-only
+selection separately without scoring test or de novo proteins.
 
 See `data/benchmark/provenance.json` for upstream revisions and artifact hashes,
 `WORK_PLAN.md` for execution stages, and `PLAN.md` for the longer-term discrete

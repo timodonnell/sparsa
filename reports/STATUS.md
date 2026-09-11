@@ -72,10 +72,14 @@ CLI verification, and completion of this project still require the agent.
 1. Monitor training and recover from any infrastructure failures. Use only
    eval-val for training decisions. Do not score eval-test or eval-denovo until
    the model/readout choice is fixed.
-2. The final-evaluation script now compares the original readout against distance
-   capping at crop minus one on validation only. It saves the chosen inference
-   setting in the released checkpoint. Tests verify unchanged within-cap outputs
-   and reproduction after checkpoint reload. Training computations are unchanged.
+2. The final-evaluation script rechecks the best original readout and evaluates
+   distance capping at crop minus one at every durable checkpoint, using validation
+   only. It saves the chosen checkpoint and inference setting before held-out
+   evaluation. A real one-H100 batch preview passed for the first six checkpoints:
+   capping improved each, reaching 0.203275 R-precision / 0.154691 long-range at
+   step 12000 (original: 0.202191 / 0.152688). See `readout_preview.json`.
+   Tests verify unchanged within-cap outputs and checkpoint reload reproduction.
+   Training computations are unchanged.
 3. Run `scripts/final_evaluate.py` as a one-H100 **batch** job after training
    completes. It uses `best.json`, evaluates all 333 fixed proteins, checks exact
    candidate/true/top-k parity against MarinFold, and writes inference weights,

@@ -14,6 +14,7 @@ from pathlib import Path
 import torch
 
 from scripts.compare import compare
+from scripts.select_readout import select_readout
 from sparsa.cli import export_contacts, load_model
 from sparsa.data import benchmark
 from sparsa.evaluate import evaluate
@@ -48,32 +49,17 @@ def main():
         )
     torch.set_num_threads(4)
     device = torch.device("cuda")
+    readout = select_readout(args.run, device)
+    selection = readout["selected"]
+    inference_config = readout["inference_config"]
     start = time.perf_counter()
     model, state = load_model(selection["checkpoint"], device)
+    model.relative_max_distance = inference_config["relative_max_distance"]
     load_seconds = time.perf_counter() - start
     records = benchmark(splits=("eval-val", "eval-test", "eval-denovo"))
     local = Path("outputs/final_evaluation")
     local.mkdir(parents=True, exist_ok=True)
-    validation = [r for r in records if r["eval_set"] == "eval-val"]
-    readouts = []
-    for cap in (None, state["training_config"]["crop"] - 1):
-        model.relative_max_distance = cap
-        metrics = evaluate(
-            model,
-            validation,
-            device,
-            pos_weight=state["training_config"].get("pos_weight", 1.0),
-        )
-        readouts.append(dict(relative_max_distance=cap, **metrics))
-    chosen = max(readouts, key=lambda r: r["r_precision"])
-    model.relative_max_distance = chosen["relative_max_distance"]
-    inference_config = {"relative_max_distance": model.relative_max_distance}
-    (local / "readout_selection.json").write_text(
-        json.dumps(
-            {"split": "eval-val", "candidates": readouts, "selected": inference_config},
-            indent=2,
-        )
-    )
+    (local / "readout_selection.json").write_text(json.dumps(readout, indent=2))
     result = evaluate(
         model,
         records,
@@ -141,12 +127,14 @@ def main():
         gpu=torch.cuda.get_device_name(),
         model_parameters=sum(p.numel() for p in model.parameters()),
         inference_config=inference_config,
+        selection_seconds=readout["selection_seconds"],
         evaluation_source_sha256={
             str(path): sha256(path)
             for path in [
                 *sorted(Path("sparsa").rglob("*.py")),
                 Path(__file__),
                 Path("scripts/compare.py"),
+                Path("scripts/select_readout.py"),
             ]
         },
         benchmark_sha256={

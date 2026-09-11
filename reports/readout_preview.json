@@ -1,0 +1,133 @@
+{
+  "split": "eval-val",
+  "method": "best original readout plus capped readout at every durable checkpoint",
+  "training_best_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-12000.pt",
+  "validation_history": [
+    {
+      "r_precision": 0.16024634896875078,
+      "long_r_precision": 0.1207636321981539,
+      "proteins": 97,
+      "inference_seconds": 3.3115752320736647,
+      "step": 2000,
+      "seconds": 880.6508736377582
+    },
+    {
+      "r_precision": 0.17489561442860416,
+      "long_r_precision": 0.13173311442719035,
+      "proteins": 97,
+      "inference_seconds": 2.3574906680732965,
+      "step": 4000,
+      "seconds": 1765.342484566383
+    },
+    {
+      "r_precision": 0.18449389312051204,
+      "long_r_precision": 0.14128650271677437,
+      "proteins": 97,
+      "inference_seconds": 2.356198719702661,
+      "step": 6000,
+      "seconds": 2648.214771144092
+    },
+    {
+      "r_precision": 0.1928526109476361,
+      "long_r_precision": 0.14642645575805333,
+      "proteins": 97,
+      "inference_seconds": 2.36100303940475,
+      "step": 8000,
+      "seconds": 3531.712006009184
+    },
+    {
+      "r_precision": 0.19665910977310322,
+      "long_r_precision": 0.14930667152499508,
+      "proteins": 97,
+      "inference_seconds": 2.3732051560655236,
+      "step": 10000,
+      "seconds": 4415.255863977596
+    },
+    {
+      "r_precision": 0.20219051043728728,
+      "long_r_precision": 0.1526875856371941,
+      "proteins": 97,
+      "inference_seconds": 2.364106153137982,
+      "step": 12000,
+      "seconds": 5299.133726554923
+    }
+  ],
+  "candidates": [
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-12000.pt",
+      "step": 12000,
+      "relative_max_distance": null,
+      "r_precision": 0.20219051043728728,
+      "long_r_precision": 0.1526875856371941,
+      "proteins": 97,
+      "inference_seconds": 3.7631988557986915
+    },
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-2000.pt",
+      "step": 2000,
+      "relative_max_distance": 383,
+      "r_precision": 0.16209389367327176,
+      "long_r_precision": 0.12408135440082427,
+      "proteins": 97,
+      "inference_seconds": 2.4027967953588814
+    },
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-4000.pt",
+      "step": 4000,
+      "relative_max_distance": 383,
+      "r_precision": 0.17692754065507943,
+      "long_r_precision": 0.1345188591426493,
+      "proteins": 97,
+      "inference_seconds": 2.406055035535246
+    },
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "relative_max_distance": 383,
+      "r_precision": 0.1865300055782707,
+      "long_r_precision": 0.14391972406664177,
+      "proteins": 97,
+      "inference_seconds": 2.527436609612778
+    },
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-8000.pt",
+      "step": 8000,
+      "relative_max_distance": 383,
+      "r_precision": 0.19431605473241567,
+      "long_r_precision": 0.14894268568971789,
+      "proteins": 97,
+      "inference_seconds": 2.4121261353138834
+    },
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-10000.pt",
+      "step": 10000,
+      "relative_max_distance": 383,
+      "r_precision": 0.1978032664962305,
+      "long_r_precision": 0.15149874743215108,
+      "proteins": 97,
+      "inference_seconds": 2.4069313497748226
+    },
+    {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-12000.pt",
+      "step": 12000,
+      "relative_max_distance": 383,
+      "r_precision": 0.20327496477187995,
+      "long_r_precision": 0.154691378239265,
+      "proteins": 97,
+      "inference_seconds": 2.4077984306495637
+    }
+  ],
+  "selected": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-12000.pt",
+    "step": 12000,
+    "validation": {
+      "r_precision": 0.20327496477187995,
+      "long_r_precision": 0.154691378239265,
+      "proteins": 97
+    }
+  },
+  "inference_config": {
+    "relative_max_distance": 383
+  },
+  "selection_seconds": 51.5783871000167
+}
