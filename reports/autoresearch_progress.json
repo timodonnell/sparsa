@@ -1,5 +1,5 @@
 {
-  "observed_utc": "2026-09-11T16:19:20.771929+00:00",
+  "observed_utc": "2026-09-11T16:59:00.031717+00:00",
   "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
   "stage": "running",
   "champion": "c000",
@@ -154,6 +154,40 @@
         "preemptions": 0,
         "failures": 0
       }
+    },
+    {
+      "id": "c004-s17",
+      "state": "completed",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 2.2890133333333336,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb95e20",
+            "terminal_reason": "",
+            "running_seconds": 2060.112,
+            "accounted_end_ms": 1789145805158,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c004-s37",
+      "state": "submitted",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "not_found"
+      }
     }
   ],
   "candidates": [
@@ -301,9 +335,29 @@
     {
       "id": "c004",
       "parent": "c000",
-      "hypothesis": "Pending proposal",
-      "status": "proposing",
-      "metrics": {}
+      "hypothesis": "Run the existing 16-block pair trunk twice with shared weights, giving 32 pair updates and eight triangle updates without adding parameters. Repeated refinement may improve macro and long-range R-precision by revisiting local contact motifs after global shared-neighbor propagation. This tests recurrence rather than the previously rejected feature-injection and axial-attention mechanisms. Performance under the fixed recipe is unmeasured.",
+      "status": "confirming",
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true,
+        "pair_recycles": 2
+      },
+      "source_hash": "a625f86ff77ed712fcf1e815bf5a34ce9a9729e3b48075ed9d456ab74fb30068",
+      "metrics": {
+        "17": {
+          "r_precision": 0.15271656812768764,
+          "long_r_precision": 0.10983110775167164,
+          "parameters": 39994657,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c004-s17/checkpoints/step-3000.pt"
+        }
+      }
     }
   ]
 }

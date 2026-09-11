@@ -1,4 +1,34 @@
 {
+  "latest": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-100000.pt",
+    "step": 100000,
+    "validation": {
+      "r_precision": 0.2451070109944811,
+      "long_r_precision": 0.20470711286007184,
+      "proteins": 97,
+      "inference_seconds": 2.414594088681042,
+      "step": 100000,
+      "seconds": 2483.868866465986
+    }
+  },
+  "best": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-96000.pt",
+    "step": 96000,
+    "validation": {
+      "r_precision": 0.24615127130146205,
+      "long_r_precision": 0.20535383308941477,
+      "proteins": 97,
+      "inference_seconds": 3.363388814032078,
+      "step": 96000,
+      "seconds": 677.9858119329438
+    }
+  },
+  "complete": {
+    "step": 100000,
+    "best_validation_r_precision": 0.24615127130146205,
+    "elapsed_seconds": 2490.5359944384545,
+    "initial_step": 94500
+  },
   "validation": [
     {
       "r_precision": 0.16024634896875078,
@@ -391,31 +421,15 @@
       "inference_seconds": 2.415150391869247,
       "step": 98000,
       "seconds": 1580.833209889941
+    },
+    {
+      "r_precision": 0.2451070109944811,
+      "long_r_precision": 0.20470711286007184,
+      "proteins": 97,
+      "inference_seconds": 2.414594088681042,
+      "step": 100000,
+      "seconds": 2483.868866465986
     }
   ],
-  "latest": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-98000.pt",
-    "step": 98000,
-    "validation": {
-      "r_precision": 0.24504688679042744,
-      "long_r_precision": 0.2047811595066632,
-      "proteins": 97,
-      "inference_seconds": 2.415150391869247,
-      "step": 98000,
-      "seconds": 1580.833209889941
-    }
-  },
-  "best": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-96000.pt",
-    "step": 96000,
-    "validation": {
-      "r_precision": 0.24615127130146205,
-      "long_r_precision": 0.20535383308941477,
-      "proteins": 97,
-      "inference_seconds": 3.363388814032078,
-      "step": 96000,
-      "seconds": 677.9858119329438
-    }
-  },
-  "observed_utc": "2026-09-11T16:49:16.498582+00:00"
+  "observed_utc": "2026-09-11T17:04:57.380348+00:00"
 }

@@ -1,10 +1,25 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 15:47 UTC: implementation and pilots complete; production
-main training is running and has reached step 90000. Final test/de novo
-evaluation has not been run.
+Status at 2026-09-11 17:05 UTC: main training completed all 100,000 steps.
+Long-sequence finetuning has started from the main validation best, step 96000.
+Final test/de novo evaluation has not been run.
 
 ## Current production job
+
+- Iris job: `/bizon/sparsa-long-sequence-pair-40m-20260911`.
+- Pod label: `iris.job_id=bizon.sparsa-long-sequence-pair-40m-20260911`.
+- Eight H100s at **batch** priority; crop 1024, global batch 32, 3000 steps,
+  activation checkpointing, LR 5e-5, seed 119.
+- Startup confirms initialization from main step 96000, distance-bin
+  initialization at separation 383, and recovery saves every 100 steps.
+- The first 100 training steps and recovery checkpoint passed; this initial
+  interval averaged 0.90 s/step on the sampled proteins. See
+  `long_startup_verification.json`; throughput varies with sequence lengths.
+- Output: `s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long`.
+- The existing coordinator submitted this phase after main training succeeded.
+  Final selection, held-out evaluation, and artifact recovery remain pending.
+
+## Completed main run and recovery history
 
 - Iris job: `/bizon/sparsa-sequence-pair-40m-20260911-r1`
 - Cluster config: `/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml`
@@ -22,9 +37,9 @@ evaluation has not been run.
   replay after preemption, and the separate long-sequence phase; the main job
   timeout is 18 hours. It retries up to five times with automatic checkpoint and
   data-cursor restoration. Checkpoints retain optimizer and RNG state.
-- Best original-readout validation: step 88000, R-precision **0.246046**,
-  long-range **0.205477**. Step 90000 scores **0.245524** overall and
-  **0.205540** long-range. Selection uses overall R-precision. The complete
+- Best original-readout validation: step 96000, R-precision **0.246151**,
+  long-range **0.205354**. The final step 100000 scores **0.245107** overall and
+  **0.204707** long-range. Selection uses overall R-precision. The complete
   validation trajectory and durable latest/best pointers are recorded in
   `main_validation_progress.json`. These remain far below MarinFold's roughly
   0.52–0.55 validation R-precision; no architecture superiority is established.
@@ -79,6 +94,13 @@ evaluation has not been run.
   full step-85500 checkpoint on eight batch H100s and advanced through step 90000.
   See `resume_85500_verification.json`. This was an automatic retry of the same
   job; the completion coordinator remains live.
+- At step 94500, a DataLoader queue feeder encountered a shared-memory allocation
+  error and left a training rank waiting. Neither shared-memory capacity nor the
+  cgroup memory limit was exhausted; the root cause of EAGAIN is unestablished.
+  Terminating that waiting rank caused the existing Iris job to retry. Attempt 7
+  restored step 94500 and completed step 100000. See `shm_94500_failure.json`.
+  The full 50-checkpoint validation history, best/latest pointers, and completion
+  marker are in `main_validation_progress.json`.
 - Completion time depends on batch capacity. Keep priority at batch and allow
   Iris to schedule any retries.
   Final artifacts will preserve resume provenance; completion elapsed time is
@@ -107,6 +129,10 @@ evaluation has not been run.
   4-GPU resume from step 500 successfully trained/evaluated step 501.
 - Helico's actual `contacts_from_pairs(..., strict=True)` accepts the export;
   unlisted entries remain UNKNOWN. See `helico_integration.json`.
+- The actual step-88000 weights passed the prediction CLI and Helico parser on
+  81- and 761-residue validation chains. See `trained_helico_preview.json` and
+  `trained_helico_long_preview.json`. The final selected checkpoint must still
+  pass the same check; these are interoperability checks, not structure predictions.
 
 All pilot details are in `pilot_summary.json`; launcher commands are in `jobs/`.
 The original pilot writer made synchronous small-object writes every 25 steps;
@@ -136,9 +162,9 @@ snapshot, the best single checkpoint scored 0.230973 versus the average's
 The local `scripts/finish_run.py --name sequence-pair-40m-20260911 --profile-job
 /bizon/sparsa-long-profile-20260911 --training-job
 /bizon/sparsa-sequence-pair-40m-20260911-r1` coordinator is running; read `handoff.pid`
-for its current PID. It waits for main training and the long-crop GPU profile,
-then runs the long-sequence finetune, final validation selection/evaluation, and
-CPU artifact recovery. All jobs use **batch** priority. Recovered checksums are
+for its current PID. Main training and the long-crop profile have succeeded;
+it is now waiting for the long-sequence finetune before final validation
+selection/evaluation and CPU artifact recovery. All jobs use **batch** priority. Recovered checksums are
 verified before completion. **Do not submit a duplicate final evaluation while
 the coordinator is active.** Inspect:
 
@@ -204,7 +230,7 @@ Use read-only Kubernetes logs instead:
 
 ```bash
 kubectl --kubeconfig ~/.kube/coreweave-iris --context marin-rn02a_RNO2A -n iris \
-  get pods -l iris.job_id=bizon.sparsa-sequence-pair-40m-20260911-r1 -o wide
+  get pods -l iris.job_id=bizon.sparsa-long-sequence-pair-40m-20260911 -o wide
 # Then use the returned current pod name:
 kubectl --kubeconfig ~/.kube/coreweave-iris --context marin-rn02a_RNO2A -n iris \
   logs CURRENT_POD -c task --tail=20
@@ -229,6 +255,10 @@ R-precision after 3000 steps). Candidate c001, sequence-attention features in th
 pair trunk, improved both seeds by about 0.0026 on average, but its paired 95%
 interval crossed zero, so it was not promoted. Candidate c002, shared row/column attention in the pair trunk, scored
 0.150449 on seed 17: a 0.001157 gain, below the 0.002 screening threshold. It was
-not advanced to confirmation. The loop is continuing with another idea. See
+not advanced to confirmation. Candidate c003, bilinear sequence-to-pair features,
+scored 0.150309: a 0.001017 gain, also below the screening threshold. Candidate
+c004, two passes through the pair trunk with shared weights, scored 0.152717:
+a 0.003425 gain. Its second-seed confirmation is running; it has not been
+promoted. All 32 reserved H100-hours are now assigned to trials. See
 `autoresearch_progress.json`. These short-run scores are not comparisons against
 the production run's much larger training budget. Only validation guides search.

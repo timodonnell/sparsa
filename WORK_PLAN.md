@@ -30,13 +30,16 @@ objective, with a strong one-pass model before iterative generative extensions.
 
 All accelerator jobs are submitted directly at Iris `--priority batch`, avoiding
 implicit child jobs whose priority might default to interactive. Training data
-and durable artifacts stay on CoreWeave S3 alongside compute. The eventual
-autoresearch extension can use the same config, validation, and run artifact
-contracts. Completion requires actual training and measured evaluation results.
+and durable artifacts stay on CoreWeave S3 alongside compute. The implemented
+architecture-search loop uses the same data and scoring contracts, with fixed
+short training budgets and two-seed confirmation. Completion requires actual
+training and measured evaluation results.
 
-## Execution status (2026-09-11 06:06 UTC)
+## Execution status (2026-09-11 17:05 UTC)
 
-Stages 1–4 are complete. The selected 40M network has resumed on 8 H100s at batch
-priority after preemption, using the verified decontaminated teacher corpus. Stage 5 is active;
-held-out evaluation and final artifacts (stage 6) remain pending. See
+Stages 1–4 and the main 100,000-step training run are complete. Stage 5 continues
+with a 3,000-step crop-1024 finetune on eight batch H100s, initialized from the
+main validation best at step 96000. Held-out evaluation and final artifacts
+(stage 6) remain pending. The separate architecture search is confirming a
+shared-weight refinement candidate. See
 `reports/STATUS.md` and the machine-readable pilot reports for exact evidence.
