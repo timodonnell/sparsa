@@ -1,6 +1,6 @@
 {
-  "observed_utc": "2026-09-11T06:37:16.718577+00:00",
-  "running_gpu_hours": 26.296706666666665,
+  "observed_utc": "2026-09-11T07:37:40.039205+00:00",
+  "running_gpu_hours": 42.40035555555555,
   "jobs": [
     {
       "job": "/bizon/sparsa-sequence-pair-40m-20260911",
@@ -100,8 +100,8 @@
               "state": "killed",
               "start_ms": 1789107607852,
               "finish_ms": null,
-              "running_seconds": 1028.866,
-              "running_gpu_hours": 2.2863688888888887,
+              "running_seconds": 4652.187,
+              "running_gpu_hours": 10.338193333333333,
               "node": "gb960a0",
               "terminal_reason": ""
             }
@@ -114,7 +114,7 @@
       "state": "running",
       "submitted_ms": 1789108596564,
       "finished_ms": null,
-      "wall_seconds": 40.154,
+      "wall_seconds": 3663.475,
       "preemptions": 0,
       "failures": 0,
       "tasks": [
@@ -130,8 +130,8 @@
               "state": "running",
               "start_ms": 1789108606761,
               "finish_ms": null,
-              "running_seconds": 29.957,
-              "running_gpu_hours": 0.06657111111111111,
+              "running_seconds": 3653.278,
+              "running_gpu_hours": 8.118395555555555,
               "node": "gb960a0",
               "terminal_reason": ""
             }
