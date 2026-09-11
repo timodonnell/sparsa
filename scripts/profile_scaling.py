@@ -13,10 +13,12 @@ from sparsa.model import ContactModel, ModelConfig
 from sparsa.train import contact_loss, write_json
 
 
-def profile(config, batch, length):
+def profile(config, batch, length, transform=None):
     torch.cuda.empty_cache()
     model = ContactModel(config).cuda().train()
     ema = copy.deepcopy(model).eval().requires_grad_(False)
+    if transform is not None:
+        transform(model)
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0002, fused=True)
     tokens = torch.randint(1, 22, (batch, length), device="cuda")
     target = (torch.rand(batch, length, length, device="cuda") < 0.01).float()

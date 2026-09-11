@@ -17,6 +17,9 @@ def main():
     )
     parser.add_argument("--gpus", type=int, default=4)
     parser.add_argument("--timeout", type=int, default=43200)
+    parser.add_argument(
+        "--memory-gb", type=int, help="Host RAM; defaults to 32 GiB per GPU"
+    )
     parser.add_argument("--resume")
     parser.add_argument("--init-from")
     parser.add_argument(
@@ -29,6 +32,8 @@ def main():
     args = parser.parse_args()
     if args.gpus not in (1, 2, 4, 8):
         raise ValueError("Single-node training supports 1, 2, 4, or 8 GPUs")
+    if args.memory_gb is not None and args.memory_gb <= 0:
+        raise ValueError("Host memory must be positive")
     root = Path(__file__).resolve().parents[1]
     out = (
         args.out
@@ -48,7 +53,7 @@ def main():
         "--cpu",
         str(args.gpus * 6),
         "--memory",
-        f"{args.gpus * 32}GB",
+        f"{args.memory_gb or args.gpus * 32}GB",
         "--disk",
         "40GB",
         "--timeout",

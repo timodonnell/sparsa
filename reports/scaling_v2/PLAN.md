@@ -45,18 +45,25 @@ profiling checks passed; pilot loss and gradient telemetry are finite.
 
 ## Experiments
 
-Three continuation pilots start from the identical released EMA weights:
+Seven continuation pilots start from the identical released EMA weights:
 
 | Pilot | Parameters | AFDB protein probability | Purpose |
 |---|---:|---:|---|
 | scale-control50-20260911 | 39,994,657 | 0.5 | Longer-training control |
 | scale-control-prop-20260911 | 39,994,657 | 0.0570052468 | Teacher-mixture control |
 | scale-grown456m-20260911 | 455,648,545 | 0.0570052468 | Capacity expansion |
+| scale-grown456m50-20260911 | 455,648,545 | 0.5 | Capacity × mixture interaction |
+| scale-rank40m50-20260911 | 39,994,657 | 0.5 | BCE + 0.05 contact-ranking KL |
+| scale-rank456m50-20260911 | 455,648,545 | 0.5 | Capacity with ranking loss |
+| scale-grown18b50-20260911 | 1,815,192,865 | 0.5 | Parameter scale comparable to MarinFold |
 
 All use seed 217, crop 512, global batch 64, 6,000 steps (384,000 additional
 crops), LR 1e-4 with 300-step warmup/cosine decay, EMA 0.999, and validation every
-1,000 steps. The two proportional arms share the deterministic data stream.
-Each uses eight H100s and saves recovery checkpoints every 500 steps. This is
+1,000 steps. Each size comparison within a mixture shares the deterministic data stream.
+Each uses eight H100s and saves recovery checkpoints every 500 steps (1,000 for
+1.8B). The 1.8B arm uses batch 2 × accumulation 4 instead of batch 4 × 2, so its
+worker grouping/data stream differs while total crop count and distribution
+match. This is
 matched training exposure, not matched FLOPs or training time.
 
 A separate 200-protein training-corpus diagnostic checks fit to each teacher
@@ -72,7 +79,14 @@ do not dismiss scaling solely from a short continuation pilot.
 The initial pilots should use tens of H100-hours. Bound the subsequent campaign
 to approximately 600 H100-hours initially, including retries; reassess using
 validation and measured throughput rather than automatically consuming it.
-Keep resumable state and actual attempt-time accounting. Preserve the original
+Keep resumable state and actual attempt-time accounting. A local
+`scripts/guard_compute.py` process monitors the explicit job list in
+`outputs/scaling-v2/budget.json`; it includes retries and requests cancellation
+of active GPU jobs at 600 hours. It keeps watching between phases. Unknown
+stopped-attempt durations are conservatively bounded by whole job lifetime for
+enforcement. This is a polling guard, not a billing guarantee. Large production
+checkpoints will retain all validated steps and roll recovery-only saves to the
+latest two, reducing storage while preserving resumability. Preserve the original
 release and its held-out results as a fixed reference. Final evaluation and
 Helico export follow only after model selection.
 
@@ -85,3 +99,35 @@ explicit pair reasoning, but uses MSA features that remain excluded here.
 [ESMFold](https://pubmed.ncbi.nlm.nih.gov/36927031/) reports improvements with
 language-model scale; that does not establish scaling behavior for this
 supervised-only contact model. This campaign must measure it directly.
+
+## Measured execution improvements and additional hypotheses
+
+Compiled pair-block forwards preserve ordinary checkpoint keys and leave EMA
+inference eager. GPU checks cover outputs, gradients, masks and active triangle
+updates. The initial DDP smoke hit Dynamo's default recompilation limit; raising
+the per-code cache limit to 128 fixed that fallback. A second 200-step, eight-H100
+smoke settled at 0.38–0.39 s/optimizer step, global batch 64, peak 55.85 GiB.
+The four original pilots were stopped and fully resumed with this execution
+change; optimizer, RNG, worker cursors, objective and LR schedule are retained.
+Resume provenance records the change. Compiled arithmetic can alter rounding.
+The ranking pilots use compilation from their start.
+
+The 1.8B sequence encoder (2048 × 36, 32 heads, unchanged pair trunk) also passes
+the actual growth probe: validation R 0.247789, FP32 max logit error 0.001391.
+These small differences are numerical, not learned gains. A compiled synthetic
+batch 2 / crop 512 takes 0.179 s/microbatch and peaks at 54.28 GiB. Its eight-GPU
+pilot must establish real throughput before choosing a long-run length. Host
+RAM is requested at 640 GiB for loading full eight-rank optimizer checkpoints.
+
+The auxiliary ranking loss is the KL from a uniform distribution over true
+contacts to softmax logits over eligible pairs. It normalizes positive learning
+by the number of contacts instead of L²; zero-contact crops retain BCE alone.
+This is a training-only use of true contact count, not a truth-based export
+budget. Test its validation effect before selecting it for extended training.
+
+The extended run remains a pending decision, targeting about 200,000 additional
+steps in the best measured larger recipe, subject to measured throughput and
+the 600-H100-hour campaign guard. No new test/de novo evaluation has occurred.
+
+[PyTorch compilation documentation](https://docs.pytorch.org/docs/2.10/generated/torch.compile.html)
+explains dynamic-shape compilation and fallback after the recompilation limit.

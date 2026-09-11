@@ -24,6 +24,16 @@ def main():
     parser.add_argument("--name", required=True)
     parser.add_argument("--training-job")
     parser.add_argument("--profile-job")
+    parser.add_argument("--long-config", default="configs/long_finetune.yaml")
+    parser.add_argument("--evaluation-memory-gb", type=int, default=32)
+    parser.add_argument("--training-memory-gb", type=int, default=256)
+    parser.add_argument("--finetune-timeout", type=int, default=14400)
+    parser.add_argument("--evaluation-timeout", type=int, default=3600)
+    parser.add_argument("--extra-candidate-run", action="append", default=[])
+    parser.add_argument(
+        "--budget-config", help="Register phase jobs with a running compute guard"
+    )
+    parser.add_argument("--verify-release", action="store_true")
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
         "--cluster-config",
@@ -85,10 +95,40 @@ def main():
                     raise
                 time.sleep(30)
 
+    def register_budget_job(job):
+        if args.budget_config:
+            budget_path = Path(args.budget_config)
+            budget = json.loads(budget_path.read_text())
+            if job not in budget["jobs"]:
+                budget["jobs"].append(job)
+                temporary = budget_path.with_suffix(".partial")
+                temporary.write_text(json.dumps(budget, indent=2) + "\n")
+                temporary.replace(budget_path)
+
+    def verify_release(artifacts):
+        for stem in ("7pv5_A", "7znz_A"):
+            command(
+                [
+                    sys.executable,
+                    "-m",
+                    "scripts.verify_release",
+                    "--checkpoint",
+                    str(artifacts / "sparsa.pt"),
+                    "--helico-python",
+                    "/home/bizon/git/helico/.venv/bin/python",
+                    "--validation-protein",
+                    stem,
+                    "--out",
+                    str(local / f"release-{stem}"),
+                ]
+            )
+        record("verified", artifacts=str(artifacts))
+
     def submit(label, gpu, script_args):
         job = f"/bizon/sparsa-{label}-{args.name}"
         try:
             command(iris + ["job", "describe", job])
+            register_budget_job(job)
             return job
         except subprocess.CalledProcessError as error:
             detail = (error.stdout + error.stderr).lower()
@@ -103,11 +143,17 @@ def main():
             "--cpu",
             str(max(8, gpu * 6)) if gpu else "2",
             "--memory",
-            f"{gpu * 32}GB" if gpu else "8GB",
+            f"{args.evaluation_memory_gb if gpu == 1 else args.training_memory_gb}GB"
+            if gpu
+            else "8GB",
             "--disk",
             "40GB" if gpu > 1 else "20GB",
             "--timeout",
-            "14400" if gpu > 1 else "3600" if gpu else "1800",
+            str(args.finetune_timeout)
+            if gpu > 1
+            else str(args.evaluation_timeout)
+            if gpu
+            else "1800",
             "--max-retries",
             "3",
             "--job-name",
@@ -131,11 +177,14 @@ def main():
                 indent=2,
             )
         )
+        register_budget_job(job)
         return job
 
     try:
-        if state.get("stage") == "recovered":
+        if state.get("stage") in ("recovered", "verified"):
             print("Artifacts already recovered:", state["artifacts"], flush=True)
+            if args.verify_release and state["stage"] != "verified":
+                verify_release(Path(state["artifacts"]))
             return
         training_job = args.training_job or f"/bizon/sparsa-{args.name}"
         record("waiting_for_training", training_job=training_job)
@@ -156,7 +205,7 @@ def main():
                 "--source-run",
                 f"{base}/runs/{args.name}",
                 "--config",
-                "configs/long_finetune.yaml",
+                args.long_config,
                 "--out",
                 long_run,
                 "--auto-resume",
@@ -173,6 +222,11 @@ def main():
                 f"{base}/runs/{args.name}",
                 "--candidate-run",
                 long_run,
+                *[
+                    item
+                    for run in args.extra_candidate_run
+                    for item in ("--candidate-run", run)
+                ],
                 "--out",
                 evaluation,
             ],
@@ -242,6 +296,8 @@ def main():
                 raise RuntimeError(f"Recovered artifact checksum mismatch: {name}")
         command(iris + ["job", "cancel", job])
         record("recovered", artifacts=str(artifacts), verified_files=len(hashes))
+        if args.verify_release:
+            verify_release(artifacts)
     except Exception as error:
         record("needs_inspection", error=str(error))
         raise

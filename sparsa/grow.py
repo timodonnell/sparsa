@@ -22,8 +22,8 @@ def grow_from_ema(model: ContactModel, state: dict, *, noise=0.01):
         raise ValueError("Growth requires an uncapped source checkpoint")
     factor = new.sequence_dim // old.sequence_dim
     depth = new.sequence_layers // old.sequence_layers
-    if factor not in (1, 2) or new.sequence_dim != factor * old.sequence_dim:
-        raise ValueError("Growth supports unchanged or doubled sequence width")
+    if factor not in (1, 2, 4) or new.sequence_dim != factor * old.sequence_dim:
+        raise ValueError("Growth supports 1x, 2x, or 4x sequence width")
     if depth < 1 or new.sequence_layers != depth * old.sequence_layers:
         raise ValueError("Sequence depth must be an integer multiple of source depth")
     if new.heads != factor * old.heads:
@@ -72,6 +72,20 @@ def grow_from_ema(model: ContactModel, state: dict, *, noise=0.01):
                 delta = torch.randn_like(value[:, :d]) * source[key].std() * noise
                 value[:, :d] += delta
                 value[:, d:] -= delta
+            elif factor == 4 and noise:
+                delta = (
+                    torch.randn(
+                        value.shape[0],
+                        factor,
+                        d,
+                        device=value.device,
+                        dtype=value.dtype,
+                    )
+                    * source[key].std()
+                    * noise
+                )
+                delta -= delta.mean(1, keepdim=True)
+                value += delta.flatten(1)
         target[name].copy_(value)
     for index, block in enumerate(model.sequence):
         if index % depth:

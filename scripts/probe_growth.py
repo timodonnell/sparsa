@@ -18,13 +18,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument("--sequence-dim", type=int, default=1024)
+    parser.add_argument("--skip-profile", action="store_true")
     args = parser.parse_args()
     torch.set_num_threads(4)
     torch.set_float32_matmul_precision("highest")
     torch.manual_seed(217)
     state = load_checkpoint(args.checkpoint)
     old_config = ModelConfig(**state["model_config"])
-    new_config = replace(old_config, sequence_dim=1024, heads=16, sequence_layers=36)
+    new_config = replace(
+        old_config,
+        sequence_dim=args.sequence_dim,
+        heads=args.sequence_dim // (old_config.sequence_dim // old_config.heads),
+        sequence_layers=36,
+    )
     old = ContactModel(old_config).cuda().eval()
     old.load_state_dict(state["ema"])
     new = ContactModel(new_config).cuda().eval()
@@ -47,6 +54,8 @@ def main():
     }
     print("GROWTH_CHECK " + json.dumps(report), flush=True)
     write_json(report, args.out)
+    if args.skip_profile:
+        return
     del old, new, state, a, b
     torch.cuda.empty_cache()
     torch.set_float32_matmul_precision("high")

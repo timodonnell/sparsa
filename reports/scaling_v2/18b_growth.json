@@ -1,0 +1,44 @@
+{
+  "source": "s3://marin-us-east-02a/marin/protein-structure/sparsa/evaluations/sequence-pair-40m-20260911/sparsa.pt",
+  "growth": {
+    "source_config": {
+      "sequence_dim": 512,
+      "sequence_layers": 12,
+      "heads": 8,
+      "pair_dim": 96,
+      "pair_layers": 16,
+      "triangle_every": 4,
+      "triangle_dim": 48,
+      "dropout": 0.0,
+      "gradient_checkpointing": true
+    },
+    "target_config": {
+      "sequence_dim": 2048,
+      "sequence_layers": 36,
+      "heads": 32,
+      "pair_dim": 96,
+      "pair_layers": 16,
+      "triangle_every": 4,
+      "triangle_dim": 48,
+      "dropout": 0.0,
+      "gradient_checkpointing": true
+    },
+    "width_factor": 4,
+    "depth_factor": 3,
+    "symmetry_breaking_noise": 0.01,
+    "weights": "source EMA"
+  },
+  "fp32_max_abs_logit_error": 0.0013914108276367188,
+  "source_validation": {
+    "r_precision": 0.24771644329033637,
+    "long_r_precision": 0.20733489397146512,
+    "proteins": 97,
+    "inference_seconds": 3.4640504540875554
+  },
+  "grown_validation": {
+    "r_precision": 0.24778873147384867,
+    "long_r_precision": 0.20740929129767546,
+    "proteins": 97,
+    "inference_seconds": 4.083131824620068
+  }
+}

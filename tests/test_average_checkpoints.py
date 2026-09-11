@@ -63,3 +63,14 @@ def test_average_rejects_mismatched_amino_acid_semantics(tmp_path):
     torch.save(second, paths[1])
     with pytest.raises(ValueError, match="alphabet"):
         average_ema(paths)
+
+
+def test_average_accepts_execution_change_but_rejects_architecture(tmp_path):
+    _, second, paths = checkpoints(tmp_path)
+    second["model_config"]["gradient_checkpointing"] = False
+    torch.save(second, paths[1])
+    assert average_ema(paths)["step"] == 200
+    second["model_config"]["dropout"] = 0.1
+    torch.save(second, paths[1])
+    with pytest.raises(ValueError, match="model_config"):
+        average_ema(paths)

@@ -1,0 +1,227 @@
+{
+  "job": "/bizon/sparsa-scale-compile-smoke2-20260911",
+  "training": [
+    {
+      "step": 10,
+      "loss": 0.0888960063457489,
+      "grad_norm": 0.042210228741168976,
+      "lr": 3.3333333333333333e-06,
+      "seconds": 79.48052306845784,
+      "seconds_per_step": 7.948052290454507,
+      "examples": 640,
+      "peak_gpu_gb": 55.835569858551025,
+      "compiled_graphs": 4
+    },
+    {
+      "step": 20,
+      "loss": 0.09791702032089233,
+      "grad_norm": 0.05272863805294037,
+      "lr": 6.666666666666667e-06,
+      "seconds": 91.3137174686417,
+      "seconds_per_step": 1.1833194400183857,
+      "examples": 1280,
+      "peak_gpu_gb": 55.83560037612915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 30,
+      "loss": 0.09296904504299164,
+      "grad_norm": 0.04663388803601265,
+      "lr": 1e-05,
+      "seconds": 95.53819546662271,
+      "seconds_per_step": 0.4224477997981012,
+      "examples": 1920,
+      "peak_gpu_gb": 55.83657693862915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 40,
+      "loss": 0.08302407711744308,
+      "grad_norm": 0.044914960861206055,
+      "lr": 1.3333333333333333e-05,
+      "seconds": 99.79447968304157,
+      "seconds_per_step": 0.42562842164188625,
+      "examples": 2560,
+      "peak_gpu_gb": 55.84707498550415,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 50,
+      "loss": 0.08798781037330627,
+      "grad_norm": 0.044997621327638626,
+      "lr": 1.6666666666666667e-05,
+      "seconds": 119.9598317462951,
+      "seconds_per_step": 2.016535206325352,
+      "examples": 3200,
+      "peak_gpu_gb": 55.84707498550415,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 60,
+      "loss": 0.09172486513853073,
+      "grad_norm": 0.0525084063410759,
+      "lr": 2e-05,
+      "seconds": 123.87031050771475,
+      "seconds_per_step": 0.3910478761419654,
+      "examples": 3840,
+      "peak_gpu_gb": 55.84707498550415,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 70,
+      "loss": 0.09464149177074432,
+      "grad_norm": 0.05907805636525154,
+      "lr": 2.3333333333333336e-05,
+      "seconds": 127.9331003408879,
+      "seconds_per_step": 0.4062789833173156,
+      "examples": 4480,
+      "peak_gpu_gb": 55.84707498550415,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 80,
+      "loss": 0.08882097899913788,
+      "grad_norm": 0.03792208805680275,
+      "lr": 2.6666666666666667e-05,
+      "seconds": 132.13837894704193,
+      "seconds_per_step": 0.4205278606154025,
+      "examples": 5120,
+      "peak_gpu_gb": 55.84707498550415,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 90,
+      "loss": 0.08795562386512756,
+      "grad_norm": 0.04568329453468323,
+      "lr": 3e-05,
+      "seconds": 136.43035001214594,
+      "seconds_per_step": 0.42919710651040077,
+      "examples": 5760,
+      "peak_gpu_gb": 55.84707498550415,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 100,
+      "loss": 0.08710916340351105,
+      "grad_norm": 0.045864082872867584,
+      "lr": 3.3333333333333335e-05,
+      "seconds": 140.3980600144714,
+      "seconds_per_step": 0.3967710002325475,
+      "examples": 6400,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 110,
+      "loss": 0.09410478919744492,
+      "grad_norm": 0.07141478359699249,
+      "lr": 3.6666666666666666e-05,
+      "seconds": 202.4291313411668,
+      "seconds_per_step": 6.203107132669539,
+      "examples": 7040,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 120,
+      "loss": 0.08988668769598007,
+      "grad_norm": 0.07176359742879868,
+      "lr": 4e-05,
+      "seconds": 206.52481777593493,
+      "seconds_per_step": 0.40956864347681404,
+      "examples": 7680,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 130,
+      "loss": 0.09038718044757843,
+      "grad_norm": 0.05522863194346428,
+      "lr": 4.3333333333333334e-05,
+      "seconds": 210.57619843166322,
+      "seconds_per_step": 0.40513806557282805,
+      "examples": 8320,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 140,
+      "loss": 0.08518580347299576,
+      "grad_norm": 0.04689161106944084,
+      "lr": 4.666666666666667e-05,
+      "seconds": 214.50361921545118,
+      "seconds_per_step": 0.3927420783787966,
+      "examples": 8960,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 150,
+      "loss": 0.08109508454799652,
+      "grad_norm": 0.04397722706198692,
+      "lr": 5e-05,
+      "seconds": 218.66865782160312,
+      "seconds_per_step": 0.41650386061519384,
+      "examples": 9600,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 160,
+      "loss": 0.09267645329236984,
+      "grad_norm": 0.05916201323270798,
+      "lr": 5.333333333333333e-05,
+      "seconds": 222.62636978831142,
+      "seconds_per_step": 0.39577119667083027,
+      "examples": 10240,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 170,
+      "loss": 0.08771896362304688,
+      "grad_norm": 0.059198442846536636,
+      "lr": 5.666666666666667e-05,
+      "seconds": 226.57287170831114,
+      "seconds_per_step": 0.39465019199997187,
+      "examples": 10880,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 180,
+      "loss": 0.08173906803131104,
+      "grad_norm": 0.03801645711064339,
+      "lr": 6e-05,
+      "seconds": 230.4074490442872,
+      "seconds_per_step": 0.38345773359760643,
+      "examples": 11520,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 190,
+      "loss": 0.09598124027252197,
+      "grad_norm": 0.05788212642073631,
+      "lr": 6.333333333333333e-05,
+      "seconds": 234.21618830692023,
+      "seconds_per_step": 0.3808739262633026,
+      "examples": 12160,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    },
+    {
+      "step": 200,
+      "loss": 0.09242213517427444,
+      "grad_norm": 0.053393539041280746,
+      "lr": 6.666666666666667e-05,
+      "seconds": 238.06851960346103,
+      "seconds_per_step": 0.3852331296540797,
+      "examples": 12800,
+      "peak_gpu_gb": 55.85415506362915,
+      "compiled_graphs": 5
+    }
+  ],
+  "validated_checkpoint_200_written": true,
+  "scope": "Eight-H100 batch compiled training from trained 456M weights, actual variable-length teacher batches; includes startup and checkpoint overhead. Not an accuracy-selection candidate."
+}

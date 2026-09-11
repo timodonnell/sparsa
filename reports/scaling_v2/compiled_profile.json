@@ -1,0 +1,38 @@
+{
+  "torch": "2.10.0+cu128",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "checks": [
+    {
+      "length": 37,
+      "max_output_error": 0.005718350410461426,
+      "max_gradient_error": 3.0517578125e-05
+    },
+    {
+      "length": 53,
+      "max_output_error": 0.006763756275177002,
+      "max_gradient_error": 3.0517578125e-05
+    }
+  ],
+  "profile": {
+    "model_config": {
+      "sequence_dim": 1024,
+      "sequence_layers": 36,
+      "heads": 16,
+      "pair_dim": 96,
+      "pair_layers": 16,
+      "triangle_every": 4,
+      "triangle_dim": 48,
+      "dropout": 0.0,
+      "gradient_checkpointing": false
+    },
+    "parameters": 455648545,
+    "batch_size": 4,
+    "crop": 512,
+    "seconds_per_microbatch": 0.21140133421868085,
+    "crops_per_second_per_gpu": 18.921356455878666,
+    "peak_gpu_gib": 52.42482042312622,
+    "loss": 0.16960971057415009,
+    "grad_norm": 0.11015400290489197
+  },
+  "total_probe_seconds": 44.545546628534794
+}

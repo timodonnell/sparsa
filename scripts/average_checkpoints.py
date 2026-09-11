@@ -4,7 +4,7 @@ import copy
 
 import torch
 
-from sparsa.train import load_checkpoint
+from sparsa.train import architecture_config, load_checkpoint
 
 
 @torch.no_grad()
@@ -29,9 +29,13 @@ def average_ema(checkpoints):
             }
             result["ema"] = {k: v.clone() for k, v in state["ema"].items()}
         else:
-            for key in ["format_version", "alphabet", "model_config"]:
+            for key in ["format_version", "alphabet"]:
                 if result[key] != state[key]:
                     raise ValueError(f"Cannot average different {key}")
+            if architecture_config(result["model_config"]) != architecture_config(
+                state["model_config"]
+            ):
+                raise ValueError("Cannot average different model_config")
             for key in ["crop", "pos_weight"]:
                 if result["training_config"].get(key) != state["training_config"].get(
                     key
@@ -51,6 +55,7 @@ def average_ema(checkpoints):
         sources.append(
             {"checkpoint": uri, "step": state["step"], "weight": 1 / len(checkpoints)}
         )
+        del state
     result["checkpoint_kind"] = "ema_average"
     result["averaged_checkpoints"] = sources
     return result
