@@ -1,6 +1,6 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 17:05 UTC: main training completed all 100,000 steps.
+Status at 2026-09-11 17:13 UTC: main training completed all 100,000 steps.
 Long-sequence finetuning has started from the main validation best, step 96000.
 Final test/de novo evaluation has not been run.
 
@@ -15,6 +15,11 @@ Final test/de novo evaluation has not been run.
 - The first 100 training steps and recovery checkpoint passed; this initial
   interval averaged 0.90 s/step on the sampled proteins. See
   `long_startup_verification.json`; throughput varies with sequence lengths.
+- First validation, step 500: R-precision **0.246513**, long-range **0.206910**.
+  This is slightly above the main run's best original readout. Selection across
+  original, capped, and averaged candidates is still pending; this does not yet
+  establish that the finetune beats the best main-run readout. See
+  `long_validation_progress.json`.
 - Output: `s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long`.
 - The existing coordinator submitted this phase after main training succeeded.
   Final selection, held-out evaluation, and artifact recovery remain pending.
