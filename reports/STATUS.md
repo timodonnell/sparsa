@@ -52,6 +52,21 @@ now saves compact shard/row cursors rather than replaying the entire stream.
 
 ## Remaining work
 
+The local `scripts/finish_run.py --name sequence-pair-40m-20260911` coordinator
+is running (initial PID 3284859). It waits for training success, submits the final
+evaluation at **batch** priority, then a CPU recovery task, downloads the bundle,
+and verifies SHA256 checksums. **Do not submit a duplicate final evaluation while
+the coordinator is active.** Inspect:
+
+- `outputs/sequence-pair-40m-20260911/handoff.json`
+- `outputs/sequence-pair-40m-20260911/handoff.log`
+- `outputs/sequence-pair-40m-20260911/handoff.pid`
+
+A file lock prevents two coordinators for this run. Restart the same command if
+the local process stops; already submitted evaluation jobs are reused. A failed
+remote job is reported for inspection. Final result interpretation, checkpoint
+CLI verification, and completion of this project still require the agent.
+
 1. Monitor training and recover from any infrastructure failures. Use only
    eval-val for training decisions. Do not score eval-test or eval-denovo until
    the model/readout choice is fixed.
