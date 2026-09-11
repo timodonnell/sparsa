@@ -1,5 +1,5 @@
 {
-  "observed_utc": "2026-09-11T15:54:49.295085+00:00",
+  "observed_utc": "2026-09-11T16:19:20.771929+00:00",
   "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
   "stage": "running",
   "champion": "c000",
@@ -129,6 +129,31 @@
         "preemptions": 0,
         "failures": 0
       }
+    },
+    {
+      "id": "c003-s17",
+      "state": "completed",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c003-s17",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 1.3391300000000002,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb95a30",
+            "terminal_reason": "",
+            "running_seconds": 1205.217,
+            "accounted_end_ms": 1789143490807,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
     }
   ],
   "candidates": [
@@ -148,7 +173,6 @@
         "gradient_checkpointing": true
       },
       "source_hash": "67dd7ddd29881910f795b3a95581357a28b3c78ef9203466de357f396e4eb759",
-      "decision": null,
       "metrics": {
         "17": {
           "r_precision": 0.14929156244934083,
@@ -246,11 +270,39 @@
     {
       "id": "c003",
       "parent": "c000",
+      "hypothesis": "Add a symmetric bilinear sequence-to-pair residual with 16-dimensional left/right factors. Unlike the parent's channelwise product, it exposes learned cross-channel residue compatibility to the unchanged pair trunk. This adds 40,960 parameters and tests a distinct mechanism from rejected attention-feature injection and axial attention. It may improve macro and long-range R-precision under the fixed recipe; performance is unmeasured.",
+      "status": "rejected",
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true,
+        "bilinear_dim": 16
+      },
+      "source_hash": "243de43b30c4c3a5d800243c11a34645b409b0b1bef1a401da285b7ce9dfd077",
+      "decision": {
+        "reason": "screening_gain_below_threshold",
+        "gain": 0.0010174929620208328
+      },
+      "metrics": {
+        "17": {
+          "r_precision": 0.15030905541136166,
+          "long_r_precision": 0.11078861832814993,
+          "parameters": 40035617,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c003-s17/checkpoints/step-3000.pt"
+        }
+      }
+    },
+    {
+      "id": "c004",
+      "parent": "c000",
       "hypothesis": "Pending proposal",
       "status": "proposing",
-      "model_config": null,
-      "source_hash": null,
-      "decision": null,
       "metrics": {}
     }
   ]
