@@ -1,0 +1,59 @@
+{
+  "observed_utc": "2026-09-11T13:52:00.031585+00:00",
+  "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
+  "controller_pid": 383811,
+  "controller_source_revision": "c454377",
+  "run_name": "arch-0911-69e07f",
+  "proposer": "codex",
+  "budget_gpu_hours": 32.0,
+  "active_job": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s17",
+  "submission": {
+    "job": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s17",
+    "priority": "batch",
+    "command": [
+      "/home/bizon/git/sparsa/.tools/iris/bin/iris",
+      "--config",
+      "/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml",
+      "job",
+      "run",
+      "--priority",
+      "batch",
+      "--enable-extra-resources",
+      "--cpu",
+      "24",
+      "--memory",
+      "128GB",
+      "--disk",
+      "40GB",
+      "--timeout",
+      "3600",
+      "--max-retries",
+      "0",
+      "--job-name",
+      "sparsa-ar-arch-0911-69e07f-c000-s17",
+      "--no-wait",
+      "--gpu",
+      "H100x4",
+      "--",
+      "python",
+      "-m",
+      "research.trial"
+    ],
+    "workspace": "/data/sparsa-runtime/outputs/autoresearch-v1/work/c000-s17"
+  },
+  "startup_or_progress": [
+    {
+      "world_size": 4,
+      "parameters": 39994657,
+      "priority": "batch",
+      "started_utc": "2026-09-11T13:51:09Z"
+    },
+    {
+      "step": 100,
+      "loss": 0.14059798419475555
+    }
+  ],
+  "leaderboard": "/data/sparsa-runtime/outputs/autoresearch-v1/REPORT.md",
+  "ideas": "/data/sparsa-runtime/outputs/autoresearch-v1/IDEAS.md",
+  "state": "/data/sparsa-runtime/outputs/autoresearch-v1/state.json"
+}

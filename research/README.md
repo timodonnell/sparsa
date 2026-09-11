@@ -31,10 +31,17 @@ flowchart LR
 
 ## Start, inspect, and stop
 
+The initial live campaign is `outputs/autoresearch-v1`, with a 32 H100-hour
+allocation and the Codex proposer enabled. It has started its four-H100 baseline.
+Use `status`, `stop`, or `run` to manage that campaign; do not initialize it again.
+Its recorded launch is in
+[`reports/autoresearch_campaign.json`](../reports/autoresearch_campaign.json).
+
 From the Sparsa repository, with dependencies installed using `uv sync`:
 
 ```bash
 # Initialization freezes the source and protocol; it submits no jobs.
+# Use a fresh name/directory when starting another campaign.
 .venv/bin/python -m research.controller init \
   --name arch-v1 --campaign outputs/autoresearch-v1 --gpu-hours 32
 
