@@ -91,6 +91,10 @@ evaluation has not been run.
   See `resume_57500_verification.json`. The coordinator remains live and no
   manual resubmission was needed. Main-run running resource time is about
   69.36 H100-hours at the latest accounting snapshot, including replay.
+- Replacement-job preemption 5 occurred after step 64200; attempt 5 received
+  eight H100s on another node and restored step 64000 at batch priority. Training
+  has advanced past the restore point. See `resume_64000_verification.json`.
+  The coordinator remains active; no duplicate phase jobs have been submitted.
 - Completion time depends on batch capacity. Keep priority at batch and allow
   Iris to schedule any retries.
   Final artifacts will preserve resume provenance; completion elapsed time is
