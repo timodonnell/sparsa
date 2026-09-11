@@ -1,6 +1,6 @@
 {
-  "observed_utc": "2026-09-11T07:40:23.357390+00:00",
-  "running_gpu_hours": 34.57489777777778,
+  "observed_utc": "2026-09-11T08:39:20.142534+00:00",
+  "running_gpu_hours": 42.41201777777778,
   "unmeasured_started_attempts": 0,
   "estimated_finished_attempts": 1,
   "jobs": [
@@ -132,8 +132,8 @@
       "state": "running",
       "submitted_ms": 1789108596564,
       "finished_ms": null,
-      "wall_seconds": 3826.793,
-      "preemptions": 0,
+      "wall_seconds": 7363.578,
+      "preemptions": 1,
       "failures": 0,
       "tasks": [
         {
@@ -145,14 +145,27 @@
             {
               "number": 0,
               "uid": "8482ddb2049138a4",
-              "state": "running",
+              "state": "preempted",
               "start_ms": 1789108606761,
-              "finish_ms": null,
-              "running_seconds": 3816.596,
-              "accounted_end_ms": 1789112423357,
-              "end_source": "observation_time",
-              "running_gpu_hours": 8.481324444444445,
+              "finish_ms": 1789115892587,
+              "running_seconds": 7285.826,
+              "accounted_end_ms": 1789115892587,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 16.190724444444445,
               "node": "gb960a0",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: f5cbc053-464b-4b30-9938-cc1313510245, JobUID: 07eada2f-2df7-4a27-befe-ea71aec90856) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 1,
+              "uid": "2c476ff33422ae4f",
+              "state": "running",
+              "start_ms": 1789115902668,
+              "finish_ms": null,
+              "running_seconds": 57.474,
+              "accounted_end_ms": 1789115960142,
+              "end_source": "observation_time",
+              "running_gpu_hours": 0.12772,
+              "node": "gb957e0",
               "terminal_reason": ""
             }
           ]

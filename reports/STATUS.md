@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 08:07 UTC: implementation and pilots complete; production
-training has resumed from step 22000 with more frequent recovery saves. Final test/de novo
+Status at 2026-09-11 08:38 UTC: implementation and pilots complete; production
+main training has reached step 38000 and Iris is retrying batch preemptions. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -33,7 +33,9 @@ evaluation has not been run.
   Step 30000 reaches 0.223701 (long-range 0.184229).
   Step 32000 reaches 0.225877 (long-range 0.183768).
   Step 34000 reaches 0.224344 (long-range 0.185324).
-  The raw selection remains step 32000; selection uses overall R-precision.
+  Step 36000 reaches 0.226772 (long-range 0.182922).
+  Step 38000 reaches 0.228394 (long-range 0.187089).
+  The raw selection is now step 38000; selection uses overall R-precision.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -60,6 +62,14 @@ evaluation has not been run.
   accounting regression tests pass, including the actual cancellation timestamps.
   Unknown stopped-attempt durations are reported separately; current main-run
   accounting has one estimated finish and no unmeasured started attempts.
+- The replacement job was preempted at about 08:38 UTC, immediately after its
+  durable step-38000 checkpoint. Iris started attempt 1 on a new node and its
+  startup provenance confirms a full step-38000 resume on eight H100s at batch
+  priority. The best pointer also selects step 38000. No manual resubmission
+  or coordinator change was needed.
+  Attempt 1 was preempted again shortly after restoration. At 08:39 UTC, attempt
+  2 was waiting in SchedulingGated for batch capacity; the job and coordinator
+  remain live. Continue discovering current pods by label.
 - The original approximate 11 a.m. Eastern completion estimate is now conditional
   on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
   Final artifacts will preserve resume provenance; completion elapsed time is
