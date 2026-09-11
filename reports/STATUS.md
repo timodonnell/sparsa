@@ -1,6 +1,6 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 03:56 UTC: implementation and pilots complete; production
+Status at 2026-09-11 04:40 UTC: implementation and pilots complete; production
 training is running. Final test/de novo evaluation has not been run.
 
 ## Current production job
@@ -19,7 +19,8 @@ training is running. Final test/de novo evaluation has not been run.
   timeout is 18 hours. It retries up to five times with automatic checkpoint and
   data-cursor restoration. Checkpoints retain optimizer and RNG state.
 - Production validation: step 2000 R-precision 0.160246; step 4000 0.174896;
-  step 6000 0.184494; step 8000 0.192853 (long-range 0.146426).
+  step 6000 0.184494; step 8000 0.192853; step 10000 0.196659;
+  step 12000 0.202191; step 14000 0.206153 (long-range 0.158005).
   The first hour completed without failures or preemptions. At measured speed,
   the 100,000-step run is expected to finish around 11 a.m. Eastern September 11.
 
