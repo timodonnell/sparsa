@@ -10,11 +10,42 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-from iris.cli.connect import open_iris_client
-from iris.cluster.types import JobName
+
+def attempt_timing(*, start_ms, finish_ms, state, observed_ms, job_finish_ms):
+    """Keep stopped attempts from accruing time when Iris omits their finish."""
+    if start_ms is None:
+        return {
+            "running_seconds": 0,
+            "accounted_end_ms": None,
+            "end_source": "not_started",
+        }
+    if finish_ms is not None:
+        end, source = finish_ms, "attempt_finish"
+    elif job_finish_ms is not None:
+        # Iris sometimes records job cancellation without finishing the attempt.
+        # This is an explicitly labelled estimate, not an observed pod exit.
+        end, source = job_finish_ms, "job_finish_fallback"
+    elif state == "running":
+        end, source = observed_ms, "observation_time"
+    else:
+        return {
+            "running_seconds": None,
+            "accounted_end_ms": None,
+            "end_source": "unknown_finish",
+        }
+    if end < start_ms:
+        raise ValueError("Attempt end precedes its start")
+    return {
+        "running_seconds": (end - start_ms) / 1000,
+        "accounted_end_ms": end,
+        "end_source": source,
+    }
 
 
 def main():
+    from iris.cli.connect import open_iris_client
+    from iris.cluster.types import JobName
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--job", action="append", required=True)
     parser.add_argument("--out", required=True)
@@ -33,12 +64,17 @@ def main():
     ) as client:
         for name in args.job:
             job = client.job_status(JobName.from_wire(name))
+            finished = job.finished_at.epoch_ms() if job.finished_at else None
             tasks = []
             for task in client.list_tasks(JobName.from_wire(name)):
                 description = client.describe_task(task.task_id)
                 device = description.resources.device
                 gpu_count = device.count if device and device.kind.value == "gpu" else 0
                 attempts = []
+                last_attempt = max(
+                    (a.attempt_number for a in description.status.attempts),
+                    default=None,
+                )
                 for attempt in description.status.attempts:
                     start = (
                         attempt.started_at.epoch_ms() if attempt.started_at else None
@@ -46,11 +82,16 @@ def main():
                     finish = (
                         attempt.finished_at.epoch_ms() if attempt.finished_at else None
                     )
-                    seconds = (
-                        max(0, (finish or now_ms) - start) / 1000
-                        if start is not None
-                        else 0
+                    timing = attempt_timing(
+                        start_ms=start,
+                        finish_ms=finish,
+                        state=attempt.state.value,
+                        observed_ms=now_ms,
+                        job_finish_ms=finished
+                        if attempt.attempt_number == last_attempt
+                        else None,
                     )
+                    seconds = timing["running_seconds"]
                     attempts.append(
                         {
                             "number": attempt.attempt_number,
@@ -58,8 +99,10 @@ def main():
                             "state": attempt.state.value,
                             "start_ms": start,
                             "finish_ms": finish,
-                            "running_seconds": seconds,
-                            "running_gpu_hours": seconds * gpu_count / 3600,
+                            **timing,
+                            "running_gpu_hours": seconds * gpu_count / 3600
+                            if seconds is not None
+                            else None,
                             "node": attempt.node_name,
                             "terminal_reason": attempt.terminal_reason,
                         }
@@ -74,7 +117,6 @@ def main():
                     }
                 )
             submitted = job.submitted_at.epoch_ms() if job.submitted_at else None
-            finished = job.finished_at.epoch_ms() if job.finished_at else None
             jobs.append(
                 {
                     "job": name,
@@ -89,15 +131,22 @@ def main():
                     "tasks": tasks,
                 }
             )
+    all_attempts = [a for j in jobs for t in j["tasks"] for a in t["attempts"]]
     total = sum(
-        a["running_gpu_hours"] for j in jobs for t in j["tasks"] for a in t["attempts"]
+        a["running_gpu_hours"]
+        for a in all_attempts
+        if a["running_gpu_hours"] is not None
     )
+    unknown = sum(a["end_source"] == "unknown_finish" for a in all_attempts)
+    estimated = sum(a["end_source"] == "job_finish_fallback" for a in all_attempts)
     report = {
         "observed_utc": now.isoformat(),
         "running_gpu_hours": total,
+        "unmeasured_started_attempts": unknown,
+        "estimated_finished_attempts": estimated,
         "jobs": jobs,
-        "timing_definition": "Iris attempt started_at through finished_at (or observation time for a running attempt)",
-        "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. This is running resource time, not GPU utilization or billing.",
+        "timing_definition": "Iris attempt started_at through finished_at; a missing final-attempt finish uses the job finish as a labelled estimate, or observation time only for a still-running attempt.",
+        "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing.",
     }
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)

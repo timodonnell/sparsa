@@ -1,6 +1,8 @@
 {
-  "observed_utc": "2026-09-11T07:37:40.039205+00:00",
-  "running_gpu_hours": 42.40035555555555,
+  "observed_utc": "2026-09-11T07:40:23.357390+00:00",
+  "running_gpu_hours": 34.57489777777778,
+  "unmeasured_started_attempts": 0,
+  "estimated_finished_attempts": 1,
   "jobs": [
     {
       "job": "/bizon/sparsa-sequence-pair-40m-20260911",
@@ -24,6 +26,8 @@
               "start_ms": 1789095388500,
               "finish_ms": 1789104229988,
               "running_seconds": 8841.488,
+              "accounted_end_ms": 1789104229988,
+              "end_source": "attempt_finish",
               "running_gpu_hours": 19.64775111111111,
               "node": "gb95a30",
               "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: 468ca9a7-0bc9-4bfc-b681-d0be4dde9d09, JobUID: 1a9f51d9-623b-4d19-94ac-112a633246e7) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
@@ -35,6 +39,8 @@
               "start_ms": null,
               "finish_ms": 1789104275510,
               "running_seconds": 0,
+              "accounted_end_ms": null,
+              "end_source": "not_started",
               "running_gpu_hours": 0.0,
               "node": "",
               "terminal_reason": "PodDeleted: pod was deleted while the attempt was active"
@@ -46,6 +52,8 @@
               "start_ms": 1789104297325,
               "finish_ms": 1789104364823,
               "running_seconds": 67.498,
+              "accounted_end_ms": 1789104364823,
+              "end_source": "attempt_finish",
               "running_gpu_hours": 0.14999555555555558,
               "node": "g1cbf32",
               "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: 899aed19-c489-45cc-9db8-3c0cf1bc5af9, JobUID: c076b405-46b3-4c79-9ead-9c30dc033fab) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
@@ -57,6 +65,8 @@
               "start_ms": 1789104940231,
               "finish_ms": 1789104984703,
               "running_seconds": 44.472,
+              "accounted_end_ms": 1789104984703,
+              "end_source": "attempt_finish",
               "running_gpu_hours": 0.09882666666666667,
               "node": "g1cbf32",
               "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: baa7c9c2-d193-4ffb-abbc-19edb96b41a2, JobUID: a63cd1ea-5ffc-4ddb-a73a-e6985377c28f) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
@@ -68,6 +78,8 @@
               "start_ms": 1789105348293,
               "finish_ms": 1789105393107,
               "running_seconds": 44.814,
+              "accounted_end_ms": 1789105393107,
+              "end_source": "attempt_finish",
               "running_gpu_hours": 0.09958666666666667,
               "node": "gaa0e72",
               "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: d8c68f51-9889-4505-a8f7-431c0118d68e, JobUID: 74d3170b-9a8e-4458-9712-2623e89409b1) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
@@ -79,6 +91,8 @@
               "start_ms": 1789105714010,
               "finish_ms": 1789105758010,
               "running_seconds": 44.0,
+              "accounted_end_ms": 1789105758010,
+              "end_source": "attempt_finish",
               "running_gpu_hours": 0.09777777777777778,
               "node": "g5ba762",
               "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: f4afa3e2-801d-4a24-90a9-a76b939c7163, JobUID: 1cda39ed-9bf3-4c6f-bcdb-9f0c9e349093) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
@@ -90,6 +104,8 @@
               "start_ms": 1789105785689,
               "finish_ms": 1789107518112,
               "running_seconds": 1732.423,
+              "accounted_end_ms": 1789107518112,
+              "end_source": "attempt_finish",
               "running_gpu_hours": 3.8498288888888887,
               "node": "gb95c40",
               "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: ddb8dd87-7713-4c4b-8cc1-0ed2a909ae68, JobUID: 3d3281d2-ebe1-4fce-bb0c-67ab3b01b4c6) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
@@ -100,8 +116,10 @@
               "state": "killed",
               "start_ms": 1789107607852,
               "finish_ms": null,
-              "running_seconds": 4652.187,
-              "running_gpu_hours": 10.338193333333333,
+              "running_seconds": 967.413,
+              "accounted_end_ms": 1789108575265,
+              "end_source": "job_finish_fallback",
+              "running_gpu_hours": 2.1498066666666666,
               "node": "gb960a0",
               "terminal_reason": ""
             }
@@ -114,7 +132,7 @@
       "state": "running",
       "submitted_ms": 1789108596564,
       "finished_ms": null,
-      "wall_seconds": 3663.475,
+      "wall_seconds": 3826.793,
       "preemptions": 0,
       "failures": 0,
       "tasks": [
@@ -130,8 +148,10 @@
               "state": "running",
               "start_ms": 1789108606761,
               "finish_ms": null,
-              "running_seconds": 3653.278,
-              "running_gpu_hours": 8.118395555555555,
+              "running_seconds": 3816.596,
+              "accounted_end_ms": 1789112423357,
+              "end_source": "observation_time",
+              "running_gpu_hours": 8.481324444444445,
               "node": "gb960a0",
               "terminal_reason": ""
             }
@@ -140,6 +160,6 @@
       ]
     }
   ],
-  "timing_definition": "Iris attempt started_at through finished_at (or observation time for a running attempt)",
-  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. This is running resource time, not GPU utilization or billing."
+  "timing_definition": "Iris attempt started_at through finished_at; a missing final-attempt finish uses the job finish as a labelled estimate, or observation time only for a still-running attempt.",
+  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing."
 }

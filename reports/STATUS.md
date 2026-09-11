@@ -52,6 +52,12 @@ evaluation has not been run.
   durable-object check, pointers, resume identity, and source hashes.
   Both job handles are included in `main_job_accounting.json`; refresh this
   snapshot at completion to include all running time and preempted attempts.
+  Iris omitted the final attempt's finish timestamp on the cancelled original
+  job. Accounting now uses its job-finish timestamp as a labelled estimate,
+  instead of incorrectly accruing time until every later observation. Six
+  accounting regression tests pass, including the actual cancellation timestamps.
+  Unknown stopped-attempt durations are reported separately; current main-run
+  accounting has one estimated finish and no unmeasured started attempts.
 - The original approximate 11 a.m. Eastern completion estimate is now conditional
   on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
   Final artifacts will preserve resume provenance; completion elapsed time is
