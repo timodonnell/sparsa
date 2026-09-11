@@ -134,7 +134,7 @@
         "peak_gpu_gb": 12.80238151550293
       },
       "pod": "iris-bizon-sparsa-scale-control50-2-080d9893-0-e9d7c104a63e19c5",
-      "pod_phase": "Running"
+      "pod_phase": "Absent"
     },
     "/bizon/sparsa-scale-control-prop-20260911": {
       "validation": [
@@ -270,7 +270,7 @@
         "peak_gpu_gb": 12.804294109344482
       },
       "pod": "iris-bizon-sparsa-scale-control-pro-36138890-0-c8c5160b38d45de3",
-      "pod_phase": "Running"
+      "pod_phase": "Absent"
     },
     "/bizon/sparsa-scale-grown456m-20260911": {
       "validation": [
@@ -389,7 +389,7 @@
         "peak_gpu_gb": 22.3310866355896
       },
       "pod": "iris-bizon-sparsa-scale-grown456m-2-8ecb028f-0-b262a54e96941685",
-      "pod_phase": "Running"
+      "pod_phase": "Absent"
     },
     "/bizon/sparsa-scale-grown456m50-20260911": {
       "validation": [
@@ -490,7 +490,7 @@
         "peak_gpu_gb": 22.325440883636475
       },
       "pod": "iris-bizon-sparsa-scale-grown456m50-6b273db7-0-59d70972cd4cfb22",
-      "pod_phase": "Running"
+      "pod_phase": "Absent"
     },
     "/bizon/sparsa-scale-compile-smoke-20260911": {
       "validation": [
@@ -583,7 +583,7 @@
         "peak_gpu_gb": 55.844058990478516
       },
       "pod": "iris-bizon-sparsa-scale-compile-smo-c54e5994-0-8f1694ed90d2b08c",
-      "pod_phase": "Succeeded"
+      "pod_phase": "Absent"
     },
     "/bizon/sparsa-scale-compile-smoke2-20260911": {
       "validation": [
@@ -710,6 +710,30 @@
           "inference_seconds": 2.38420719653368,
           "step": 3000,
           "seconds": 1265.9301417469978
+        },
+        {
+          "r_precision": 0.24812857099294222,
+          "long_r_precision": 0.2102377863191516,
+          "proteins": 97,
+          "inference_seconds": 2.402933661825955,
+          "step": 4000,
+          "seconds": 1612.8359822435305
+        },
+        {
+          "r_precision": 0.24882526071890537,
+          "long_r_precision": 0.2097385753233551,
+          "proteins": 97,
+          "inference_seconds": 2.390965459868312,
+          "step": 5000,
+          "seconds": 1954.8120300732553
+        },
+        {
+          "r_precision": 0.24901039810363315,
+          "long_r_precision": 0.20987230014849675,
+          "proteins": 97,
+          "inference_seconds": 2.388673096895218,
+          "step": 6000,
+          "seconds": 2299.3478444330394
         }
       ],
       "checkpoints": [
@@ -747,6 +771,31 @@
           "step": 3500,
           "validated": false,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-3500.pt"
+        },
+        {
+          "step": 4000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-4000.pt"
+        },
+        {
+          "step": 4500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-4500.pt"
+        },
+        {
+          "step": 5000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-5000.pt"
+        },
+        {
+          "step": 5500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-5500.pt"
+        },
+        {
+          "step": 6000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-6000.pt"
         }
       ],
       "provenance": {
@@ -813,18 +862,18 @@
         "started_utc": "2026-09-11T19:49:45Z"
       },
       "latest_training": {
-        "step": 3700,
-        "loss": 0.2537647485733032,
-        "grad_norm": 0.09708816558122635,
-        "lr": 4.159050674201269e-05,
-        "seconds": 1510.8531357962638,
-        "seconds_per_step": 0.3329211519379169,
-        "examples": 236800,
-        "peak_gpu_gb": 43.43487596511841,
+        "step": 6000,
+        "loss": 0.25197720527648926,
+        "grad_norm": 0.09386710077524185,
+        "lr": 1.0000006834905923e-05,
+        "seconds": 2294.60302537214,
+        "seconds_per_step": 0.3259891104977578,
+        "examples": 384000,
+        "peak_gpu_gb": 43.43723726272583,
         "compiled_graphs": 9
       },
       "pod": "iris-bizon-sparsa-scale-rank40m50-2-7ca1f697-0-0fc837e2a21091b3",
-      "pod_phase": "Running"
+      "pod_phase": "Succeeded"
     },
     "/bizon/sparsa-scale-rank456m50-20260911": {
       "validation": [
@@ -843,6 +892,22 @@
           "inference_seconds": 3.5085234390571713,
           "step": 2000,
           "seconds": 1228.7788173845038
+        },
+        {
+          "r_precision": 0.2507698834152832,
+          "long_r_precision": 0.20893830508693542,
+          "proteins": 97,
+          "inference_seconds": 3.519222181290388,
+          "step": 3000,
+          "seconds": 1779.5997795248404
+        },
+        {
+          "r_precision": 0.2505236965945015,
+          "long_r_precision": 0.2105595626539813,
+          "proteins": 97,
+          "inference_seconds": 3.507057521492243,
+          "step": 4000,
+          "seconds": 2312.2959554623812
         }
       ],
       "checkpoints": [
@@ -865,6 +930,26 @@
           "step": 2000,
           "validated": true,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-2000.pt"
+        },
+        {
+          "step": 2500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-2500.pt"
+        },
+        {
+          "step": 3000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-3000.pt"
+        },
+        {
+          "step": 3500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-3500.pt"
+        },
+        {
+          "step": 4000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-4000.pt"
         }
       ],
       "provenance": {
@@ -932,14 +1017,14 @@
         "started_utc": "2026-09-11T19:50:13Z"
       },
       "latest_training": {
-        "step": 2400,
-        "loss": 0.23638522624969482,
-        "grad_norm": 0.11646246910095215,
-        "lr": 7.309900441601515e-05,
-        "seconds": 1451.372787727043,
-        "seconds_per_step": 0.40709753582254055,
-        "examples": 153600,
-        "peak_gpu_gb": 55.840660572052,
+        "step": 4300,
+        "loss": 0.23969829082489014,
+        "grad_norm": 0.1127178743481636,
+        "lr": 2.8369402301171575e-05,
+        "seconds": 2491.6556135797873,
+        "seconds_per_step": 0.4078813434578478,
+        "examples": 275200,
+        "peak_gpu_gb": 55.843361377716064,
         "compiled_graphs": 9
       },
       "pod": "iris-bizon-sparsa-scale-rank456m50-8c6de713-0-b2d3e6e982838cfa",
@@ -962,6 +1047,14 @@
           "inference_seconds": 2.407809720374644,
           "step": 5000,
           "seconds": 749.6931017972529
+        },
+        {
+          "r_precision": 0.24920926332774548,
+          "long_r_precision": 0.20851332758867427,
+          "proteins": 97,
+          "inference_seconds": 2.4001195523887873,
+          "step": 6000,
+          "seconds": 1095.1718568922952
         }
       ],
       "checkpoints": [
@@ -979,6 +1072,16 @@
           "step": 5000,
           "validated": true,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control50-20260911/checkpoints/step-5000.pt"
+        },
+        {
+          "step": 5500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control50-20260911/checkpoints/step-5500.pt"
+        },
+        {
+          "step": 6000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control50-20260911/checkpoints/step-6000.pt"
         }
       ],
       "provenance": {
@@ -1054,16 +1157,16 @@
         }
       },
       "pod": "iris-bizon-sparsa-scale-control50-2-c74d1688-0-ec701a15b069343e",
-      "pod_phase": "Running",
+      "pod_phase": "Succeeded",
       "latest_training": {
-        "step": 5100,
-        "loss": 0.0887279361486435,
-        "grad_norm": 0.04162880778312683,
-        "lr": 1.5435491675968545e-05,
-        "seconds": 788.4768881639466,
-        "seconds_per_step": 0.43581790895201267,
-        "examples": 326400,
-        "peak_gpu_gb": 43.430153369903564,
+        "step": 6000,
+        "loss": 0.0927928239107132,
+        "grad_norm": 0.052042387425899506,
+        "lr": 1.0000006834905923e-05,
+        "seconds": 1090.4177696416155,
+        "seconds_per_step": 0.3218712639249861,
+        "examples": 384000,
+        "peak_gpu_gb": 43.43097972869873,
         "compiled_graphs": 9
       }
     },
@@ -1084,6 +1187,14 @@
           "inference_seconds": 2.4051789776422083,
           "step": 5000,
           "seconds": 710.3124527561013
+        },
+        {
+          "r_precision": 0.24833684643682608,
+          "long_r_precision": 0.2059363590530866,
+          "proteins": 97,
+          "inference_seconds": 2.412309096660465,
+          "step": 6000,
+          "seconds": 1059.9596325000748
         }
       ],
       "checkpoints": [
@@ -1101,6 +1212,16 @@
           "step": 5000,
           "validated": true,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control-prop-20260911/checkpoints/step-5000.pt"
+        },
+        {
+          "step": 5500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control-prop-20260911/checkpoints/step-5500.pt"
+        },
+        {
+          "step": 6000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control-prop-20260911/checkpoints/step-6000.pt"
         }
       ],
       "provenance": {
@@ -1176,15 +1297,15 @@
         }
       },
       "pod": "iris-bizon-sparsa-scale-control-pro-e2118629-0-7361b89e2936a094",
-      "pod_phase": "Running",
+      "pod_phase": "Succeeded",
       "latest_training": {
-        "step": 5200,
-        "loss": 0.0898398756980896,
-        "grad_norm": 0.05191411077976227,
-        "lr": 1.4314518878594072e-05,
-        "seconds": 798.2922523801681,
-        "seconds_per_step": 0.5116518888017163,
-        "examples": 332800,
+        "step": 6000,
+        "loss": 0.0915311649441719,
+        "grad_norm": 0.06336480379104614,
+        "lr": 1.0000006834905923e-05,
+        "seconds": 1055.1317738441285,
+        "seconds_per_step": 0.31379588356008753,
+        "examples": 384000,
         "peak_gpu_gb": 43.4342041015625,
         "compiled_graphs": 9
       }
@@ -1198,9 +1319,28 @@
           "inference_seconds": 4.402856567059644,
           "step": 1000,
           "seconds": 693.3345954049946
+        },
+        {
+          "r_precision": 0.24797471874956542,
+          "long_r_precision": 0.20701647320521327,
+          "proteins": 97,
+          "inference_seconds": 3.46821425606322,
+          "step": 2000,
+          "seconds": 1420.5350745630058
         }
       ],
-      "checkpoints": [],
+      "checkpoints": [
+        {
+          "step": 1000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911/checkpoints/step-1000.pt"
+        },
+        {
+          "step": 2000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911/checkpoints/step-2000.pt"
+        }
+      ],
       "provenance": {
         "model_config": {
           "sequence_dim": 2048,
@@ -1268,14 +1408,14 @@
       "pod": "iris-bizon-sparsa-scale-grown18b50-730ff8e6-0-edc02db03ec3f7f1",
       "pod_phase": "Running",
       "latest_training": {
-        "step": 1000,
-        "loss": 0.07881849259138107,
-        "grad_norm": 0.03931112587451935,
-        "lr": 9.670155993452314e-05,
-        "seconds": 686.4757785839975,
-        "seconds_per_step": 0.5493962387100327,
-        "examples": 64000,
-        "peak_gpu_gb": 67.80564975738525,
+        "step": 2400,
+        "loss": 0.08331810683012009,
+        "grad_norm": 0.049023907631635666,
+        "lr": 7.309900441601515e-05,
+        "seconds": 1805.8338999879998,
+        "seconds_per_step": 0.5548078739500488,
+        "examples": 153600,
+        "peak_gpu_gb": 67.80565023422241,
         "compiled_graphs": 9
       }
     },
@@ -1288,6 +1428,22 @@
           "inference_seconds": 4.703606099821627,
           "step": 3000,
           "seconds": 374.54902539681643
+        },
+        {
+          "r_precision": 0.24641796806509916,
+          "long_r_precision": 0.20562928093930943,
+          "proteins": 97,
+          "inference_seconds": 3.58686298225075,
+          "step": 4000,
+          "seconds": 966.0664695147425
+        },
+        {
+          "r_precision": 0.247268910240481,
+          "long_r_precision": 0.2060475701627572,
+          "proteins": 97,
+          "inference_seconds": 3.592279238626361,
+          "step": 5000,
+          "seconds": 1485.1060502873734
         }
       ],
       "checkpoints": [
@@ -1300,6 +1456,26 @@
           "step": 3500,
           "validated": false,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-3500.pt"
+        },
+        {
+          "step": 4000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-4000.pt"
+        },
+        {
+          "step": 4500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-4500.pt"
+        },
+        {
+          "step": 5000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-5000.pt"
+        },
+        {
+          "step": 5500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-5500.pt"
         }
       ],
       "provenance": {
@@ -1378,13 +1554,13 @@
       "pod": "iris-bizon-sparsa-scale-grown456m-2-1da451af-0-12fa68b1a1c90227",
       "pod_phase": "Running",
       "latest_training": {
-        "step": 3500,
-        "loss": 0.08912591636180878,
-        "grad_norm": 0.04677433520555496,
-        "lr": 4.6397364878847626e-05,
-        "seconds": 703.0432588662952,
-        "seconds_per_step": 0.405312823811546,
-        "examples": 224000,
+        "step": 5500,
+        "loss": 0.08629462122917175,
+        "grad_norm": 0.04230749234557152,
+        "lr": 1.1704695285749422e-05,
+        "seconds": 1741.4723948128521,
+        "seconds_per_step": 0.4011652643047273,
+        "examples": 352000,
         "peak_gpu_gb": 57.52347755432129,
         "compiled_graphs": 9
       }
@@ -1398,6 +1574,22 @@
           "inference_seconds": 4.5431234035640955,
           "step": 2000,
           "seconds": 396.2581404466182
+        },
+        {
+          "r_precision": 0.2497195672292965,
+          "long_r_precision": 0.20818332951770283,
+          "proteins": 97,
+          "inference_seconds": 3.472062323242426,
+          "step": 3000,
+          "seconds": 989.7205117214471
+        },
+        {
+          "r_precision": 0.24851121085887157,
+          "long_r_precision": 0.2082347016709663,
+          "proteins": 97,
+          "inference_seconds": 3.5479488195851445,
+          "step": 4000,
+          "seconds": 1532.4593652067706
         }
       ],
       "checkpoints": [
@@ -1405,6 +1597,26 @@
           "step": 2000,
           "validated": true,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-2000.pt"
+        },
+        {
+          "step": 2500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-2500.pt"
+        },
+        {
+          "step": 3000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-3000.pt"
+        },
+        {
+          "step": 3500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-3500.pt"
+        },
+        {
+          "step": 4000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-4000.pt"
         }
       ],
       "provenance": {
@@ -1483,24 +1695,61 @@
       "pod": "iris-bizon-sparsa-scale-grown456m50-97edc5ea-0-055d4bacb63207b5",
       "pod_phase": "Running",
       "latest_training": {
-        "step": 2500,
-        "loss": 0.08528759330511093,
-        "grad_norm": 0.05059078708291054,
-        "lr": 7.080191498199181e-05,
-        "seconds": 716.6005932986736,
-        "seconds_per_step": 0.582776499716565,
-        "examples": 160000,
+        "step": 4400,
+        "loss": 0.09137396514415741,
+        "grad_norm": 0.07481789588928223,
+        "lr": 2.641158078795497e-05,
+        "seconds": 1750.6934185493737,
+        "seconds_per_step": 0.40702056074514986,
+        "examples": 281600,
         "peak_gpu_gb": 57.521554946899414,
         "compiled_graphs": 9
       }
     },
     "/bizon/sparsa-scale-grown456m50-lr4-20260911": {
-      "validation": [],
+      "validation": [
+        {
+          "r_precision": 0.24303924521785014,
+          "long_r_precision": 0.20111757917164705,
+          "proteins": 97,
+          "inference_seconds": 4.585305308923125,
+          "step": 1000,
+          "seconds": 688.2360060233623
+        },
+        {
+          "r_precision": 0.24202153435024548,
+          "long_r_precision": 0.20161486668552592,
+          "proteins": 97,
+          "inference_seconds": 3.6214659716933966,
+          "step": 2000,
+          "seconds": 1216.4515175530687
+        }
+      ],
       "checkpoints": [
         {
           "step": 500,
           "validated": false,
           "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-500.pt"
+        },
+        {
+          "step": 1000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-1000.pt"
+        },
+        {
+          "step": 1500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-1500.pt"
+        },
+        {
+          "step": 2000,
+          "validated": true,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-2000.pt"
+        },
+        {
+          "step": 2500,
+          "validated": false,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-2500.pt"
         }
       ],
       "provenance": {
@@ -1568,20 +1817,197 @@
         "execution_changes": {}
       },
       "latest_training": {
-        "step": 600,
-        "loss": 0.08918242156505585,
-        "grad_norm": 0.052621129900217056,
-        "lr": 0.0003975613367761474,
-        "seconds": 482.70360193867236,
-        "seconds_per_step": 1.144964618589729,
-        "examples": 38400,
-        "peak_gpu_gb": 55.839271545410156,
+        "step": 2500,
+        "loss": 0.0879005640745163,
+        "grad_norm": 0.046298131346702576,
+        "lr": 0.00028320765992796725,
+        "seconds": 1493.828753117472,
+        "seconds_per_step": 0.5697658347245306,
+        "examples": 160000,
+        "peak_gpu_gb": 55.84404802322388,
         "compiled_graphs": 9
       },
       "pod": "iris-bizon-sparsa-scale-grown456m50-61660abb-0-cf1addc379080b24",
       "pod_phase": "Running"
+    },
+    "/bizon/sparsa-scale-18b-resume-smoke-20260911": {
+      "validation": [],
+      "checkpoints": [],
+      "provenance": {
+        "model_config": {
+          "sequence_dim": 2048,
+          "sequence_layers": 36,
+          "heads": 32,
+          "pair_dim": 96,
+          "pair_layers": 16,
+          "triangle_every": 4,
+          "triangle_dim": 48,
+          "dropout": 0.0,
+          "gradient_checkpointing": false
+        },
+        "training_config": {
+          "seed": 217,
+          "model": {
+            "sequence_dim": 2048,
+            "sequence_layers": 36,
+            "heads": 32,
+            "pair_dim": 96,
+            "pair_layers": 16,
+            "triangle_every": 4,
+            "triangle_dim": 48,
+            "gradient_checkpointing": false
+          },
+          "batch_size": 2,
+          "accumulation": 4,
+          "crop": 512,
+          "workers": 2,
+          "steps": 1200,
+          "warmup": 300,
+          "lr": 0.0001,
+          "weight_decay": 0.01,
+          "pos_weight": 4.0,
+          "ema_decay": 0.999,
+          "eval_every": 1000,
+          "checkpoint_every": 1000,
+          "log_every": 10,
+          "afdb_probability": 0.5,
+          "grow_from_ema": true,
+          "compile_pair_blocks": true,
+          "compile_cache_limit": 128,
+          "keep_recovery_checkpoints": 2,
+          "compile_sequence_blocks": true
+        },
+        "world_size": 8,
+        "parameters": 1815192865,
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch_version": "2.10.0+cu128",
+        "resume": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911/checkpoints/step-1000.pt",
+        "init_from": null,
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "65b11cbb02142670b3d0c490592b1ff006dddd46e70cb8e997ae01c959d1e998",
+          "sparsa/evaluate.py": "5d4145353db6447a90dae3c80537d7a8ab9c39af3ceb673a8212a860dc36defd",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+          "sparsa/train.py": "03923c600083e7c3a85a63684cda37696cf0f15c5a45a1ad24d8a2fdcb066c5e",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        },
+        "iris_job": null,
+        "priority": "batch",
+        "started_utc": "2026-09-11T20:21:42Z",
+        "execution_changes": {
+          "compile_sequence_blocks": {
+            "before": false,
+            "after": true
+          }
+        }
+      },
+      "pod": "iris-bizon-sparsa-scale-18b-resume-8151711a-0-9b654a15197f6dc1",
+      "pod_phase": "Failed"
+    },
+    "/bizon/sparsa-scale-18b-resume-smoke2-20260911": {
+      "validation": [
+        {
+          "r_precision": 0.24768369345743943,
+          "long_r_precision": 0.20626075546457442,
+          "proteins": 97,
+          "inference_seconds": 4.538608931005001,
+          "step": 1200,
+          "seconds": 219.81898824032396
+        }
+      ],
+      "checkpoints": [],
+      "provenance": {
+        "model_config": {
+          "sequence_dim": 2048,
+          "sequence_layers": 36,
+          "heads": 32,
+          "pair_dim": 96,
+          "pair_layers": 16,
+          "triangle_every": 4,
+          "triangle_dim": 48,
+          "dropout": 0.0,
+          "gradient_checkpointing": false
+        },
+        "training_config": {
+          "seed": 217,
+          "model": {
+            "sequence_dim": 2048,
+            "sequence_layers": 36,
+            "heads": 32,
+            "pair_dim": 96,
+            "pair_layers": 16,
+            "triangle_every": 4,
+            "triangle_dim": 48,
+            "gradient_checkpointing": false
+          },
+          "batch_size": 2,
+          "accumulation": 4,
+          "crop": 512,
+          "workers": 2,
+          "steps": 1200,
+          "warmup": 300,
+          "lr": 0.0001,
+          "weight_decay": 0.01,
+          "pos_weight": 4.0,
+          "ema_decay": 0.999,
+          "eval_every": 1000,
+          "checkpoint_every": 1000,
+          "log_every": 10,
+          "afdb_probability": 0.5,
+          "grow_from_ema": true,
+          "compile_pair_blocks": true,
+          "compile_cache_limit": 128,
+          "keep_recovery_checkpoints": 2,
+          "compile_sequence_blocks": true,
+          "compile_ddp_optimizer": false
+        },
+        "world_size": 8,
+        "parameters": 1815192865,
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch_version": "2.10.0+cu128",
+        "resume": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911/checkpoints/step-1000.pt",
+        "init_from": null,
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "65b11cbb02142670b3d0c490592b1ff006dddd46e70cb8e997ae01c959d1e998",
+          "sparsa/evaluate.py": "5d4145353db6447a90dae3c80537d7a8ab9c39af3ceb673a8212a860dc36defd",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+          "sparsa/train.py": "9363e74238425c13e37b861a4b8c0f97ced0a21e84bfbf3940328a81cfa922f0",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        },
+        "iris_job": null,
+        "priority": "batch",
+        "started_utc": "2026-09-11T20:25:33Z",
+        "execution_changes": {
+          "compile_sequence_blocks": {
+            "before": false,
+            "after": true
+          },
+          "compile_ddp_optimizer": {
+            "before": true,
+            "after": false
+          }
+        }
+      },
+      "pod": "iris-bizon-sparsa-scale-18b-resume-bbcd58ab-0-32c111adec234d05",
+      "pod_phase": "Failed",
+      "latest_training": {
+        "step": 1200,
+        "loss": 0.08989937603473663,
+        "grad_norm": 0.0431588776409626,
+        "lr": 1.0000274155399433e-05,
+        "seconds": 212.8167487066239,
+        "seconds_per_step": 0.5858230061829091,
+        "examples": 76800,
+        "peak_gpu_gb": 72.51574182510376,
+        "compiled_graphs": 10
+      }
     }
   },
-  "observed_utc": "2026-09-11T20:15:09.338212+00:00",
+  "observed_utc": "2026-09-11T20:32:26.690050+00:00",
   "scope": "Training logs and successful checkpoint-write messages; selection uses durable S3 pointers after completed pilots. Validation only."
 }

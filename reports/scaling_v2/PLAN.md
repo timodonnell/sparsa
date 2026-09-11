@@ -159,3 +159,33 @@ Their journals are restartable; Iris training independently retries from durable
 checkpoints. Terminal failures stop the handoff for inspection. Unit tests cover
 budget bounds, capacity fallback without checkpoint shrinking, and rejection of
 held-out recipe selection. Downstream phases are pending until their jobs finish.
+
+
+Additional checks: on validation chains of at most 256 residues, the previous
+release scores 0.276413 versus MarinFold's 0.492856 (51 proteins). The gap is not
+limited to contacts beyond training crop length; the length-stratified table is
+retained in `validation_gap_by_length.csv`.
+
+Compiling sequence blocks as well as pair blocks improves synthetic 1.8B timing
+from 0.179 to 0.163 s/microbatch. Output/gradient checks pass, but the first DDP
+resume probe encountered a Dynamo graph-partition compiler error after loading
+the full checkpoint. Its retries were stopped. Sequence compilation remains
+optional and is not selected for production until a real DDP test passes.
+Full-state eight-rank loading peaked at about 598 GiB host RAM; extended 1.8B jobs
+will request 768 GiB for headroom. This does not change GPU priority or count.
+
+
+The extended run retains the established pair-only compilation. Disabling
+Dynamo's DDP graph optimizer allowed the optional sequence-compiled probe to
+train 200 resumed steps at about 0.51 s/step, but its checkpoint collective
+failed with an NCCL error. This is not accepted as a successful production
+configuration. Its logs and failed outcome are retained. Production checkpoints
+now release completed gradients and unused CUDA cache before validation and
+checkpoint collectives. A separate pair-only full-state resume/checkpoint probe
+must pass before the handoff can launch extended training.
+
+Final selection includes the chosen pilot run as well as main training,
+long-crop finetuning and the original release, preserving a successful pilot if
+extended training fails to improve it. The automated final report includes paired
+comparisons against the previous release; completed results are pushed to main
+when the branch and staging index permit publishing campaign-owned outputs.

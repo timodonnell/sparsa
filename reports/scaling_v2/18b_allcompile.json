@@ -1,0 +1,50 @@
+{
+  "torch": "2.10.0+cu128",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "checks": [
+    {
+      "length": 37,
+      "max_output_error": 0.005718350410461426,
+      "max_gradient_error": 3.0517578125e-05
+    },
+    {
+      "length": 53,
+      "max_output_error": 0.006763756275177002,
+      "max_gradient_error": 3.0517578125e-05
+    },
+    {
+      "block": "sequence",
+      "length": 37,
+      "max_output_error": 0.004674851894378662,
+      "max_gradient_error": 1.9073486328125e-06
+    },
+    {
+      "block": "sequence",
+      "length": 53,
+      "max_output_error": 0.00470423698425293,
+      "max_gradient_error": 1.1278025340288877e-06
+    }
+  ],
+  "profile": {
+    "model_config": {
+      "sequence_dim": 2048,
+      "sequence_layers": 36,
+      "heads": 32,
+      "pair_dim": 96,
+      "pair_layers": 16,
+      "triangle_every": 4,
+      "triangle_dim": 48,
+      "dropout": 0.0,
+      "gradient_checkpointing": false
+    },
+    "parameters": 1815192865,
+    "batch_size": 2,
+    "crop": 512,
+    "seconds_per_microbatch": 0.16335311839939096,
+    "crops_per_second_per_gpu": 12.243414876905446,
+    "peak_gpu_gib": 54.13291120529175,
+    "loss": 0.1713818907737732,
+    "grad_norm": 0.11796862632036209
+  },
+  "total_probe_seconds": 65.97525642099936
+}

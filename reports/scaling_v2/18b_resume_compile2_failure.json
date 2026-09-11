@@ -1,0 +1,238 @@
+{
+  "job": "/bizon/sparsa-scale-18b-resume-smoke2-20260911",
+  "training": [
+    {
+      "step": 1010,
+      "loss": 0.07817994803190231,
+      "grad_norm": 0.04167632758617401,
+      "lr": 1.963643980710691e-05,
+      "seconds": 113.27134715486318,
+      "seconds_per_step": 11.327134690340609,
+      "examples": 64640,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1020,
+      "loss": 0.09120433777570724,
+      "grad_norm": 0.056470707058906555,
+      "lr": 1.8686785953528924e-05,
+      "seconds": 119.32533558551222,
+      "seconds_per_step": 0.6053988430649042,
+      "examples": 65280,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1030,
+      "loss": 0.09869968146085739,
+      "grad_norm": 0.05627702921628952,
+      "lr": 1.7781374157644715e-05,
+      "seconds": 124.55747768562287,
+      "seconds_per_step": 0.523214210011065,
+      "examples": 65920,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1040,
+      "loss": 0.09292210638523102,
+      "grad_norm": 0.0520363487303257,
+      "lr": 1.6921307524259627e-05,
+      "seconds": 129.91044304799289,
+      "seconds_per_step": 0.5352965362370015,
+      "examples": 66560,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1050,
+      "loss": 0.09017105400562286,
+      "grad_norm": 0.06337735801935196,
+      "lr": 1.610763391208329e-05,
+      "seconds": 135.20567567739636,
+      "seconds_per_step": 0.5295232629403472,
+      "examples": 67200,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1060,
+      "loss": 0.0836169421672821,
+      "grad_norm": 0.05925016850233078,
+      "lr": 1.5341344657075355e-05,
+      "seconds": 140.3008813103661,
+      "seconds_per_step": 0.5095205632969737,
+      "examples": 67840,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1070,
+      "loss": 0.0861135870218277,
+      "grad_norm": 0.04982153698801994,
+      "lr": 1.4623373364655223e-05,
+      "seconds": 145.2616754937917,
+      "seconds_per_step": 0.49607941834256053,
+      "examples": 68480,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1080,
+      "loss": 0.09028825908899307,
+      "grad_norm": 0.06932491064071655,
+      "lr": 1.395459477224772e-05,
+      "seconds": 150.2875153357163,
+      "seconds_per_step": 0.5025839841924608,
+      "examples": 69120,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1090,
+      "loss": 0.09500288963317871,
+      "grad_norm": 0.06820512562990189,
+      "lr": 1.3335823683550238e-05,
+      "seconds": 154.98729185573757,
+      "seconds_per_step": 0.469977652002126,
+      "examples": 69760,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1100,
+      "loss": 0.09060544520616531,
+      "grad_norm": 0.05964149534702301,
+      "lr": 1.2767813975819984e-05,
+      "seconds": 161.00478740315884,
+      "seconds_per_step": 0.6017495547421277,
+      "examples": 70400,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1110,
+      "loss": 0.08617082983255386,
+      "grad_norm": 0.04037853702902794,
+      "lr": 1.2251257681390645e-05,
+      "seconds": 167.07761783525348,
+      "seconds_per_step": 0.6072830432094634,
+      "examples": 71040,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1120,
+      "loss": 0.08929957449436188,
+      "grad_norm": 0.056549299508333206,
+      "lr": 1.1786784144537563e-05,
+      "seconds": 172.14612583629787,
+      "seconds_per_step": 0.5068508001044393,
+      "examples": 71680,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1130,
+      "loss": 0.09014170616865158,
+      "grad_norm": 0.05906947702169418,
+      "lr": 1.1374959254718752e-05,
+      "seconds": 176.9285500207916,
+      "seconds_per_step": 0.47824241844937204,
+      "examples": 72320,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1140,
+      "loss": 0.0893818661570549,
+      "grad_norm": 0.04672485962510109,
+      "lr": 1.1016284757125687e-05,
+      "seconds": 181.6960599059239,
+      "seconds_per_step": 0.4767509885132313,
+      "examples": 72960,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1150,
+      "loss": 0.09382179379463196,
+      "grad_norm": 0.044589925557374954,
+      "lr": 1.0711197641384115e-05,
+      "seconds": 186.81338367704302,
+      "seconds_per_step": 0.5117323771119118,
+      "examples": 73600,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1160,
+      "loss": 0.08724956959486008,
+      "grad_norm": 0.04861912503838539,
+      "lr": 1.0460069609149496e-05,
+      "seconds": 191.8764640521258,
+      "seconds_per_step": 0.5063080375082791,
+      "examples": 74240,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1170,
+      "loss": 0.08245961368083954,
+      "grad_norm": 0.04311550408601761,
+      "lr": 1.0263206621245809e-05,
+      "seconds": 196.98028977960348,
+      "seconds_per_step": 0.510382572747767,
+      "examples": 74880,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1180,
+      "loss": 0.08711083233356476,
+      "grad_norm": 0.04837421327829361,
+      "lr": 1.0120848524899388e-05,
+      "seconds": 202.07544812001288,
+      "seconds_per_step": 0.5095158340409398,
+      "examples": 75520,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1190,
+      "loss": 0.07415085285902023,
+      "grad_norm": 0.04274604842066765,
+      "lr": 1.0033168761522049e-05,
+      "seconds": 206.95851864479482,
+      "seconds_per_step": 0.4883070524781942,
+      "examples": 76160,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    },
+    {
+      "step": 1200,
+      "loss": 0.08989937603473663,
+      "grad_norm": 0.0431588776409626,
+      "lr": 1.0000274155399433e-05,
+      "seconds": 212.8167487066239,
+      "seconds_per_step": 0.5858230061829091,
+      "examples": 76800,
+      "peak_gpu_gb": 72.51574182510376,
+      "compiled_graphs": 10
+    }
+  ],
+  "validation": [
+    {
+      "r_precision": 0.24768369345743943,
+      "long_r_precision": 0.20626075546457442,
+      "proteins": 97,
+      "inference_seconds": 4.538608931005001,
+      "step": 1200,
+      "seconds": 219.81898824032396
+    }
+  ],
+  "error": "NCCL error during gather_object before checkpoint save",
+  "scope": "Full resume and 200 optimizer steps succeeded; checkpoint did not. Extra sequence compilation is not selected for production.",
+  "next": "Verify full resume/checkpoint with established pair-only compilation and cleared gradients before checkpoint collectives."
+}

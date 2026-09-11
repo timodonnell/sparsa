@@ -53,5 +53,6 @@
       "job": "/bizon/sparsa-scale-grown456m50-lr4-20260911",
       "config": "configs/scale_grown456m50_lr4.yaml"
     }
-  ]
+  ],
+  "preflight_job": "/bizon/sparsa-scale-18b-resume-plain-20260911"
 }

@@ -46,6 +46,12 @@ def main():
     )["items"]
     out = Path(args.out)
     report = json.loads(out.read_text()) if out.exists() else {"jobs": {}}
+    present_jobs = {
+        "/" + p["metadata"]["labels"]["iris.job_id"].replace(".", "/", 1) for p in pods
+    }
+    for job, state in report["jobs"].items():
+        if job not in present_jobs:
+            state["pod_phase"] = "Absent"
     for pod in sorted(pods, key=lambda p: p["metadata"]["creationTimestamp"]):
         label = pod["metadata"]["labels"]["iris.job_id"]
         job = jobs[labels.index(label)]

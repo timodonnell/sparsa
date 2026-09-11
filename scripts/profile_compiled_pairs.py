@@ -8,7 +8,7 @@ import time
 import torch
 
 from scripts.profile_scaling import profile
-from sparsa.model import ModelConfig, PairBlock
+from sparsa.model import ModelConfig, PairBlock, SequenceBlock
 from sparsa.train import write_json
 
 
@@ -23,6 +23,7 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--very-large", action="store_true")
     parser.add_argument("--long", action="store_true")
+    parser.add_argument("--sequence", action="store_true")
     args = parser.parse_args()
     torch.set_num_threads(4)
     torch.set_float32_matmul_precision("high")
@@ -77,10 +78,46 @@ def main():
         print("COMPILE_CHECK " + json.dumps(results["checks"][-1]), flush=True)
     del original, compiled, a, b, z
     torch.cuda.empty_cache()
+    if args.sequence:
+        original = SequenceBlock(cfg).cuda().train()
+        compiled = copy.deepcopy(original)
+        compiled.forward = torch.compile(compiled.forward, dynamic=True)
+        for length in (37, 53):
+            x = torch.randn(2, length, cfg.sequence_dim, device="cuda")
+            valid = torch.ones(2, length, device="cuda", dtype=torch.bool)
+            valid[0, -7:] = False
+            original.zero_grad(set_to_none=True)
+            compiled.zero_grad(set_to_none=True)
+            with torch.autocast("cuda", dtype=torch.bfloat16):
+                a, b = original(x, valid), compiled(x, valid)
+            a.square().mean().backward()
+            b.square().mean().backward()
+            torch.testing.assert_close(a, b, atol=0.03, rtol=0.01)
+            max_error = 0.0
+            for p, q in zip(original.parameters(), compiled.parameters(), strict=True):
+                torch.testing.assert_close(p.grad, q.grad, atol=0.001, rtol=0.05)
+                max_error = max(max_error, float((p.grad - q.grad).abs().max()))
+            results["checks"].append(
+                {
+                    "block": "sequence",
+                    "length": length,
+                    "max_output_error": float((a - b).detach().abs().max()),
+                    "max_gradient_error": max_error,
+                }
+            )
+        del original, compiled, a, b, x
+        torch.cuda.empty_cache()
+
+    def transform(model):
+        compile_pairs(model)
+        if args.sequence:
+            for block in model.sequence:
+                block.forward = torch.compile(block.forward, dynamic=True)
+
     batch = 1 if args.long else 2 if args.very_large else 4
     crop = 1024 if args.long else 512
     try:
-        result = profile(cfg, batch, crop, transform=compile_pairs)
+        result = profile(cfg, batch, crop, transform=transform)
     except torch.cuda.OutOfMemoryError:
         result = {
             "error": "CUDA OOM",

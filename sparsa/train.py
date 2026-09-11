@@ -136,11 +136,14 @@ def main():
     )
     args = parser.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
-    if cfg.get("compile_pair_blocks", False):
+    if cfg.get("compile_pair_blocks", False) or cfg.get(
+        "compile_sequence_blocks", False
+    ):
         os.environ.setdefault("TORCHINDUCTOR_COMPILE_THREADS", "2")
         import torch._dynamo.config as dynamo_config
 
         dynamo_config.recompile_limit = cfg.get("compile_cache_limit", 128)
+        dynamo_config.optimize_ddp = cfg.get("compile_ddp_optimizer", True)
     eval_every = cfg.get("eval_every", 1000)
     checkpoint_every = cfg.get("checkpoint_every", eval_every)
     if eval_every <= 0 or checkpoint_every <= 0:
@@ -240,6 +243,16 @@ def main():
                 "compile_cache_limit",
                 state["training_config"].get("compile_cache_limit", 128),
                 cfg.get("compile_cache_limit", 128),
+            ),
+            (
+                "compile_sequence_blocks",
+                state["training_config"].get("compile_sequence_blocks", False),
+                cfg.get("compile_sequence_blocks", False),
+            ),
+            (
+                "compile_ddp_optimizer",
+                state["training_config"].get("compile_ddp_optimizer", True),
+                cfg.get("compile_ddp_optimizer", True),
             ),
         ):
             if before != after:
@@ -351,6 +364,9 @@ def main():
         # Keep EMA eager and parameter names unchanged for portable checkpoints.
         for block in model.pairs:
             block.forward = torch.compile(block.forward, dynamic=True)
+    if cfg.get("compile_sequence_blocks", False):
+        for block in model.sequence:
+            block.forward = torch.compile(block.forward, dynamic=True)
     wrapped = (
         DistributedDataParallel(model, device_ids=[local_rank]) if world > 1 else model
     )
@@ -426,6 +442,10 @@ def main():
                 last_log = now
         evaluate_now = step % eval_every == 0 or step == steps
         if evaluate_now or step % checkpoint_every == 0:
+            # Gradients are no longer needed after the optimizer/EMA update.
+            # Leave headroom for evaluation and NCCL checkpoint collectives.
+            optimizer.zero_grad(set_to_none=True)
+            torch.cuda.empty_cache()
             if world > 1:
                 dist.barrier()
             result = None

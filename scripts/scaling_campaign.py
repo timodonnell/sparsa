@@ -192,6 +192,9 @@ def main():
         for pilot in manifest["pilots"]:
             record("waiting_for_pilot", pilot=pilot["name"])
             wait(pilot["job"])
+        if manifest.get("preflight_job"):
+            record("waiting_for_preflight", preflight_job=manifest["preflight_job"])
+            wait(manifest["preflight_job"])
         compare_job = "/bizon/sparsa-compare-" + name
         if not exists(compare_job):
             cmd = iris + [
@@ -319,7 +322,7 @@ def main():
                     "--gpus",
                     "8",
                     "--memory-gb",
-                    "640" if big else "256",
+                    "768" if big else "256",
                     "--timeout",
                     "259200",
                     "--init-from",
@@ -328,6 +331,17 @@ def main():
             )
         register(job)
         record("main_training", training_job=job, training_run=BASE + "/runs/" + name)
+        candidate_runs = [manifest["baseline_run"]]
+        source_pilot = next(
+            (
+                p
+                for p in manifest["pilots"]
+                if p["name"] == decision["source_name"].removesuffix("-best")
+            ),
+            None,
+        )
+        if source_pilot:
+            candidate_runs.append(source_pilot["run"])
         # The completion helper separately journals finetuning, validation selection,
         # one held-out evaluation, checksummed recovery, and actual CLI/Helico checks.
         subprocess.run(
@@ -342,15 +356,18 @@ def main():
                 "--long-config",
                 "configs/scaling_long.yaml",
                 "--training-memory-gb",
-                "640" if big else "256",
+                "768" if big else "256",
                 "--evaluation-memory-gb",
                 "192",
                 "--finetune-timeout",
                 "28800",
                 "--evaluation-timeout",
-                "14400",
-                "--extra-candidate-run",
-                manifest["baseline_run"],
+                "21600",
+                *[
+                    item
+                    for run_uri in dict.fromkeys(candidate_runs)
+                    for item in ("--extra-candidate-run", run_uri)
+                ],
                 "--budget-config",
                 manifest["budget"],
                 "--verify-release",
