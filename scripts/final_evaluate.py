@@ -34,7 +34,18 @@ def main():
     fs, root = storage(args.run)
     if not fs.exists(root + "/complete.json"):
         raise RuntimeError("Training must complete before the held-out evaluation")
+    completion = json.loads(fs.cat_file(root + "/complete.json"))
     selection = json.loads(fs.cat_file(root + "/best.json"))
+    if (
+        abs(
+            selection["validation"]["r_precision"]
+            - completion["best_validation_r_precision"]
+        )
+        > 1e-12
+    ):
+        raise RuntimeError(
+            "Best-checkpoint pointer is stale; inspect checkpoint recovery"
+        )
     torch.set_num_threads(4)
     device = torch.device("cuda")
     start = time.perf_counter()
