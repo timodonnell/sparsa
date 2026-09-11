@@ -1,0 +1,71 @@
+{
+  "observed_utc": "2026-09-11T05:35:24.585550+00:00",
+  "running_gpu_hours": 19.797746666666665,
+  "jobs": [
+    {
+      "job": "/bizon/sparsa-sequence-pair-40m-20260911",
+      "state": "running",
+      "submitted_ms": 1789095382567,
+      "finished_ms": null,
+      "wall_seconds": 9542.018,
+      "preemptions": 2,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-sequence-pair-40m-20260911/0",
+          "state": "building",
+          "gpu_count": 8,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "466eb34f320305e6",
+              "state": "preempted",
+              "start_ms": 1789095388500,
+              "finish_ms": 1789104229988,
+              "running_seconds": 8841.488,
+              "running_gpu_hours": 19.64775111111111,
+              "node": "gb95a30",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: 468ca9a7-0bc9-4bfc-b681-d0be4dde9d09, JobUID: 1a9f51d9-623b-4d19-94ac-112a633246e7) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 1,
+              "uid": "ecb5f00ece510ea1",
+              "state": "worker_failed",
+              "start_ms": null,
+              "finish_ms": 1789104275510,
+              "running_seconds": 0,
+              "running_gpu_hours": 0.0,
+              "node": "",
+              "terminal_reason": "PodDeleted: pod was deleted while the attempt was active"
+            },
+            {
+              "number": 2,
+              "uid": "3f020df6733d0d62",
+              "state": "preempted",
+              "start_ms": 1789104297325,
+              "finish_ms": 1789104364823,
+              "running_seconds": 67.498,
+              "running_gpu_hours": 0.14999555555555558,
+              "node": "g1cbf32",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: 899aed19-c489-45cc-9db8-3c0cf1bc5af9, JobUID: c076b405-46b3-4c79-9ead-9c30dc033fab) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 3,
+              "uid": "debe2b8ad6b936e4",
+              "state": "building",
+              "start_ms": null,
+              "finish_ms": null,
+              "running_seconds": 0,
+              "running_gpu_hours": 0.0,
+              "node": "",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timing_definition": "Iris attempt started_at through finished_at (or observation time for a running attempt)",
+  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. This is running resource time, not GPU utilization or billing."
+}

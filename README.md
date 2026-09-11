@@ -64,6 +64,11 @@ checkpoints. Resume restores compact data cursors and RNG state with unchanged w
 workers, crop, and batch settings. It reloads only the current teacher shards;
 prefetched but unconsumed batches are replayed without skipping training data.
 
+After preemption, the completion file's elapsed time covers the final attempt.
+Use `scripts/job_accounting.py` with the isolated Iris Python environment to
+collect per-attempt running time across retries; its report excludes queue waits
+and distinguishes this resource-time estimate from billing or GPU utilization.
+
 ## Evaluation contract
 
 The target is **native-amino-acid ConFind degree >= 0.001 at sequence separation
