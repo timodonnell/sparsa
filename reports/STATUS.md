@@ -17,7 +17,8 @@ evaluation has not been run.
 - Starts from the large pilot's step-3000 online weights and EMA; all weights
   originated in this project's random initialization and supervised training.
 - Measured main-run speed: about 0.44 s/step; peak memory about 51.4 GiB/GPU.
-- Expected compute: approximately 12 hours / 96 H100-hours plus pilots; the job
+- Expected main-run compute: approximately 12 hours / 96 H100-hours, plus pilots,
+  replay after preemption, and the separate long-sequence phase; the main job
   timeout is 18 hours. It retries up to five times with automatic checkpoint and
   data-cursor restoration. Checkpoints retain optimizer and RNG state.
 - Production validation: step 2000 R-precision 0.160246; step 4000 0.174896;
@@ -26,7 +27,7 @@ evaluation has not been run.
   step 18000 0.209735 (long-range 0.166595). The raw selection remains step 16000.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
-  retry. Attempt 3 is SchedulingGated, awaiting eight GPUs at batch priority.
+  retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
   The CPU-only checkpoint audit confirmed that step 18000 is durable and that
   the best pointer still selects step 16000. See `preemption_checkpoint.json`.
   Subsequent brief allocations were preempted too. Attempt 6 restored the full
