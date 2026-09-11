@@ -359,6 +359,22 @@
       "inference_seconds": 2.409951531328261,
       "step": 90000,
       "seconds": 2032.293173273094
+    },
+    {
+      "r_precision": 0.2457850519188933,
+      "long_r_precision": 0.204623839711882,
+      "proteins": 97,
+      "inference_seconds": 2.4096087710931897,
+      "step": 92000,
+      "seconds": 2935.0463884212077
+    },
+    {
+      "r_precision": 0.24599315786344222,
+      "long_r_precision": 0.2061781397986792,
+      "proteins": 97,
+      "inference_seconds": 2.4163288781419396,
+      "step": 94000,
+      "seconds": 3838.2011752850376
     }
   ],
   "best": {
@@ -374,16 +390,16 @@
     }
   },
   "latest": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-90000.pt",
-    "step": 90000,
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-94000.pt",
+    "step": 94000,
     "validation": {
-      "r_precision": 0.24552413481781482,
-      "long_r_precision": 0.20553993883254523,
+      "r_precision": 0.24599315786344222,
+      "long_r_precision": 0.2061781397986792,
       "proteins": 97,
-      "inference_seconds": 2.409951531328261,
-      "step": 90000,
-      "seconds": 2032.293173273094
+      "inference_seconds": 2.4163288781419396,
+      "step": 94000,
+      "seconds": 3838.2011752850376
     }
   },
-  "observed_utc": "2026-09-11T15:44:33.744615+00:00"
+  "observed_utc": "2026-09-11T16:13:25.732654+00:00"
 }
