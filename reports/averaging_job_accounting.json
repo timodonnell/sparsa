@@ -1,0 +1,74 @@
+{
+  "observed_utc": "2026-09-11T09:34:22.371434+00:00",
+  "running_gpu_hours": 0.1088061111111111,
+  "unmeasured_started_attempts": 0,
+  "estimated_finished_attempts": 0,
+  "jobs": [
+    {
+      "job": "/bizon/sparsa-average-preview-20260911",
+      "state": "succeeded",
+      "submitted_ms": 1789118070081,
+      "finished_ms": 1789118288381,
+      "wall_seconds": 218.3,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-average-preview-20260911/0",
+          "state": "succeeded",
+          "gpu_count": 1,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "b48b068f389f25f1",
+              "state": "succeeded",
+              "start_ms": 1789118078580,
+              "finish_ms": 1789118288381,
+              "running_seconds": 209.801,
+              "accounted_end_ms": 1789118288381,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.058278055555555555,
+              "node": "g323020",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-average-integration-20260911",
+      "state": "succeeded",
+      "submitted_ms": 1789118685546,
+      "finished_ms": 1789118878346,
+      "wall_seconds": 192.8,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-average-integration-20260911/0",
+          "state": "succeeded",
+          "gpu_count": 1,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "c181ef58f0b24cfc",
+              "state": "succeeded",
+              "start_ms": 1789118696445,
+              "finish_ms": 1789118878346,
+              "running_seconds": 181.901,
+              "accounted_end_ms": 1789118878346,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.050528055555555555,
+              "node": "gb957e0",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timing_definition": "Iris attempt started_at through finished_at; a missing final-attempt finish uses the job finish as a labelled estimate, or observation time only for a still-running attempt.",
+  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing."
+}

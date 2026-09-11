@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 09:25 UTC: implementation and pilots complete; production
-main training is running and has reached step 43000. Final test/de novo
+Status at 2026-09-11 09:34 UTC: implementation and pilots complete; production
+main training is running and has reached step 44000. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -37,7 +37,8 @@ evaluation has not been run.
   Step 38000 reaches 0.228394 (long-range 0.187089).
   Step 40000 reaches 0.227092 (long-range 0.188067).
   Step 42000 reaches 0.230962 (long-range 0.190309).
-  The raw selection is now step 42000; selection uses overall R-precision.
+  Step 44000 reaches 0.233189 (long-range 0.192339).
+  The raw selection is now step 44000; selection uses overall R-precision.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
