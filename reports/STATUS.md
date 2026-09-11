@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 09:01 UTC: implementation and pilots complete; production
-main training is running and has reached step 40000. Final test/de novo
+Status at 2026-09-11 09:25 UTC: implementation and pilots complete; production
+main training is running and has reached step 43000. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -36,7 +36,8 @@ evaluation has not been run.
   Step 36000 reaches 0.226772 (long-range 0.182922).
   Step 38000 reaches 0.228394 (long-range 0.187089).
   Step 40000 reaches 0.227092 (long-range 0.188067).
-  The raw selection remains step 38000; selection uses overall R-precision.
+  Step 42000 reaches 0.230962 (long-range 0.190309).
+  The raw selection is now step 42000; selection uses overall R-precision.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -116,12 +117,15 @@ readout and every capped checkpoint through step 40000, using only eval-val.
 Two local tests verify prediction-preserving checkpoint reload and rejection of
 incompatible amino-acid vocabularies. The top-two average with cap 383 improved
 R-precision from 0.228426 to 0.228618 (long-range: 0.187723 to 0.188320).
-This is a small validation gain, not evidence of a statistically established
-advantage. The top-three and top-five averages did not beat the best single
+The gain is small. The top-three and top-five averages did not beat the best single
 checkpoint. See `average_preview.json`; the experiment took 189.49 seconds.
 Final selection now includes the top-two average within each completed training
-phase, using only validation. A GPU integration check remains to verify the
-updated selector and averaged checkpoint reload before final evaluation.
+phase, using only validation. The one-H100 batch job
+`/bizon/sparsa-average-integration-20260911` passed: reloaded averaged weights
+reproduce both readouts' validation metrics exactly. At the newer step-42000
+snapshot, the best single checkpoint scored 0.230973 versus the average's
+0.230448, and the selector correctly retained the single checkpoint. See
+`average_integration.json`. Both experiments used validation only.
 
 The local `scripts/finish_run.py --name sequence-pair-40m-20260911 --profile-job
 /bizon/sparsa-long-profile-20260911 --training-job

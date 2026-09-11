@@ -1,0 +1,39 @@
+{
+  "command": [
+    ".tools/iris/bin/iris",
+    "--config",
+    "/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml",
+    "job",
+    "run",
+    "--priority",
+    "batch",
+    "--enable-extra-resources",
+    "--gpu",
+    "H100x1",
+    "--cpu",
+    "4",
+    "--memory",
+    "16GB",
+    "--disk",
+    "10GB",
+    "--timeout",
+    "1800",
+    "--max-retries",
+    "2",
+    "--job-name",
+    "sparsa-average-integration-20260911",
+    "--no-wait",
+    "--",
+    "python",
+    "-c",
+    "import json, torch\nfrom scripts.select_readout import select_readout\nfrom sparsa.cli import load_model\nfrom sparsa.data import benchmark\nfrom sparsa.evaluate import evaluate\nfrom sparsa.train import write_json\ntorch.set_num_threads(4)\ndevice = torch.device(\"cuda\")\nrun = \"s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911\"\nresult = select_readout(run, device)\nrows = [r for r in result[\"candidates\"] if r[\"kind\"] == \"ema_average\"]\nassert len(rows) == 2\nmodel, state = load_model(rows[0][\"checkpoint\"], device)\nassert state[\"checkpoint_kind\"] == \"ema_average\"\nassert len(state[\"averaged_checkpoints\"]) == 2\nvalidation = benchmark(splits=(\"eval-val\",))\nverified = []\nfor row in rows:\n    model.relative_max_distance = row[\"relative_max_distance\"]\n    actual = evaluate(model, validation, device, pos_weight=state[\"training_config\"].get(\"pos_weight\", 1.0))\n    for key in (\"r_precision\", \"long_r_precision\"):\n        assert abs(actual[key] - row[key]) < 1e-12, (key, actual[key], row[key])\n    verified.append({\"checkpoint\": row[\"checkpoint\"], \"relative_max_distance\": row[\"relative_max_distance\"], \"validation\": actual})\nassert result[\"selected\"][\"validation\"][\"r_precision\"] == max(r[\"r_precision\"] for r in result[\"candidates\"])\nresult[\"roundtrip_verification\"] = verified\nwrite_json(result, \"s3://marin-us-east-02a/marin/protein-structure/sparsa/diagnostics/average-integration-20260911.json\")\nprint(\"AVERAGE_INTEGRATION \" + json.dumps({\"selected\": result[\"selected\"], \"roundtrip_verified\": True}), flush=True)\n"
+  ],
+  "priority": "batch",
+  "submitted_utc": "2026-09-11T09:24:45.795526+00:00",
+  "stdout": "/bizon/sparsa-average-integration-20260911\n",
+  "source_sha256": {
+    "scripts/select_readout.py": "66d34f6b1cd634ad3e8d4ce19fe08adeba3967a809a22815ac3d817a00544387",
+    "scripts/average_checkpoints.py": "5d2614d54b32f7fa9ce89a4d1899eead2a5f1f27b9a799ffc8d58011032f6838",
+    "scripts/final_evaluate.py": "48d7a79ad0cbb9e92af6cb97b999deb05dbc957b4443f724727ebdc3fa996599"
+  }
+}
