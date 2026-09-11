@@ -358,7 +358,95 @@ def main():
             cwd=root,
             check=True,
         )
-        record("complete", artifacts=str(local / "sparsa-results"))
+        artifacts = local / "sparsa-results"
+        budget_path = Path(manifest["budget"])
+        budget = json.loads(budget_path.read_text())
+        accounting = root / "reports/scaling_v2/job_accounting.json"
+        command = [
+            str(root / ".tools/iris/bin/python"),
+            "scripts/job_accounting.py",
+            "--out",
+            str(accounting),
+        ]
+        for handle in budget["jobs"]:
+            command += ["--job", handle]
+        run(command)
+        readme_clean = (
+            subprocess.run(
+                ["git", "diff", "--quiet", "HEAD", "--", "README.md"],
+                cwd=root,
+                check=False,
+            ).returncode
+            == 0
+        )
+        run(
+            [
+                sys.executable,
+                "scripts/report_scaling.py",
+                "--artifacts",
+                str(artifacts),
+                "--out",
+                "reports/scaling_v2/final",
+                "--evaluation-uri",
+                BASE + "/evaluations/" + name,
+                "--accounting",
+                str(accounting),
+                *(["--update-readme"] if readme_clean else []),
+            ]
+        )
+        budget["keep_watching"] = False
+        temporary = budget_path.with_suffix(".partial")
+        temporary.write_text(json.dumps(budget, indent=2) + "\n")
+        temporary.replace(budget_path)
+        record(
+            "complete",
+            artifacts=str(artifacts),
+            report="reports/scaling_v2/FINAL.md",
+            published=False,
+        )
+        # Publish only campaign-owned outputs, preserving any pre-existing index.
+        clean_index = (
+            subprocess.run(
+                ["git", "diff", "--cached", "--quiet"], cwd=root, check=False
+            ).returncode
+            == 0
+        )
+        if clean_index and run(["git", "branch", "--show-current"]).strip() == "main":
+            paths = [
+                "configs/scaling_main.yaml",
+                "configs/scaling_long.yaml",
+                "reports/scaling_v2/comparison.json",
+                "reports/scaling_v2/selection.json",
+                "reports/scaling_v2/job_accounting.json",
+                "reports/scaling_v2/FINAL.md",
+                "reports/scaling_v2/final",
+                *(["README.md"] if readme_clean else []),
+            ]
+            paths += [
+                str(p.relative_to(root))
+                for p in (root / "reports/jobs").glob(f"*{name}.json")
+            ]
+            try:
+                run(["git", "add", "--", *paths])
+                if subprocess.run(
+                    ["git", "diff", "--cached", "--quiet"], cwd=root, check=False
+                ).returncode:
+                    run(
+                        [
+                            "git",
+                            "commit",
+                            "-m",
+                            "Record completed scaling campaign and verified contact-model release",
+                        ]
+                    )
+                run(["git", "push", "origin", "main"])
+                record(
+                    "complete",
+                    published=True,
+                    commit=run(["git", "rev-parse", "HEAD"]).strip(),
+                )
+            except subprocess.CalledProcessError as error:
+                record("complete", publication_error=str(error))
     except Exception as error:
         record("needs_inspection", error=str(error))
         raise

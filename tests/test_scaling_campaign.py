@@ -52,3 +52,36 @@ def test_reject_heldout_selection_or_exhausted_budget():
     comparison["test_used"] = False
     with pytest.raises(RuntimeError, match="budget"):
         choose_extension(comparison, pilots, {"18b": 6000, "456m": 3000}, 550)
+
+
+def test_report_checks_matched_proteins_and_contact_universe():
+    import pandas as pd
+
+    from scripts.report_scaling import paired_release_comparison
+
+    records = []
+    for split, count in [("eval-val", 97), ("eval-test", 217), ("eval-denovo", 19)]:
+        for distance in ["all", "long"]:
+            for i in range(count):
+                records.append(
+                    {
+                        "eval_set": split,
+                        "range": distance,
+                        "cut": "R",
+                        "dataset": "fixture",
+                        "stem": str(i),
+                        "precision": 0.3,
+                        "n_candidate": 100,
+                        "n_true": 10,
+                        "n_top": 10,
+                    }
+                )
+    baseline = pd.DataFrame(records)
+    current = baseline.copy()
+    current["precision"] += 0.02
+    result = paired_release_comparison(current, baseline)
+    assert result.delta.to_numpy() == pytest.approx([0.02] * 6)
+    assert result.ci_low.to_numpy() == pytest.approx([0.02] * 6)
+    current.loc[0, "n_true"] = 11
+    with pytest.raises(ValueError, match="universe"):
+        paired_release_comparison(current, baseline)
