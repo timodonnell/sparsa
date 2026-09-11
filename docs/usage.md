@@ -125,6 +125,20 @@ final evaluator compares the completed runs on validation and retains the best
 candidate before scoring held-out sets. Both runs' training provenance and
 validation trajectories accompany the export.
 
+To verify a recovered checkpoint through the actual prediction CLI and Helico's
+installed contact parser, use Helico's Python environment:
+
+```bash
+uv run python -m scripts.verify_release --checkpoint /path/to/sparsa.pt \
+  --helico-python /path/to/helico/.venv/bin/python --out outputs/release-check
+```
+
+This uses one validation sequence on CPU, checks the score matrix and ranked
+top-L export, and confirms that Helico accepts the zero-based contacts while
+leaving all unlisted pairs unknown. `verification.json` records checkpoint and
+source hashes. This is an interoperability check, not a structure prediction or
+an accuracy evaluation; run it again on the final selected checkpoint.
+
 See `data/benchmark/provenance.json` for upstream revisions and artifact hashes,
 `WORK_PLAN.md` for execution stages, and `PLAN.md` for the longer-term discrete
 contact-completion research roadmap. Configuration, validation, and artifact
