@@ -227,7 +227,8 @@ The 32 H100-hour reserved search campaign is running on four batch H100s per
 trial. Both matched-budget baseline seeds completed (0.149292 and 0.151978
 R-precision after 3000 steps). Candidate c001, sequence-attention features in the
 pair trunk, improved both seeds by about 0.0026 on average, but its paired 95%
-interval crossed zero, so it was not promoted. Candidate c002 adds shared
-row/column attention in the pair trunk and is training. See
+interval crossed zero, so it was not promoted. Candidate c002, shared row/column attention in the pair trunk, scored
+0.150449 on seed 17: a 0.001157 gain, below the 0.002 screening threshold. It was
+not advanced to confirmation. The loop is continuing with another idea. See
 `autoresearch_progress.json`. These short-run scores are not comparisons against
 the production run's much larger training budget. Only validation guides search.

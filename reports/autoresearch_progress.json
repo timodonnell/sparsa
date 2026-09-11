@@ -1,5 +1,5 @@
 {
-  "observed_utc": "2026-09-11T15:46:12.619809+00:00",
+  "observed_utc": "2026-09-11T15:54:49.295085+00:00",
   "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
   "stage": "running",
   "champion": "c000",
@@ -107,23 +107,23 @@
     },
     {
       "id": "c002-s17",
-      "state": "running",
+      "state": "completed",
       "job": "/bizon/sparsa-ar-arch-0911-69e07f-c002-s17",
       "reserved_gpu_hours": 4.0,
       "observation": {
-        "state": "running",
-        "gpu_hours": 1.262478888888889,
+        "state": "succeeded",
+        "gpu_hours": 1.7549211111111112,
         "unknown_attempts": 0,
         "attempts": [
           {
             "attempt": 0,
-            "state": "running",
+            "state": "succeeded",
             "gpus": 4,
             "node": "gb95a30",
             "terminal_reason": "",
-            "running_seconds": 1136.231,
-            "accounted_end_ms": 1789141554590,
-            "end_source": "observation_time"
+            "running_seconds": 1579.429,
+            "accounted_end_ms": 1789141997788,
+            "end_source": "attempt_finish"
           }
         ],
         "preemptions": 0,
@@ -214,7 +214,7 @@
       "id": "c002",
       "parent": "c000",
       "hypothesis": "Adding gated, weight-shared row/column attention after pair blocks 4, 8, 12, and 16 may improve macro and long-range R-precision by allowing content-dependent communication between distant pair cells. This tests global pair reasoning rather than repeating c001's rejected sequence-attention feature injection. Parent widths, depths, and existing operations are retained; attention is chunked to bound memory. Performance under the fixed recipe remains unmeasured.",
-      "status": "screening",
+      "status": "rejected",
       "model_config": {
         "sequence_dim": 512,
         "sequence_layers": 12,
@@ -230,6 +230,26 @@
         "axial_chunk_size": 128
       },
       "source_hash": "6c352b557d39c82207bb2a73d11895e69417a58692972d22637b42a2c5aec58d",
+      "decision": {
+        "reason": "screening_gain_below_threshold",
+        "gain": 0.001157291894079704
+      },
+      "metrics": {
+        "17": {
+          "r_precision": 0.15044885434342053,
+          "long_r_precision": 0.11190681915473889,
+          "parameters": 40180513,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c002-s17/checkpoints/step-3000.pt"
+        }
+      }
+    },
+    {
+      "id": "c003",
+      "parent": "c000",
+      "hypothesis": "Pending proposal",
+      "status": "proposing",
+      "model_config": null,
+      "source_hash": null,
       "decision": null,
       "metrics": {}
     }
