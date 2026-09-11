@@ -113,8 +113,9 @@ evaluation has not been run.
 - GPU profiling: crop 384, batch 8, no activation checkpointing uses 51.0 GiB
   and gives 19.0 crops/s/GPU on a fixed-shape synthetic throughput workload.
   Checkpointing the same workload gives 13.1 crops/s/GPU. See `gpu_profile.json`.
-- Thirteen local tests pass, including finite-worker cursor restoration, masked loss,
-  padding isolation, symmetry, optimization, and checkpoint loading. A real
+- The combined local suite passes: 21 tests in 10.55 seconds, including
+  finite-worker cursor restoration, masked loss, padding isolation, symmetry,
+  optimization, checkpoint averaging/loading, and attempt-time accounting. A real
   4-GPU resume from step 500 successfully trained/evaluated step 501.
 - Helico's actual `contacts_from_pairs(..., strict=True)` accepts the export;
   unlisted entries remain UNKNOWN. See `helico_integration.json`.
