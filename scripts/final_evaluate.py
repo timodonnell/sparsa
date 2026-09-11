@@ -147,10 +147,17 @@ def main():
     (local / "evaluation_manifest.json").write_text(json.dumps(result, indent=2))
     for name in ("provenance.json", "training_log.json", "complete.json"):
         (local / ("training_" + name)).write_bytes(fs.cat_file(root + "/" + name))
+    validation_history = [
+        json.loads(fs.cat_file(path))
+        for path in fs.glob(root + "/validation/step-*.json")
+    ]
+    (local / "training_validation.json").write_text(
+        json.dumps(sorted(validation_history, key=lambda r: r["step"]), indent=2)
+    )
     hashes = {
         str(path.relative_to(local)): sha256(path)
         for path in sorted(local.rglob("*"))
-        if path.is_file()
+        if path.is_file() and path.name != "SHA256SUMS.json"
     }
     (local / "SHA256SUMS.json").write_text(json.dumps(hashes, indent=2))
     destination_fs, destination = storage(args.out)
