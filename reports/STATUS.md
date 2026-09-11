@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 12:13 UTC: implementation and pilots complete; production
-main training is running and has reached step 64000. Final test/de novo
+Status at 2026-09-11 15:47 UTC: implementation and pilots complete; production
+main training is running and has reached step 90000. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -22,33 +22,12 @@ evaluation has not been run.
   replay after preemption, and the separate long-sequence phase; the main job
   timeout is 18 hours. It retries up to five times with automatic checkpoint and
   data-cursor restoration. Checkpoints retain optimizer and RNG state.
-- Production validation: step 2000 R-precision 0.160246; step 4000 0.174896;
-  step 6000 0.184494; step 8000 0.192853; step 10000 0.196659;
-  step 12000 0.202191; step 14000 0.206153; step 16000 0.210827;
-  step 18000 0.209735; step 20000 0.214023 (long-range 0.169089).
-  Step 22000 reaches 0.218130 (long-range 0.173775).
-  Step 24000 reaches 0.219253 (long-range 0.175950).
-  Step 26000 reaches 0.220617 (long-range 0.177822).
-  Step 28000 reaches 0.223616 (long-range 0.182619).
-  Step 30000 reaches 0.223701 (long-range 0.184229).
-  Step 32000 reaches 0.225877 (long-range 0.183768).
-  Step 34000 reaches 0.224344 (long-range 0.185324).
-  Step 36000 reaches 0.226772 (long-range 0.182922).
-  Step 38000 reaches 0.228394 (long-range 0.187089).
-  Step 40000 reaches 0.227092 (long-range 0.188067).
-  Step 42000 reaches 0.230962 (long-range 0.190309).
-  Step 44000 reaches 0.233189 (long-range 0.192339).
-  Step 46000 reaches 0.233958 (long-range 0.190635).
-  Step 48000 reaches 0.233856 (long-range 0.191529).
-  Step 50000 reaches 0.236671 (long-range 0.192298).
-  Step 52000 reaches 0.238568 (long-range 0.196697).
-  Step 54000 reaches 0.239001 (long-range 0.196755).
-  Step 56000 reaches 0.240337 (long-range 0.198393).
-  Step 58000 reaches 0.236862 (long-range 0.198606).
-  Step 60000 reaches 0.238324 (long-range 0.197944).
-  Step 62000 reaches 0.238781 (long-range 0.199561).
-  Step 64000 reaches 0.239433 (long-range 0.200479).
-  The raw selection remains step 56000; selection uses overall R-precision.
+- Best original-readout validation: step 88000, R-precision **0.246046**,
+  long-range **0.205477**. Step 90000 scores **0.245524** overall and
+  **0.205540** long-range. Selection uses overall R-precision. The complete
+  validation trajectory and durable latest/best pointers are recorded in
+  `main_validation_progress.json`. These remain far below MarinFold's roughly
+  0.52–0.55 validation R-precision; no architecture superiority is established.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -90,11 +69,16 @@ evaluation has not been run.
   eight batch H100s, then advanced through the validated step-64000 checkpoint.
   See `resume_57500_verification.json`. The coordinator remains live and no
   manual resubmission was needed. Main-run running resource time is about
-  69.36 H100-hours at the latest accounting snapshot, including replay.
+  69.36 H100-hours at that historical accounting snapshot, including replay.
 - Replacement-job preemption 5 occurred after step 64200; attempt 5 received
   eight H100s on another node and restored step 64000 at batch priority. Training
   has advanced past the restore point. See `resume_64000_verification.json`.
   The coordinator remains active; no duplicate phase jobs have been submitted.
+- Attempt 5 ended with a SIGABRT at about 15:08 UTC. Iris's saved diagnostic
+  is truncated and does not establish the root cause. Attempt 6 restored the
+  full step-85500 checkpoint on eight batch H100s and advanced through step 90000.
+  See `resume_85500_verification.json`. This was an automatic retry of the same
+  job; the completion coordinator remains live.
 - Completion time depends on batch capacity. Keep priority at batch and allow
   Iris to schedule any retries.
   Final artifacts will preserve resume provenance; completion elapsed time is
@@ -190,6 +174,9 @@ CLI verification, and completion of this project still require the agent.
    Unseen distance embeddings start as copies of the trained edge bin at
    separation 383. Functional tests verify equivalence to capped inference.
    Resume skips this initialization and restores the finetune checkpoint intact.
+   Finetuning now saves recovery checkpoints every 100 steps, while validation
+   remains every 500 steps. At the measured larger-crop speed, this bounds replay
+   to roughly four minutes instead of roughly twenty minutes per preemption.
 4. Run `scripts/final_evaluate.py` as a one-H100 **batch** job after both phases
    complete. It chooses across both runs using validation only, so the finetune
    is retained only if it improves the primary metric. It uses `best.json`, evaluates all 333 fixed proteins, checks exact
@@ -233,3 +220,14 @@ It does not isolate architecture causally: parameter count, training exposure,
 compute budget, and readout differ from the 1.5B LLM. The fixed experimental
 scoring protocol is directly comparable, and these differences must remain
 visible in the final report.
+
+## Separate architecture search
+
+The 32 H100-hour reserved search campaign is running on four batch H100s per
+trial. Both matched-budget baseline seeds completed (0.149292 and 0.151978
+R-precision after 3000 steps). Candidate c001, sequence-attention features in the
+pair trunk, improved both seeds by about 0.0026 on average, but its paired 95%
+interval crossed zero, so it was not promoted. Candidate c002 adds shared
+row/column attention in the pair trunk and is training. See
+`autoresearch_progress.json`. These short-run scores are not comparisons against
+the production run's much larger training budget. Only validation guides search.

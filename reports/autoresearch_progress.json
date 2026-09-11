@@ -1,0 +1,237 @@
+{
+  "observed_utc": "2026-09-11T15:46:12.619809+00:00",
+  "campaign": "/data/sparsa-runtime/outputs/autoresearch-v1",
+  "stage": "running",
+  "champion": "c000",
+  "budget_gpu_hours": 32.0,
+  "trials": [
+    {
+      "id": "c000-s17",
+      "state": "completed",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s17",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 1.327807777777778,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb960f0",
+            "terminal_reason": "",
+            "running_seconds": 1195.027,
+            "accounted_end_ms": 1789135852024,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c000-s37",
+      "state": "completed",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c000-s37",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 1.3344511111111113,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb95a30",
+            "terminal_reason": "",
+            "running_seconds": 1201.006,
+            "accounted_end_ms": 1789137198927,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c001-s17",
+      "state": "completed",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c001-s17",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 1.4063644444444445,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb95a30",
+            "terminal_reason": "",
+            "running_seconds": 1265.728,
+            "accounted_end_ms": 1789138732565,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c001-s37",
+      "state": "completed",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c001-s37",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 1.3979111111111109,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 4,
+            "node": "gb95a30",
+            "terminal_reason": "",
+            "running_seconds": 1258.12,
+            "accounted_end_ms": 1789140084491,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c002-s17",
+      "state": "running",
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c002-s17",
+      "reserved_gpu_hours": 4.0,
+      "observation": {
+        "state": "running",
+        "gpu_hours": 1.262478888888889,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "running",
+            "gpus": 4,
+            "node": "gb95a30",
+            "terminal_reason": "",
+            "running_seconds": 1136.231,
+            "accounted_end_ms": 1789141554590,
+            "end_source": "observation_time"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "c000",
+      "parent": null,
+      "hypothesis": "Matched-budget original Sparsa baseline",
+      "status": "accepted",
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "gradient_checkpointing": true
+      },
+      "source_hash": "67dd7ddd29881910f795b3a95581357a28b3c78ef9203466de357f396e4eb759",
+      "decision": null,
+      "metrics": {
+        "17": {
+          "r_precision": 0.14929156244934083,
+          "long_r_precision": 0.11118490853268874,
+          "parameters": 39994657,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c000-s17/checkpoints/step-3000.pt"
+        },
+        "37": {
+          "r_precision": 0.15197832101797787,
+          "long_r_precision": 0.10814919975170743,
+          "parameters": 39994657,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c000-s37/checkpoints/step-3000.pt"
+        }
+      }
+    },
+    {
+      "id": "c001",
+      "parent": "c000",
+      "hypothesis": "Injecting concatenated symmetric, pre-softmax attention scores from all sequence layers into the initial pair representation may improve macro and long-range R-precision by exposing residue compatibility that value aggregation otherwise compresses. This adds 9,408 parameters while preserving the parent depths and widths. Performance under the fixed recipe remains unmeasured.",
+      "status": "rejected",
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "source_hash": "465cb28bb9008850fbd9ea0aae4e13e96990441454be2228b3c15f79136a43b2",
+      "decision": {
+        "accepted": false,
+        "mean_gain": 0.002572942544001298,
+        "long_gain": 0.000399522155559559,
+        "seed_gains": [
+          0.0024985571808704104,
+          0.0026473279071321854
+        ],
+        "paired_ci95": [
+          -0.0006105187199220621,
+          0.005652424958373454
+        ],
+        "interpretation": "Validation search evidence; adaptive selection makes this interval descriptive, not confirmatory."
+      },
+      "metrics": {
+        "17": {
+          "r_precision": 0.1517901196302113,
+          "long_r_precision": 0.10884985968887435,
+          "parameters": 40004065,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c001-s17/checkpoints/step-3000.pt"
+        },
+        "37": {
+          "r_precision": 0.15462564892511008,
+          "long_r_precision": 0.11128329290664093,
+          "parameters": 40004065,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/arch-0911-69e07f/c001-s37/checkpoints/step-3000.pt"
+        }
+      }
+    },
+    {
+      "id": "c002",
+      "parent": "c000",
+      "hypothesis": "Adding gated, weight-shared row/column attention after pair blocks 4, 8, 12, and 16 may improve macro and long-range R-precision by allowing content-dependent communication between distant pair cells. This tests global pair reasoning rather than repeating c001's rejected sequence-attention feature injection. Parent widths, depths, and existing operations are retained; attention is chunked to bound memory. Performance under the fixed recipe remains unmeasured.",
+      "status": "screening",
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true,
+        "axial_every": 4,
+        "axial_heads": 4,
+        "axial_chunk_size": 128
+      },
+      "source_hash": "6c352b557d39c82207bb2a73d11895e69417a58692972d22637b42a2c5aec58d",
+      "decision": null,
+      "metrics": {}
+    }
+  ]
+}
