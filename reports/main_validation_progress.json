@@ -375,31 +375,39 @@
       "inference_seconds": 2.4163288781419396,
       "step": 94000,
       "seconds": 3838.2011752850376
+    },
+    {
+      "r_precision": 0.24615127130146205,
+      "long_r_precision": 0.20535383308941477,
+      "proteins": 97,
+      "inference_seconds": 3.363388814032078,
+      "step": 96000,
+      "seconds": 677.9858119329438
     }
   ],
-  "best": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-88000.pt",
-    "step": 88000,
-    "validation": {
-      "r_precision": 0.2460455904647688,
-      "long_r_precision": 0.20547749341166605,
-      "proteins": 97,
-      "inference_seconds": 2.4131061933003366,
-      "step": 88000,
-      "seconds": 1130.2720864778385
-    }
-  },
   "latest": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-94000.pt",
-    "step": 94000,
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-96000.pt",
+    "step": 96000,
     "validation": {
-      "r_precision": 0.24599315786344222,
-      "long_r_precision": 0.2061781397986792,
+      "r_precision": 0.24615127130146205,
+      "long_r_precision": 0.20535383308941477,
       "proteins": 97,
-      "inference_seconds": 2.4163288781419396,
-      "step": 94000,
-      "seconds": 3838.2011752850376
+      "inference_seconds": 3.363388814032078,
+      "step": 96000,
+      "seconds": 677.9858119329438
     }
   },
-  "observed_utc": "2026-09-11T16:13:25.732654+00:00"
+  "best": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-96000.pt",
+    "step": 96000,
+    "validation": {
+      "r_precision": 0.24615127130146205,
+      "long_r_precision": 0.20535383308941477,
+      "proteins": 97,
+      "inference_seconds": 3.363388814032078,
+      "step": 96000,
+      "seconds": 677.9858119329438
+    }
+  },
+  "observed_utc": "2026-09-11T16:33:47.167614+00:00"
 }
