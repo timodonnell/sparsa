@@ -1,4 +1,5 @@
 seed: 119
+initialize_max_distance: 383
 model:
   sequence_dim: 512
   sequence_layers: 12

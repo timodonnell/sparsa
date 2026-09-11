@@ -1,6 +1,6 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 05:58 UTC: implementation and pilots complete; production
+Status at 2026-09-11 06:06 UTC: implementation and pilots complete; production
 training has resumed from step 18000 after batch preemptions. Final test/de novo
 evaluation has not been run.
 
@@ -24,7 +24,8 @@ evaluation has not been run.
 - Production validation: step 2000 R-precision 0.160246; step 4000 0.174896;
   step 6000 0.184494; step 8000 0.192853; step 10000 0.196659;
   step 12000 0.202191; step 14000 0.206153; step 16000 0.210827;
-  step 18000 0.209735 (long-range 0.166595). The raw selection remains step 16000.
+  step 18000 0.209735; step 20000 0.214023 (long-range 0.169089).
+  The raw selection is now step 20000.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -56,7 +57,7 @@ evaluation has not been run.
 - GPU profiling: crop 384, batch 8, no activation checkpointing uses 51.0 GiB
   and gives 19.0 crops/s/GPU on a fixed-shape synthetic throughput workload.
   Checkpointing the same workload gives 13.1 crops/s/GPU. See `gpu_profile.json`.
-- Eleven local tests pass, including finite-worker cursor restoration, masked loss,
+- Thirteen local tests pass, including finite-worker cursor restoration, masked loss,
   padding isolation, symmetry, optimization, and checkpoint loading. A real
   4-GPU resume from step 500 successfully trained/evaluated step 501.
 - Helico's actual `contacts_from_pairs(..., strict=True)` accepts the export;
@@ -102,8 +103,13 @@ CLI verification, and completion of this project still require the agent.
    1024, global batch 32, LR 5e-5, activation checkpointing, new seed 119. This
    supplies labels at separations absent from crop-384 training. Its output is
    `s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long`.
-   The one-H100 `sparsa-long-profile-20260911` job is a prerequisite; inspect its
-   memory/throughput result when capacity becomes available.
+   The one-H100 prerequisite `sparsa-long-profile-20260911` completed successfully.
+   At length 1024, batch 2 used 24.09 GiB and took 1.122 seconds per microbatch
+   with backward/optimizer on a synthetic workload (no DDP or input I/O). See
+   `long_profile.json`. Both remote script entry-point checks passed.
+   Unseen distance embeddings start as copies of the trained edge bin at
+   separation 383. Functional tests verify equivalence to capped inference.
+   Resume skips this initialization and restores the finetune checkpoint intact.
 4. Run `scripts/final_evaluate.py` as a one-H100 **batch** job after both phases
    complete. It chooses across both runs using validation only, so the finetune
    is retained only if it improves the primary metric. It uses `best.json`, evaluates all 333 fixed proteins, checks exact

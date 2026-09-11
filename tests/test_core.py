@@ -215,3 +215,18 @@ def test_distance_readout_and_checkpoint(tmp_path):
     restored, _ = load_model(str(path), torch.device("cpu"))
     with torch.inference_mode():
         torch.testing.assert_close(restored(tokens), capped)
+
+
+@pytest.mark.parametrize("edge,length", [(7, 16), (383, 400)])
+def test_long_training_initialization_matches_capped_inference(edge, length):
+    model = tiny().eval()
+    tokens = torch.randint(1, 22, (1, length))
+    with torch.inference_mode():
+        short_before = model(tokens[:, :8])
+        model.relative_max_distance = edge
+        capped = model(tokens)
+    model.relative_max_distance = None
+    model.initialize_distant_buckets(edge)
+    with torch.inference_mode():
+        torch.testing.assert_close(model(tokens), capped, rtol=0, atol=0)
+        torch.testing.assert_close(model(tokens[:, :8]), short_before, rtol=0, atol=0)

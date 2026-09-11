@@ -105,7 +105,9 @@ scoring held-out sets. `scripts/select_readout.py` can run this validation-only
 selection separately without scoring test or de novo proteins.
 
 The campaign includes a short crop-1024 finetune after the main crop-384 run,
-so the model can learn contacts beyond the main crop's separation limit. The
+so the model can learn contacts beyond the main crop's separation limit. Unseen
+distance bins initially copy the trained edge bin, reproducing the validated
+capped readout while allowing new distances to learn separately. The
 final evaluator compares the completed runs on validation and retains the best
 candidate before scoring held-out sets. Both runs' training provenance and
 validation trajectories accompany the export.

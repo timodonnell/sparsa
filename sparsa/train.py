@@ -127,7 +127,11 @@ def main():
     step, best, best_checkpoint = 0, -1.0, None
     data_states = {}
     frozen_shards = None
-    if args.init_from:
+    if cfg.get("initialize_max_distance") is not None and not (
+        args.init_from or args.resume
+    ):
+        raise ValueError("Distant-bucket initialization requires a source checkpoint")
+    if args.init_from and not args.resume:
         state = load_checkpoint(args.init_from)
         if {
             k: v
@@ -137,6 +141,12 @@ def main():
             raise ValueError("Initialization architecture mismatch")
         model.load_state_dict(state["model"])
         ema.load_state_dict(state["ema"])
+        edge = cfg.get("initialize_max_distance")
+        if edge is not None:
+            if edge >= state["training_config"]["crop"]:
+                raise ValueError("Initialization edge exceeds the source training crop")
+            model.initialize_distant_buckets(edge)
+            ema.initialize_distant_buckets(edge)
         del state
     if args.resume:
         state = load_checkpoint(args.resume)

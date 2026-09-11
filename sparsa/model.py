@@ -161,6 +161,24 @@ class ContactModel(nn.Module):
         )
         nn.init.constant_(self.head[-1].bias, -3.0)
 
+    @torch.no_grad()
+    def initialize_distant_buckets(self, max_trained_distance):
+        """Extend a shorter-crop checkpoint with its learned edge-distance prior.
+
+        Initially this reproduces distance capping, while separate distant rows
+        can subsequently learn from longer training examples.
+        """
+        if not isinstance(max_trained_distance, int) or max_trained_distance < 0:
+            raise ValueError("Expected a nonnegative trained separation")
+        bucket = min(
+            128,
+            max_trained_distance
+            if max_trained_distance < 64
+            else 64 + int(math.log2(max_trained_distance / 64) * 8),
+        )
+        self.relative.weight[bucket + 1 :] = self.relative.weight[bucket]
+        return bucket
+
     def forward(self, tokens):
         valid = tokens != 0
         x = self.embedding(tokens)
