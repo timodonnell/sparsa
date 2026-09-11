@@ -18,11 +18,20 @@ them with MarinFold's autoregressive LLM approach. Predictions can be passed to
 - **Evaluation:** MarinFold's frozen experimental splits and unmodified scoring
   code. Contacts are native-amino-acid ConFind degree >= 0.001 at sequence
   separation >= 6. Only the 97 validation proteins guide search; the 217 test and
-  19 de novo proteins are reserved for final evaluation.
+  19 de novo proteins were held out until final model selection.
 
-Research is in progress. The initial model has not matched MarinFold's validation
-accuracy. Matching the evaluation protocol does not equalize model size or
-training compute.
+The first training and evaluation campaign is complete. R-precision:
+
+| Experimental split | Proteins | Sparsa | MarinFold¹ |
+|---|---:|---:|---:|
+| Validation | 97 | 0.24772 | 0.51980 |
+| Test | 217 | 0.25405 | 0.53765 |
+| De novo | 19 | 0.50527 | 0.59138 |
+
+¹ Decontaminated exp232 m2-p06, step 145199. Sparsa remains substantially worse;
+model size, training compute, and readout differ. Eight architecture-search trials
+completed; none met the promotion rule. See [results and checkpoint](reports/FINAL.md)
+and [search results](reports/AUTORESEARCH.md).
 
 ## Use
 

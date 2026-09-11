@@ -31,9 +31,10 @@ flowchart LR
 
 ## Start, inspect, and stop
 
-The initial live campaign is `outputs/autoresearch-v1`, with a 32 H100-hour
-allocation and the Codex proposer enabled. It has started its four-H100 baseline.
-Use `status`, `stop`, or `run` to manage that campaign; do not initialize it again.
+The first campaign, `outputs/autoresearch-v1`, completed eight trials using
+13.1386 H100-hours of running time and its 32 H100-hour reservation budget.
+No candidate met the promotion rule; see [results](../reports/AUTORESEARCH.md).
+Use a new directory for a new campaign; do not initialize this one again.
 Its recorded launch is in
 [`reports/autoresearch_campaign.json`](../reports/autoresearch_campaign.json).
 

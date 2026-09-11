@@ -1,0 +1,5 @@
+{
+  "complete": true,
+  "selected_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/readout-averages/steps-2500-1000.pt",
+  "proteins": 333
+}

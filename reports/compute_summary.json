@@ -1,20 +1,44 @@
 {
-  "observed_utc": "2026-09-11T16:25:03.604832+00:00",
-  "scope": "All 31 Sparsa jobs returned by Iris at this snapshot; ongoing run, not final accounting",
+  "observed_utc": "2026-09-11T18:06:01.682151+00:00",
+  "scope": "Final accounting of all 35 Sparsa jobs returned by Iris; all terminal",
   "source": "reports/all_job_accounting.json",
-  "source_sha256": "6d8328f614cc3c1cc08aa4a4da4a4c0d342096bbcd0f112623a2963cf1806af7",
-  "total_running_h100_hours": 116.34999777777777,
+  "source_sha256": "5a7bca35ab1b63203f6b78c70bbeefa125fd3b33b5a89ce9558913c11b228875",
+  "total_running_h100_hours": 132.4723736111111,
   "groups": {
-    "architecture_search": {
-      "running_h100_hours": 8.736761111111111,
+    "cpu_data_and_metadata": {
+      "running_h100_hours": 0.0,
       "jobs": [
+        "/bizon/sparsa-recover-sequence-pair-40m-20260911",
+        "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0",
+        "/bizon/sparsa-ar-smoke-0911-bridge-0",
+        "/bizon/sparsa-metadata-20260911",
+        "/bizon/sparsa-pilot-report-20260911",
+        "/bizon/sparsa-data-audit-20260911c",
+        "/bizon/sparsa-data-audit-20260911b"
+      ]
+    },
+    "final_evaluation": {
+      "running_h100_hours": 0.16226805555555554,
+      "jobs": [
+        "/bizon/sparsa-final-sequence-pair-40m-20260911"
+      ]
+    },
+    "long_finetuning": {
+      "running_h100_hours": 6.415542222222222,
+      "jobs": [
+        "/bizon/sparsa-long-sequence-pair-40m-20260911"
+      ]
+    },
+    "architecture_search": {
+      "running_h100_hours": 13.138593333333333,
+      "jobs": [
+        "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37",
         "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17",
         "/bizon/sparsa-ar-arch-0911-69e07f-c003-s17",
         "/bizon/sparsa-ar-arch-0911-69e07f-c002-s17",
         "/bizon/sparsa-ar-arch-0911-69e07f-c001-s37",
         "/bizon/sparsa-ar-arch-0911-69e07f-c001-s17",
         "/bizon/sparsa-ar-arch-0911-69e07f-c000-s37",
-        "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0",
         "/bizon/sparsa-ar-arch-0911-69e07f-c000-s17"
       ]
     },
@@ -23,7 +47,6 @@
       "jobs": [
         "/bizon/sparsa-ar-smoke-0911-c001-s17",
         "/bizon/sparsa-ar-smoke-0911-c000-s37",
-        "/bizon/sparsa-ar-smoke-0911-bridge-0",
         "/bizon/sparsa-ar-smoke-0911-c000-s17"
       ]
     },
@@ -40,19 +63,10 @@
       ]
     },
     "main_training": {
-      "running_h100_hours": 103.11615777777777,
+      "running_h100_hours": 108.2588911111111,
       "jobs": [
         "/bizon/sparsa-sequence-pair-40m-20260911-r1",
         "/bizon/sparsa-sequence-pair-40m-20260911"
-      ]
-    },
-    "cpu_data_and_metadata": {
-      "running_h100_hours": 0.0,
-      "jobs": [
-        "/bizon/sparsa-metadata-20260911",
-        "/bizon/sparsa-pilot-report-20260911",
-        "/bizon/sparsa-data-audit-20260911c",
-        "/bizon/sparsa-data-audit-20260911b"
       ]
     },
     "training_pilots": {
@@ -68,14 +82,10 @@
     }
   },
   "unmeasured_started_attempts": 0,
-  "estimated_finished_attempts": 4,
-  "ongoing_jobs": [
-    "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17",
-    "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0",
-    "/bizon/sparsa-sequence-pair-40m-20260911-r1"
-  ],
-  "search_reserved_h100_hours": 28.0,
+  "estimated_finished_attempts": 6,
+  "ongoing_jobs": [],
+  "search_reserved_h100_hours": 32.0,
   "search_budget_h100_hours": 32.0,
-  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing.",
-  "aggregation_note": "Groups partition the source jobs. Do not add older main, averaging, or search accounting reports to this total; those are overlapping snapshots. Reserved search budget is a conservative scheduling cap, not measured running time. Future finetuning and final evaluation are not yet included."
+  "limitations": "Running resource time, not GPU utilization or billing. Excludes queue waits and pre-start build/allocation time. Six final-attempt durations use labelled job-finish fallbacks, not observed pod exits; there are no unmeasured started attempts.",
+  "aggregation_note": "Groups partition all jobs. Older main, averaging and search reports overlap this total; do not add them. Search reservations are a scheduling cap, not measured time."
 }

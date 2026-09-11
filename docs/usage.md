@@ -3,8 +3,8 @@
 Protein residue contacts from amino-acid sequence alone. Sparsa is trained from
 scratch on MarinFold's curated AFDB and ESM-Atlas teacher contact maps, with no
 MSAs, pretrained protein language models, templates, or evolutionary features.
-Training and experimental evaluation are in progress; no accuracy claim or
-released checkpoint is implied by the implementation.
+The first training and experimental evaluation campaign is complete. See
+[measured results and checkpoint](../reports/FINAL.md).
 
 The model combines a bidirectional rotary-attention sequence encoder with a
 symmetric pair network: sequence pair products, relative positions, dilated 2D
@@ -27,8 +27,8 @@ leaderboard. Test and de novo sets are excluded from the search. See
 uv sync
 uv run pytest -q
 
-# A checkpoint contains architecture, alphabet contract, EMA weights, optimizer,
-# step, training config, RNG states, and validation-selection state.
+# Training checkpoints include optimizer/RNG state for resume.
+# The released sparsa.pt contains inference weights and their model contract.
 uv run sparsa predict --checkpoint /path/to/step-N.pt \
   --sequence ACDEFGHIKLMNPQRSTVWY --out outputs/example --top-l 1
 
@@ -137,7 +137,7 @@ This uses one validation sequence on CPU, checks the score matrix and ranked
 top-L export, and confirms that Helico accepts the zero-based contacts while
 leaving all unlisted pairs unknown. `verification.json` records checkpoint and
 source hashes. This is an interoperability check, not a structure prediction or
-an accuracy evaluation; run it again on the final selected checkpoint.
+an accuracy evaluation. The released checkpoint passed both examples below.
 Use `--validation-protein 7znz_A` to check the longest validation chain (761
 residues); stems outside the validation split are rejected.
 

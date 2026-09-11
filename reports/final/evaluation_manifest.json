@@ -1,0 +1,62 @@
+{
+  "r_precision": 0.2665372756869731,
+  "long_r_precision": 0.2184244254069458,
+  "proteins": 333,
+  "inference_seconds": 9.772793723270297,
+  "selected_checkpoint": {
+    "kind": "ema_average",
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/readout-averages/steps-2500-1000.pt",
+    "step": 2500,
+    "validation": {
+      "r_precision": 0.24771644329033637,
+      "long_r_precision": 0.20733489397146512,
+      "proteins": 97
+    },
+    "averaged_checkpoints": [
+      {
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/checkpoints/step-2500.pt",
+        "step": 2500,
+        "weight": 0.5
+      },
+      {
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/checkpoints/step-1000.pt",
+        "step": 1000,
+        "weight": 0.5
+      }
+    ]
+  },
+  "load_seconds": 0.861021040007472,
+  "test_used_for_selection": false,
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "model_parameters": 39994657,
+  "inference_config": {
+    "relative_max_distance": null
+  },
+  "selection_seconds": 413.25208315532655,
+  "selected_training_run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long",
+  "training_runs": {
+    "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911": "training_runs/run-0",
+    "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long": "training_runs/run-1"
+  },
+  "evaluation_source_sha256": {
+    "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+    "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+    "sparsa/data.py": "c10e40ff79e8694940347c254772516c622a653fefee68b3cdd1bed2edeaa432",
+    "sparsa/evaluate.py": "5d4145353db6447a90dae3c80537d7a8ab9c39af3ceb673a8212a860dc36defd",
+    "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+    "sparsa/train.py": "90d9572c649c72a9d2e8ba287bb97662afb0c9d0e0521bd7a489238def9e345e",
+    "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a",
+    "/app/scripts/final_evaluate.py": "48d7a79ad0cbb9e92af6cb97b999deb05dbc957b4443f724727ebdc3fa996599",
+    "scripts/compare.py": "07fac6204af3e048ad13ffc1ac6e3ecfceda101718c11002bba27371d15cf0ea",
+    "scripts/select_readout.py": "66d34f6b1cd634ad3e8d4ce19fe08adeba3967a809a22815ac3d817a00544387",
+    "scripts/average_checkpoints.py": "5d2614d54b32f7fa9ce89a4d1899eead2a5f1f27b9a799ffc8d58011032f6838"
+  },
+  "benchmark_sha256": {
+    "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861",
+    "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+    "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+    "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+    "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+    "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5"
+  }
+}

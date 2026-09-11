@@ -1,20 +1,33 @@
 {
   "latest": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/checkpoints/step-2100.pt",
-    "step": 2100,
-    "validation": null
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/checkpoints/step-3000.pt",
+    "step": 3000,
+    "validation": {
+      "r_precision": 0.24725156534772577,
+      "long_r_precision": 0.2089380371843831,
+      "proteins": 97,
+      "inference_seconds": 2.3916549999266863,
+      "step": 3000,
+      "seconds": 2840.9580140067264
+    }
   },
   "best": {
-    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/checkpoints/step-1000.pt",
-    "step": 1000,
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long/checkpoints/step-2500.pt",
+    "step": 2500,
     "validation": {
-      "r_precision": 0.24756454331149422,
-      "long_r_precision": 0.20673021693991853,
+      "r_precision": 0.24759431681225896,
+      "long_r_precision": 0.2088369993887794,
       "proteins": 97,
-      "inference_seconds": 2.387092402204871,
-      "step": 1000,
-      "seconds": 960.6840575011447
+      "inference_seconds": 2.3813419602811337,
+      "step": 2500,
+      "seconds": 2375.1694733742625
     }
+  },
+  "complete": {
+    "step": 3000,
+    "best_validation_r_precision": 0.24759431681225896,
+    "elapsed_seconds": 2847.6617378946394,
+    "initial_step": 0
   },
   "validation": [
     {
@@ -48,8 +61,24 @@
       "inference_seconds": 2.382667537778616,
       "step": 2000,
       "seconds": 1904.5143348360434
+    },
+    {
+      "r_precision": 0.24759431681225896,
+      "long_r_precision": 0.2088369993887794,
+      "proteins": 97,
+      "inference_seconds": 2.3813419602811337,
+      "step": 2500,
+      "seconds": 2375.1694733742625
+    },
+    {
+      "r_precision": 0.24725156534772577,
+      "long_r_precision": 0.2089380371843831,
+      "proteins": 97,
+      "inference_seconds": 2.3916549999266863,
+      "step": 3000,
+      "seconds": 2840.9580140067264
     }
   ],
-  "observed_utc": "2026-09-11T17:38:32.368477+00:00",
+  "observed_utc": "2026-09-11T17:54:30.532263+00:00",
   "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long"
 }

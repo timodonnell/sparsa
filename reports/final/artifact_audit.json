@@ -1,0 +1,61 @@
+{
+  "observed_utc": "2026-09-11T18:14:16.216521+00:00",
+  "artifact_directory": "/data/sparsa-runtime/outputs/sequence-pair-40m-20260911/sparsa-results",
+  "artifact_s3": "s3://marin-us-east-02a/marin/protein-structure/sparsa/evaluations/sequence-pair-40m-20260911",
+  "sha256_verified_files": 362,
+  "checkpoint_sha256": "fad90bd545849e566e0ba9ca9d9a258977d2e9ef12125ae8f0ea7da4ae64e029",
+  "evaluation_source_hashes_match_worktree": true,
+  "benchmark_hashes_match": true,
+  "score_matrices_checked": 333,
+  "finite_symmetric_unit_interval_correct_lengths": true,
+  "split_counts": {
+    "eval-denovo": 19,
+    "eval-test": 217,
+    "eval-val": 97
+  },
+  "metric_rows": 6660,
+  "paired_scoring_universes": [
+    {
+      "baseline": "marinfold-exp199-cw-p06-cool-step290400",
+      "metric_rows": 6660,
+      "exact_candidate_true_top_counts": true
+    },
+    {
+      "baseline": "marinfold-exp232-decontam-m1-p02-step145199",
+      "metric_rows": 6660,
+      "exact_candidate_true_top_counts": true
+    },
+    {
+      "baseline": "marinfold-exp232-decontam-m2-p06-step145199",
+      "metric_rows": 6660,
+      "exact_candidate_true_top_counts": true
+    },
+    {
+      "baseline": "marinfold-exp232-decontam-train-m2-p06-step363000",
+      "metric_rows": 2320,
+      "exact_candidate_true_top_counts": true
+    }
+  ],
+  "validation_candidates": 62,
+  "selected_validation_is_maximum": true,
+  "test_used_for_selection": false,
+  "completed_steps": [
+    100000,
+    3000
+  ],
+  "training_shard_counts": [
+    {
+      "afdb": 2067,
+      "esm": 3338
+    },
+    {
+      "afdb": 2067,
+      "esm": 3338
+    }
+  ],
+  "helico_verifications": [
+    "helico_short.json",
+    "helico_long.json"
+  ],
+  "scope": "Artifact, source, data, paired-universe and selection audit; CLI/Helico checks were run separately with the same final checkpoint."
+}

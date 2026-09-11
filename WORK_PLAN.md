@@ -37,9 +37,14 @@ training and measured evaluation results.
 
 ## Execution status (2026-09-11)
 
-Stages 1–4 and the main 100,000-step training run are complete. Stage 5 continues
-with a 3,000-step crop-1024 finetune on eight batch H100s, initialized from the
-main validation best at step 96000. Held-out evaluation and final artifacts
-(stage 6) remain pending. The separate eight-trial architecture search finished;
-none of the four candidate ideas met its promotion rule. See
-`reports/STATUS.md` and the machine-readable pilot reports for exact evidence.
+All six stages are complete. Main training reached 100,000 steps and crop-1024
+finetuning reached 3,000 steps. Validation selected a uniform EMA weight average
+of finetuning steps 2500 and 1000. The selected model was evaluated on all 333
+experimental proteins, recovered with checksums, and verified through the actual
+prediction CLI and Helico contact parser. The separate eight-trial architecture
+search finished without a promotion. All jobs are terminal.
+
+See [final results](reports/FINAL.md), [search results](reports/AUTORESEARCH.md),
+and [artifact audit](reports/final/artifact_audit.json). The initial sequence-only
+implementation is complete; broader contact-completion work in `PLAN.md` remains
+a future research direction.

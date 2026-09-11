@@ -1,34 +1,162 @@
 {
-  "observed_utc": "2026-09-11T16:25:03.604832+00:00",
-  "running_gpu_hours": 116.34999777777777,
+  "observed_utc": "2026-09-11T18:06:01.682151+00:00",
+  "running_gpu_hours": 132.4723736111111,
   "unmeasured_started_attempts": 0,
-  "estimated_finished_attempts": 4,
+  "estimated_finished_attempts": 6,
   "jobs": [
     {
+      "job": "/bizon/sparsa-recover-sequence-pair-40m-20260911",
+      "state": "killed",
+      "submitted_ms": 1789149767940,
+      "finished_ms": 1789149834388,
+      "wall_seconds": 66.448,
+      "preemptions": 1,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-recover-sequence-pair-40m-20260911/0",
+          "state": "killed",
+          "gpu_count": 0,
+          "gpu_variant": null,
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "5b7f12d8975cabb4",
+              "state": "killed",
+              "start_ms": 1789149777709,
+              "finish_ms": null,
+              "running_seconds": 56.679,
+              "accounted_end_ms": 1789149834388,
+              "end_source": "job_finish_fallback",
+              "running_gpu_hours": 0.0,
+              "node": "gb95e20",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-final-sequence-pair-40m-20260911",
+      "state": "succeeded",
+      "submitted_ms": 1789149154544,
+      "finished_ms": 1789149751046,
+      "wall_seconds": 596.502,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-final-sequence-pair-40m-20260911/0",
+          "state": "succeeded",
+          "gpu_count": 1,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "7be9c178afd15e03",
+              "state": "succeeded",
+              "start_ms": 1789149166881,
+              "finish_ms": 1789149751046,
+              "running_seconds": 584.165,
+              "accounted_end_ms": 1789149751046,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.16226805555555554,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-long-sequence-pair-40m-20260911",
+      "state": "succeeded",
+      "submitted_ms": 1789146248522,
+      "finished_ms": 1789149144941,
+      "wall_seconds": 2896.419,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-long-sequence-pair-40m-20260911/0",
+          "state": "succeeded",
+          "gpu_count": 8,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "d4abda064e0f483d",
+              "state": "succeeded",
+              "start_ms": 1789146257947,
+              "finish_ms": 1789149144941,
+              "running_seconds": 2886.994,
+              "accounted_end_ms": 1789149144941,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 6.415542222222222,
+              "node": "gb95a30",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37",
+      "state": "succeeded",
+      "submitted_ms": 1789145916066,
+      "finished_ms": 1789147985631,
+      "wall_seconds": 2069.565,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s37/0",
+          "state": "succeeded",
+          "gpu_count": 4,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "6d6f5e3c46dccbda",
+              "state": "succeeded",
+              "start_ms": 1789145925536,
+              "finish_ms": 1789147985631,
+              "running_seconds": 2060.095,
+              "accounted_end_ms": 1789147985631,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 2.288994444444444,
+              "node": "gb95c40",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
       "job": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17",
-      "state": "running",
+      "state": "succeeded",
       "submitted_ms": 1789143735287,
-      "finished_ms": null,
-      "wall_seconds": 168.317,
+      "finished_ms": 1789145805158,
+      "wall_seconds": 2069.871,
       "preemptions": 0,
       "failures": 0,
       "tasks": [
         {
           "task": "/bizon/sparsa-ar-arch-0911-69e07f-c004-s17/0",
-          "state": "running",
+          "state": "succeeded",
           "gpu_count": 4,
           "gpu_variant": "H100",
           "attempts": [
             {
               "number": 0,
               "uid": "b4b0405d239c1b1a",
-              "state": "running",
+              "state": "succeeded",
               "start_ms": 1789143745046,
-              "finish_ms": null,
-              "running_seconds": 158.558,
-              "accounted_end_ms": 1789143903604,
-              "end_source": "observation_time",
-              "running_gpu_hours": 0.17617555555555556,
+              "finish_ms": 1789145805158,
+              "running_seconds": 2060.112,
+              "accounted_end_ms": 1789145805158,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 2.2890133333333336,
               "node": "gb95e20",
               "terminal_reason": ""
             }
@@ -198,28 +326,28 @@
     },
     {
       "job": "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0",
-      "state": "running",
+      "state": "killed",
       "submitted_ms": 1789135873066,
-      "finished_ms": null,
-      "wall_seconds": 8030.538,
-      "preemptions": 0,
+      "finished_ms": 1789148085770,
+      "wall_seconds": 12212.704,
+      "preemptions": 1,
       "failures": 0,
       "tasks": [
         {
           "task": "/bizon/sparsa-ar-arch-0911-69e07f-bridge-0/0",
-          "state": "running",
+          "state": "killed",
           "gpu_count": 0,
           "gpu_variant": null,
           "attempts": [
             {
               "number": 0,
               "uid": "e7e990b26b85944f",
-              "state": "running",
+              "state": "killed",
               "start_ms": 1789135880941,
               "finish_ms": null,
-              "running_seconds": 8022.663,
-              "accounted_end_ms": 1789143903604,
-              "end_source": "observation_time",
+              "running_seconds": 12204.829,
+              "accounted_end_ms": 1789148085770,
+              "end_source": "job_finish_fallback",
               "running_gpu_hours": 0.0,
               "node": "gb95a30",
               "terminal_reason": ""
@@ -454,16 +582,16 @@
     },
     {
       "job": "/bizon/sparsa-sequence-pair-40m-20260911-r1",
-      "state": "running",
+      "state": "succeeded",
       "submitted_ms": 1789108596564,
-      "finished_ms": null,
-      "wall_seconds": 35307.04,
+      "finished_ms": 1789146217834,
+      "wall_seconds": 37621.27,
       "preemptions": 5,
       "failures": 2,
       "tasks": [
         {
           "task": "/bizon/sparsa-sequence-pair-40m-20260911-r1/0",
-          "state": "running",
+          "state": "succeeded",
           "gpu_count": 8,
           "gpu_variant": "H100",
           "attempts": [
@@ -561,13 +689,13 @@
             {
               "number": 7,
               "uid": "c6cfd5dc90ca161d",
-              "state": "running",
+              "state": "succeeded",
               "start_ms": 1789143687092,
-              "finish_ms": null,
-              "running_seconds": 216.512,
-              "accounted_end_ms": 1789143903604,
-              "end_source": "observation_time",
-              "running_gpu_hours": 0.4811377777777778,
+              "finish_ms": 1789146217834,
+              "running_seconds": 2530.742,
+              "accounted_end_ms": 1789146217834,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 5.623871111111112,
               "node": "gb95a30",
               "terminal_reason": ""
             }
