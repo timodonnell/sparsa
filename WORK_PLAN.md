@@ -19,6 +19,9 @@ objective, with a strong one-pass model before iterative generative extensions.
 5. Train controlled architecture variants; use only experimental eval-val for
    selection. Save resumable optimizer/RNG checkpoints and compute/data budgets.
    Expand the best variant after inspecting validation trajectories.
+   Follow the 100,000-step crop-384 run with a 3,000-step crop-1024 finetune
+   (global batch 32, low learning rate, activation checkpointing). Select the
+   checkpoint and readout across both phases using validation only.
 6. Evaluate the selected checkpoint on all fixed experimental splits; publish
    per-protein scores, timing, paired comparisons, limitations, reproducible
    commands, and a loadable checkpoint plus Helico contact export.
@@ -29,9 +32,9 @@ and durable artifacts stay on CoreWeave S3 alongside compute. The eventual
 autoresearch extension can use the same config, validation, and run artifact
 contracts. Completion requires actual training and measured evaluation results.
 
-## Execution status (2026-09-11 05:32 UTC)
+## Execution status (2026-09-11 05:58 UTC)
 
-Stages 1–4 are complete. The selected 40M network is queued to resume on 8 H100s at batch
+Stages 1–4 are complete. The selected 40M network has resumed on 8 H100s at batch
 priority after preemption, using the verified decontaminated teacher corpus. Stage 5 is active;
 held-out evaluation and final artifacts (stage 6) remain pending. See
 `reports/STATUS.md` and the machine-readable pilot reports for exact evidence.

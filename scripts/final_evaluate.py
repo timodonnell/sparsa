@@ -27,29 +27,61 @@ def sha256(path):
         return hashlib.file_digest(handle, "sha256").hexdigest()
 
 
+def export_training_metadata(run, local):
+    fs, root = storage(run)
+    local.mkdir(parents=True, exist_ok=True)
+    for source, target in {
+        "provenance.json": "training_provenance.json",
+        "training_log.json": "training_log.json",
+        "complete.json": "training_complete.json",
+    }.items():
+        (local / target).write_bytes(fs.cat_file(root + "/" + source))
+    resumes = [
+        json.loads(fs.cat_file(p))
+        for p in fs.glob(root + "/resume-step-*-provenance.json")
+    ]
+    (local / "training_resumes.json").write_text(
+        json.dumps(sorted(resumes, key=lambda r: r["started_utc"]), indent=2)
+    )
+    history = [
+        json.loads(fs.cat_file(p)) for p in fs.glob(root + "/validation/step-*.json")
+    ]
+    (local / "training_validation.json").write_text(
+        json.dumps(sorted(history, key=lambda r: r["step"]), indent=2)
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", required=True)
+    parser.add_argument("--candidate-run", action="append", default=[])
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
-    fs, root = storage(args.run)
-    if not fs.exists(root + "/complete.json"):
-        raise RuntimeError("Training must complete before the held-out evaluation")
-    completion = json.loads(fs.cat_file(root + "/complete.json"))
-    selection = json.loads(fs.cat_file(root + "/best.json"))
-    if (
-        abs(
-            selection["validation"]["r_precision"]
-            - completion["best_validation_r_precision"]
-        )
-        > 1e-12
-    ):
-        raise RuntimeError(
-            "Best-checkpoint pointer is stale; inspect checkpoint recovery"
-        )
+    runs = [args.run, *args.candidate_run]
+    for run in runs:
+        fs, root = storage(run)
+        if not fs.exists(root + "/complete.json"):
+            raise RuntimeError(
+                "Every candidate run must complete before held-out evaluation"
+            )
+        completion = json.loads(fs.cat_file(root + "/complete.json"))
+        selection = json.loads(fs.cat_file(root + "/best.json"))
+        if (
+            abs(
+                selection["validation"]["r_precision"]
+                - completion["best_validation_r_precision"]
+            )
+            > 1e-12
+        ):
+            raise RuntimeError(
+                "Best-checkpoint pointer is stale; inspect checkpoint recovery"
+            )
     torch.set_num_threads(4)
     device = torch.device("cuda")
-    readout = select_readout(args.run, device)
+    run_readouts = [dict(run=run, **select_readout(run, device)) for run in runs]
+    readout = max(
+        run_readouts, key=lambda r: r["selected"]["validation"]["r_precision"]
+    )
     selection = readout["selected"]
     inference_config = readout["inference_config"]
     start = time.perf_counter()
@@ -60,12 +92,15 @@ def main():
     local = Path("outputs/final_evaluation")
     local.mkdir(parents=True, exist_ok=True)
     (local / "readout_selection.json").write_text(json.dumps(readout, indent=2))
+    (local / "candidate_run_selection.json").write_text(
+        json.dumps(run_readouts, indent=2)
+    )
     result = evaluate(
         model,
         records,
         device,
         local,
-        label=f"sparsa-40m-step-{state['step']}",
+        label=f"sparsa-{readout['run'].rsplit('/', 1)[-1]}-step-{state['step']}",
         pos_weight=state["training_config"].get("pos_weight", 1.0),
     )
     paired = compare(
@@ -127,7 +162,9 @@ def main():
         gpu=torch.cuda.get_device_name(),
         model_parameters=sum(p.numel() for p in model.parameters()),
         inference_config=inference_config,
-        selection_seconds=readout["selection_seconds"],
+        selection_seconds=sum(r["selection_seconds"] for r in run_readouts),
+        selected_training_run=readout["run"],
+        training_runs={run: f"training_runs/run-{i}" for i, run in enumerate(runs)},
         evaluation_source_sha256={
             str(path): sha256(path)
             for path in [
@@ -144,22 +181,9 @@ def main():
         },
     )
     (local / "evaluation_manifest.json").write_text(json.dumps(result, indent=2))
-    for name in ("provenance.json", "training_log.json", "complete.json"):
-        (local / ("training_" + name)).write_bytes(fs.cat_file(root + "/" + name))
-    resumes = [
-        json.loads(fs.cat_file(path))
-        for path in fs.glob(root + "/resume-step-*-provenance.json")
-    ]
-    (local / "training_resumes.json").write_text(
-        json.dumps(sorted(resumes, key=lambda r: r["started_utc"]), indent=2)
-    )
-    validation_history = [
-        json.loads(fs.cat_file(path))
-        for path in fs.glob(root + "/validation/step-*.json")
-    ]
-    (local / "training_validation.json").write_text(
-        json.dumps(sorted(validation_history, key=lambda r: r["step"]), indent=2)
-    )
+    export_training_metadata(readout["run"], local)
+    for i, run in enumerate(runs):
+        export_training_metadata(run, local / "training_runs" / f"run-{i}")
     hashes = {
         str(path.relative_to(local)): sha256(path)
         for path in sorted(local.rglob("*"))

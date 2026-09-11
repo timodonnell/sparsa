@@ -104,6 +104,12 @@ using validation only. It saves the selected checkpoint and readout before
 scoring held-out sets. `scripts/select_readout.py` can run this validation-only
 selection separately without scoring test or de novo proteins.
 
+The campaign includes a short crop-1024 finetune after the main crop-384 run,
+so the model can learn contacts beyond the main crop's separation limit. The
+final evaluator compares the completed runs on validation and retains the best
+candidate before scoring held-out sets. Both runs' training provenance and
+validation trajectories accompany the export.
+
 See `data/benchmark/provenance.json` for upstream revisions and artifact hashes,
 `WORK_PLAN.md` for execution stages, and `PLAN.md` for the longer-term discrete
 contact-completion research roadmap. Configuration, validation, and artifact

@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 05:32 UTC: implementation and pilots complete; production
-training is queued for batch capacity after preemption. Final test/de novo
+Status at 2026-09-11 05:58 UTC: implementation and pilots complete; production
+training has resumed from step 18000 after batch preemptions. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -29,8 +29,10 @@ evaluation has not been run.
   retry. Attempt 3 is SchedulingGated, awaiting eight GPUs at batch priority.
   The CPU-only checkpoint audit confirmed that step 18000 is durable and that
   the best pointer still selects step 16000. See `preemption_checkpoint.json`.
-  About 1,900 unsaved steps must be replayed. Resume has not yet been verified
-  on a replacement GPU attempt; the coordinator remains live and waiting.
+  Subsequent brief allocations were preempted too. Attempt 6 restored the full
+  step-18000 checkpoint on eight GPUs and advanced beyond step 18900 at about
+  0.44 s/step. See `resume_verification.json`. The unsaved tail is being replayed.
+  Keep discovering current pods by label; do not reuse deleted pod names.
 - The original approximate 11 a.m. Eastern completion estimate is now conditional
   on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
   Final artifacts will preserve resume provenance; completion elapsed time is
@@ -67,10 +69,12 @@ now saves compact shard/row cursors rather than replaying the entire stream.
 
 ## Remaining work
 
-The local `scripts/finish_run.py --name sequence-pair-40m-20260911` coordinator
-is running (initial PID 3284859). It waits for training success, submits the final
-evaluation at **batch** priority, then a CPU recovery task, downloads the bundle,
-and verifies SHA256 checksums. **Do not submit a duplicate final evaluation while
+The local `scripts/finish_run.py --name sequence-pair-40m-20260911 --profile-job
+/bizon/sparsa-long-profile-20260911` coordinator is running; read `handoff.pid`
+for its current PID. It waits for main training and the long-crop GPU profile,
+then runs the long-sequence finetune, final validation selection/evaluation, and
+CPU artifact recovery. All jobs use **batch** priority. Recovered checksums are
+verified before completion. **Do not submit a duplicate final evaluation while
 the coordinator is active.** Inspect:
 
 - `outputs/sequence-pair-40m-20260911/handoff.json`
@@ -93,18 +97,25 @@ CLI verification, and completion of this project still require the agent.
    step 12000 (original: 0.202191 / 0.152688). See `readout_preview.json`.
    Tests verify unchanged within-cap outputs and checkpoint reload reproduction.
    Training computations are unchanged.
-3. Run `scripts/final_evaluate.py` as a one-H100 **batch** job after training
-   completes. It uses `best.json`, evaluates all 333 fixed proteins, checks exact
+3. The coordinator runs a 3,000-step finetune from the main run's best weights: crop
+   1024, global batch 32, LR 5e-5, activation checkpointing, new seed 119. This
+   supplies labels at separations absent from crop-384 training. Its output is
+   `s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long`.
+   The one-H100 `sparsa-long-profile-20260911` job is a prerequisite; inspect its
+   memory/throughput result when capacity becomes available.
+4. Run `scripts/final_evaluate.py` as a one-H100 **batch** job after both phases
+   complete. It chooses across both runs using validation only, so the finetune
+   is retained only if it improves the primary metric. It uses `best.json`, evaluates all 333 fixed proteins, checks exact
    candidate/true/top-k parity against MarinFold, and writes inference weights,
    scores, timing, and paired comparisons to an evaluation prefix on S3.
    It also compares against the later step-363000 MarinFold reference on the 116
    available validation/de novo proteins; the 217 test proteins are unavailable
    for that reference. Both source and filtered table hashes are pinned separately.
-4. Recover artifacts via a CPU-only `scripts/recover_results.py` task and
+5. Recover artifacts via a CPU-only `scripts/recover_results.py` task and
    `scripts/fetch_results.py`, or read individual files through a live task using
    `scripts/fetch_artifact.py`. Keep large local artifacts under `outputs`
    (a local ignored link to `/data/sparsa-runtime/outputs`).
-5. Verify the released checkpoint/CLI, write final results and limitations,
+6. Verify the released checkpoint/CLI, write final results and limitations,
    update README and this status, and mark the active goal complete only then.
 
 ## Monitoring and infrastructure notes

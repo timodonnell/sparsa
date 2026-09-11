@@ -21,6 +21,7 @@ from pathlib import Path
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", required=True)
+    parser.add_argument("--profile-job")
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
         "--cluster-config",
@@ -29,6 +30,8 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r"[a-z0-9-]{1,35}", args.name):
         raise ValueError("Expected a short Sparsa run name")
+    if args.profile_job and not args.profile_job.startswith("/bizon/sparsa-"):
+        raise ValueError("Expected a Sparsa profiling job")
     root = Path(__file__).resolve().parents[1]
     local = root / "outputs" / args.name
     local.mkdir(parents=True, exist_ok=True)
@@ -94,13 +97,13 @@ def main():
             "batch",
             "--enable-extra-resources",
             "--cpu",
-            "8" if gpu else "2",
+            str(max(8, gpu * 6)) if gpu else "2",
             "--memory",
-            "32GB" if gpu else "8GB",
+            f"{gpu * 32}GB" if gpu else "8GB",
             "--disk",
-            "20GB",
+            "40GB" if gpu > 1 else "20GB",
             "--timeout",
-            "3600" if gpu else "1800",
+            "14400" if gpu > 1 else "3600" if gpu else "1800",
             "--max-retries",
             "3",
             "--job-name",
@@ -108,7 +111,7 @@ def main():
             "--no-wait",
         ]
         if gpu:
-            argv += ["--gpu", "H100x1"]
+            argv += ["--gpu", f"H100x{gpu}"]
         argv += ["--", "python", *script_args]
         output = command(argv)
         if job not in output:
@@ -132,13 +135,39 @@ def main():
             return
         record("waiting_for_training")
         wait_job(f"/bizon/sparsa-{args.name}")
+        if args.profile_job:
+            record("waiting_for_long_profile", profile_job=args.profile_job)
+            wait_job(args.profile_job)
+        long_run = f"{base}/runs/{args.name}-long"
+        job = submit(
+            "long",
+            8,
+            [
+                "-m",
+                "torch.distributed.run",
+                "--standalone",
+                "--nproc_per_node=8",
+                "scripts/train_from_best.py",
+                "--source-run",
+                f"{base}/runs/{args.name}",
+                "--config",
+                "configs/long_finetune.yaml",
+                "--out",
+                long_run,
+                "--auto-resume",
+            ],
+        )
+        record("waiting_for_long_finetune", finetune_job=job, finetune_uri=long_run)
+        wait_job(job)
         job = submit(
             "final",
-            True,
+            1,
             [
                 "scripts/final_evaluate.py",
                 "--run",
                 f"{base}/runs/{args.name}",
+                "--candidate-run",
+                long_run,
                 "--out",
                 evaluation,
             ],
@@ -147,7 +176,7 @@ def main():
         wait_job(job)
         job = submit(
             "recover",
-            False,
+            0,
             [
                 "scripts/recover_results.py",
                 "--source",

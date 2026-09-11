@@ -1,0 +1,40 @@
+{
+  "observed_utc": "2026-09-11T05:57:24.991275+00:00",
+  "pod": "iris-bizon-sparsa-sequence-pair-40m-b5a43384-6-19e56b4ef9eee6b7",
+  "restored_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-18000.pt",
+  "world_size": 8,
+  "priority": "batch",
+  "latest_logged_step": 18900,
+  "recent_steps": [
+    {
+      "step": 18700,
+      "loss": 0.10348803550004959,
+      "grad_norm": 0.030871232971549034,
+      "lr": 0.00037234824222661875,
+      "seconds": 307.74911835510284,
+      "seconds_per_step": 0.43614301612600687,
+      "examples": 1196800,
+      "peak_gpu_gb": 51.49698448181152
+    },
+    {
+      "step": 18800,
+      "loss": 0.09258317202329636,
+      "grad_norm": 0.031185651198029518,
+      "lr": 0.000372043266185073,
+      "seconds": 351.35908109974116,
+      "seconds_per_step": 0.43609962744638325,
+      "examples": 1203200,
+      "peak_gpu_gb": 51.49698448181152
+    },
+    {
+      "step": 18900,
+      "loss": 0.10280469059944153,
+      "grad_norm": 0.03069879114627838,
+      "lr": 0.00037173675906952474,
+      "seconds": 394.9543262384832,
+      "seconds_per_step": 0.4359524513874203,
+      "examples": 1209600,
+      "peak_gpu_gb": 51.49698448181152
+    }
+  ]
+}
