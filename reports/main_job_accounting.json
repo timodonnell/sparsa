@@ -1,6 +1,6 @@
 {
-  "observed_utc": "2026-09-11T08:39:20.142534+00:00",
-  "running_gpu_hours": 42.41201777777778,
+  "observed_utc": "2026-09-11T09:01:26.079001+00:00",
+  "running_gpu_hours": 44.69407111111111,
   "unmeasured_started_attempts": 0,
   "estimated_finished_attempts": 1,
   "jobs": [
@@ -132,8 +132,8 @@
       "state": "running",
       "submitted_ms": 1789108596564,
       "finished_ms": null,
-      "wall_seconds": 7363.578,
-      "preemptions": 1,
+      "wall_seconds": 8689.515,
+      "preemptions": 3,
       "failures": 0,
       "tasks": [
         {
@@ -158,14 +158,40 @@
             {
               "number": 1,
               "uid": "2c476ff33422ae4f",
-              "state": "running",
+              "state": "preempted",
               "start_ms": 1789115902668,
-              "finish_ms": null,
-              "running_seconds": 57.474,
-              "accounted_end_ms": 1789115960142,
-              "end_source": "observation_time",
-              "running_gpu_hours": 0.12772,
+              "finish_ms": 1789115975286,
+              "running_seconds": 72.618,
+              "accounted_end_ms": 1789115975286,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.1613733333333333,
               "node": "gb957e0",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: 0744e9dc-3c18-4570-bb64-f2120a591511, JobUID: afb06fe0-d6b9-4445-b267-e55968dd4732) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 2,
+              "uid": "14fb26ca0518a0c2",
+              "state": "preempted",
+              "start_ms": 1789116065530,
+              "finish_ms": 1789116111239,
+              "running_seconds": 45.709,
+              "accounted_end_ms": 1789116111239,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.10157555555555556,
+              "node": "g53ee66",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: 064da2b0-2ec1-4947-8b25-6d1352f471db, JobUID: f0901688-de6f-40da-945d-26bf4ec4932a) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 3,
+              "uid": "66c1fa2cc0a4ed53",
+              "state": "running",
+              "start_ms": 1789116320008,
+              "finish_ms": null,
+              "running_seconds": 966.071,
+              "accounted_end_ms": 1789117286079,
+              "end_source": "observation_time",
+              "running_gpu_hours": 2.1468244444444444,
+              "node": "gb975c0",
               "terminal_reason": ""
             }
           ]

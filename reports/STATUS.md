@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 08:47 UTC: implementation and pilots complete; production
-main training has reached step 38000 and Iris is retrying batch preemptions. Final test/de novo
+Status at 2026-09-11 09:01 UTC: implementation and pilots complete; production
+main training is running and has reached step 40000. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -35,7 +35,8 @@ evaluation has not been run.
   Step 34000 reaches 0.224344 (long-range 0.185324).
   Step 36000 reaches 0.226772 (long-range 0.182922).
   Step 38000 reaches 0.228394 (long-range 0.187089).
-  The raw selection is now step 38000; selection uses overall R-precision.
+  Step 40000 reaches 0.227092 (long-range 0.188067).
+  The raw selection remains step 38000; selection uses overall R-precision.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
