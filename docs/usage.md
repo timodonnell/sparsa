@@ -138,6 +138,8 @@ top-L export, and confirms that Helico accepts the zero-based contacts while
 leaving all unlisted pairs unknown. `verification.json` records checkpoint and
 source hashes. This is an interoperability check, not a structure prediction or
 an accuracy evaluation; run it again on the final selected checkpoint.
+Use `--validation-protein 7znz_A` to check the longest validation chain (761
+residues); stems outside the validation split are rejected.
 
 See `data/benchmark/provenance.json` for upstream revisions and artifact hashes,
 `WORK_PLAN.md` for execution stages, and `PLAN.md` for the longer-term discrete

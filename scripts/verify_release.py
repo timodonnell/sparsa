@@ -30,11 +30,22 @@ def main():
     parser.add_argument("--helico-python", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--device", default="cpu")
+    parser.add_argument(
+        "--validation-protein",
+        help="Validation protein stem; defaults to the first validation record",
+    )
     args = parser.parse_args()
     checkpoint = args.checkpoint.resolve(strict=True)
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
-    record = benchmark(splits=("eval-val",))[0]
+    records = benchmark(splits=("eval-val",))
+    if args.validation_protein:
+        matches = [r for r in records if r["stem"] == args.validation_protein]
+        if len(matches) != 1:
+            raise ValueError("Expected exactly one matching validation protein")
+        record = matches[0]
+    else:
+        record = records[0]
     sequence = record["sequence"]
     length = len(sequence)
     command = [

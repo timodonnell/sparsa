@@ -1,0 +1,62 @@
+{
+  "observed_utc": "2026-09-11T16:04:44.487525+00:00",
+  "checkpoint": "/data/sparsa-runtime/outputs/trained-preview-88000/sparsa.pt",
+  "checkpoint_sha256": "b1a1226e9bd065a00f8bf8b1733bf136dd178e0a60896008a8b40ca11e9201fd",
+  "prediction": {
+    "sequence": "KPSASNLIWSDEPAVVVYPQEDKNSEGSFGKYRKPASVWEAEGYPIGNGRVGAMIFSAPGRERLALNEISLWSGGANPGGGYGYGPDAGTNQFGNYLPFGDLFVDFKKGDQPASLSVEDFTRSLDLRDGIHKVNYKADGVTYDREAFSSTPANVLVLNYKASKPGQFSADFSVNSQLGADISAKGSVITWKGMLKNGMNYEGRVLIRPKGGTLSASGDKISVKNADSCMVVIAMETDYLMDYKKDWKGESPSRKLDRYAAKAASADYAALKQAHISQYKSMFDRVKVNFGKTEEDVAKLPTPKRLEAYKKNPADPDLEETMFQFGRYLLLSSSRPGTLPANLQGLWNDYVKPPWACDYHNNINVQMAYWGAEPANLSECHEALVNYVEAMAPGCRDASQANKGFNTKDGKPVRGWTVRTSQNIFGGNGWQWNIPGAAWYALHIWEHYAFTGDRKYLEKQAYPLMKEICHFWEDHLKELGAGGEGFKTNGKDPSEEEKKDLADVKAGTLVAPNGWSPEHGPREDGVMHDQQLIAELFSNTIKAARILGKDAAWAKSLEGKLKRLAGNKIGKEGNLQEWMIDRIPKTDHRHTSHLFAVFPGNQISKLKTPKLAEAARLSLEWRGTTGDSRRSWTWPWRTALWARLGEGNKAHEMVQGLLKFNTLPNMLTTHPPMQMDGNFGIVGGICEMLVQSHAGGLDIMPSPVEAWPEGSVKGLKARGNVTVDFSWKDGKVSNVKLYSAQPKVLPVRVNGKMTRMKTLPLK",
+    "length": 761,
+    "elapsed_seconds": 19.166068089194596,
+    "contact_budget_top_l": 1.0,
+    "checkpoint": "/data/sparsa-runtime/outputs/trained-preview-88000/sparsa.pt",
+    "step": 88000,
+    "model_load_seconds": 0.3214536919258535,
+    "parameters": 39994657,
+    "alphabet": "ACDEFGHIKLMNPQRSTVWYX",
+    "contact_definition": "native-amino-acid ConFind degree >= 0.001, sequence separation >= 6",
+    "index_base": 0,
+    "model_config": {
+      "sequence_dim": 512,
+      "sequence_layers": 12,
+      "heads": 8,
+      "pair_dim": 96,
+      "pair_layers": 16,
+      "triangle_every": 4,
+      "triangle_dim": 48,
+      "dropout": 0.0,
+      "gradient_checkpointing": false
+    },
+    "inference_config": {}
+  },
+  "validation_protein": "7znz_A",
+  "sequence_length": 761,
+  "finite_symmetric_probability_matrix": true,
+  "separation_mask_verified": true,
+  "stable_top_l_export_verified": true,
+  "helico": {
+    "parser": "/home/bizon/git/helico/src/helico/inference.py",
+    "parser_sha256": "c0692152da6d22e06ed515f1c805349de5bdda67e0915acf10f9ff0013474016",
+    "dependency_sha256": {
+      "/home/bizon/git/helico/src/helico/contacts.py": "66b9f7a6f506377b7a88a10a4641c3fbf80ddab138671570336265495e234494",
+      "/home/bizon/git/helico/src/helico/data.py": "9fa2b768d0962d2680208cd775c1ca061908a6bb989ca1d2c2d817ef47043a75"
+    },
+    "repository_revision": "b10385d736673c81b10e70d1099962af6f2573c0",
+    "repository_dirty": true,
+    "positive_unordered_pairs": 761,
+    "unlisted_pairs_remain_unknown": true,
+    "strict_parser_passed": true
+  },
+  "artifact_sha256": {
+    "contacts.npz": "a8f1f9663290a43f43c01e048c74b02606562cfc43880d60b06494c0e337f980",
+    "helico_contacts.txt": "8b455b442939df435e3ba174c8f16b27e519ea7989e7dcad29897deddb52a8c9",
+    "prediction.json": "c71deb17f8350f9e8ddb3f39086625a6bc80a852bacb4618d82cf09bd577b0fe"
+  },
+  "verification_source_sha256": {
+    "/home/bizon/git/sparsa/scripts/verify_release.py": "bb57fa5c843eea2c2413cbfe1b8a336c75ec197b7a98d52bf29ac962851538da",
+    "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+    "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa"
+  },
+  "scope": "CLI and contact-parser integration; not a Helico structure prediction or an accuracy evaluation",
+  "release_status": "intermediate checkpoint preview; final selection and held-out evaluation pending",
+  "source_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-88000.pt",
+  "remote_lean_sha256_verified": true
+}
