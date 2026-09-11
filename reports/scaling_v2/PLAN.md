@@ -33,11 +33,10 @@ may overlap past training, so this is not a controlled domain-gap estimate. It
 does show that teacher-contact reconstruction is still far from saturated.
 
 The 456M non-checkpointed profile fits batch 4 / crop 512 in 54.75 GiB and takes
-0.423 s/microbatch, versus 0.621 s with activation checkpointing. The planned
-long run can use this faster mode, subject to an actual DDP memory check.
+0.423 s/microbatch, versus 0.621 s with activation checkpointing. The actual eight-GPU DDP smoke subsequently passed with this faster mode.
 Batch 8 / crop 512 and batch 2 / crop 1024 OOM in this mode; do not use them.
 
-Verification: 26 local tests passed, including growth prediction equivalence,
+Verification: the latest targeted suite has 30 passing local tests, including growth prediction equivalence,
 new-layer/channel gradients, vocabulary and architecture rejection, teacher
 mixture endpoints, exact worker-cursor replay, existing model/decoder/export
 contracts, checkpoint averaging, and job accounting. The real GPU growth and
@@ -72,9 +71,8 @@ source. Those proteins may have been seen in training; its scores are diagnostic
 not held-out generalization estimates. Identity and score tables are retained.
 
 After inspecting these curves, choose the mixture and run a larger model for
-substantially longer, initially targeting 200,000 additional steps. Profile
-non-checkpointed execution to reduce activation-recomputation overhead before
-that run. If growth impairs learning, test a freshly initialized wider model;
+substantially longer, initially targeting 200,000 additional steps. Use the verified compiled pair blocks and non-checkpointed main-training
+execution for that run. If growth impairs learning, test a freshly initialized wider model;
 do not dismiss scaling solely from a short continuation pilot.
 
 The initial pilots should use tens of H100-hours. Bound the subsequent campaign
@@ -189,3 +187,18 @@ long-crop finetuning and the original release, preserving a successful pilot if
 extended training fails to improve it. The automated final report includes paired
 comparisons against the previous release; completed results are pushed to main
 when the branch and staging index permit publishing campaign-owned outputs.
+
+
+The production preflight passed: the 1.8B checkpoint restored model, EMA,
+optimizer, RNG and worker cursors on eight H100s, trained 40 further steps,
+evaluated validation, and durably saved step 1040. It is an execution test with a
+shortened schedule, not a selection candidate. The 30-test local suite passes.
+The completed-control GPU comparison also passed: seven model/readout entries,
+42 paired comparisons, and exact 97-protein scoring-universe agreement. Its
+final 40M 50/50 gain is +0.001493 R, paired interval [-0.001108, +0.004097];
+these descriptive intervals do not establish a substantial improvement.
+
+The restartable coordinator and budget guard are running locally. Remaining
+pilots and the extended run are still pending; this report does not claim a
+new held-out result or a closed MarinFold gap. After completion, the pipeline
+writes and publishes `reports/scaling_v2/FINAL.md` and the verified model artifacts.

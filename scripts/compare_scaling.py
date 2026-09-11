@@ -114,7 +114,14 @@ def main():
         "scope": "Final-EMA comparisons match pilot exposure; best checkpoints are validation-selected. Intervals are descriptive under adaptive validation reuse.",
     }
     write_json(report, args.out + "/comparison.json")
-    print("PILOT_COMPARISON " + json.dumps(report), flush=True)
+    # Keep individual log records below container-runtime line-size limits.
+    for row in paired:
+        print("PILOT_PAIRED " + json.dumps(row), flush=True)
+    print(
+        "PILOT_COMPARISON "
+        + json.dumps({k: v for k, v in report.items() if k != "paired"}),
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

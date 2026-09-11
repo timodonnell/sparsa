@@ -154,7 +154,7 @@ def main():
                     raise
                 time.sleep(30)
 
-    def marker(job, prefix):
+    def marker(job, prefix, *, all_rows=False):
         pods = json.loads(
             run(
                 kube
@@ -183,7 +183,7 @@ def main():
                 if line.startswith(prefix)
             ]
             if rows:
-                return rows[-1]
+                return rows if all_rows else rows[-1]
         raise RuntimeError("Missing durable job log marker: " + job)
 
     try:
@@ -242,6 +242,7 @@ def main():
         record("waiting_for_comparison", comparison_job=compare_job)
         wait(compare_job)
         comparison = marker(compare_job, "PILOT_COMPARISON ")
+        comparison["paired"] = marker(compare_job, "PILOT_PAIRED ", all_rows=True)
         report = root / "reports/scaling_v2/comparison.json"
         report.write_text(json.dumps(comparison, indent=2) + "\n")
         # Completion metadata includes upload time; use a full fresh compiled pilot
