@@ -1,6 +1,6 @@
 """Stage final artifacts in a short-lived CPU task for workstation recovery.
 
-After the READY line, use kubectl cp on this task's /app/outputs/recovered. The
+After the READY line, use scripts/fetch_results.py to recover the directory. The
 1,200-second grace period consumes no GPUs and ends at the Iris task timeout.
 """
 

@@ -130,8 +130,23 @@ def main():
         gpu=torch.cuda.get_device_name(),
         model_parameters=sum(p.numel() for p in model.parameters()),
         inference_config=inference_config,
+        evaluation_source_sha256={
+            str(path): sha256(path)
+            for path in [
+                *sorted(Path("sparsa").rglob("*.py")),
+                Path(__file__),
+                Path("scripts/compare.py"),
+            ]
+        },
+        benchmark_sha256={
+            path.name: sha256(path)
+            for path in sorted(Path("data/benchmark").glob("*"))
+            if path.is_file()
+        },
     )
     (local / "evaluation_manifest.json").write_text(json.dumps(result, indent=2))
+    for name in ("provenance.json", "training_log.json", "complete.json"):
+        (local / ("training_" + name)).write_bytes(fs.cat_file(root + "/" + name))
     hashes = {
         str(path.relative_to(local)): sha256(path)
         for path in sorted(local.rglob("*"))
