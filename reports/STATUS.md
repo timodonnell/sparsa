@@ -1,19 +1,20 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 06:06 UTC: implementation and pilots complete; production
-training has resumed from step 18000 after batch preemptions. Final test/de novo
+Status at 2026-09-11 06:41 UTC: implementation and pilots complete; production
+training has resumed from step 22000 with more frequent recovery saves. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
 
-- Iris job: `/bizon/sparsa-sequence-pair-40m-20260911`
+- Iris job: `/bizon/sparsa-sequence-pair-40m-20260911-r1`
 - Cluster config: `/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml`
-- Pod label: `iris.job_id=bizon.sparsa-sequence-pair-40m-20260911`.
+- Pod label: `iris.job_id=bizon.sparsa-sequence-pair-40m-20260911-r1`.
   Discover the current pod with this label; pod names change on preemption.
 - Priority: **batch**, root job, one node / 8 H100s.
 - Output: `s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911`
 - Config: `configs/sequence_pair.yaml`; 39,994,657 parameters, crop 384,
-  global batch 64, 100,000 steps, validation every 2,000 steps, EMA 0.999.
+  global batch 64, 100,000 steps, validation every 2,000 steps, recovery checkpoints
+  every 500 steps, EMA 0.999.
 - Starts from the large pilot's step-3000 online weights and EMA; all weights
   originated in this project's random initialization and supervised training.
 - Measured main-run speed: about 0.44 s/step; peak memory about 51.4 GiB/GPU.
@@ -25,7 +26,8 @@ evaluation has not been run.
   step 6000 0.184494; step 8000 0.192853; step 10000 0.196659;
   step 12000 0.202191; step 14000 0.206153; step 16000 0.210827;
   step 18000 0.209735; step 20000 0.214023 (long-range 0.169089).
-  The raw selection is now step 20000.
+  Step 22000 reaches 0.218130 (long-range 0.173775).
+  The raw selection is now step 22000.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -35,6 +37,17 @@ evaluation has not been run.
   step-18000 checkpoint on eight GPUs and advanced beyond step 18900 at about
   0.44 s/step. See `resume_verification.json`. The unsaved tail is being replayed.
   Keep discovering current pods by label; do not reuse deleted pod names.
+- Repeated preemptions lost up to roughly 1,900 steps between 2,000-step saves.
+  After attempt 7 saved step 22000, the original job was intentionally cancelled
+  and its pod deletion verified. Replacement `-r1` resumed the same run URI and
+  full checkpoint with recovery saves every 500 steps. Its startup provenance
+  confirms eight GPUs, batch priority, and the step-22000 resume. Validation
+  remains every 2,000 steps; recovery-only saves do not change best-model selection.
+  The first recovery-only save at step 22500 succeeded: latest has no validation
+  result and best remains step 22000. See `checkpoint_handoff.json` for the
+  durable-object check, pointers, resume identity, and source hashes.
+  Both job handles are included in `main_job_accounting.json`; refresh this
+  snapshot at completion to include all running time and preempted attempts.
 - The original approximate 11 a.m. Eastern completion estimate is now conditional
   on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
   Final artifacts will preserve resume provenance; completion elapsed time is
@@ -72,7 +85,8 @@ now saves compact shard/row cursors rather than replaying the entire stream.
 ## Remaining work
 
 The local `scripts/finish_run.py --name sequence-pair-40m-20260911 --profile-job
-/bizon/sparsa-long-profile-20260911` coordinator is running; read `handoff.pid`
+/bizon/sparsa-long-profile-20260911 --training-job
+/bizon/sparsa-sequence-pair-40m-20260911-r1` coordinator is running; read `handoff.pid`
 for its current PID. It waits for main training and the long-crop GPU profile,
 then runs the long-sequence finetune, final validation selection/evaluation, and
 CPU artifact recovery. All jobs use **batch** priority. Recovered checksums are
@@ -137,7 +151,7 @@ Use read-only Kubernetes logs instead:
 
 ```bash
 kubectl --kubeconfig ~/.kube/coreweave-iris --context marin-rn02a_RNO2A -n iris \
-  get pods -l iris.job_id=bizon.sparsa-sequence-pair-40m-20260911 -o wide
+  get pods -l iris.job_id=bizon.sparsa-sequence-pair-40m-20260911-r1 -o wide
 # Then use the returned current pod name:
 kubectl --kubeconfig ~/.kube/coreweave-iris --context marin-rn02a_RNO2A -n iris \
   logs CURRENT_POD -c task --tail=20

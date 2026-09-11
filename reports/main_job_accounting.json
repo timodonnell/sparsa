@@ -1,19 +1,19 @@
 {
-  "observed_utc": "2026-09-11T05:35:24.585550+00:00",
-  "running_gpu_hours": 19.797746666666665,
+  "observed_utc": "2026-09-11T06:37:16.718577+00:00",
+  "running_gpu_hours": 26.296706666666665,
   "jobs": [
     {
       "job": "/bizon/sparsa-sequence-pair-40m-20260911",
-      "state": "running",
+      "state": "killed",
       "submitted_ms": 1789095382567,
-      "finished_ms": null,
-      "wall_seconds": 9542.018,
-      "preemptions": 2,
+      "finished_ms": 1789108575265,
+      "wall_seconds": 13192.698,
+      "preemptions": 7,
       "failures": 0,
       "tasks": [
         {
           "task": "/bizon/sparsa-sequence-pair-40m-20260911/0",
-          "state": "building",
+          "state": "killed",
           "gpu_count": 8,
           "gpu_variant": "H100",
           "attempts": [
@@ -53,12 +53,86 @@
             {
               "number": 3,
               "uid": "debe2b8ad6b936e4",
-              "state": "building",
-              "start_ms": null,
+              "state": "preempted",
+              "start_ms": 1789104940231,
+              "finish_ms": 1789104984703,
+              "running_seconds": 44.472,
+              "running_gpu_hours": 0.09882666666666667,
+              "node": "g1cbf32",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: baa7c9c2-d193-4ffb-abbc-19edb96b41a2, JobUID: a63cd1ea-5ffc-4ddb-a73a-e6985377c28f) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 4,
+              "uid": "84d705045ef88767",
+              "state": "preempted",
+              "start_ms": 1789105348293,
+              "finish_ms": 1789105393107,
+              "running_seconds": 44.814,
+              "running_gpu_hours": 0.09958666666666667,
+              "node": "gaa0e72",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: d8c68f51-9889-4505-a8f7-431c0118d68e, JobUID: 74d3170b-9a8e-4458-9712-2623e89409b1) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 5,
+              "uid": "1f14bb4c9a19ec2c",
+              "state": "preempted",
+              "start_ms": 1789105714010,
+              "finish_ms": 1789105758010,
+              "running_seconds": 44.0,
+              "running_gpu_hours": 0.09777777777777778,
+              "node": "g5ba762",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: f4afa3e2-801d-4a24-90a9-a76b939c7163, JobUID: 1cda39ed-9bf3-4c6f-bcdb-9f0c9e349093) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 6,
+              "uid": "19e56b4ef9eee6b7",
+              "state": "preempted",
+              "start_ms": 1789105785689,
+              "finish_ms": 1789107518112,
+              "running_seconds": 1732.423,
+              "running_gpu_hours": 3.8498288888888887,
+              "node": "gb95c40",
+              "terminal_reason": "WorkloadEvictedDueToPreempted: Preempted to accommodate a workload (UID: ddb8dd87-7713-4c4b-8cc1-0ed2a909ae68, JobUID: 3d3281d2-ebe1-4fce-bb0c-67ab3b01b4c6) due to prioritization in the ClusterQueue; preemptor path: /iris-cq; preemptee path: /iris-cq"
+            },
+            {
+              "number": 7,
+              "uid": "5d9d0b0f3c9a4637",
+              "state": "killed",
+              "start_ms": 1789107607852,
               "finish_ms": null,
-              "running_seconds": 0,
-              "running_gpu_hours": 0.0,
-              "node": "",
+              "running_seconds": 1028.866,
+              "running_gpu_hours": 2.2863688888888887,
+              "node": "gb960a0",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-sequence-pair-40m-20260911-r1",
+      "state": "running",
+      "submitted_ms": 1789108596564,
+      "finished_ms": null,
+      "wall_seconds": 40.154,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-sequence-pair-40m-20260911-r1/0",
+          "state": "running",
+          "gpu_count": 8,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "8482ddb2049138a4",
+              "state": "running",
+              "start_ms": 1789108606761,
+              "finish_ms": null,
+              "running_seconds": 29.957,
+              "running_gpu_hours": 0.06657111111111111,
+              "node": "gb960a0",
               "terminal_reason": ""
             }
           ]

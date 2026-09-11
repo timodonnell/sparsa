@@ -1,0 +1,42 @@
+{
+  "observed_utc": "2026-09-11T06:41:57.710719+00:00",
+  "original_job": "/bizon/sparsa-sequence-pair-40m-20260911",
+  "replacement_job": "/bizon/sparsa-sequence-pair-40m-20260911-r1",
+  "original_termination": "Intentional cancellation after durable step 22000; pod deletion verified before replacement submission",
+  "pod": "iris-bizon-sparsa-sequence-pair-40m-b71ce35d-0-8482ddb2049138a4",
+  "priority": "batch",
+  "world_size": 8,
+  "resume": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-22000.pt",
+  "checkpoint_every": 500,
+  "eval_every": 2000,
+  "latest": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-22500.pt",
+    "step": 22500,
+    "validation": null
+  },
+  "best": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-22000.pt",
+    "step": 22000,
+    "validation": {
+      "r_precision": 0.21812972150369092,
+      "long_r_precision": 0.17377456212733547,
+      "proteins": 97,
+      "inference_seconds": 3.3210891692433506,
+      "step": 22000,
+      "seconds": 879.9885542478878
+    }
+  },
+  "checkpoint_object": {
+    "size": 640675239,
+    "exists": true
+  },
+  "code_sha256": {
+    "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+    "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+    "sparsa/data.py": "c10e40ff79e8694940347c254772516c622a653fefee68b3cdd1bed2edeaa432",
+    "sparsa/evaluate.py": "5d4145353db6447a90dae3c80537d7a8ab9c39af3ceb673a8212a860dc36defd",
+    "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+    "sparsa/train.py": "90d9572c649c72a9d2e8ba287bb97662afb0c9d0e0521bd7a489238def9e345e",
+    "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+  }
+}
