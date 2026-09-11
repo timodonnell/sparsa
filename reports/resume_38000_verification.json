@@ -1,0 +1,32 @@
+{
+  "observed_utc": "2026-09-11T08:47:46.217507+00:00",
+  "job": "/bizon/sparsa-sequence-pair-40m-20260911-r1",
+  "pod": "iris-bizon-sparsa-sequence-pair-40m-b71ce35d-3-66c1fa2cc0a4ed53",
+  "restored_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-38000.pt",
+  "world_size": 8,
+  "priority": "batch",
+  "checkpoint_every": 500,
+  "latest_logged_step": 38200,
+  "recent_steps": [
+    {
+      "step": 38100,
+      "loss": 0.0979904755949974,
+      "grad_norm": 0.03025921806693077,
+      "lr": 0.0002890202012410025,
+      "seconds": 45.60426655318588,
+      "seconds_per_step": 0.4560426636599004,
+      "examples": 2438400,
+      "peak_gpu_gb": 51.35123252868652
+    },
+    {
+      "step": 38200,
+      "loss": 0.08992856740951538,
+      "grad_norm": 0.04206487536430359,
+      "lr": 0.00028849231638418903,
+      "seconds": 89.20100234728307,
+      "seconds_per_step": 0.43596735794097186,
+      "examples": 2444800,
+      "peak_gpu_gb": 51.35123252868652
+    }
+  ]
+}

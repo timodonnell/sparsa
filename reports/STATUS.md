@@ -1,6 +1,6 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 08:38 UTC: implementation and pilots complete; production
+Status at 2026-09-11 08:47 UTC: implementation and pilots complete; production
 main training has reached step 38000 and Iris is retrying batch preemptions. Final test/de novo
 evaluation has not been run.
 
@@ -69,7 +69,9 @@ evaluation has not been run.
   or coordinator change was needed.
   Attempt 1 was preempted again shortly after restoration. At 08:39 UTC, attempt
   2 was waiting in SchedulingGated for batch capacity; the job and coordinator
-  remain live. Continue discovering current pods by label.
+  remain live. Attempt 2 was also preempted; attempt 3 subsequently obtained
+  eight batch H100s, restored step 38000, and advanced past step 38100. See
+  `resume_38000_verification.json`. Continue discovering current pods by label.
 - The original approximate 11 a.m. Eastern completion estimate is now conditional
   on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
   Final artifacts will preserve resume provenance; completion elapsed time is
