@@ -93,7 +93,7 @@ $$
 \frac{w(t)}{|E\setminus O|}
 \sum_{e\in E\setminus O}
 \mathbf1\{X_{t,e}=\mathrm{MASK}\}
-\operatorname{CE}\!\left(C_e,f_{\theta,e}(S,X_t,O,C_O,t)\right)
+\mathrm{CE}\!\left(C_e,f_{\theta,e}(S,X_t,O,C_O,t)\right)
 \right],
 \quad
 w(t)=\frac{-\alpha'(t)}{1-\alpha(t)}.
