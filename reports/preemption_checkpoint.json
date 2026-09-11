@@ -1,0 +1,28 @@
+{
+  "latest": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-18000.pt",
+    "step": 18000,
+    "validation": {
+      "r_precision": 0.20973546267872656,
+      "long_r_precision": 0.16659496300588716,
+      "proteins": 97,
+      "inference_seconds": 2.359362429007888,
+      "step": 18000,
+      "seconds": 7949.298403175548
+    }
+  },
+  "best": {
+    "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-16000.pt",
+    "step": 16000,
+    "validation": {
+      "r_precision": 0.21082721352430903,
+      "long_r_precision": 0.16319823589813645,
+      "proteins": 97,
+      "inference_seconds": 2.3554027481004596,
+      "step": 16000,
+      "seconds": 7065.484898848459
+    }
+  },
+  "latest_checkpoint_exists": true,
+  "completed": false
+}

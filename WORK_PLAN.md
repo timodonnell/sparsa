@@ -29,9 +29,9 @@ and durable artifacts stay on CoreWeave S3 alongside compute. The eventual
 autoresearch extension can use the same config, validation, and run artifact
 contracts. Completion requires actual training and measured evaluation results.
 
-## Execution status (2026-09-11 04:40 UTC)
+## Execution status (2026-09-11 05:32 UTC)
 
-Stages 1–4 are complete. The selected 40M network is training on 8 H100s at batch
-priority, using the verified decontaminated teacher corpus. Stage 5 is active;
+Stages 1–4 are complete. The selected 40M network is queued to resume on 8 H100s at batch
+priority after preemption, using the verified decontaminated teacher corpus. Stage 5 is active;
 held-out evaluation and final artifacts (stage 6) remain pending. See
 `reports/STATUS.md` and the machine-readable pilot reports for exact evidence.

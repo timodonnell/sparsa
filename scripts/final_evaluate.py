@@ -146,6 +146,13 @@ def main():
     (local / "evaluation_manifest.json").write_text(json.dumps(result, indent=2))
     for name in ("provenance.json", "training_log.json", "complete.json"):
         (local / ("training_" + name)).write_bytes(fs.cat_file(root + "/" + name))
+    resumes = [
+        json.loads(fs.cat_file(path))
+        for path in fs.glob(root + "/resume-step-*-provenance.json")
+    ]
+    (local / "training_resumes.json").write_text(
+        json.dumps(sorted(resumes, key=lambda r: r["started_utc"]), indent=2)
+    )
     validation_history = [
         json.loads(fs.cat_file(path))
         for path in fs.glob(root + "/validation/step-*.json")

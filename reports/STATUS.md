@@ -1,13 +1,15 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 04:40 UTC: implementation and pilots complete; production
-training is running. Final test/de novo evaluation has not been run.
+Status at 2026-09-11 05:32 UTC: implementation and pilots complete; production
+training is queued for batch capacity after preemption. Final test/de novo
+evaluation has not been run.
 
 ## Current production job
 
 - Iris job: `/bizon/sparsa-sequence-pair-40m-20260911`
 - Cluster config: `/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml`
-- Pod: `iris-bizon-sparsa-sequence-pair-40m-b5a43384-0-466eb34f320305e6`
+- Pod label: `iris.job_id=bizon.sparsa-sequence-pair-40m-20260911`.
+  Discover the current pod with this label; pod names change on preemption.
 - Priority: **batch**, root job, one node / 8 H100s.
 - Output: `s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911`
 - Config: `configs/sequence_pair.yaml`; 39,994,657 parameters, crop 384,
@@ -20,9 +22,19 @@ training is running. Final test/de novo evaluation has not been run.
   data-cursor restoration. Checkpoints retain optimizer and RNG state.
 - Production validation: step 2000 R-precision 0.160246; step 4000 0.174896;
   step 6000 0.184494; step 8000 0.192853; step 10000 0.196659;
-  step 12000 0.202191; step 14000 0.206153 (long-range 0.158005).
-  The first hour completed without failures or preemptions. At measured speed,
-  the 100,000-step run is expected to finish around 11 a.m. Eastern September 11.
+  step 12000 0.202191; step 14000 0.206153; step 16000 0.210827;
+  step 18000 0.209735 (long-range 0.166595). The raw selection remains step 16000.
+- At about 05:23 UTC the original attempt was preempted for a higher-priority
+  workload. A replacement was also preempted; there was one intervening pod-deletion
+  retry. Attempt 3 is SchedulingGated, awaiting eight GPUs at batch priority.
+  The CPU-only checkpoint audit confirmed that step 18000 is durable and that
+  the best pointer still selects step 16000. See `preemption_checkpoint.json`.
+  About 1,900 unsaved steps must be replayed. Resume has not yet been verified
+  on a replacement GPU attempt; the coordinator remains live and waiting.
+- The original approximate 11 a.m. Eastern completion estimate is now conditional
+  on batch capacity. Keep priority at batch and allow Iris to schedule the retry.
+  Final artifacts will preserve resume provenance; completion elapsed time is
+  for the final attempt, not total campaign compute or wall-clock time.
 
 ## Evidence and choices
 
@@ -107,7 +119,10 @@ Use read-only Kubernetes logs instead:
 
 ```bash
 kubectl --kubeconfig ~/.kube/coreweave-iris --context marin-rn02a_RNO2A -n iris \
-  logs iris-bizon-sparsa-sequence-pair-40m-b5a43384-0-466eb34f320305e6 -c task --tail=20
+  get pods -l iris.job_id=bizon.sparsa-sequence-pair-40m-20260911 -o wide
+# Then use the returned current pod name:
+kubectl --kubeconfig ~/.kube/coreweave-iris --context marin-rn02a_RNO2A -n iris \
+  logs CURRENT_POD -c task --tail=20
 ```
 
 Only inspect/cancel this project's own jobs. Do not restart the shared cluster.
