@@ -1,0 +1,42 @@
+[
+  {
+    "batch_size": 4,
+    "crop": 384,
+    "checkpointing": true,
+    "seconds_per_step": 0.31656646199990063,
+    "proteins_per_second": 12.635577296249581,
+    "peak_gpu_gb": 7.1752753257751465
+  },
+  {
+    "batch_size": 8,
+    "crop": 384,
+    "checkpointing": true,
+    "seconds_per_step": 0.611690276581794,
+    "proteins_per_second": 13.078514251861344,
+    "peak_gpu_gb": 13.82584285736084
+  },
+  {
+    "batch_size": 16,
+    "crop": 384,
+    "checkpointing": true,
+    "seconds_per_step": 1.1583112741820514,
+    "proteins_per_second": 13.813212697336905,
+    "peak_gpu_gb": 27.133081436157227
+  },
+  {
+    "batch_size": 8,
+    "crop": 384,
+    "checkpointing": false,
+    "seconds_per_step": 0.42092174049466846,
+    "proteins_per_second": 19.005908296868622,
+    "peak_gpu_gb": 51.044503688812256
+  },
+  {
+    "batch_size": 8,
+    "crop": 512,
+    "checkpointing": true,
+    "seconds_per_step": 1.0442199741955847,
+    "proteins_per_second": 7.661221004858486,
+    "peak_gpu_gb": 24.13793182373047
+  }
+]

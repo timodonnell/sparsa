@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Sparsa runtime artifacts
+.tools/
+outputs/
+_scratch/
+*.pt
+*.npz
+data/*_shards.json
+
+*.partial
+
+/outputs

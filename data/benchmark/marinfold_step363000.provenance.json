@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/Open-Athena/MarinFold",
+  "revision": "7a18dd5158e71b0db8d782be77cc4b9a6d59c8df",
+  "source": "experiments/exp232_sweep_cv1_decontam/evals/2026-08-24_rollout_v2/data/coreweave_results/marinfold_precision.csv.gz",
+  "source_sha256": "1709007bb591bc61593d1638173a9a968df2be78490a5a884a0592f04e7516f4",
+  "filtered_sha256": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+  "ground_truth_sha256": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+  "covered_splits": {
+    "eval-val": 97,
+    "eval-denovo": 19
+  },
+  "unavailable_splits": [
+    "eval-test"
+  ],
+  "readout": "100 rollouts, temperature 1.0, top_p 0.95, contact multiplier 6; terminating rollout vote frequencies",
+  "candidate_true_top_counts_match_frozen_baselines": true
+}

@@ -1,0 +1,16 @@
+{
+  "afdb": {
+    "rows": 3963003,
+    "truncated": 229,
+    "retained": 3962774,
+    "retained_residues": 1024372454,
+    "retained_contacts": 782218323
+  },
+  "esm": {
+    "rows": 65553178,
+    "truncated": 0,
+    "retained": 65553178,
+    "retained_residues": 15523301580,
+    "retained_contacts": 12802113801
+  }
+}

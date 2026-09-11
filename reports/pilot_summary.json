@@ -1,0 +1,639 @@
+{
+  "pilot-20260911": {
+    "best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-20260911/checkpoints/step-2000.pt",
+      "step": 2000,
+      "validation": {
+        "r_precision": 0.1304466322273902,
+        "long_r_precision": 0.08673146397531051,
+        "proteins": 97,
+        "inference_seconds": 1.007143403403461,
+        "step": 2000,
+        "seconds": 308.2385677471757
+      }
+    },
+    "latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-20260911/checkpoints/step-3000.pt",
+      "step": 3000,
+      "validation": {
+        "r_precision": 0.1288610324671763,
+        "long_r_precision": 0.08596156441470443,
+        "proteins": 97,
+        "inference_seconds": 0.9959069713950157,
+        "step": 3000,
+        "seconds": 471.63152904156595
+      }
+    },
+    "complete": {
+      "step": 3000,
+      "best_validation_r_precision": 0.1304466322273902,
+      "elapsed_seconds": 496.23698654491454,
+      "initial_step": 0
+    },
+    "provenance": {
+      "parameters": 5030641,
+      "model_config": {
+        "sequence_dim": 256,
+        "sequence_layers": 6,
+        "heads": 8,
+        "pair_dim": 48,
+        "pair_layers": 8,
+        "triangle_every": 4,
+        "triangle_dim": 24,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "training_config": {
+        "seed": 17,
+        "model": {
+          "sequence_dim": 256,
+          "sequence_layers": 6,
+          "heads": 8,
+          "pair_dim": 48,
+          "pair_layers": 8,
+          "triangle_every": 4,
+          "triangle_dim": 24,
+          "gradient_checkpointing": true
+        },
+        "batch_size": 4,
+        "accumulation": 2,
+        "crop": 256,
+        "workers": 4,
+        "steps": 3000,
+        "warmup": 200,
+        "lr": 0.0005,
+        "weight_decay": 0.01,
+        "pos_weight": 4.0,
+        "ema_decay": 0.995,
+        "eval_every": 500,
+        "log_every": 25
+      },
+      "world_size": 4
+    },
+    "validation": [
+      {
+        "r_precision": 0.11837272537007656,
+        "long_r_precision": 0.0792933514683956,
+        "proteins": 97,
+        "inference_seconds": 1.0107718920335174,
+        "step": 1000,
+        "seconds": 154.24427391495556
+      },
+      {
+        "r_precision": 0.12404218546890053,
+        "long_r_precision": 0.08293200237620929,
+        "proteins": 97,
+        "inference_seconds": 1.0025900332257152,
+        "step": 1500,
+        "seconds": 229.43975602462888
+      },
+      {
+        "r_precision": 0.1304466322273902,
+        "long_r_precision": 0.08673146397531051,
+        "proteins": 97,
+        "inference_seconds": 1.007143403403461,
+        "step": 2000,
+        "seconds": 308.2385677471757
+      },
+      {
+        "r_precision": 0.12927724087307685,
+        "long_r_precision": 0.0840966020349955,
+        "proteins": 97,
+        "inference_seconds": 1.0172020010650158,
+        "step": 2500,
+        "seconds": 381.8607697645202
+      },
+      {
+        "r_precision": 0.1288610324671763,
+        "long_r_precision": 0.08596156441470443,
+        "proteins": 97,
+        "inference_seconds": 0.9959069713950157,
+        "step": 3000,
+        "seconds": 471.63152904156595
+      },
+      {
+        "r_precision": 0.11083780799813649,
+        "long_r_precision": 0.0721269612055852,
+        "proteins": 97,
+        "inference_seconds": 1.73821612726897,
+        "step": 500,
+        "seconds": 79.25920119974762
+      }
+    ]
+  },
+  "pilot-no-triangle-20260911": {
+    "best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-no-triangle-20260911/checkpoints/step-2500.pt",
+      "step": 2500,
+      "validation": {
+        "r_precision": 0.1303555402559706,
+        "long_r_precision": 0.0876670832981189,
+        "proteins": 97,
+        "inference_seconds": 0.8826990639790893,
+        "step": 2500,
+        "seconds": 320.1717662392184
+      }
+    },
+    "latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-no-triangle-20260911/checkpoints/step-2500.pt",
+      "step": 2500,
+      "validation": {
+        "r_precision": 0.1303555402559706,
+        "long_r_precision": 0.0876670832981189,
+        "proteins": 97,
+        "inference_seconds": 0.8826990639790893,
+        "step": 2500,
+        "seconds": 320.1717662392184
+      }
+    },
+    "provenance": {
+      "parameters": 5013841,
+      "model_config": {
+        "sequence_dim": 256,
+        "sequence_layers": 6,
+        "heads": 8,
+        "pair_dim": 48,
+        "pair_layers": 8,
+        "triangle_every": 0,
+        "triangle_dim": 24,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "training_config": {
+        "seed": 17,
+        "model": {
+          "sequence_dim": 256,
+          "sequence_layers": 6,
+          "heads": 8,
+          "pair_dim": 48,
+          "pair_layers": 8,
+          "triangle_every": 0,
+          "triangle_dim": 24,
+          "gradient_checkpointing": true
+        },
+        "batch_size": 4,
+        "accumulation": 2,
+        "crop": 256,
+        "workers": 4,
+        "steps": 3000,
+        "warmup": 200,
+        "lr": 0.0005,
+        "weight_decay": 0.01,
+        "pos_weight": 4.0,
+        "ema_decay": 0.995,
+        "eval_every": 500,
+        "log_every": 25
+      },
+      "world_size": 4
+    },
+    "validation": [
+      {
+        "r_precision": 0.11695307055520289,
+        "long_r_precision": 0.08198305732916708,
+        "proteins": 97,
+        "inference_seconds": 0.8773253858089447,
+        "step": 1000,
+        "seconds": 130.51868781913072
+      },
+      {
+        "r_precision": 0.12258437380592498,
+        "long_r_precision": 0.08348220355940598,
+        "proteins": 97,
+        "inference_seconds": 0.8769496651366353,
+        "step": 1500,
+        "seconds": 193.51640514377505
+      },
+      {
+        "r_precision": 0.12731132163843534,
+        "long_r_precision": 0.08503176845752,
+        "proteins": 97,
+        "inference_seconds": 0.8739000707864761,
+        "step": 2000,
+        "seconds": 257.043095019646
+      },
+      {
+        "r_precision": 0.1303555402559706,
+        "long_r_precision": 0.0876670832981189,
+        "proteins": 97,
+        "inference_seconds": 0.8826990639790893,
+        "step": 2500,
+        "seconds": 320.1717662392184
+      },
+      {
+        "r_precision": 0.10878161348781253,
+        "long_r_precision": 0.07241597894916023,
+        "proteins": 97,
+        "inference_seconds": 1.5464808214455843,
+        "step": 500,
+        "seconds": 66.1918011661619
+      }
+    ]
+  },
+  "pilot-large-20260911": {
+    "best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-large-20260911/checkpoints/step-3000.pt",
+      "step": 3000,
+      "validation": {
+        "r_precision": 0.14970858275614557,
+        "long_r_precision": 0.11027470508867257,
+        "proteins": 97,
+        "inference_seconds": 2.409716791473329,
+        "step": 3000,
+        "seconds": 1182.7472988832742
+      }
+    },
+    "latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-large-20260911/checkpoints/step-3000.pt",
+      "step": 3000,
+      "validation": {
+        "r_precision": 0.14970858275614557,
+        "long_r_precision": 0.11027470508867257,
+        "proteins": 97,
+        "inference_seconds": 2.409716791473329,
+        "step": 3000,
+        "seconds": 1182.7472988832742
+      }
+    },
+    "complete": {
+      "step": 3000,
+      "best_validation_r_precision": 0.14970858275614557,
+      "elapsed_seconds": 1189.634870953858,
+      "initial_step": 0
+    },
+    "provenance": {
+      "parameters": 39994657,
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "training_config": {
+        "seed": 17,
+        "model": {
+          "sequence_dim": 512,
+          "sequence_layers": 12,
+          "heads": 8,
+          "pair_dim": 96,
+          "pair_layers": 16,
+          "triangle_every": 4,
+          "triangle_dim": 48,
+          "gradient_checkpointing": true
+        },
+        "batch_size": 4,
+        "accumulation": 2,
+        "crop": 256,
+        "workers": 4,
+        "steps": 3000,
+        "warmup": 200,
+        "lr": 0.0005,
+        "weight_decay": 0.01,
+        "pos_weight": 4.0,
+        "ema_decay": 0.995,
+        "eval_every": 500,
+        "log_every": 25
+      },
+      "world_size": 4
+    },
+    "validation": [
+      {
+        "r_precision": 0.13066369624203175,
+        "long_r_precision": 0.09392935438335022,
+        "proteins": 97,
+        "inference_seconds": 2.4216573610901833,
+        "step": 1000,
+        "seconds": 420.5749395750463
+      },
+      {
+        "r_precision": 0.1382232544053719,
+        "long_r_precision": 0.09935905159165542,
+        "proteins": 97,
+        "inference_seconds": 2.4199731647968292,
+        "step": 1500,
+        "seconds": 610.897034025751
+      },
+      {
+        "r_precision": 0.14367927517393736,
+        "long_r_precision": 0.10465487739011854,
+        "proteins": 97,
+        "inference_seconds": 2.4164397129788995,
+        "step": 2000,
+        "seconds": 800.6837984304875
+      },
+      {
+        "r_precision": 0.14727894868451313,
+        "long_r_precision": 0.10834980786935564,
+        "proteins": 97,
+        "inference_seconds": 2.439557259902358,
+        "step": 2500,
+        "seconds": 992.0680122999474
+      },
+      {
+        "r_precision": 0.14970858275614557,
+        "long_r_precision": 0.11027470508867257,
+        "proteins": 97,
+        "inference_seconds": 2.409716791473329,
+        "step": 3000,
+        "seconds": 1182.7472988832742
+      },
+      {
+        "r_precision": 0.12205293674539458,
+        "long_r_precision": 0.08535525041970421,
+        "proteins": 97,
+        "inference_seconds": 3.3821137454360723,
+        "step": 500,
+        "seconds": 192.82896364107728
+      }
+    ]
+  },
+  "pilot-weight16-20260911": {
+    "provenance": {
+      "parameters": 5030641,
+      "model_config": {
+        "sequence_dim": 256,
+        "sequence_layers": 6,
+        "heads": 8,
+        "pair_dim": 48,
+        "pair_layers": 8,
+        "triangle_every": 4,
+        "triangle_dim": 24,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "training_config": {
+        "seed": 17,
+        "model": {
+          "sequence_dim": 256,
+          "sequence_layers": 6,
+          "heads": 8,
+          "pair_dim": 48,
+          "pair_layers": 8,
+          "triangle_every": 4,
+          "triangle_dim": 24,
+          "gradient_checkpointing": true
+        },
+        "batch_size": 4,
+        "accumulation": 2,
+        "crop": 256,
+        "workers": 4,
+        "steps": 3000,
+        "warmup": 200,
+        "lr": 0.0005,
+        "weight_decay": 0.01,
+        "pos_weight": 16.0,
+        "ema_decay": 0.995,
+        "eval_every": 500,
+        "log_every": 25
+      },
+      "world_size": 4
+    },
+    "validation": []
+  },
+  "pilot-v2-weight4-20260911": {
+    "best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-v2-weight4-20260911/checkpoints/step-1500.pt",
+      "step": 1500,
+      "validation": {
+        "r_precision": 0.12532137073643165,
+        "long_r_precision": 0.08238945900701101,
+        "proteins": 97,
+        "inference_seconds": 1.0162621038034558,
+        "step": 1500,
+        "seconds": 206.3102127155289
+      }
+    },
+    "latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-v2-weight4-20260911/checkpoints/step-2000.pt",
+      "step": 2000,
+      "validation": {
+        "r_precision": 0.12526345365302227,
+        "long_r_precision": 0.08552695017492133,
+        "proteins": 97,
+        "inference_seconds": 1.0152336470782757,
+        "step": 2000,
+        "seconds": 277.375917294994
+      }
+    },
+    "complete": {
+      "step": 2000,
+      "best_validation_r_precision": 0.12532137073643165,
+      "elapsed_seconds": 279.20782920811325,
+      "initial_step": 0
+    },
+    "provenance": {
+      "parameters": 5030641,
+      "model_config": {
+        "sequence_dim": 256,
+        "sequence_layers": 6,
+        "heads": 8,
+        "pair_dim": 48,
+        "pair_layers": 8,
+        "triangle_every": 4,
+        "triangle_dim": 24,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "training_config": {
+        "seed": 17,
+        "model": {
+          "sequence_dim": 256,
+          "sequence_layers": 6,
+          "heads": 8,
+          "pair_dim": 48,
+          "pair_layers": 8,
+          "triangle_every": 4,
+          "triangle_dim": 24,
+          "gradient_checkpointing": true
+        },
+        "batch_size": 4,
+        "accumulation": 2,
+        "crop": 256,
+        "workers": 4,
+        "steps": 2000,
+        "warmup": 200,
+        "lr": 0.0005,
+        "weight_decay": 0.01,
+        "pos_weight": 4.0,
+        "ema_decay": 0.995,
+        "eval_every": 500,
+        "log_every": 25
+      },
+      "world_size": 4
+    },
+    "validation": [
+      {
+        "r_precision": 0.12088585729484948,
+        "long_r_precision": 0.08060074262880831,
+        "proteins": 97,
+        "inference_seconds": 1.0149419652298093,
+        "step": 1000,
+        "seconds": 138.59115133155137
+      },
+      {
+        "r_precision": 0.12532137073643165,
+        "long_r_precision": 0.08238945900701101,
+        "proteins": 97,
+        "inference_seconds": 1.0162621038034558,
+        "step": 1500,
+        "seconds": 206.3102127155289
+      },
+      {
+        "r_precision": 0.12526345365302227,
+        "long_r_precision": 0.08552695017492133,
+        "proteins": 97,
+        "inference_seconds": 1.0152336470782757,
+        "step": 2000,
+        "seconds": 277.375917294994
+      },
+      {
+        "r_precision": 0.11127492700154545,
+        "long_r_precision": 0.07447182013076793,
+        "proteins": 97,
+        "inference_seconds": 1.766835194081068,
+        "step": 500,
+        "seconds": 70.39183949958533
+      }
+    ]
+  },
+  "pilot-v2-weight16-20260911": {
+    "best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-v2-weight16-20260911/checkpoints/step-2000.pt",
+      "step": 2000,
+      "validation": {
+        "r_precision": 0.1237643557746117,
+        "long_r_precision": 0.08126294579764912,
+        "proteins": 97,
+        "inference_seconds": 0.9937605503946543,
+        "step": 2000,
+        "seconds": 272.97862441744655
+      }
+    },
+    "latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-v2-weight16-20260911/checkpoints/step-2000.pt",
+      "step": 2000,
+      "validation": {
+        "r_precision": 0.1237643557746117,
+        "long_r_precision": 0.08126294579764912,
+        "proteins": 97,
+        "inference_seconds": 0.9937605503946543,
+        "step": 2000,
+        "seconds": 272.97862441744655
+      }
+    },
+    "complete": {
+      "step": 2000,
+      "best_validation_r_precision": 0.1237643557746117,
+      "elapsed_seconds": 275.82840409502387,
+      "initial_step": 0
+    },
+    "provenance": {
+      "parameters": 5030641,
+      "model_config": {
+        "sequence_dim": 256,
+        "sequence_layers": 6,
+        "heads": 8,
+        "pair_dim": 48,
+        "pair_layers": 8,
+        "triangle_every": 4,
+        "triangle_dim": 24,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "training_config": {
+        "seed": 17,
+        "model": {
+          "sequence_dim": 256,
+          "sequence_layers": 6,
+          "heads": 8,
+          "pair_dim": 48,
+          "pair_layers": 8,
+          "triangle_every": 4,
+          "triangle_dim": 24,
+          "gradient_checkpointing": true
+        },
+        "batch_size": 4,
+        "accumulation": 2,
+        "crop": 256,
+        "workers": 4,
+        "steps": 2000,
+        "warmup": 200,
+        "lr": 0.0005,
+        "weight_decay": 0.01,
+        "pos_weight": 16.0,
+        "ema_decay": 0.995,
+        "eval_every": 500,
+        "log_every": 25
+      },
+      "world_size": 4
+    },
+    "validation": [
+      {
+        "r_precision": 0.11816522698516038,
+        "long_r_precision": 0.07721829225566089,
+        "proteins": 97,
+        "inference_seconds": 0.9945810958743095,
+        "step": 1000,
+        "seconds": 138.95734118949622
+      },
+      {
+        "r_precision": 0.12347287882929311,
+        "long_r_precision": 0.08030497636884619,
+        "proteins": 97,
+        "inference_seconds": 0.9919058606028557,
+        "step": 1500,
+        "seconds": 206.13655529916286
+      },
+      {
+        "r_precision": 0.1237643557746117,
+        "long_r_precision": 0.08126294579764912,
+        "proteins": 97,
+        "inference_seconds": 0.9937605503946543,
+        "step": 2000,
+        "seconds": 272.97862441744655
+      },
+      {
+        "r_precision": 0.10945062128495636,
+        "long_r_precision": 0.07061973819115486,
+        "proteins": 97,
+        "inference_seconds": 1.7272936161607504,
+        "step": 500,
+        "seconds": 70.90937027242035
+      }
+    ]
+  },
+  "resume-smoke-20260911": {
+    "latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/resume-smoke-20260911/checkpoints/step-501.pt",
+      "step": 501,
+      "validation": {
+        "r_precision": 0.11115012857192641,
+        "long_r_precision": 0.0747741238183625,
+        "proteins": 97,
+        "inference_seconds": 1.8194860545918345,
+        "step": 501,
+        "seconds": 6.551035481505096
+      }
+    },
+    "complete": {
+      "step": 501,
+      "best_validation_r_precision": 0.11127492700154545,
+      "elapsed_seconds": 8.710012052208185,
+      "initial_step": 500
+    },
+    "validation": [
+      {
+        "r_precision": 0.11115012857192641,
+        "long_r_precision": 0.0747741238183625,
+        "proteins": 97,
+        "inference_seconds": 1.8194860545918345,
+        "step": 501,
+        "seconds": 6.551035481505096
+      }
+    ]
+  }
+}

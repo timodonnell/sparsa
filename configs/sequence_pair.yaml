@@ -1,0 +1,22 @@
+seed: 117
+model:
+  sequence_dim: 512
+  sequence_layers: 12
+  heads: 8
+  pair_dim: 96
+  pair_layers: 16
+  triangle_every: 4
+  triangle_dim: 48
+  gradient_checkpointing: false
+batch_size: 8
+accumulation: 1
+crop: 384
+workers: 4
+steps: 100000
+warmup: 1000
+lr: 0.0004
+weight_decay: 0.01
+pos_weight: 4.0
+ema_decay: 0.999
+eval_every: 2000
+log_every: 100

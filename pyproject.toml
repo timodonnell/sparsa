@@ -1,0 +1,19 @@
+[project]
+name = "sparsa"
+version = "0.1.0"
+description = "Sequence-only protein contact prediction distilled from structure teachers"
+requires-python = ">=3.12"
+dependencies = ["torch==2.10.0", "numpy>=2,<3", "pyarrow>=19", "fsspec", "s3fs", "scikit-learn>=1.6", "pandas>=2", "pyyaml>=6"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.11"]
+
+[project.scripts]
+sparsa = "sparsa.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sparsa"]

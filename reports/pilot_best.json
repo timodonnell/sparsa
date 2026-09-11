@@ -1,0 +1,12 @@
+{
+  "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/pilot-20260911/checkpoints/step-2000.pt",
+  "step": 2000,
+  "validation": {
+    "r_precision": 0.1304466322273902,
+    "long_r_precision": 0.08673146397531051,
+    "proteins": 97,
+    "inference_seconds": 1.007143403403461,
+    "step": 2000,
+    "seconds": 308.2385677471757
+  }
+}

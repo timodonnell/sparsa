@@ -1,0 +1,59 @@
+{
+  "marinfold": {
+    "repository": "https://github.com/Open-Athena/MarinFold",
+    "revision": "7a18dd5158e71b0db8d782be77cc4b9a6d59c8df"
+  },
+  "helico": {
+    "repository": "https://github.com/Open-Athena/helico",
+    "revision": "b10385d736673c81b10e70d1099962af6f2573c0"
+  },
+  "metric_source": "experiments/exp89_evals_contacts_v1_model_on_eval_set/compute_metrics.py",
+  "benchmark_source": "experiments/exp245_evals_foldbench_held_out_monomers/data",
+  "teacher_source": "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data",
+  "teacher_counts_before_sparsa_filter": {
+    "afdb": 3963003,
+    "esm": 65553178
+  },
+  "teacher_shards": {
+    "afdb": 2067,
+    "esm": 3338
+  },
+  "decontamination": "MarinFold exp225, >=30% identity over >=50% of the shorter sequence against the benchmark reference",
+  "contact_definition": {
+    "native_amino_acids": true,
+    "minimum_degree_in_metric": 0.001,
+    "minimum_sequence_separation": 6
+  },
+  "selection_split": "eval-val",
+  "scored_split_sizes": {
+    "eval-val": 97,
+    "eval-test": 217,
+    "eval-denovo": 19
+  },
+  "excluded_from_comparison": {
+    "8uxt_A": "MarinFold exp245 context-budget exclusion retained for the paired comparison"
+  },
+  "baseline_checkpoints": [
+    "exp232 decontaminated m2-p06 step145199",
+    "exp232 decontaminated m1-p02 step145199",
+    "exp199 contaminated cooldown step290400"
+  ],
+  "files": {
+    "data/benchmark/eval_sets.csv": {
+      "sha256": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861",
+      "bytes": 199548
+    },
+    "data/benchmark/gt_universe_scored.jsonl": {
+      "sha256": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+      "bytes": 6938887
+    },
+    "data/benchmark/marinfold_baselines.csv": {
+      "sha256": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+      "bytes": 2587963
+    },
+    "sparsa/vendor/marinfold_metrics.py": {
+      "sha256": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a",
+      "bytes": 8678
+    }
+  }
+}
