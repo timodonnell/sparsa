@@ -1,0 +1,35 @@
+name: architecture-v1
+gpu_hours: 32
+gpus: 4
+trial_timeout_seconds: 3600
+max_candidates: 12
+seeds: [17, 37]
+minimum_gain: 0.002
+maximum_long_regression: 0.002
+bootstrap_samples: 5000
+max_parameters: 100000000
+proposer_timeout_seconds: 900
+poll_seconds: 30
+training:
+  model:
+    sequence_dim: 512
+    sequence_layers: 12
+    heads: 8
+    pair_dim: 96
+    pair_layers: 16
+    triangle_every: 4
+    triangle_dim: 48
+    gradient_checkpointing: true
+  batch_size: 4
+  accumulation: 2
+  crop: 256
+  workers: 4
+  steps: 3000
+  warmup: 200
+  lr: 0.0005
+  weight_decay: 0.01
+  pos_weight: 4.0
+  ema_decay: 0.995
+  eval_every: 500
+  checkpoint_every: 250
+  log_every: 100

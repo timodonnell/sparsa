@@ -1,0 +1,92 @@
+{
+  "observed_utc": "2026-09-11T13:47:23.708355+00:00",
+  "purpose": "System integration only: two-step tiny-network runs do not measure architectural quality.",
+  "stage": "complete",
+  "trials": [
+    {
+      "id": "c000-s17",
+      "job": "/bizon/sparsa-ar-smoke-0911-c000-s17",
+      "state": "completed",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/smoke-0911/c000-s17",
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 0.01798888888888889,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 1,
+            "node": "gb960f0",
+            "running_seconds": 64.76,
+            "accounted_end_ms": 1789133977600,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c000-s37",
+      "job": "/bizon/sparsa-ar-smoke-0911-c000-s37",
+      "state": "completed",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/smoke-0911/c000-s37",
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 0.013089166666666667,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 1,
+            "node": "gb960f0",
+            "terminal_reason": "",
+            "running_seconds": 47.121,
+            "accounted_end_ms": 1789134103182,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    },
+    {
+      "id": "c001-s17",
+      "job": "/bizon/sparsa-ar-smoke-0911-c001-s17",
+      "state": "completed",
+      "out": "s3://marin-us-east-02a/marin/protein-structure/sparsa/autoresearch/smoke-0911/c001-s17",
+      "observation": {
+        "state": "succeeded",
+        "gpu_hours": 0.017731388888888887,
+        "unknown_attempts": 0,
+        "attempts": [
+          {
+            "attempt": 0,
+            "state": "succeeded",
+            "gpus": 1,
+            "node": "gb960f0",
+            "terminal_reason": "",
+            "running_seconds": 63.833,
+            "accounted_end_ms": 1789134244291,
+            "end_source": "attempt_finish"
+          }
+        ],
+        "preemptions": 0,
+        "failures": 0
+      }
+    }
+  ],
+  "baseline_seeds": [
+    "17",
+    "37"
+  ],
+  "candidate_decision": {
+    "reason": "screening_gain_below_threshold",
+    "gain": 0.003579520564179317
+  },
+  "champion": "c000",
+  "reserved_gpu_hours": 0.5,
+  "artifacts": "/data/sparsa-runtime/outputs/autoresearch-smoke"
+}

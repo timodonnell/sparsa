@@ -1,0 +1,106 @@
+{
+  "observed_utc": "2026-09-11T13:47:21.422640+00:00",
+  "running_gpu_hours": 0.04880944444444445,
+  "unmeasured_started_attempts": 0,
+  "estimated_finished_attempts": 0,
+  "jobs": [
+    {
+      "job": "/bizon/sparsa-ar-smoke-0911-c000-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789133903985,
+      "finished_ms": 1789133977600,
+      "wall_seconds": 73.615,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-smoke-0911-c000-s17/0",
+          "state": "succeeded",
+          "gpu_count": 1,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "460052e9c53a4911",
+              "state": "succeeded",
+              "start_ms": 1789133912840,
+              "finish_ms": 1789133977600,
+              "running_seconds": 64.76,
+              "accounted_end_ms": 1789133977600,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.01798888888888889,
+              "node": "gb960f0",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-smoke-0911-c000-s37",
+      "state": "succeeded",
+      "submitted_ms": 1789134046451,
+      "finished_ms": 1789134103182,
+      "wall_seconds": 56.731,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-smoke-0911-c000-s37/0",
+          "state": "succeeded",
+          "gpu_count": 1,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "823d1ca0effb6e95",
+              "state": "succeeded",
+              "start_ms": 1789134056061,
+              "finish_ms": 1789134103182,
+              "running_seconds": 47.121,
+              "accounted_end_ms": 1789134103182,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.013089166666666667,
+              "node": "gb960f0",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "job": "/bizon/sparsa-ar-smoke-0911-c001-s17",
+      "state": "succeeded",
+      "submitted_ms": 1789134172541,
+      "finished_ms": 1789134244291,
+      "wall_seconds": 71.75,
+      "preemptions": 0,
+      "failures": 0,
+      "tasks": [
+        {
+          "task": "/bizon/sparsa-ar-smoke-0911-c001-s17/0",
+          "state": "succeeded",
+          "gpu_count": 1,
+          "gpu_variant": "H100",
+          "attempts": [
+            {
+              "number": 0,
+              "uid": "4b91535a68d207ac",
+              "state": "succeeded",
+              "start_ms": 1789134180458,
+              "finish_ms": 1789134244291,
+              "running_seconds": 63.833,
+              "accounted_end_ms": 1789134244291,
+              "end_source": "attempt_finish",
+              "running_gpu_hours": 0.017731388888888887,
+              "node": "gb960f0",
+              "terminal_reason": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timing_definition": "Iris attempt started_at through finished_at; a missing final-attempt finish uses the job finish as a labelled estimate, or observation time only for a still-running attempt.",
+  "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing."
+}

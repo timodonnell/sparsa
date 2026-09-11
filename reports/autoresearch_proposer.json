@@ -1,0 +1,29 @@
+{
+  "observed_utc": "2026-09-11T13:47:23.708666+00:00",
+  "hypothesis": "Adding the final sequence layer's symmetric, per-head rotary attention scores to the initial pair representation may improve validation macro R-precision, especially for long-range contacts, by exposing learned residue interactions directly to the pair trunk. Keep all depths, widths, and training settings unchanged; this hypothesis is unmeasured.",
+  "model_source_sha256": "1eb23ad0cfc063c4ad82deb0c3bed967a7e3fb1fb59ff4e0668944da9ec75bc3",
+  "model_config": {
+    "sequence_dim": 512,
+    "sequence_layers": 12,
+    "heads": 8,
+    "pair_dim": 96,
+    "pair_layers": 16,
+    "triangle_every": 4,
+    "triangle_dim": 48,
+    "dropout": 0.0,
+    "gradient_checkpointing": true
+  },
+  "parameters": 39995441,
+  "cpu_contract_passed": true,
+  "gpu_quality_evaluated": false,
+  "usage": [
+    {
+      "input_tokens": 18109,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 3654,
+      "reasoning_output_tokens": 1008
+    }
+  ],
+  "artifacts": "/data/sparsa-runtime/outputs/autoresearch-proposer-check"
+}

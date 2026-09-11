@@ -11,6 +11,16 @@ symmetric pair network: sequence pair products, relative positions, dilated 2D
 convolutions, and gated triangle multiplication. It directly predicts a dense
 matrix, avoiding autoregressive contact-list generation.
 
+## Automated architecture research
+
+The [autoresearch controller](research/README.md) can continually propose model
+code changes, train them on Iris at batch priority, and retain improvements in
+validation R-precision. It uses isolated source snapshots, matched training
+exposure, two-seed confirmation, a compute allocation, and a persistent
+leaderboard. Test and de novo sets are excluded from the search. See
+[research/program.md](research/program.md) for the proposal instructions and
+[research/protocol.yaml](research/protocol.yaml) for the initial search budget.
+
 ## Setup and use
 
 ```bash
