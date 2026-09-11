@@ -1,6 +1,6 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 06:53 UTC: implementation and pilots complete; production
+Status at 2026-09-11 07:22 UTC: implementation and pilots complete; production
 training has resumed from step 22000 with more frequent recovery saves. Final test/de novo
 evaluation has not been run.
 
@@ -28,7 +28,9 @@ evaluation has not been run.
   step 18000 0.209735; step 20000 0.214023 (long-range 0.169089).
   Step 22000 reaches 0.218130 (long-range 0.173775).
   Step 24000 reaches 0.219253 (long-range 0.175950).
-  The raw selection is now step 24000.
+  Step 26000 reaches 0.220617 (long-range 0.177822).
+  Step 28000 reaches 0.223616 (long-range 0.182619).
+  The raw selection is now step 28000.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
