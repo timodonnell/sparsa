@@ -1,6 +1,7 @@
 """Resume the local training -> batch evaluation -> CPU recovery handoff.
 
-This coordinator submits no training jobs and never evaluates an unfinished run.
+This coordinator waits for main training, submits long-sequence finetuning,
+then evaluates only completed runs.
 Its journal and recovered weights belong under the ignored outputs directory.
 Run with the same --name to resume an interrupted coordinator without submitting
 duplicate evaluation jobs. A failed training/evaluation job requires inspection.

@@ -1,0 +1,63 @@
+{
+  "observed_utc": "2026-09-11T12:09:37.730502+00:00",
+  "pod": "iris-bizon-sparsa-sequence-pair-40m-b71ce35d-4-dafd679b50532f8a",
+  "startup": [
+    {
+      "model_config": {
+        "sequence_dim": 512,
+        "sequence_layers": 12,
+        "heads": 8,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": false
+      },
+      "training_config": {
+        "seed": 117,
+        "model": {
+          "sequence_dim": 512,
+          "sequence_layers": 12,
+          "heads": 8,
+          "pair_dim": 96,
+          "pair_layers": 16,
+          "triangle_every": 4,
+          "triangle_dim": 48,
+          "gradient_checkpointing": false
+        },
+        "batch_size": 8,
+        "accumulation": 1,
+        "crop": 384,
+        "workers": 4,
+        "steps": 100000,
+        "warmup": 1000,
+        "lr": 0.0004,
+        "weight_decay": 0.01,
+        "pos_weight": 4.0,
+        "ema_decay": 0.999,
+        "eval_every": 2000,
+        "checkpoint_every": 500,
+        "log_every": 100
+      },
+      "world_size": 8,
+      "parameters": 39994657,
+      "gpu": "NVIDIA H100 80GB HBM3",
+      "torch_version": "2.10.0+cu128",
+      "resume": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911/checkpoints/step-57500.pt",
+      "init_from": null,
+      "code_sha256": {
+        "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+        "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+        "sparsa/data.py": "c10e40ff79e8694940347c254772516c622a653fefee68b3cdd1bed2edeaa432",
+        "sparsa/evaluate.py": "5d4145353db6447a90dae3c80537d7a8ab9c39af3ceb673a8212a860dc36defd",
+        "sparsa/model.py": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+        "sparsa/train.py": "90d9572c649c72a9d2e8ba287bb97662afb0c9d0e0521bd7a489238def9e345e",
+        "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+      },
+      "iris_job": null,
+      "priority": "batch",
+      "started_utc": "2026-09-11T11:19:52Z"
+    }
+  ]
+}

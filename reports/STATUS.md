@@ -1,7 +1,7 @@
 # Sparsa training campaign
 
-Status at 2026-09-11 10:19 UTC: implementation and pilots complete; production
-main training is running and has reached step 50000 (half of the main schedule). Final test/de novo
+Status at 2026-09-11 12:13 UTC: implementation and pilots complete; production
+main training is running and has reached step 64000. Final test/de novo
 evaluation has not been run.
 
 ## Current production job
@@ -41,7 +41,14 @@ evaluation has not been run.
   Step 46000 reaches 0.233958 (long-range 0.190635).
   Step 48000 reaches 0.233856 (long-range 0.191529).
   Step 50000 reaches 0.236671 (long-range 0.192298).
-  The raw selection is now step 50000; selection uses overall R-precision.
+  Step 52000 reaches 0.238568 (long-range 0.196697).
+  Step 54000 reaches 0.239001 (long-range 0.196755).
+  Step 56000 reaches 0.240337 (long-range 0.198393).
+  Step 58000 reaches 0.236862 (long-range 0.198606).
+  Step 60000 reaches 0.238324 (long-range 0.197944).
+  Step 62000 reaches 0.238781 (long-range 0.199561).
+  Step 64000 reaches 0.239433 (long-range 0.200479).
+  The raw selection remains step 56000; selection uses overall R-precision.
 - At about 05:23 UTC the original attempt was preempted for a higher-priority
   workload. A replacement was also preempted; there was one intervening pod-deletion
   retry. Attempt 3 initially waited in SchedulingGated for eight batch GPUs.
@@ -78,6 +85,12 @@ evaluation has not been run.
   remain live. Attempt 2 was also preempted; attempt 3 subsequently obtained
   eight batch H100s, restored step 38000, and advanced past step 38100. See
   `resume_38000_verification.json`. Continue discovering current pods by label.
+- A fourth replacement-job preemption occurred after the durable step-57500
+  recovery checkpoint. Attempt 4 restored that checkpoint at 11:19:52 UTC on
+  eight batch H100s, then advanced through the validated step-64000 checkpoint.
+  See `resume_57500_verification.json`. The coordinator remains live and no
+  manual resubmission was needed. Main-run running resource time is about
+  69.36 H100-hours at the latest accounting snapshot, including replay.
 - Completion time depends on batch capacity. Keep priority at batch and allow
   Iris to schedule any retries.
   Final artifacts will preserve resume provenance; completion elapsed time is
