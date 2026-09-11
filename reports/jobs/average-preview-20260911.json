@@ -1,0 +1,43 @@
+{
+  "command": [
+    ".tools/iris/bin/iris",
+    "--config",
+    "/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml",
+    "job",
+    "run",
+    "--priority",
+    "batch",
+    "--enable-extra-resources",
+    "--gpu",
+    "H100x1",
+    "--cpu",
+    "4",
+    "--memory",
+    "16GB",
+    "--disk",
+    "10GB",
+    "--timeout",
+    "1800",
+    "--max-retries",
+    "2",
+    "--job-name",
+    "sparsa-average-preview-20260911",
+    "--no-wait",
+    "--",
+    "python",
+    "scripts/preview_average.py",
+    "--run",
+    "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911",
+    "--max-step",
+    "40000",
+    "--out",
+    "s3://marin-us-east-02a/marin/protein-structure/sparsa/diagnostics/average-preview-20260911"
+  ],
+  "priority": "batch",
+  "submitted_utc": "2026-09-11T09:14:30.301295+00:00",
+  "stdout": "/bizon/sparsa-average-preview-20260911\n",
+  "source_sha256": {
+    "scripts/preview_average.py": "4e5be8c3a21106a9b8aa10e95becce30ef2c28ace81830ab94c9a93ae75f66ed",
+    "scripts/average_checkpoints.py": "5d2614d54b32f7fa9ce89a4d1899eead2a5f1f27b9a799ffc8d58011032f6838"
+  }
+}

@@ -100,7 +100,8 @@ def main():
         records,
         device,
         local,
-        label=f"sparsa-{readout['run'].rsplit('/', 1)[-1]}-step-{state['step']}",
+        label=f"sparsa-{readout['run'].rsplit('/', 1)[-1]}-step-{state['step']}"
+        + ("-ema-average" if state.get("checkpoint_kind") == "ema_average" else ""),
         pos_weight=state["training_config"].get("pos_weight", 1.0),
     )
     paired = compare(
@@ -127,6 +128,9 @@ def main():
         ]
     }
     lean["source_checkpoint"] = selection["checkpoint"]
+    for key in ("checkpoint_kind", "averaged_checkpoints"):
+        if key in state:
+            lean[key] = state[key]
     lean["validation_selection"] = selection
     lean["inference_config"] = inference_config
     torch.save(lean, local / "sparsa.pt")
@@ -172,6 +176,7 @@ def main():
                 Path(__file__),
                 Path("scripts/compare.py"),
                 Path("scripts/select_readout.py"),
+                Path("scripts/average_checkpoints.py"),
             ]
         },
         benchmark_sha256={

@@ -109,6 +109,20 @@ now saves compact shard/row cursors rather than replaying the entire stream.
 
 ## Remaining work
 
+A validation-only checkpoint averaging preview completed as
+`/bizon/sparsa-average-preview-20260911` on one batch H100. It compared uniform
+EMA weight averages of the top 2, 3, and 5 checkpoints against the best original
+readout and every capped checkpoint through step 40000, using only eval-val.
+Two local tests verify prediction-preserving checkpoint reload and rejection of
+incompatible amino-acid vocabularies. The top-two average with cap 383 improved
+R-precision from 0.228426 to 0.228618 (long-range: 0.187723 to 0.188320).
+This is a small validation gain, not evidence of a statistically established
+advantage. The top-three and top-five averages did not beat the best single
+checkpoint. See `average_preview.json`; the experiment took 189.49 seconds.
+Final selection now includes the top-two average within each completed training
+phase, using only validation. A GPU integration check remains to verify the
+updated selector and averaged checkpoint reload before final evaluation.
+
 The local `scripts/finish_run.py --name sequence-pair-40m-20260911 --profile-job
 /bizon/sparsa-long-profile-20260911 --training-job
 /bizon/sparsa-sequence-pair-40m-20260911-r1` coordinator is running; read `handoff.pid`
@@ -131,8 +145,9 @@ CLI verification, and completion of this project still require the agent.
    eval-val for training decisions. Do not score eval-test or eval-denovo until
    the model/readout choice is fixed.
 2. The final-evaluation script rechecks the best original readout and evaluates
-   distance capping at crop minus one at every durable checkpoint, using validation
-   only. It saves the chosen checkpoint and inference setting before held-out
+   distance capping at crop minus one at every durable validation checkpoint,
+   plus the top-two EMA weight average with both readouts, using validation only.
+   It saves the chosen checkpoint and inference setting before held-out
    evaluation. A real one-H100 batch preview passed for the first six checkpoints:
    capping improved each, reaching 0.203275 R-precision / 0.154691 long-range at
    step 12000 (original: 0.202191 / 0.152688). See `readout_preview.json`.

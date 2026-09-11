@@ -21,7 +21,9 @@ objective, with a strong one-pass model before iterative generative extensions.
    Expand the best variant after inspecting validation trajectories.
    Follow the 100,000-step crop-384 run with a 3,000-step crop-1024 finetune
    (global batch 32, low learning rate, activation checkpointing). Select the
-   checkpoint and readout across both phases using validation only.
+   checkpoint and readout across both phases using validation only, including
+   distance capping and a uniform EMA weight average of each phase's two best
+   original checkpoints. A validation-only averaging preview showed a small gain.
 6. Evaluate the selected checkpoint on all fixed experimental splits; publish
    per-protein scores, timing, paired comparisons, limitations, reproducible
    commands, and a loadable checkpoint plus Helico contact export.

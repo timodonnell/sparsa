@@ -99,8 +99,11 @@ silently relabeled as the latest MarinFold release.
 The later exp232 step-363000 reference is included separately for the 97
 validation and 19 de novo proteins; its saved results do not cover this test set.
 After training, `scripts/final_evaluate.py` rechecks the best original readout and
-evaluates a cap at the largest trained separation at every saved checkpoint,
-using validation only. It saves the selected checkpoint and readout before
+evaluates a cap at the largest trained separation at every validated checkpoint,
+using validation only. It also tests a uniform EMA weight average of the two
+best original checkpoints, with both original and capped readouts. An averaged
+checkpoint still uses one model at inference, and its source checkpoints and
+weights are preserved in the export. It saves the selected checkpoint and readout before
 scoring held-out sets. `scripts/select_readout.py` can run this validation-only
 selection separately without scoring test or de novo proteins.
 

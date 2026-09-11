@@ -1,7 +1,8 @@
 """Select checkpoint and distance readout using only experimental validation.
 
-The training run already evaluated the original readout at each saved checkpoint.
-Recheck its best checkpoint, and evaluate distance capping at every saved step.
+The training run already evaluated the original readout at each validation checkpoint.
+Recheck its best checkpoint, evaluate distance capping at every validated step, and
+compare a uniform EMA weight average of the two best original checkpoints.
 This script never loads or scores the test/de novo splits.
 """
 
@@ -11,10 +12,12 @@ import time
 
 import torch
 
+from scripts.average_checkpoints import average_ema
 from sparsa.cli import load_model
 from sparsa.data import benchmark
 from sparsa.evaluate import evaluate
-from sparsa.train import storage, write_json
+from sparsa.model import ContactModel, ModelConfig
+from sparsa.train import save_checkpoint, storage, write_json
 
 
 def select_readout(run, device):
@@ -47,6 +50,7 @@ def select_readout(run, device):
     )
     candidates.append(
         dict(
+            kind="single",
             checkpoint=original["checkpoint"],
             step=state["step"],
             relative_max_distance=None,
@@ -65,24 +69,61 @@ def select_readout(run, device):
             pos_weight=state["training_config"].get("pos_weight", 1.0),
         )
         row = dict(
-            checkpoint=uri, step=state["step"], relative_max_distance=cap, **metrics
+            kind="single",
+            checkpoint=uri,
+            step=state["step"],
+            relative_max_distance=cap,
+            **metrics,
         )
         candidates.append(row)
         print("READOUT_VALIDATION " + json.dumps(row), flush=True)
+    if len(saved) >= 2:
+        ranked = sorted(saved, key=lambda r: (-r["r_precision"], r["step"]))[:2]
+        sources = [
+            run.rstrip("/") + f"/checkpoints/step-{r['step']}.pt" for r in ranked
+        ]
+        state = average_ema(sources)
+        steps = "-".join(str(r["step"]) for r in ranked)
+        uri = run.rstrip("/") + f"/readout-averages/steps-{steps}.pt"
+        save_checkpoint(uri, state)
+        model = ContactModel(ModelConfig(**state["model_config"])).to(device).eval()
+        model.load_state_dict(state["ema"])
+        for cap in (None, state["training_config"]["crop"] - 1):
+            model.relative_max_distance = cap
+            metrics = evaluate(
+                model,
+                validation,
+                device,
+                pos_weight=state["training_config"].get("pos_weight", 1.0),
+            )
+            row = dict(
+                kind="ema_average",
+                checkpoint=uri,
+                step=state["step"],
+                relative_max_distance=cap,
+                averaged_checkpoints=state["averaged_checkpoints"],
+                **metrics,
+            )
+            candidates.append(row)
+            print("READOUT_VALIDATION " + json.dumps(row), flush=True)
     chosen = max(candidates, key=lambda r: r["r_precision"])
+    selected = {
+        "kind": chosen["kind"],
+        "checkpoint": chosen["checkpoint"],
+        "step": chosen["step"],
+        "validation": {
+            k: chosen[k] for k in ("r_precision", "long_r_precision", "proteins")
+        },
+    }
+    if "averaged_checkpoints" in chosen:
+        selected["averaged_checkpoints"] = chosen["averaged_checkpoints"]
     return {
         "split": "eval-val",
-        "method": "best original readout plus capped readout at every durable checkpoint",
+        "method": "best original readout, capped readout at every durable validation checkpoint, and the uniform EMA weight average of the best two original checkpoints (original and capped readouts)",
         "training_best_checkpoint": original["checkpoint"],
         "validation_history": history,
         "candidates": candidates,
-        "selected": {
-            "checkpoint": chosen["checkpoint"],
-            "step": chosen["step"],
-            "validation": {
-                k: chosen[k] for k in ("r_precision", "long_r_precision", "proteins")
-            },
-        },
+        "selected": selected,
         "inference_config": {"relative_max_distance": chosen["relative_max_distance"]},
         "selection_seconds": time.perf_counter() - started,
     }
