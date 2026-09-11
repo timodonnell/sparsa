@@ -45,7 +45,7 @@ profiling checks passed; pilot loss and gradient telemetry are finite.
 
 ## Experiments
 
-Seven continuation pilots start from the identical released EMA weights:
+Eight continuation pilots start from the identical released EMA weights:
 
 | Pilot | Parameters | AFDB protein probability | Purpose |
 |---|---:|---:|---|
@@ -56,9 +56,10 @@ Seven continuation pilots start from the identical released EMA weights:
 | scale-rank40m50-20260911 | 39,994,657 | 0.5 | BCE + 0.05 contact-ranking KL |
 | scale-rank456m50-20260911 | 455,648,545 | 0.5 | Capacity with ranking loss |
 | scale-grown18b50-20260911 | 1,815,192,865 | 0.5 | Parameter scale comparable to MarinFold |
+| scale-grown456m50-lr4-20260911 | 455,648,545 | 0.5 | LR 4e-4, the original main-run peak |
 
 All use seed 217, crop 512, global batch 64, 6,000 steps (384,000 additional
-crops), LR 1e-4 with 300-step warmup/cosine decay, EMA 0.999, and validation every
+crops), LR 1e-4 (4e-4 in the LR pilot) with 300-step warmup/cosine decay, EMA 0.999, and validation every
 1,000 steps. Each size comparison within a mixture shares the deterministic data stream.
 Each uses eight H100s and saves recovery checkpoints every 500 steps (1,000 for
 1.8B). The 1.8B arm uses batch 2 × accumulation 4 instead of batch 4 × 2, so its
@@ -131,3 +132,30 @@ the 600-H100-hour campaign guard. No new test/de novo evaluation has occurred.
 
 [PyTorch compilation documentation](https://docs.pytorch.org/docs/2.10/generated/torch.compile.html)
 explains dynamic-shape compilation and fallback after the recompilation limit.
+
+## Autonomous handoff
+
+`scripts/scaling_campaign.py --manifest configs/scaling_campaign.json` waits for
+all eight completed pilots, recomputes their best/final EMA validation scores and
+paired intervals, then freezes its decision in `reports/scaling_v2/selection.json`.
+The highest validation R chooses the starting EMA and recipe; the original release
+remains a fallback if no pilot improves it. The target is 1.8B parameters and up
+to 200,000 new steps (12.8M crops). Measured full-pilot elapsed time, a 10% margin,
+and a 60-H100-hour reserve determine the exact affordable step count. If 1.8B
+cannot support at least 100,000 steps, it uses 456M and a compatible source.
+This is a compute-constrained decision, not a claim that size already helps.
+
+The generated main config uses crop 512, global batch 64, the chosen pilot LR,
+and 2,000 warmup steps. A subsequent 5,000-step phase uses crop 1024, global batch
+32 and LR at most 5e-5. Existing long-distance embeddings are retained: the source
+40M release already had 1024-residue finetuning. Synthetic 1.8B long-crop profiling
+passed at batch 1 with activation checkpointing: 0.429 s/microbatch, 40.97 GiB.
+Final validation-only readout selection includes the original completed baseline;
+then one held-out evaluation, checksummed artifact recovery, and actual CLI/Helico
+parser verification run through `scripts/finish_run.py`.
+
+The local handoff and compute guard require this workstation to remain running.
+Their journals are restartable; Iris training independently retries from durable
+checkpoints. Terminal failures stop the handoff for inspection. Unit tests cover
+budget bounds, capacity fallback without checkpoint shrinking, and rejection of
+held-out recipe selection. Downstream phases are pending until their jobs finish.

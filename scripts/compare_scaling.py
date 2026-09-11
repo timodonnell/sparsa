@@ -25,11 +25,16 @@ def main():
     torch.set_float32_matmul_precision("high")
     records = benchmark()
     choices = [("release", args.reference)]
+    elapsed = {}
     for value in args.run:
         name, uri = value.split("=", 1)
         fs, prefix = storage(uri)
         if not fs.exists(prefix + "/complete.json"):
             raise ValueError(f"Pilot {name} has not completed")
+        complete = json.loads(fs.cat_file(prefix + "/complete.json"))
+        if complete["step"] != 6000:
+            raise ValueError(f"Pilot {name} did not finish the matched 6,000 steps")
+        elapsed[name] = complete["elapsed_seconds"]
         for pointer in ("latest", "best"):
             state = json.loads(fs.cat_file(prefix + f"/{pointer}.json"))
             choices.append((name + "-" + pointer, state["checkpoint"]))
@@ -105,6 +110,7 @@ def main():
         "test_used": False,
         "models": results,
         "paired": paired,
+        "pilot_elapsed_seconds": elapsed,
         "scope": "Final-EMA comparisons match pilot exposure; best checkpoints are validation-selected. Intervals are descriptive under adaptive validation reuse.",
     }
     write_json(report, args.out + "/comparison.json")

@@ -1,0 +1,57 @@
+{
+  "name": "scale-main-20260911",
+  "reference": "s3://marin-us-east-02a/marin/protein-structure/sparsa/evaluations/sequence-pair-40m-20260911/sparsa.pt",
+  "baseline_run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/sequence-pair-40m-20260911-long",
+  "budget": "outputs/scaling-v2/budget.json",
+  "guard_status": "outputs/scaling-v2/guard/status.json",
+  "pilots": [
+    {
+      "name": "control50",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control50-20260911",
+      "job": "/bizon/sparsa-scale-control50-20260911-fast",
+      "config": "configs/scale_control50_fast.yaml"
+    },
+    {
+      "name": "control-prop",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control-prop-20260911",
+      "job": "/bizon/sparsa-scale-control-prop-20260911-fast",
+      "config": "configs/scale_control_proportional_fast.yaml"
+    },
+    {
+      "name": "grown456m",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911",
+      "job": "/bizon/sparsa-scale-grown456m-20260911-fast",
+      "config": "configs/scale_grown456m_fast.yaml"
+    },
+    {
+      "name": "grown456m50",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911",
+      "job": "/bizon/sparsa-scale-grown456m50-20260911-fast",
+      "config": "configs/scale_grown456m50_fast.yaml"
+    },
+    {
+      "name": "rank40m50",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911",
+      "job": "/bizon/sparsa-scale-rank40m50-20260911",
+      "config": "configs/scale_rank40m50.yaml"
+    },
+    {
+      "name": "rank456m50",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911",
+      "job": "/bizon/sparsa-scale-rank456m50-20260911",
+      "config": "configs/scale_rank456m50.yaml"
+    },
+    {
+      "name": "grown18b50",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911",
+      "job": "/bizon/sparsa-scale-grown18b50-20260911",
+      "config": "configs/scale_grown18b50.yaml"
+    },
+    {
+      "name": "grown456m50-lr4",
+      "run": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911",
+      "job": "/bizon/sparsa-scale-grown456m50-lr4-20260911",
+      "config": "configs/scale_grown456m50_lr4.yaml"
+    }
+  ]
+}
