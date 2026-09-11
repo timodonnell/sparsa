@@ -135,16 +135,26 @@ def main():
         args.init_from or args.resume
     ):
         raise ValueError("Distant-bucket initialization requires a source checkpoint")
+    if cfg.get("grow_from_ema", False) and not (args.init_from or args.resume):
+        raise ValueError("Model growth requires a source checkpoint")
     if args.init_from and not args.resume:
         state = load_checkpoint(args.init_from)
-        if {
+        if cfg.get("grow_from_ema", False):
+            from sparsa.grow import grow_from_ema
+
+            growth = grow_from_ema(model, state)
+            ema.load_state_dict(model.state_dict())
+            if rank == 0:
+                print("GROWTH " + json.dumps(growth), flush=True)
+        elif {
             k: v
             for k, v in state["model_config"].items()
             if k != "gradient_checkpointing"
         } != {k: v for k, v in asdict(config).items() if k != "gradient_checkpointing"}:
             raise ValueError("Initialization architecture mismatch")
-        model.load_state_dict(state["model"])
-        ema.load_state_dict(state["ema"])
+        else:
+            model.load_state_dict(state.get("model", state["ema"]))
+            ema.load_state_dict(state["ema"])
         edge = cfg.get("initialize_max_distance")
         if edge is not None:
             if edge >= state["training_config"]["crop"]:
@@ -172,6 +182,8 @@ def main():
             "weight_decay",
             "pos_weight",
             "ema_decay",
+            "afdb_probability",
+            "grow_from_ema",
         ):
             if state["training_config"].get(field) != cfg.get(field):
                 raise ValueError(f"Resume changes data stream: {field}")
@@ -248,6 +260,7 @@ def main():
         limit_shards=cfg.get("limit_shards", 0),
         states=data_states,
         total_batches=cfg["steps"] * accumulation,
+        afdb_probability=cfg.get("afdb_probability", 0.5),
     )
     loader = DataLoader(
         dataset,

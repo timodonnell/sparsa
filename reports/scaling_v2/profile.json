@@ -1,0 +1,174 @@
+{
+  "gpu": "H100",
+  "scope": "Synthetic full-length training, including EMA and AdamW; excludes DDP and teacher I/O",
+  "results": [
+    {
+      "model_config": {
+        "sequence_dim": 768,
+        "sequence_layers": 24,
+        "heads": 12,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 175771777,
+      "batch_size": 4,
+      "crop": 384,
+      "seconds_per_microbatch": 0.6015540639869869,
+      "crops_per_second_per_gpu": 6.649443897841459,
+      "peak_gpu_gib": 13.86136531829834,
+      "loss": 0.17473585903644562,
+      "grad_norm": 0.08976544439792633
+    },
+    {
+      "model_config": {
+        "sequence_dim": 768,
+        "sequence_layers": 24,
+        "heads": 12,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 175771777,
+      "batch_size": 8,
+      "crop": 384,
+      "seconds_per_microbatch": 1.1045596566051246,
+      "crops_per_second_per_gpu": 7.242705228423861,
+      "peak_gpu_gib": 25.038147449493408,
+      "loss": 0.16773688793182373,
+      "grad_norm": 0.033081039786338806
+    },
+    {
+      "model_config": {
+        "sequence_dim": 768,
+        "sequence_layers": 24,
+        "heads": 12,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 175771777,
+      "batch_size": 4,
+      "crop": 512,
+      "seconds_per_microbatch": 1.0018996285740287,
+      "crops_per_second_per_gpu": 3.992415892690838,
+      "peak_gpu_gib": 22.52616834640503,
+      "loss": 0.17050579190254211,
+      "grad_norm": 0.029153751209378242
+    },
+    {
+      "model_config": {
+        "sequence_dim": 768,
+        "sequence_layers": 24,
+        "heads": 12,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 175771777,
+      "batch_size": 2,
+      "crop": 1024,
+      "seconds_per_microbatch": 2.090087038371712,
+      "crops_per_second_per_gpu": 0.9568979488806865,
+      "peak_gpu_gib": 42.20146131515503,
+      "loss": 0.17024214565753937,
+      "grad_norm": 0.10711710900068283
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 32,
+        "heads": 16,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 408770689,
+      "batch_size": 4,
+      "crop": 384,
+      "seconds_per_microbatch": 0.6280149637721479,
+      "crops_per_second_per_gpu": 6.369274986656611,
+      "peak_gpu_gib": 17.419299125671387,
+      "loss": 0.17184308171272278,
+      "grad_norm": 0.001498934580013156
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 32,
+        "heads": 16,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 408770689,
+      "batch_size": 8,
+      "crop": 384,
+      "seconds_per_microbatch": 1.1326981668360532,
+      "crops_per_second_per_gpu": 7.062781802098494,
+      "peak_gpu_gib": 28.677135944366455,
+      "loss": 0.17268270254135132,
+      "grad_norm": 0.14166259765625
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 32,
+        "heads": 16,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 408770689,
+      "batch_size": 4,
+      "crop": 512,
+      "seconds_per_microbatch": 1.029897240176797,
+      "crops_per_second_per_gpu": 3.8838826282448737,
+      "peak_gpu_gib": 26.087153911590576,
+      "loss": 0.17424903810024261,
+      "grad_norm": 0.2081006020307541
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 32,
+        "heads": 16,
+        "pair_dim": 128,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 408770689,
+      "batch_size": 2,
+      "crop": 1024,
+      "seconds_per_microbatch": 2.119777523400262,
+      "crops_per_second_per_gpu": 0.9434952384964763,
+      "peak_gpu_gib": 45.755122661590576,
+      "loss": 0.1816900372505188,
+      "grad_norm": 0.30014339089393616
+    }
+  ]
+}

@@ -188,6 +188,7 @@ class TeacherBatches(IterableDataset):
         limit_shards=0,
         states=None,
         total_batches=None,
+        afdb_probability=0.5,
     ):
         self.shards = shards
         self.batch_size, self.crop, self.seed = batch_size, crop, seed
@@ -195,6 +196,9 @@ class TeacherBatches(IterableDataset):
         self.limit_shards = limit_shards
         self.states = states or {}
         self.total_batches = total_batches
+        if not 0 <= afdb_probability <= 1:
+            raise ValueError("AFDB sampling probability must be in [0, 1]")
+        self.afdb_probability = afdb_probability
 
     def __iter__(self):
         worker = get_worker_info()
@@ -227,7 +231,7 @@ class TeacherBatches(IterableDataset):
         batch_index = 0
         while remaining is None or batch_index < skip + remaining:
             records = [
-                next(streams["afdb" if rng.random() < 0.5 else "esm"])
+                next(streams["afdb" if rng.random() < self.afdb_probability else "esm"])
                 for _ in range(self.batch_size)
             ]
             batch = collate(records, self.crop, rng)

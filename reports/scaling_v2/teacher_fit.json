@@ -1,0 +1,39 @@
+{
+  "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/evaluations/sequence-pair-40m-20260911/sparsa.pt",
+  "seed": 251,
+  "scope": "100 proteins per source, lengths 12\u20131024; sampled from the training corpus, potentially seen during training. Not a held-out generalization estimate.",
+  "sources": {
+    "afdb": {
+      "summary": {
+        "r_precision": 0.24466700110984227,
+        "long_r_precision": 0.1809563276714843,
+        "proteins": 100,
+        "inference_seconds": 4.208051106892526
+      },
+      "shards": [
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/afdb/contacts_v1-01821-of-02067.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/afdb/contacts_v1-01566-of-02067.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/afdb/contacts_v1-01871-of-02067.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/afdb/contacts_v1-01011-of-02067.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/afdb/contacts_v1-01680-of-02067.parquet"
+      ],
+      "length_mean": 265.27
+    },
+    "esm": {
+      "summary": {
+        "r_precision": 0.33454163316543556,
+        "long_r_precision": 0.27755638807787403,
+        "proteins": 100,
+        "inference_seconds": 2.698151698336005
+      },
+      "shards": [
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/esm/shard-00158-of-03338.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/esm/shard-00466-of-03338.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/esm/shard-02238-of-03338.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/esm/shard-01708-of-03338.parquet",
+        "s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data/esm/shard-01295-of-03338.parquet"
+      ],
+      "length_mean": 216.81
+    }
+  }
+}

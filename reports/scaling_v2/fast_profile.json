@@ -1,0 +1,80 @@
+{
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "results": [
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": false
+      },
+      "parameters": 455648545,
+      "batch_size": 4,
+      "crop": 512,
+      "seconds_per_microbatch": 0.42323081754148006,
+      "crops_per_second_per_gpu": 9.451107608930126,
+      "peak_gpu_gib": 54.745920181274414,
+      "loss": 0.1695164442062378,
+      "grad_norm": 0.08974847942590714
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": false
+      },
+      "batch_size": 8,
+      "crop": 512,
+      "error": "CUDA OOM"
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": false
+      },
+      "parameters": 455648545,
+      "batch_size": 2,
+      "crop": 768,
+      "seconds_per_microbatch": 0.4836584959179163,
+      "crops_per_second_per_gpu": 4.135149112193882,
+      "peak_gpu_gib": 59.61444044113159,
+      "loss": 0.1688372790813446,
+      "grad_norm": 0.09472908824682236
+    },
+    {
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": false
+      },
+      "batch_size": 2,
+      "crop": 1024,
+      "error": "CUDA OOM"
+    }
+  ],
+  "scope": "Synthetic full-length training, including EMA and AdamW; excludes DDP and teacher I/O"
+}

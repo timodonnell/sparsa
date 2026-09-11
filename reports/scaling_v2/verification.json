@@ -1,0 +1,9 @@
+{
+  "tests": 26,
+  "command": ".venv/bin/pytest -q tests/test_scaling.py tests/test_core.py tests/test_average_checkpoints.py tests/test_job_accounting.py",
+  "result": "26 passed in 9.82s",
+  "gpu_growth_check": "growth_probe.json",
+  "larger_model_profiles": "profile.json",
+  "non_checkpointed_profiles": "fast_profile.json",
+  "teacher_fit": "teacher_fit.json"
+}
