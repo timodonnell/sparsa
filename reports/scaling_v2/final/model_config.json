@@ -1,0 +1,11 @@
+{
+  "sequence_dim": 2048,
+  "sequence_layers": 36,
+  "heads": 32,
+  "pair_dim": 96,
+  "pair_layers": 16,
+  "triangle_every": 4,
+  "triangle_dim": 48,
+  "dropout": 0.0,
+  "gradient_checkpointing": true
+}

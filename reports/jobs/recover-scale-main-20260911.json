@@ -1,0 +1,33 @@
+{
+  "job": "/bizon/sparsa-recover-scale-main-20260911",
+  "command": [
+    "/home/bizon/git/sparsa/.tools/iris/bin/iris",
+    "--config",
+    "/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml",
+    "job",
+    "run",
+    "--priority",
+    "batch",
+    "--enable-extra-resources",
+    "--cpu",
+    "2",
+    "--memory",
+    "8GB",
+    "--disk",
+    "20GB",
+    "--timeout",
+    "1800",
+    "--max-retries",
+    "3",
+    "--job-name",
+    "sparsa-recover-scale-main-20260911",
+    "--no-wait",
+    "--",
+    "python",
+    "scripts/recover_results.py",
+    "--source",
+    "s3://marin-us-east-02a/marin/protein-structure/sparsa/evaluations/scale-main-20260911"
+  ],
+  "priority": "batch",
+  "submitted_utc": "2026-09-13T18:05:02.737786+00:00"
+}

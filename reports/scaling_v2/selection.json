@@ -1,0 +1,19 @@
+{
+  "source_name": "rank456m50-best",
+  "source_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-3000.pt",
+  "source_validation": {
+    "r_precision": 0.2507698834152832,
+    "long_r_precision": 0.20893830508693542,
+    "proteins": 97,
+    "inference_seconds": 3.5331521946936846
+  },
+  "source_config": "configs/scale_rank456m50.yaml",
+  "capacity": "18b",
+  "steps": 200000,
+  "estimated_seconds_per_step": 0.8209214744329508,
+  "estimated_main_h100_hours": 364.85398863686703,
+  "spent_h100_hours": 81.14349555555556,
+  "reserved_h100_hours": 60,
+  "decision_split": "eval-val",
+  "test_used": false
+}

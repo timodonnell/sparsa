@@ -1,0 +1,29 @@
+seed: 417
+model:
+  sequence_dim: 2048
+  sequence_layers: 36
+  heads: 32
+  pair_dim: 96
+  pair_layers: 16
+  triangle_every: 4
+  triangle_dim: 48
+  gradient_checkpointing: false
+batch_size: 2
+accumulation: 4
+crop: 512
+workers: 2
+steps: 200000
+warmup: 2000
+lr: 0.0001
+weight_decay: 0.01
+pos_weight: 4.0
+ema_decay: 0.999
+eval_every: 5000
+checkpoint_every: 2000
+log_every: 200
+afdb_probability: 0.5
+grow_from_ema: true
+ranking_weight: 0.05
+compile_pair_blocks: true
+compile_cache_limit: 128
+keep_recovery_checkpoints: 2

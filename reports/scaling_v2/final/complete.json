@@ -1,0 +1,5 @@
+{
+  "complete": true,
+  "selected_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-main-20260911-long/checkpoints/step-2000.pt",
+  "proteins": 333
+}

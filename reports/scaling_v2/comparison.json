@@ -1,0 +1,2656 @@
+{
+  "split": "eval-val",
+  "test_used": false,
+  "models": {
+    "release": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/evaluations/sequence-pair-40m-20260911/sparsa.pt",
+      "step": 2500,
+      "validation": {
+        "r_precision": 0.24771644329033637,
+        "long_r_precision": 0.20733489397146512,
+        "proteins": 97,
+        "inference_seconds": 3.657920705154538
+      },
+      "parameters": 39994657
+    },
+    "control50-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control50-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24920926332774548,
+        "long_r_precision": 0.20851332758867427,
+        "proteins": 97,
+        "inference_seconds": 2.5064788749441504
+      },
+      "parameters": 39994657
+    },
+    "control50-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control50-20260911/checkpoints/step-3000.pt",
+      "step": 3000,
+      "validation": {
+        "r_precision": 0.25024894908860545,
+        "long_r_precision": 0.20785041056494702,
+        "proteins": 97,
+        "inference_seconds": 2.3773224987089634
+      },
+      "parameters": 39994657
+    },
+    "control-prop-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control-prop-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24833684643682608,
+        "long_r_precision": 0.2059363590530866,
+        "proteins": 97,
+        "inference_seconds": 2.379138474352658
+      },
+      "parameters": 39994657
+    },
+    "control-prop-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-control-prop-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24833684643682608,
+        "long_r_precision": 0.2059363590530866,
+        "proteins": 97,
+        "inference_seconds": 2.379138474352658
+      },
+      "parameters": 39994657,
+      "same_weights_as": "control-prop-latest"
+    },
+    "grown456m-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24901505469657245,
+        "long_r_precision": 0.20534596494219898,
+        "proteins": 97,
+        "inference_seconds": 4.1883445624262094
+      },
+      "parameters": 455648545
+    },
+    "grown456m-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24901505469657245,
+        "long_r_precision": 0.20534596494219898,
+        "proteins": 97,
+        "inference_seconds": 4.1883445624262094
+      },
+      "parameters": 455648545,
+      "same_weights_as": "grown456m-latest"
+    },
+    "grown456m50-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24965379015499364,
+        "long_r_precision": 0.20924582257900473,
+        "proteins": 97,
+        "inference_seconds": 3.573096476495266
+      },
+      "parameters": 455648545
+    },
+    "grown456m50-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-20260911/checkpoints/step-3000.pt",
+      "step": 3000,
+      "validation": {
+        "r_precision": 0.2497195672292965,
+        "long_r_precision": 0.20818332951770283,
+        "proteins": 97,
+        "inference_seconds": 3.534064829349518
+      },
+      "parameters": 455648545
+    },
+    "rank40m50-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24901039810363315,
+        "long_r_precision": 0.20987230014849675,
+        "proteins": 97,
+        "inference_seconds": 2.384875638410449
+      },
+      "parameters": 39994657
+    },
+    "rank40m50-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank40m50-20260911/checkpoints/step-2000.pt",
+      "step": 2000,
+      "validation": {
+        "r_precision": 0.24981942045085848,
+        "long_r_precision": 0.20926976615875192,
+        "proteins": 97,
+        "inference_seconds": 2.3804760901257396
+      },
+      "parameters": 39994657
+    },
+    "rank456m50-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.25040220148184855,
+        "long_r_precision": 0.21107823393094965,
+        "proteins": 97,
+        "inference_seconds": 3.540611137636006
+      },
+      "parameters": 455648545
+    },
+    "rank456m50-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-3000.pt",
+      "step": 3000,
+      "validation": {
+        "r_precision": 0.2507698834152832,
+        "long_r_precision": 0.20893830508693542,
+        "proteins": 97,
+        "inference_seconds": 3.5331521946936846
+      },
+      "parameters": 455648545
+    },
+    "grown18b50-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24933807298687216,
+        "long_r_precision": 0.20944413650279137,
+        "proteins": 97,
+        "inference_seconds": 4.106728196144104
+      },
+      "parameters": 1815192865
+    },
+    "grown18b50-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown18b50-20260911/checkpoints/step-4000.pt",
+      "step": 4000,
+      "validation": {
+        "r_precision": 0.2495815282651132,
+        "long_r_precision": 0.20849609928642332,
+        "proteins": 97,
+        "inference_seconds": 3.542687333188951
+      },
+      "parameters": 1815192865
+    },
+    "grown456m50-lr4-latest": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-6000.pt",
+      "step": 6000,
+      "validation": {
+        "r_precision": 0.24426442657010194,
+        "long_r_precision": 0.2046022635389077,
+        "proteins": 97,
+        "inference_seconds": 3.5292077967897058
+      },
+      "parameters": 455648545
+    },
+    "grown456m50-lr4-best": {
+      "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-grown456m50-lr4-20260911/checkpoints/step-5000.pt",
+      "step": 5000,
+      "validation": {
+        "r_precision": 0.2450068741080503,
+        "long_r_precision": 0.20390548583222923,
+        "proteins": 97,
+        "inference_seconds": 3.5243465146049857
+      },
+      "parameters": 455648545
+    }
+  },
+  "pilot_elapsed_seconds": {
+    "control50": 1102.1367777306587,
+    "control-prop": 1065.7923342240974,
+    "grown456m": 2056.6231034062803,
+    "grown456m50": 2646.741938312538,
+    "rank40m50": 2306.074604794383,
+    "rank456m50": 3426.8530625663698,
+    "grown18b50": 4477.753496907004,
+    "grown456m50-lr4": 3396.9157176492736
+  },
+  "scope": "Final-EMA comparisons match pilot exposure; best checkpoints are validation-selected. Intervals are descriptive under adaptive validation reuse.",
+  "paired": [
+    {
+      "model": "control50-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0014928200374091012,
+      "ci_low": -0.001108294374866336,
+      "ci_high": 0.004097249162254481
+    },
+    {
+      "model": "control50-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0011784336172091141,
+      "ci_low": -0.0016921211678548708,
+      "ci_high": 0.003923432742868984
+    },
+    {
+      "model": "control50-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0025325057982690854,
+      "ci_low": 0.00018401889333637605,
+      "ci_high": 0.005085086599103964
+    },
+    {
+      "model": "control50-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0005155165934818723,
+      "ci_low": -0.002724792033250007,
+      "ci_high": 0.003601422255128903
+    },
+    {
+      "model": "control50-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.001039685760859984,
+      "ci_low": -0.0016836285373341413,
+      "ci_high": 0.0035963170680119415
+    },
+    {
+      "model": "control50-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0006629170237272421,
+      "ci_low": -0.0030246502759434433,
+      "ci_high": 0.0018221067598715415
+    },
+    {
+      "model": "control-prop-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006204031464896641,
+      "ci_low": -0.0030295019534324155,
+      "ci_high": 0.003931388582101175
+    },
+    {
+      "model": "control-prop-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0013985349183785075,
+      "ci_low": -0.004763148962731457,
+      "ci_high": 0.0019697464260684844
+    },
+    {
+      "model": "control-prop-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0008724168909194372,
+      "ci_low": -0.003821558558088646,
+      "ci_high": 0.002206073976328141
+    },
+    {
+      "model": "control-prop-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0025769685355876214,
+      "ci_low": -0.006000693185412468,
+      "ci_high": 0.0006645991053643964
+    },
+    {
+      "model": "control-prop-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0019121026517794212,
+      "ci_low": -0.005640928894325227,
+      "ci_high": 0.0016558016401787502
+    },
+    {
+      "model": "control-prop-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0019140515118603795,
+      "ci_low": -0.00538436703509988,
+      "ci_high": 0.0014408844703276112
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006204031464896641,
+      "ci_low": -0.003029627938769231,
+      "ci_high": 0.003916004124526809
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0013985349183785075,
+      "ci_low": -0.0047732526374084155,
+      "ci_high": 0.002037946685513514
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0008724168909194372,
+      "ci_low": -0.00390680766660609,
+      "ci_high": 0.0021387875797803753
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0025769685355876214,
+      "ci_low": -0.005840526353430346,
+      "ci_high": 0.0006717821078085963
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0019121026517794212,
+      "ci_low": -0.005414893068544949,
+      "ci_high": 0.0016665621003454105
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0019140515118603795,
+      "ci_low": -0.005376528627029273,
+      "ci_high": 0.001507448045739203
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "model": "control-prop-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0012986114062360768,
+      "ci_low": -0.002857841056887762,
+      "ci_high": 0.005577982941349218
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": -0.001988929029266161,
+      "ci_low": -0.005628453737328638,
+      "ci_high": 0.001547099210058297
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00019420863117302448,
+      "ci_low": -0.0037282786337157993,
+      "ci_high": 0.003889662603421693
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0031673626464752747,
+      "ci_low": -0.006535428604549252,
+      "ci_high": 1.1233983201003918e-05
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0012338943920330086,
+      "ci_low": -0.005258483305080696,
+      "ci_high": 0.0025679025096694585
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.002504445622748033,
+      "ci_low": -0.006093054279744219,
+      "ci_high": 0.0011176688608529775
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006782082597464127,
+      "ci_low": -0.0016536399137953117,
+      "ci_high": 0.003307956538330297
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0005903941108876535,
+      "ci_low": -0.002650045637953432,
+      "ci_high": 0.0014160590321347785
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006782082597464127,
+      "ci_low": -0.0016217194958130514,
+      "ci_high": 0.003357282680185326
+    },
+    {
+      "model": "grown456m-latest",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0005903941108876535,
+      "ci_low": -0.002616294191717557,
+      "ci_high": 0.0014729790164177802
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0012986114062360768,
+      "ci_low": -0.0027914486631496907,
+      "ci_high": 0.005603505980139646
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": -0.001988929029266161,
+      "ci_low": -0.005579553081943865,
+      "ci_high": 0.0014856064679264662
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00019420863117302448,
+      "ci_low": -0.0038838940905176478,
+      "ci_high": 0.003955658855665765
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0031673626464752747,
+      "ci_low": -0.006520574350150961,
+      "ci_high": -0.00010101212207716664
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0012338943920330086,
+      "ci_low": -0.005105723003374528,
+      "ci_high": 0.002672660957458452
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.002504445622748033,
+      "ci_low": -0.006230862661044501,
+      "ci_high": 0.0012038006410174875
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006782082597464127,
+      "ci_low": -0.0016628981255668374,
+      "ci_high": 0.0031881687651556774
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0005903941108876535,
+      "ci_low": -0.0027120425459897456,
+      "ci_high": 0.0014521167218693022
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006782082597464127,
+      "ci_low": -0.0016351470808936238,
+      "ci_high": 0.0033430464600133964
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0005903941108876535,
+      "ci_low": -0.002699822142808168,
+      "ci_high": 0.0014746092373219399
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "model": "grown456m-best",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0019373468646572253,
+      "ci_low": -0.0011022912149877293,
+      "ci_high": 0.004826207599606682
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0019109286075396205,
+      "ci_low": -0.0009141015316519257,
+      "ci_high": 0.004779310105383478
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0004445268272481244,
+      "ci_low": -0.0008101591443725509,
+      "ci_high": 0.0017738572781864329
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0007324949903305065,
+      "ci_low": -0.0013976872559180917,
+      "ci_high": 0.0027740388322892787
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0005951589336118597,
+      "ci_low": -0.0034601937085510697,
+      "ci_high": 0.002480373006639375
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0013954120140577486,
+      "ci_low": -0.0011697812194174104,
+      "ci_high": 0.003971262519187508
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0013169437181675616,
+      "ci_low": -0.001651085539438656,
+      "ci_high": 0.004232383542440145
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0033094635259181284,
+      "ci_low": -0.00010158222290619532,
+      "ci_high": 0.00673427816971962
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0013169437181675616,
+      "ci_low": -0.0015942266305038677,
+      "ci_high": 0.004277043543006808
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0033094635259181284,
+      "ci_low": -0.00021759140904670512,
+      "ci_high": 0.006981383332041681
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006387354584211488,
+      "ci_low": -0.0035622396488426133,
+      "ci_high": 0.004235649456003558
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0038998576368057818,
+      "ci_low": 0.000426429683807867,
+      "ci_high": 0.007460057932067591
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006387354584211488,
+      "ci_low": -0.0036216685428890967,
+      "ci_high": 0.0042681994376605695
+    },
+    {
+      "model": "grown456m50-latest",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0038998576368057818,
+      "ci_low": 0.0004662125297938824,
+      "ci_high": 0.007489468561029811
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.002003123938960084,
+      "ci_low": -0.0004313766523332386,
+      "ci_high": 0.00439440022623378
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0008484355462376988,
+      "ci_low": -0.0017986392137975516,
+      "ci_high": 0.0035751666929332774
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0005103039015509826,
+      "ci_low": -0.0016134669566858564,
+      "ci_high": 0.0027289318201692355
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.00032999807097141545,
+      "ci_low": -0.002974357227596731,
+      "ci_high": 0.002463742668311544
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0005293818593090016,
+      "ci_low": -0.002003997087993711,
+      "ci_high": 0.0010500760061582521
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0003329189527558265,
+      "ci_low": -0.0017001629616245004,
+      "ci_high": 0.0023336941218403857
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0013827207924704196,
+      "ci_low": -0.0016999691786636485,
+      "ci_high": 0.004527184659331055
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0022469704646162062,
+      "ci_low": -0.0012197228241255056,
+      "ci_high": 0.005780561989402412
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0013827207924704196,
+      "ci_low": -0.001561951445850569,
+      "ci_high": 0.004581478843602004
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0022469704646162062,
+      "ci_low": -0.001141015531867766,
+      "ci_high": 0.005629332096490234
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.000704512532724007,
+      "ci_low": -0.002877775298644204,
+      "ci_high": 0.004313222997210748
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0028373645755038596,
+      "ci_low": -0.0007155472863605625,
+      "ci_high": 0.006514499916159052
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.000704512532724007,
+      "ci_low": -0.0030064286036451575,
+      "ci_high": 0.00436198334685131
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0028373645755038596,
+      "ci_low": -0.000734461592680486,
+      "ci_high": 0.006472198094628188
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 6.577707430285822e-05,
+      "ci_low": -0.002162374989024406,
+      "ci_high": 0.00225459395069716
+    },
+    {
+      "model": "grown456m50-best",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.001062493061301922,
+      "ci_low": -0.0034785381067673165,
+      "ci_high": 0.0014565703771307677
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.001293954813296712,
+      "ci_low": -0.001343628927711714,
+      "ci_high": 0.0038956894264831356
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.002537406177031636,
+      "ci_low": -0.0005536702887992045,
+      "ci_high": 0.0054840582588797275
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00019886522411238897,
+      "ci_low": -0.0018286149238431115,
+      "ci_high": 0.001454545201948698
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.001358972559822522,
+      "ci_low": -0.0008481077024153539,
+      "ci_high": 0.0036627172746499913
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0012385509849723731,
+      "ci_low": -0.0042535348540830055,
+      "ci_high": 0.001694411299429755
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.002021889583549764,
+      "ci_low": -0.0003759363598880817,
+      "ci_high": 0.004425466254095002
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006735516668070482,
+      "ci_low": -0.0024221059361555696,
+      "ci_high": 0.0039507752859557115
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003935941095410143,
+      "ci_low": 0.00016457174476636852,
+      "ci_high": 0.007676369257699976
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006735516668070482,
+      "ci_low": -0.0024425328212493223,
+      "ci_high": 0.003924484284562539
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003935941095410143,
+      "ci_low": 0.00024672143335267903,
+      "ci_high": 0.007728405130558216
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -4.656592939364494e-06,
+      "ci_low": -0.00416288193635553,
+      "ci_high": 0.003640097392112871
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.004526335206297797,
+      "ci_low": 0.0009247051894830172,
+      "ci_high": 0.008175960595027084
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": -4.656592939364494e-06,
+      "ci_low": -0.004060248986442326,
+      "ci_high": 0.003710751360686839
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.004526335206297797,
+      "ci_low": 0.0009369544090839599,
+      "ci_high": 0.008310911255890214
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0006433920513605133,
+      "ci_low": -0.002655244972964691,
+      "ci_high": 0.0011953076425610827
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0006264775694920154,
+      "ci_low": -0.0015685614080605532,
+      "ci_high": 0.0028653622857105266
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0007091691256633715,
+      "ci_low": -0.003523531071590356,
+      "ci_high": 0.0018865757986585622
+    },
+    {
+      "model": "rank40m50-latest",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0016889706307939376,
+      "ci_low": -0.0011554139340353808,
+      "ci_high": 0.004458527888157284
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0021029771605220746,
+      "ci_low": -0.0004909943163888093,
+      "ci_high": 0.004602759846390272
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.001934872187286798,
+      "ci_low": -0.0007342707215972232,
+      "ci_high": 0.004787966889668834
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006101571231129733,
+      "ci_low": -0.002101350892194893,
+      "ci_high": 0.0032774522063705332
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0007564385700776841,
+      "ci_low": -0.0021730247149343764,
+      "ci_high": 0.0037483131351599528
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.000429528637747011,
+      "ci_low": -0.003466586904355656,
+      "ci_high": 0.0024146452868539186
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.001419355593804926,
+      "ci_low": -0.0015363999494807474,
+      "ci_high": 0.004147106995004903
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0014825740140324104,
+      "ci_low": -0.0016936637294957472,
+      "ci_high": 0.004831963521951525
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0033334071056653055,
+      "ci_low": -0.00019431975822177877,
+      "ci_high": 0.006859261144998771
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0014825740140324104,
+      "ci_low": -0.001581542553863589,
+      "ci_high": 0.004875359863247014
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0033334071056653055,
+      "ci_low": -0.0001790874715032313,
+      "ci_high": 0.006877877475026523
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0008043657542859977,
+      "ci_low": -0.003489974612312079,
+      "ci_high": 0.005018293171084835
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003923801216552959,
+      "ci_low": 0.000331353154570673,
+      "ci_high": 0.007816036834630617
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0008043657542859977,
+      "ci_low": -0.0035722938623962636,
+      "ci_high": 0.004939418353072288
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003923801216552959,
+      "ci_low": 0.00036256346746139933,
+      "ci_high": 0.007770058008489441
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.00016563029586484873,
+      "ci_low": -0.0029914449406272378,
+      "ci_high": 0.0030735387075938084
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 2.3943579747178024e-05,
+      "ci_low": -0.003171203138108414,
+      "ci_high": 0.003095620018322342
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 9.985322156199052e-05,
+      "ci_low": -0.0028181890987251106,
+      "ci_high": 0.0029263992141343987
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0010864366410490997,
+      "ci_low": -0.0016630649858728795,
+      "ci_high": 0.0037864127897964963
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.000809022347225362,
+      "ci_low": -0.001956375887701491,
+      "ci_high": 0.003392285460899915
+    },
+    {
+      "model": "rank40m50-best",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.000602533989744838,
+      "ci_low": -0.003286631746261706,
+      "ci_high": 0.002084024738607091
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0026857581915121914,
+      "ci_low": -0.0002897134866164453,
+      "ci_high": 0.0059398408284847045
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003743339959484554,
+      "ci_low": 0.00041661574673512817,
+      "ci_high": 0.007053700354161909
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0011929381541030907,
+      "ci_low": -0.0008332693903823718,
+      "ci_high": 0.0032254907608480574
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0025649063422754402,
+      "ci_low": 0.00047968022217406925,
+      "ci_high": 0.004666049364824173
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.00015325239324310595,
+      "ci_low": -0.0035197779339385415,
+      "ci_high": 0.0038959981908431116
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0032278233660026825,
+      "ci_low": 0.0007320580933131292,
+      "ci_high": 0.005679450672488718
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0020653550450225274,
+      "ci_low": -0.001014531540543415,
+      "ci_high": 0.005292154116850562
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.005141874877863062,
+      "ci_low": 0.0014108162333119137,
+      "ci_high": 0.008910942125126723
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0020653550450225274,
+      "ci_low": -0.0010955359039044672,
+      "ci_high": 0.005291466601694832
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.005141874877863062,
+      "ci_low": 0.0014845538045152097,
+      "ci_high": 0.008880801683317664
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.001387146785276115,
+      "ci_low": -0.0027368868071770496,
+      "ci_high": 0.005261221107774635
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.005732268988750716,
+      "ci_low": 0.0025034654577626644,
+      "ci_high": 0.009096066185970884
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.001387146785276115,
+      "ci_low": -0.0030165456955741194,
+      "ci_high": 0.005292459237709321
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.005732268988750716,
+      "ci_low": 0.002486205386149367,
+      "ci_high": 0.008998192120278123
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.000748411326854966,
+      "ci_low": -0.001051087873969622,
+      "ci_high": 0.0025865721223211993
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.001832411351944934,
+      "ci_low": -0.0004179400233446876,
+      "ci_high": 0.0040722232963514874
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0006826342525521078,
+      "ci_low": -0.0021580789511187895,
+      "ci_high": 0.0036234915064298047
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.002894904413246856,
+      "ci_low": -0.00010124028186516031,
+      "ci_high": 0.005925680897288365
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0013918033782154792,
+      "ci_low": -0.0002725018144166144,
+      "ci_high": 0.003153114043682805
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0012059337824529184,
+      "ci_low": -0.0009553286455163551,
+      "ci_high": 0.003424226864198149
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "rank40m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0005827810309901174,
+      "ci_low": -0.0025847231554049456,
+      "ci_high": 0.00397307072523887
+    },
+    {
+      "model": "rank456m50-latest",
+      "reference": "rank40m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0018084677721977565,
+      "ci_low": -0.001130455471763597,
+      "ci_high": 0.004767051598121483
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.003053440124946868,
+      "ci_low": 0.000427601669953459,
+      "ci_high": 0.005550009326784828
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0016034111154702875,
+      "ci_low": -0.0017099609587315579,
+      "ci_high": 0.004936729832115811
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0015606200875377667,
+      "ci_low": -0.0006516364218896241,
+      "ci_high": 0.003786892711241396
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0004249774982611735,
+      "ci_low": -0.0019890072308103423,
+      "ci_high": 0.0029286820957584703
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0005209343266777826,
+      "ci_low": -0.0013809614536842909,
+      "ci_high": 0.0024106624015584103
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0010878945219884157,
+      "ci_low": -0.0009865799644786268,
+      "ci_high": 0.003168408402414124
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0024330369784572037,
+      "ci_low": -0.0004476271722268234,
+      "ci_high": 0.005505280000493504
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003001946033848796,
+      "ci_low": -0.0002027439035137629,
+      "ci_high": 0.006555451105925705
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0024330369784572037,
+      "ci_low": -0.0005201975968957463,
+      "ci_high": 0.005480208220935653
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003001946033848796,
+      "ci_low": -0.0001901574848528378,
+      "ci_high": 0.006442098338563656
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0017548287187107911,
+      "ci_low": -0.0016000122591259339,
+      "ci_high": 0.00483340505680403
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003592340144736449,
+      "ci_low": 0.00031033234270385615,
+      "ci_high": 0.006901493263347823
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0017548287187107911,
+      "ci_low": -0.0016039923434045212,
+      "ci_high": 0.004927692591747115
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.003592340144736449,
+      "ci_low": 0.0003273736423123923,
+      "ci_high": 0.006994125162652336
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0011160932602896423,
+      "ci_low": -0.0012795235052276098,
+      "ci_high": 0.0033632209880698908
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.00030751749206933313,
+      "ci_low": -0.002652814255834123,
+      "ci_high": 0.002150143033532178
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.001050316185986784,
+      "ci_low": -0.0007549227367170608,
+      "ci_high": 0.0029035420810420505
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0007549755692325891,
+      "ci_low": -0.0019228001785808989,
+      "ci_high": 0.0033405363132246874
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0017594853116501559,
+      "ci_low": -0.0003732763672982587,
+      "ci_high": 0.003942850169239842
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0009339950615613484,
+      "ci_low": -0.0030918011566482937,
+      "ci_high": 0.0010731773757261178
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "rank40m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0009504629644247936,
+      "ci_low": -0.001554115894987051,
+      "ci_high": 0.0037417839146243344
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "rank40m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0003314610718165104,
+      "ci_low": -0.00308210635755912,
+      "ci_high": 0.0023940878617732687
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "rank456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0003676819334346762,
+      "ci_low": -0.002340614682214102,
+      "ci_high": 0.002941759514298707
+    },
+    {
+      "model": "rank456m50-best",
+      "reference": "rank456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.002139928844014267,
+      "ci_low": -0.004381983604198269,
+      "ci_high": 0.00012752757732296924
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0016216296965357634,
+      "ci_low": -0.0012559390245061959,
+      "ci_high": 0.004457149507301027
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0021092425313262537,
+      "ci_low": -0.000762949747644797,
+      "ci_high": 0.00496675675977241
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0001288096591266624,
+      "ci_low": -0.0019067846920214151,
+      "ci_high": 0.0022310454284036607
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0009308089141171397,
+      "ci_low": -0.0006524610786350606,
+      "ci_high": 0.0025541595064860092
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0009108761017333219,
+      "ci_low": -0.0039340919850544215,
+      "ci_high": 0.002076104440771565
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0015937259378443818,
+      "ci_low": -0.001151061788652362,
+      "ci_high": 0.004146616869382568
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0010012265500460994,
+      "ci_low": -0.0016303794978326954,
+      "ci_high": 0.00391454096274403
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0035077774497047614,
+      "ci_low": 0.00043261957765155265,
+      "ci_high": 0.00655199656370315
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0010012265500460994,
+      "ci_low": -0.0017312952989578338,
+      "ci_high": 0.003960946534842852
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0035077774497047614,
+      "ci_low": 0.0003946507242895085,
+      "ci_high": 0.006856903759861514
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.00032301829029968685,
+      "ci_low": -0.00293010245372967,
+      "ci_high": 0.0034890846748468407
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.004098171560592414,
+      "ci_low": 0.0011327670314620543,
+      "ci_high": 0.007095471758901386
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.00032301829029968685,
+      "ci_low": -0.0029252898278980285,
+      "ci_high": 0.0033444182707069907
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.004098171560592414,
+      "ci_low": 0.0011965314020553253,
+      "ci_high": 0.007126784086220103
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00031571716812146193,
+      "ci_low": -0.002369460811232187,
+      "ci_high": 0.0018664650758779256
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.00019831392378663303,
+      "ci_low": -0.0017297607405807446,
+      "ci_high": 0.0022220613182067903
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00038149424242432016,
+      "ci_low": -0.0028852251532912963,
+      "ci_high": 0.0020420894311608405
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0012608069850885552,
+      "ci_low": -0.0014646903028866412,
+      "ci_high": 0.004069629468045448
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0003276748832390513,
+      "ci_low": -0.0018304341340049872,
+      "ci_high": 0.002510957471286479
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.00042816364570538235,
+      "ci_low": -0.0027985175498933864,
+      "ci_high": 0.0018999051263568212
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank40m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0004813474639863108,
+      "ci_low": -0.003233296674359193,
+      "ci_high": 0.0023487651872271687
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank40m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0001743703440394556,
+      "ci_low": -0.0026983258433164,
+      "ci_high": 0.0028255610556240543
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0010641284949764282,
+      "ci_low": -0.003399270074630222,
+      "ci_high": 0.0011547361381691746
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0016340974281583009,
+      "ci_low": -0.003520234929271832,
+      "ci_high": 0.00021116428205645075
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0014318104284111043,
+      "ci_low": -0.0037724177075717973,
+      "ci_high": 0.000922134915624457
+    },
+    {
+      "model": "grown18b50-latest",
+      "reference": "rank456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0005058314158559661,
+      "ci_low": -0.002040160487634176,
+      "ci_high": 0.003091798772454345
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0018650849747767868,
+      "ci_low": -0.000920242947964501,
+      "ci_high": 0.004656651802637358
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0011612053149582186,
+      "ci_low": -0.001858164277016676,
+      "ci_high": 0.003988876861919308
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0003722649373676856,
+      "ci_low": -0.0015263445011867369,
+      "ci_high": 0.002387126369521548
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -1.7228302250895707e-05,
+      "ci_low": -0.0023573883370208836,
+      "ci_high": 0.0022677688997749996
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0006674208234922985,
+      "ci_low": -0.0029643182459215926,
+      "ci_high": 0.0016958928372214068
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0006456887214763463,
+      "ci_low": -0.0020580770573785244,
+      "ci_high": 0.003277936775939123
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0012446818282871228,
+      "ci_low": -0.0015341430708985379,
+      "ci_high": 0.004107371713397761
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.002559740233336726,
+      "ci_low": -0.0006762894898740692,
+      "ci_high": 0.0055774307263395375
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0012446818282871228,
+      "ci_low": -0.0016566169678541645,
+      "ci_high": 0.004097928484625731
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.002559740233336726,
+      "ci_low": -0.0006070611086725429,
+      "ci_high": 0.005633968828305139
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0005664735685407101,
+      "ci_low": -0.0026559476234729587,
+      "ci_high": 0.003515302075353358
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0031501343442243788,
+      "ci_low": 0.0002893391102046286,
+      "ci_high": 0.005976701059269406
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0005664735685407101,
+      "ci_low": -0.002530427656256213,
+      "ci_high": 0.0035042815785016976
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.0031501343442243788,
+      "ci_low": 0.00025908003996393637,
+      "ci_high": 0.0060351246482531215
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -7.226188988043875e-05,
+      "ci_low": -0.0021140806311277785,
+      "ci_high": 0.002001876353146027
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0007497232925814026,
+      "ci_low": -0.0032364110761473226,
+      "ci_high": 0.0016591734933309548
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00013803896418329697,
+      "ci_low": -0.0020716730055271955,
+      "ci_high": 0.0019234060043678228
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": 0.00031276976872051976,
+      "ci_low": -0.0025197553893549266,
+      "ci_high": 0.0030779909908806085
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0005711301614800745,
+      "ci_low": -0.0016610596310792267,
+      "ci_high": 0.0028884365653537455
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0013762008620734176,
+      "ci_low": -0.0037901010012485843,
+      "ci_high": 0.001014452122301665
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank40m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00023789218574528763,
+      "ci_low": -0.0030452151988965867,
+      "ci_high": 0.0025659846639267607
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank40m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0007736668723285798,
+      "ci_low": -0.0037234978376088053,
+      "ci_high": 0.0020707133515867732
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0008206732167354049,
+      "ci_low": -0.0032996799813405087,
+      "ci_high": 0.0016013303397783341
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.002582134644526336,
+      "ci_low": -0.005301686324413293,
+      "ci_high": 3.461616982858214e-05
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0011883551501700811,
+      "ci_low": -0.003105170371845291,
+      "ci_high": 0.0007789383928210921
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "rank456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0004422058005120694,
+      "ci_low": -0.0029944980331858533,
+      "ci_high": 0.0020787811375401833
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown18b50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.00024345527824102325,
+      "ci_low": -0.0013589899824544812,
+      "ci_high": 0.0018639257618354491
+    },
+    {
+      "model": "grown18b50-best",
+      "reference": "grown18b50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0009480372163680353,
+      "ci_low": -0.003031732361865611,
+      "ci_high": 0.0011091697380090381
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": -0.003452016720234473,
+      "ci_low": -0.006546273757988774,
+      "ci_high": 1.9746338557706108e-05
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0027326304325573955,
+      "ci_low": -0.006819141661562872,
+      "ci_high": 0.0014059080160257515
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004944836757643574,
+      "ci_low": -0.008265367178336487,
+      "ci_high": -0.0014023847302585006
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.003911064049766509,
+      "ci_low": -0.0075922595802636085,
+      "ci_high": -0.00018072891132009044
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005984522518503559,
+      "ci_low": -0.009093759000757326,
+      "ci_high": -0.0028554128412641927
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0032481470260392674,
+      "ci_low": -0.006747074795229617,
+      "ci_high": 0.00024147632076768104
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004072419866724137,
+      "ci_low": -0.007788758540121284,
+      "ci_high": -0.00029778647888259105
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0013340955141788876,
+      "ci_low": -0.00552096557049202,
+      "ci_high": 0.003084360447281109
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004072419866724137,
+      "ci_low": -0.007769638251431124,
+      "ci_high": -0.0001769486934885673
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0013340955141788876,
+      "ci_low": -0.005718470321339276,
+      "ci_high": 0.003117577223806426
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00475062812647055,
+      "ci_low": -0.008029989773908744,
+      "ci_high": -0.0012775215735735437
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0007437014032912341,
+      "ci_low": -0.005401913710293544,
+      "ci_high": 0.004163273532192027
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00475062812647055,
+      "ci_low": -0.008169566207317153,
+      "ci_high": -0.0012900086261703465
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0007437014032912341,
+      "ci_low": -0.005316082235483117,
+      "ci_high": 0.0040154479852694365
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005389363584891698,
+      "ci_low": -0.008917239006196311,
+      "ci_high": -0.001825052905450897
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.004643559040097016,
+      "ci_low": -0.008077221269420115,
+      "ci_high": -0.0009747998725785835
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005455140659194558,
+      "ci_low": -0.00829279994128591,
+      "ci_high": -0.0024192570386509394
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0035810659787950945,
+      "ci_low": -0.0074252481973016305,
+      "ci_high": 0.00044249046282808106
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004745971533531185,
+      "ci_low": -0.008280130014410504,
+      "ci_high": -0.001149798272785526
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.005270036609589031,
+      "ci_low": -0.0084491554699141,
+      "ci_high": -0.0021361668537123557
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank40m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005554993880756549,
+      "ci_low": -0.009083963101213906,
+      "ci_high": -0.0017521691907393467
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank40m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.004667502619844194,
+      "ci_low": -0.008413556090433058,
+      "ci_high": -0.0009848046634456493
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.006137774911746665,
+      "ci_low": -0.010203955571277729,
+      "ci_high": -0.0020477594852660983
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.006475970392041949,
+      "ci_low": -0.010107077215613826,
+      "ci_high": -0.00288551305915307
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.006505456845181341,
+      "ci_low": -0.009562545245573572,
+      "ci_high": -0.003352011102187146
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "rank456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.004336041548027683,
+      "ci_low": -0.008136104765482821,
+      "ci_high": -0.0006286765247525466
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown18b50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0050736464167702375,
+      "ci_low": -0.008207091069223665,
+      "ci_high": -0.001963940056635305
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown18b50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.00484187296388365,
+      "ci_low": -0.008268637243793165,
+      "ci_high": -0.0011326378701912115
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown18b50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.00531710169501126,
+      "ci_low": -0.008004230478564323,
+      "ci_high": -0.002516626428467092
+    },
+    {
+      "model": "grown456m50-lr4-latest",
+      "reference": "grown18b50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0038938357475156136,
+      "ci_low": -0.007751191812725404,
+      "ci_high": 6.378481812246363e-05
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "release",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0027095691822861603,
+      "ci_low": -0.006081447039624459,
+      "ci_high": 0.000843212421303062
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "release",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0034294081392359016,
+      "ci_low": -0.0069949218451192344,
+      "ci_high": 0.0002900794722900031
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004202389219695261,
+      "ci_low": -0.007431150738890731,
+      "ci_high": -0.0007982257605223026
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.004607841756445016,
+      "ci_low": -0.008374237983974986,
+      "ci_high": -0.0007809041610211055
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005242074980555246,
+      "ci_low": -0.008254295061065684,
+      "ci_high": -0.0021969284105195007
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.003944924732717774,
+      "ci_low": -0.007415828835066938,
+      "ci_high": -0.00043183707635490067
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control-prop-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0033299723287758243,
+      "ci_low": -0.0067008376810993855,
+      "ci_high": -4.929782125193679e-06
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control-prop-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0020308732208573943,
+      "ci_low": -0.006312732554417066,
+      "ci_high": 0.0022050063342991437
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control-prop-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.0033299723287758243,
+      "ci_low": -0.0067707070815996515,
+      "ci_high": -6.91331381361202e-05
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "control-prop-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0020308732208573943,
+      "ci_low": -0.0061506232411505405,
+      "ci_high": 0.001973492653083232
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004008180588522237,
+      "ci_low": -0.0070652144226285695,
+      "ci_high": -0.0008713957915586295
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0014404791099697405,
+      "ci_low": -0.0058373795147441026,
+      "ci_high": 0.0030522446269485967
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004008180588522237,
+      "ci_low": -0.007023038567775297,
+      "ci_high": -0.0009259107985368585
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0014404791099697405,
+      "ci_low": -0.005765199411774568,
+      "ci_high": 0.0029845411285680645
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004646916046943386,
+      "ci_low": -0.008482823074027389,
+      "ci_high": -0.000915415176034958
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.005340336746775524,
+      "ci_low": -0.009003107446288067,
+      "ci_high": -0.0018552864826442033
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004712693121246244,
+      "ci_low": -0.007738085459020886,
+      "ci_high": -0.0017093608213448789
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0042778436854736005,
+      "ci_low": -0.007917837287651691,
+      "ci_high": -0.0005715223809128664
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank40m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004003523995582873,
+      "ci_low": -0.007578640889748539,
+      "ci_high": -0.0003556620718558716
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank40m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.005966814316267539,
+      "ci_low": -0.009210901875203879,
+      "ci_high": -0.002642706806536247
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank40m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004812546342808234,
+      "ci_low": -0.008143715168248494,
+      "ci_high": -0.0012347736336211085
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank40m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0053642803265227,
+      "ci_low": -0.008962941458336853,
+      "ci_high": -0.001774677971735707
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank456m50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005395327373798352,
+      "ci_low": -0.009286234258859424,
+      "ci_high": -0.0014834136190105729
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank456m50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.007172748098720455,
+      "ci_low": -0.01106425639125339,
+      "ci_high": -0.003350492267336073
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank456m50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.005763009307233027,
+      "ci_low": -0.008826699406489884,
+      "ci_high": -0.0027304837903114007
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "rank456m50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.005032819254706189,
+      "ci_low": -0.008803927160409177,
+      "ci_high": -0.001230899435881465
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown18b50-latest",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004331198878821925,
+      "ci_low": -0.00728270119310423,
+      "ci_high": -0.0013042369542780837
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown18b50-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.005538650670562154,
+      "ci_low": -0.00906386593116016,
+      "ci_high": -0.0021091400430372493
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown18b50-best",
+      "range": "all",
+      "n": 97,
+      "delta": -0.004574654157062947,
+      "ci_low": -0.007332327196841954,
+      "ci_high": -0.0019010185862892942
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown18b50-best",
+      "range": "long",
+      "n": 97,
+      "delta": -0.00459061345419412,
+      "ci_low": -0.008258794900449734,
+      "ci_high": -0.0010908480358058513
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m50-lr4-latest",
+      "range": "all",
+      "n": 97,
+      "delta": 0.0007424475379483128,
+      "ci_low": -0.0009148459055840742,
+      "ci_high": 0.0023440259831103267
+    },
+    {
+      "model": "grown456m50-lr4-best",
+      "reference": "grown456m50-lr4-latest",
+      "range": "long",
+      "n": 97,
+      "delta": -0.0006967777066785066,
+      "ci_low": -0.003086018941900596,
+      "ci_high": 0.0015467025936788752
+    }
+  ]
+}
