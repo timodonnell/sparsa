@@ -1,8 +1,8 @@
 # Pair-trunk campaign execution
 
 2026-09-14. C0–J1 are implemented and GPU-profiled. The eight-H100 J1
-save/resume preflight is running; the coordinator will start screening only if
-it passes. No architecture-quality result is available yet.
+save/resume preflight passed and C0’s 25k-step screen is training on eight H100s.
+No architecture-quality result is available yet. See [launch record](launch.json).
 
 ## Executed protocol
 
@@ -93,6 +93,19 @@ failure or invalid result pauses in `needs_inspection`. Resolve the recorded
 failure before changing stage; do not overwrite a completed trial. To stop new
 submissions, stop the coordinator process; cancel an active job explicitly with
 Iris if needed, while leaving the compute guard running until jobs terminate.
+
+## Verification
+
+The [real-data recovery check](preflight.json) compared a two-step run resumed
+to step four against an uninterrupted four-step run of the full J1 model on
+eight H100s. RNG state and data cursors matched bitwise on every rank. Only
+two of 470,116,033 model values differed, by at most 7.11e-15; EMA and optimizer
+differences were smaller. Tensor checks use atol 1e-8 / rtol 1e-6 and retain
+exact RNG/data checks. This is an operational check, not a quality score.
+
+All 63 local tests pass. They cover model learning/gradients, symmetry, padding, chunk agreement,
+encoder-only initialization, logical-batch loss/crop equivalence, resume and
+schedule behavior, validation integrity, paired budget admission and accounting.
 
 ## Scope and remaining diagnostics
 

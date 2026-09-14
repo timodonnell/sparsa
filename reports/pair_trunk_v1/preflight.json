@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "scope": "Full J1 eight-H100 real-data save/resume equivalence; not architecture scoring",
+  "compared": [
+    "model",
+    "ema",
+    "optimizer",
+    "all_rank_rng_and_data_cursors"
+  ],
+  "bitwise_equal": false,
+  "rng_and_data_bitwise_equal": true,
+  "tensor_tolerance": {
+    "atol": 1e-08,
+    "rtol": 1e-06
+  },
+  "tensor_differences": {
+    "model": {
+      "elements": 470116033,
+      "unequal_elements": 2,
+      "max_absolute_difference": 7.105427357601002e-15
+    },
+    "ema": {
+      "elements": 470116033,
+      "unequal_elements": 2,
+      "max_absolute_difference": 3.552713678800501e-15
+    },
+    "optimizer": {
+      "elements": 940233389,
+      "unequal_elements": 40,
+      "max_absolute_difference": 2.8423444153879984e-15
+    }
+  },
+  "source_runs": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pair-trunk-v1-20260914/preflight-v3",
+  "steps": 4
+}

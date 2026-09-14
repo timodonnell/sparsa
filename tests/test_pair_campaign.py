@@ -121,3 +121,22 @@ def test_confirmation_runs_control_and_candidate_at_same_endpoint_both_seeds():
     ]
     assert c.state["stage"] == "complete"
     assert c.state["promotion"] == "J1"
+
+
+def test_recovery_comparison_allows_roundoff_but_preserves_exact_data_checks():
+    import torch
+
+    from scripts.pair_smoke import equal
+
+    a = torch.tensor([1.0, 1e-7])
+    b = torch.tensor([1.0, 1e-7 + 1e-14])
+    stats = {"elements": 0, "unequal_elements": 0, "max_absolute_difference": 0.0}
+    equal(a, b, atol=1e-8, rtol=1e-6, stats=stats)
+    assert stats["unequal_elements"] == 1
+    assert 0 < stats["max_absolute_difference"] < 1e-13
+    with pytest.raises(AssertionError):
+        equal(a, b)
+    with pytest.raises(AssertionError):
+        equal(a, a + 0.001, atol=1e-8, rtol=1e-6)
+    with pytest.raises(AssertionError):
+        equal({"cursor": b"original"}, {"cursor": b"changed"})

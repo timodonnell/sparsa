@@ -46,6 +46,17 @@ class Backend(IrisBackend):
             argv[argv.index("--max-retries") + 1] = "2"
             if "--gpu" in argv and argv[argv.index("--gpu") + 1] == "H100x8":
                 argv[argv.index("--memory") + 1] = "512GB"
+            elif "--verify-only" in argv:
+                argv[argv.index("--memory") + 1] = "64GB"
+                argv[argv.index("--cpu") + 1] = "8"
+            journal = (
+                self.campaign
+                / "submissions"
+                / (argv[argv.index("--job-name") + 1] + ".json")
+            )
+            if journal.exists():
+                record = json.loads(journal.read_text())
+                write(journal, record | {"command": argv})
         return super().command(argv, cwd, timeout)
 
 
@@ -286,6 +297,30 @@ class Campaign:
 
     def preflight_step(self):
         key = self.state.get("preflight_key", "preflight")
+        if self.state.get("preflight_verify_from"):
+            self.submit(
+                key,
+                0,
+                [
+                    "-m",
+                    "scripts.pair_smoke",
+                    "--verify-only",
+                    "--out",
+                    self.state["preflight_verify_from"],
+                    "--result",
+                    PREFIX + "/" + key + "/result.json",
+                ],
+            )
+        else:
+            self.submit_preflight_training(key)
+        result = self.retrieve(key, PREFIX + "/" + key + "/result.json")
+        if result:
+            if not result.get("passed"):
+                raise ValueError("Failed preflight")
+            write(self.path / "preflight.json", result)
+            self.record(stage="screening", active=None)
+
+    def submit_preflight_training(self, key):
         self.submit(
             key,
             8,
@@ -303,12 +338,6 @@ class Campaign:
             ],
             timeout=7200,
         )
-        result = self.retrieve(key, PREFIX + "/" + key + "/result.json")
-        if result:
-            if not result.get("passed"):
-                raise ValueError("Failed preflight")
-            write(self.path / "preflight.json", result)
-            self.record(stage="screening", active=None)
 
     def trial(self, arm, seed, step):
         key = f"{arm.lower()}-s{seed}-{step}"
