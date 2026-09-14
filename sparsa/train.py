@@ -2,9 +2,9 @@
 
 import argparse
 import copy
+import hashlib
 import io
 import json
-import math
 import os
 import random
 import re
@@ -23,6 +23,12 @@ from torch.utils.data import DataLoader
 
 from sparsa.data import ROOT, TeacherBatches, benchmark, file_sha256, inventory
 from sparsa.evaluate import evaluate
+from sparsa.experiment import (
+    advance_data_digest,
+    initialize_encoder,
+    learning_rate_scale,
+    microbatches,
+)
 from sparsa.model import ALPHABET, ContactModel, ModelConfig
 
 
@@ -47,10 +53,13 @@ def write_json(value, uri):
     fs.pipe_file(path, json.dumps(value, indent=2).encode())
 
 
-def load_checkpoint(uri):
+def load_checkpoint(uri, expected_sha256=None):
     fs, path = storage(uri)
     with fs.open(path, "rb") as f:
-        return torch.load(io.BytesIO(f.read()), map_location="cpu", weights_only=False)
+        content = f.read()
+    if expected_sha256 and hashlib.sha256(content).hexdigest() != expected_sha256:
+        raise ValueError("Checkpoint checksum mismatch")
+    return torch.load(io.BytesIO(content), map_location="cpu", weights_only=False)
 
 
 def save_checkpoint(uri, state):
@@ -71,6 +80,7 @@ def prune_recovery_checkpoints(out, keep, protected=()):
     validated = {
         int(Path(p).stem.removeprefix("step-"))
         for p in fs.glob(root + "/validation/step-*.json")
+        if Path(p).stem.removeprefix("step-").isdigit()
     }
     candidates = []
     protected_paths = {storage(p)[1] for p in protected if p}
@@ -99,12 +109,14 @@ def contact_loss(logits, targets, mask, pos_weight=1.0):
     return ((per_pair * mask).sum((1, 2)) / counts).mean()
 
 
-def contact_ranking_loss(logits, targets, mask):
+def contact_ranking_loss(logits, targets, mask, normalization_count=None):
     """Per-protein KL from uniform true contacts to a softmax over valid pairs.
 
     Positive gradients are normalized by true-contact count rather than L²;
     negative gradients focus on highly ranked false contacts. Proteins without
     positive contacts contribute only to the accompanying BCE objective.
+    A supplied count keeps logical-batch normalization independent of how
+    proteins with no contacts are distributed among accumulated microbatches.
     """
     values = logits.float()
     positive = mask & (targets > 0.5)
@@ -113,7 +125,10 @@ def contact_ranking_loss(logits, targets, mask):
     normalizer = values.masked_fill(~mask, -torch.inf).flatten(1).logsumexp(1)
     mean_positive = (values * positive).sum((1, 2)) / count.clamp_min(1)
     kl = normalizer - mean_positive - count.clamp_min(1).float().log()
-    return torch.where(valid, kl, 0.0).sum() / valid.sum().clamp_min(1)
+    denominator = (
+        valid.sum().clamp_min(1) if normalization_count is None else normalization_count
+    )
+    return torch.where(valid, kl, 0.0).sum() / denominator
 
 
 def architecture_config(values):
@@ -131,13 +146,25 @@ def main():
     parser.add_argument("--resume")
     parser.add_argument("--auto-resume", action="store_true")
     parser.add_argument(
+        "--smoke-validation-limit",
+        type=int,
+        default=0,
+        help="Operational smoke only; never a campaign result",
+    )
+    parser.add_argument(
         "--init-from",
         help="Start a new curriculum phase from Sparsa weights, resetting optimizer and data stream",
     )
     args = parser.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
-    if cfg.get("compile_pair_blocks", False) or cfg.get(
-        "compile_sequence_blocks", False
+    if args.smoke_validation_limit:
+        if args.smoke_validation_limit < 1:
+            raise ValueError("Invalid smoke limit")
+        cfg["smoke_validation_limit"] = args.smoke_validation_limit
+    if (
+        cfg.get("compile_pair_blocks", False)
+        or cfg.get("compile_sequence_blocks", False)
+        or cfg.get("compile_pair_kernels", False)
     ):
         os.environ.setdefault("TORCHINDUCTOR_COMPILE_THREADS", "2")
         import torch._dynamo.config as dynamo_config
@@ -187,6 +214,15 @@ def main():
     )
     step, best, best_checkpoint = 0, -1.0, None
     data_states = {}
+    data_digest = "00" * 32
+    data_counts = {
+        "residues": 0,
+        "positive_pairs": 0,
+        "proteins": 0,
+        "afdb": 0,
+        "esm": 0,
+    }
+    initialization = None
     frozen_shards = None
     execution_changes = {}
     if cfg.get("initialize_max_distance") is not None and not (
@@ -195,9 +231,18 @@ def main():
         raise ValueError("Distant-bucket initialization requires a source checkpoint")
     if cfg.get("grow_from_ema", False) and not (args.init_from or args.resume):
         raise ValueError("Model growth requires a source checkpoint")
+    if cfg.get("encoder_only") and not (args.init_from or args.resume):
+        raise ValueError("Encoder-only training requires its pinned source")
     if args.init_from and not args.resume:
-        state = load_checkpoint(args.init_from)
-        if cfg.get("grow_from_ema", False):
+        if cfg.get("encoder_only") and not cfg.get("init_sha256"):
+            raise ValueError(
+                "Encoder-only initialization requires a checkpoint checksum"
+            )
+        state = load_checkpoint(args.init_from, cfg.get("init_sha256"))
+        if cfg.get("encoder_only"):
+            initialization = initialize_encoder(model, state)
+            ema.load_state_dict(model.state_dict())
+        elif cfg.get("grow_from_ema", False):
             from sparsa.grow import grow_from_ema
 
             growth = grow_from_ema(model, state)
@@ -240,6 +285,11 @@ def main():
                 cfg.get("compile_pair_blocks", False),
             ),
             (
+                "compile_pair_kernels",
+                state["training_config"].get("compile_pair_kernels", False),
+                cfg.get("compile_pair_kernels", False),
+            ),
+            (
                 "compile_cache_limit",
                 state["training_config"].get("compile_cache_limit", 128),
                 cfg.get("compile_cache_limit", 128),
@@ -272,6 +322,14 @@ def main():
             "afdb_probability",
             "grow_from_ema",
             "ranking_weight",
+            "logical_batch_size",
+            "schedule",
+            "schedule_steps",
+            "decay_start",
+            "warmup",
+            "encoder_only",
+            "init_sha256",
+            "smoke_validation_limit",
         ):
             if state["training_config"].get(field) != cfg.get(field):
                 raise ValueError(f"Resume changes data stream: {field}")
@@ -283,6 +341,8 @@ def main():
         step, best = state["step"], state["best_val"]
         best_checkpoint = state["best_checkpoint"]
         data_states = state["rng"][rank]["data_states"]
+        data_digest = state["rng"][rank].get("data_digest", data_digest)
+        data_counts = state["rng"][rank].get("data_counts", data_counts)
         source_provenance = (
             args.resume.rsplit("/checkpoints/", 1)[0] + "/provenance.json"
         )
@@ -320,6 +380,7 @@ def main():
             "priority": "batch",
             "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "execution_changes": execution_changes,
+            "initialization": initialization,
         }
         provenance_file = (
             f"/resume-step-{step}-provenance.json"
@@ -338,17 +399,21 @@ def main():
             flush=True,
         )
     accumulation = cfg.get("accumulation", 1)
+    logical_size = cfg.get("logical_batch_size")
+    if logical_size is not None and logical_size != cfg["batch_size"] * accumulation:
+        raise ValueError("Logical batch must equal per-rank effective batch")
+    batches_per_step = 1 if logical_size else accumulation
     dataset = TeacherBatches(
         shards,
-        cfg["batch_size"],
+        logical_size or cfg["batch_size"],
         cfg["crop"],
         seed,
         rank,
         world,
-        consumed=step * accumulation,
+        consumed=step * batches_per_step,
         limit_shards=cfg.get("limit_shards", 0),
         states=data_states,
-        total_batches=cfg["steps"] * accumulation,
+        total_batches=cfg["steps"] * batches_per_step,
         afdb_probability=cfg.get("afdb_probability", 0.5),
     )
     loader = DataLoader(
@@ -367,10 +432,16 @@ def main():
     if cfg.get("compile_sequence_blocks", False):
         for block in model.sequence:
             block.forward = torch.compile(block.forward, dynamic=True)
+    if cfg.get("compile_pair_kernels", False):
+        from sparsa.experiment import compile_pair_kernels
+
+        compile_pair_kernels(model)
     wrapped = (
         DistributedDataParallel(model, device_ids=[local_rank]) if world > 1 else model
     )
     val = benchmark()
+    if args.smoke_validation_limit:
+        val = sorted(val, key=lambda r: r["L"])[: args.smoke_validation_limit]
     history, start_time, last_log = [], time.monotonic(), time.monotonic()
     if args.resume and rank == 0 and fs.exists(out_path + "/training_log.json"):
         history = json.loads(fs.cat_file(out_path + "/training_log.json"))
@@ -379,17 +450,42 @@ def main():
     while step < steps:
         model.train()
         optimizer.zero_grad(set_to_none=True)
-        warmup = cfg.get("warmup", 500)
-        progress = max(0, (step - warmup) / max(1, steps - warmup))
-        scale = min(1.0, (step + 1) / max(1, warmup)) * (
-            0.1 + 0.9 * 0.5 * (1 + math.cos(math.pi * progress))
-        )
+        scale = learning_rate_scale(cfg, step)
         for group in optimizer.param_groups:
             group["lr"] = cfg["lr"] * scale
         total_loss = 0.0
+        logical_parts = None
+        ranking_count = None
+        if logical_size:
+            logical = next(batches)
+            data_states[logical["worker_id"]] = logical["data_state"]
+            data_digest = advance_data_digest(data_digest, logical)
+            data_counts["residues"] += int((logical["tokens"] != 0).sum())
+            data_counts["positive_pairs"] += int(
+                (logical["targets"] * logical["mask"]).sum()
+            )
+            data_counts["proteins"] += len(logical["ids"])
+            for source in ("afdb", "esm"):
+                data_counts[source] = data_counts.get(source, 0) + logical[
+                    "sources"
+                ].count(source)
+            logical_parts = iter(microbatches(logical, cfg["batch_size"]))
+            ranking_count = (
+                max(
+                    1,
+                    int(
+                        ((logical["targets"] > 0.5) & logical["mask"])
+                        .flatten(1)
+                        .any(1)
+                        .sum()
+                    ),
+                )
+                / accumulation
+            )
         for micro in range(accumulation):
-            batch = next(batches)
-            data_states[batch["worker_id"]] = batch["data_state"]
+            batch = next(logical_parts) if logical_parts is not None else next(batches)
+            if logical_parts is None:
+                data_states[batch["worker_id"]] = batch["data_state"]
             tokens, target, mask = [
                 batch[k].to(device, non_blocking=True)
                 for k in ("tokens", "targets", "mask")
@@ -401,7 +497,7 @@ def main():
                 loss = contact_loss(logits, target, mask, cfg.get("pos_weight", 1.0))
                 if cfg.get("ranking_weight", 0.0):
                     loss = loss + cfg["ranking_weight"] * contact_ranking_loss(
-                        logits, target, mask
+                        logits, target, mask, ranking_count
                     )
                 loss = loss / accumulation
             loss.backward()
@@ -430,6 +526,8 @@ def main():
                     "seconds_per_step": (now - last_log) / cfg.get("log_every", 25),
                     "examples": step * cfg["batch_size"] * accumulation * world,
                     "peak_gpu_gb": torch.cuda.max_memory_allocated() / 2**30,
+                    "rank0_data_digest": data_digest if logical_size else None,
+                    "rank0_data_counts": dict(data_counts) if logical_size else None,
                 }
                 if cfg.get("compile_pair_blocks", False):
                     from torch._dynamo.utils import counters
@@ -451,13 +549,29 @@ def main():
             result = None
             improved = False
             if evaluate_now and rank == 0:
+                local_eval = None
+                if cfg.get("save_validation_rows"):
+                    local_eval = (
+                        Path("/tmp/sparsa-validation") / Path(out_path).name / str(step)
+                    )
                 result = evaluate(
                     ema,
                     val,
                     device,
                     label=f"sparsa-step-{step}",
                     pos_weight=cfg.get("pos_weight", 1.0),
+                    out=local_eval,
+                    save_scores=False,
                 )
+                if local_eval is not None:
+                    for filename in ("per_protein.csv", "summary.json", "timings.csv"):
+                        fs.put_file(
+                            str(local_eval / filename),
+                            out_path + f"/validation/step-{step}-{filename}",
+                        )
+                    import shutil
+
+                    shutil.rmtree(local_eval)
                 result.update(step=step, seconds=time.monotonic() - start_time)
                 print("VALIDATION " + json.dumps(result), flush=True)
                 write_json(result, args.out + f"/validation/step-{step}.json")
@@ -472,6 +586,8 @@ def main():
                 "cpu": torch.get_rng_state(),
                 "cuda": torch.cuda.get_rng_state(),
                 "data_states": data_states,
+                "data_digest": data_digest,
+                "data_counts": data_counts,
             }
             states = [None] * world if rank == 0 else None
             if world > 1:
@@ -498,6 +614,17 @@ def main():
                 }
                 save_checkpoint(uri, state)
                 write_json(history, args.out + "/training_log.json")
+                if logical_size:
+                    write_json(
+                        {
+                            "step": step,
+                            "ranks": [
+                                {"digest": r["data_digest"], "counts": r["data_counts"]}
+                                for r in states
+                            ],
+                        },
+                        args.out + f"/validation/step-{step}-exposure.json",
+                    )
                 write_json(
                     {"checkpoint": uri, "step": step, "validation": result},
                     args.out + "/latest.json",

@@ -50,8 +50,8 @@ def main():
         ):
             raise ValueError("Expected distinct, explicitly listed Sparsa jobs")
         limit = float(config["max_h100_hours"])
-        if not 0 < limit <= 600:
-            raise ValueError("This campaign has an initial maximum of 600 H100-hours")
+        if not 0 < limit <= 1000:
+            raise ValueError("Supported campaign maximum is 1,000 H100-hours")
         iris = str(root / ".tools/iris/bin/iris")
         cluster = "/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml"
         command = [

@@ -1,0 +1,585 @@
+{
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "arms": {
+    "C0": {
+      "training": [
+        {
+          "arm": "C0",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.21402512583881617,
+          "estimated_seconds_per_step": 0.21402512583881617,
+          "peak_allocated_gib": 13.177646160125732,
+          "peak_reserved_gib": 13.853515625,
+          "parameters": 455648545,
+          "loss": 0.48096221685409546,
+          "grad_norm": 0.12921971082687378
+        },
+        {
+          "arm": "C0",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.09558989355961482,
+          "estimated_seconds_per_step": 0.19117978711922964,
+          "peak_allocated_gib": 19.60139799118042,
+          "peak_reserved_gib": 19.65625,
+          "parameters": 455648545,
+          "loss": 0.47947046160697937,
+          "grad_norm": 0.0229547917842865
+        },
+        {
+          "arm": "C0",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.14004142675548792,
+          "estimated_seconds_per_step": 0.14004142675548792,
+          "peak_allocated_gib": 31.487728595733643,
+          "peak_reserved_gib": 31.58984375,
+          "parameters": 455648545,
+          "loss": 0.48544198274612427,
+          "grad_norm": 0.4158594310283661
+        }
+      ],
+      "selected": {
+        "arm": "C0",
+        "batch_size": 8,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": true,
+        "compile_pair_kernels": false,
+        "seconds_per_microbatch": 0.14004142675548792,
+        "estimated_seconds_per_step": 0.14004142675548792,
+        "peak_allocated_gib": 31.487728595733643,
+        "peak_reserved_gib": 31.58984375,
+        "parameters": 455648545,
+        "loss": 0.48544198274612427,
+        "grad_norm": 0.4158594310283661
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.06541094928979874,
+          "peak_allocated_gib": 2.7663588523864746
+        },
+        {
+          "length": 512,
+          "seconds": 0.07163743674755096,
+          "peak_allocated_gib": 3.2276978492736816
+        },
+        {
+          "length": 920,
+          "seconds": 0.17875560000538826,
+          "peak_allocated_gib": 4.597762107849121
+        },
+        {
+          "length": 1024,
+          "seconds": 0.20568953547626734,
+          "peak_allocated_gib": 5.072625637054443
+        }
+      ],
+      "padding_max_error": 0.03125
+    },
+    "C1": {
+      "training": [
+        {
+          "arm": "C1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.5501716630533338,
+          "estimated_seconds_per_step": 0.5501716630533338,
+          "peak_allocated_gib": 26.076920986175537,
+          "peak_reserved_gib": 27.2265625,
+          "parameters": 475820289,
+          "loss": 0.49014270305633545,
+          "grad_norm": 0.9450058937072754
+        },
+        {
+          "arm": "C1",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.21965592696021,
+          "estimated_seconds_per_step": 0.43931185392042,
+          "peak_allocated_gib": 50.831477642059326,
+          "peak_reserved_gib": 50.9609375,
+          "parameters": 475820289,
+          "loss": 0.5113054513931274,
+          "grad_norm": 1.829148769378662
+        },
+        {
+          "batch_size": 8,
+          "gradient_checkpointing": false,
+          "error": "CUDA OOM"
+        }
+      ],
+      "selected": {
+        "arm": "C1",
+        "batch_size": 4,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": true,
+        "compile_pair_kernels": false,
+        "seconds_per_microbatch": 0.21965592696021,
+        "estimated_seconds_per_step": 0.43931185392042,
+        "peak_allocated_gib": 50.831477642059326,
+        "peak_reserved_gib": 50.9609375,
+        "parameters": 475820289,
+        "loss": 0.5113054513931274,
+        "grad_norm": 1.829148769378662
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.05951515771448612,
+          "peak_allocated_gib": 3.2239627838134766
+        },
+        {
+          "length": 512,
+          "seconds": 0.15607932396233082,
+          "peak_allocated_gib": 4.447173118591309
+        },
+        {
+          "length": 920,
+          "seconds": 0.6197000024840236,
+          "peak_allocated_gib": 8.080873966217041
+        },
+        {
+          "length": 1024,
+          "seconds": 0.6431792452931404,
+          "peak_allocated_gib": 9.338528633117676
+        }
+      ],
+      "padding_max_error": 0.015625
+    },
+    "C2": {
+      "training": [
+        {
+          "arm": "C2",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.2463605829204122,
+          "estimated_seconds_per_step": 0.2463605829204122,
+          "peak_allocated_gib": 14.92180585861206,
+          "peak_reserved_gib": 15.64453125,
+          "parameters": 457314689,
+          "loss": 0.482150673866272,
+          "grad_norm": 0.1179099753499031
+        },
+        {
+          "arm": "C2",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.10802154739697774,
+          "estimated_seconds_per_step": 0.21604309479395548,
+          "peak_allocated_gib": 23.105347156524658,
+          "peak_reserved_gib": 23.169921875,
+          "parameters": 457314689,
+          "loss": 0.4811938405036926,
+          "grad_norm": 0.07145725935697556
+        },
+        {
+          "arm": "C2",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.16324932935337225,
+          "estimated_seconds_per_step": 0.16324932935337225,
+          "peak_allocated_gib": 38.45998525619507,
+          "peak_reserved_gib": 38.59765625,
+          "parameters": 457314689,
+          "loss": 0.4813978970050812,
+          "grad_norm": 0.014768741093575954
+        }
+      ],
+      "selected": {
+        "arm": "C2",
+        "batch_size": 8,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": true,
+        "compile_pair_kernels": false,
+        "seconds_per_microbatch": 0.16324932935337225,
+        "estimated_seconds_per_step": 0.16324932935337225,
+        "peak_allocated_gib": 38.45998525619507,
+        "peak_reserved_gib": 38.59765625,
+        "parameters": 457314689,
+        "loss": 0.4813978970050812,
+        "grad_norm": 0.014768741093575954
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.05251876078546047,
+          "peak_allocated_gib": 2.8273987770080566
+        },
+        {
+          "length": 512,
+          "seconds": 0.07338546216487885,
+          "peak_allocated_gib": 3.4411120414733887
+        },
+        {
+          "length": 920,
+          "seconds": 0.20059631019830704,
+          "peak_allocated_gib": 5.267260551452637
+        },
+        {
+          "length": 1024,
+          "seconds": 0.2441265508532524,
+          "peak_allocated_gib": 5.8954758644104
+        }
+      ],
+      "padding_max_error": 0.015625
+    },
+    "D1": {
+      "training": [
+        {
+          "arm": "D1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.23535600335647663,
+          "estimated_seconds_per_step": 0.23535600335647663,
+          "peak_allocated_gib": 14.824357986450195,
+          "peak_reserved_gib": 15.615234375,
+          "parameters": 457546177,
+          "loss": 0.4790920615196228,
+          "grad_norm": 0.2529127299785614
+        },
+        {
+          "arm": "D1",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.10427664003024499,
+          "estimated_seconds_per_step": 0.20855328006048998,
+          "peak_allocated_gib": 23.18721103668213,
+          "peak_reserved_gib": 23.259765625,
+          "parameters": 457546177,
+          "loss": 0.48381713032722473,
+          "grad_norm": 0.5046325922012329
+        },
+        {
+          "arm": "D1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": true,
+          "compile_pair_kernels": false,
+          "seconds_per_microbatch": 0.15597862967600426,
+          "estimated_seconds_per_step": 0.15597862967600426,
+          "peak_allocated_gib": 38.61985969543457,
+          "peak_reserved_gib": 38.78125,
+          "parameters": 457546177,
+          "loss": 0.4830150604248047,
+          "grad_norm": 0.3489845097064972
+        }
+      ],
+      "selected": {
+        "arm": "D1",
+        "batch_size": 8,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": true,
+        "compile_pair_kernels": false,
+        "seconds_per_microbatch": 0.15597862967600426,
+        "estimated_seconds_per_step": 0.15597862967600426,
+        "peak_allocated_gib": 38.61985969543457,
+        "peak_reserved_gib": 38.78125,
+        "parameters": 457546177,
+        "loss": 0.4830150604248047,
+        "grad_norm": 0.3489845097064972
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.04463710077106953,
+          "peak_allocated_gib": 2.829026222229004
+        },
+        {
+          "length": 512,
+          "seconds": 0.06725152116268873,
+          "peak_allocated_gib": 3.444082260131836
+        },
+        {
+          "length": 920,
+          "seconds": 0.19174865074455738,
+          "peak_allocated_gib": 5.274389266967773
+        },
+        {
+          "length": 1024,
+          "seconds": 0.23155940044671297,
+          "peak_allocated_gib": 5.904061317443848
+        }
+      ],
+      "padding_max_error": 0.03125
+    },
+    "T1": {
+      "training": [
+        {
+          "arm": "T1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 0.5236647188042601,
+          "estimated_seconds_per_step": 0.5236647188042601,
+          "peak_allocated_gib": 16.155876636505127,
+          "peak_reserved_gib": 17.275390625,
+          "parameters": 460229569,
+          "loss": 0.48203909397125244,
+          "grad_norm": 0.3295910656452179
+        },
+        {
+          "arm": "T1",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 0.22077966015785933,
+          "estimated_seconds_per_step": 0.44155932031571865,
+          "peak_allocated_gib": 42.85924434661865,
+          "peak_reserved_gib": 42.927734375,
+          "parameters": 460229569,
+          "loss": 0.47994333505630493,
+          "grad_norm": 0.2711978852748871
+        },
+        {
+          "arm": "T1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 0.3754075122997165,
+          "estimated_seconds_per_step": 0.3754075122997165,
+          "peak_allocated_gib": 77.9207992553711,
+          "peak_reserved_gib": 78.046875,
+          "parameters": 460229569,
+          "loss": 0.48604077100753784,
+          "grad_norm": 0.665414571762085
+        }
+      ],
+      "selected": {
+        "arm": "T1",
+        "batch_size": 4,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": false,
+        "compile_pair_kernels": true,
+        "seconds_per_microbatch": 0.22077966015785933,
+        "estimated_seconds_per_step": 0.44155932031571865,
+        "peak_allocated_gib": 42.85924434661865,
+        "peak_reserved_gib": 42.927734375,
+        "parameters": 460229569,
+        "loss": 0.47994333505630493,
+        "grad_norm": 0.2711978852748871
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.06317544355988503,
+          "peak_allocated_gib": 2.880828857421875
+        },
+        {
+          "length": 512,
+          "seconds": 0.14049418829381466,
+          "peak_allocated_gib": 3.6133179664611816
+        },
+        {
+          "length": 920,
+          "seconds": 0.46423545479774475,
+          "peak_allocated_gib": 5.793272495269775
+        },
+        {
+          "length": 1024,
+          "seconds": 0.5825491407886147,
+          "peak_allocated_gib": 6.542047023773193
+        }
+      ],
+      "padding_max_error": 0.03125
+    },
+    "A1": {
+      "training": [
+        {
+          "arm": "A1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 1.1160649197796981,
+          "estimated_seconds_per_step": 1.1160649197796981,
+          "peak_allocated_gib": 18.441647052764893,
+          "peak_reserved_gib": 19.689453125,
+          "parameters": 461556673,
+          "loss": 0.4799162745475769,
+          "grad_norm": 0.3198075294494629
+        },
+        {
+          "arm": "A1",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 0.46023120048145455,
+          "estimated_seconds_per_step": 0.9204624009629091,
+          "peak_allocated_gib": 51.942572593688965,
+          "peak_reserved_gib": 52.16796875,
+          "parameters": 461556673,
+          "loss": 0.47889453172683716,
+          "grad_norm": 0.27253079414367676
+        },
+        {
+          "batch_size": 8,
+          "gradient_checkpointing": false,
+          "error": "CUDA OOM"
+        }
+      ],
+      "selected": {
+        "arm": "A1",
+        "batch_size": 4,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": false,
+        "compile_pair_kernels": true,
+        "seconds_per_microbatch": 0.46023120048145455,
+        "estimated_seconds_per_step": 0.9204624009629091,
+        "peak_allocated_gib": 51.942572593688965,
+        "peak_reserved_gib": 52.16796875,
+        "parameters": 461556673,
+        "loss": 0.47889453172683716,
+        "grad_norm": 0.27253079414367676
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.06886133551597595,
+          "peak_allocated_gib": 2.902759552001953
+        },
+        {
+          "length": 512,
+          "seconds": 0.23915117047727108,
+          "peak_allocated_gib": 3.6355576515197754
+        },
+        {
+          "length": 920,
+          "seconds": 1.095663197338581,
+          "peak_allocated_gib": 5.810598850250244
+        },
+        {
+          "length": 1024,
+          "seconds": 1.2447653589770198,
+          "peak_allocated_gib": 6.563534259796143
+        }
+      ],
+      "padding_max_error": 0.03125
+    },
+    "J1": {
+      "training": [
+        {
+          "arm": "J1",
+          "batch_size": 8,
+          "crop": 256,
+          "gradient_checkpointing": true,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 1.2158279496555526,
+          "estimated_seconds_per_step": 1.2158279496555526,
+          "peak_allocated_gib": 19.511552333831787,
+          "peak_reserved_gib": 20.73046875,
+          "parameters": 470116033,
+          "loss": 0.477349191904068,
+          "grad_norm": 0.07530457526445389
+        },
+        {
+          "arm": "J1",
+          "batch_size": 4,
+          "crop": 256,
+          "gradient_checkpointing": false,
+          "compile_pair_blocks": false,
+          "compile_pair_kernels": true,
+          "seconds_per_microbatch": 0.4986836559449633,
+          "estimated_seconds_per_step": 0.9973673118899266,
+          "peak_allocated_gib": 55.796539306640625,
+          "peak_reserved_gib": 56.005859375,
+          "parameters": 470116033,
+          "loss": 0.4795505702495575,
+          "grad_norm": 0.17320244014263153
+        },
+        {
+          "batch_size": 8,
+          "gradient_checkpointing": false,
+          "error": "CUDA OOM"
+        }
+      ],
+      "selected": {
+        "arm": "J1",
+        "batch_size": 4,
+        "crop": 256,
+        "gradient_checkpointing": false,
+        "compile_pair_blocks": false,
+        "compile_pair_kernels": true,
+        "seconds_per_microbatch": 0.4986836559449633,
+        "estimated_seconds_per_step": 0.9973673118899266,
+        "peak_allocated_gib": 55.796539306640625,
+        "peak_reserved_gib": 56.005859375,
+        "parameters": 470116033,
+        "loss": 0.4795505702495575,
+        "grad_norm": 0.17320244014263153
+      },
+      "inference": [
+        {
+          "length": 256,
+          "seconds": 0.07645747624337673,
+          "peak_allocated_gib": 2.9508261680603027
+        },
+        {
+          "length": 512,
+          "seconds": 0.2536048302426934,
+          "peak_allocated_gib": 3.683868408203125
+        },
+        {
+          "length": 920,
+          "seconds": 1.1533201234415174,
+          "peak_allocated_gib": 5.8592987060546875
+        },
+        {
+          "length": 1024,
+          "seconds": 1.292280213907361,
+          "peak_allocated_gib": 6.612333297729492
+        }
+      ],
+      "padding_max_error": 0.03125
+    }
+  },
+  "complete": true
+}

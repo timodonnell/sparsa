@@ -31,7 +31,9 @@ The first training and evaluation campaign is complete. R-precision:
 ¹ Decontaminated exp232 m2-p06, step 145199. Sparsa remains substantially worse;
 model size, training compute, and readout differ. Eight architecture-search trials
 completed; none met the promotion rule. See [results and checkpoint](reports/FINAL.md)
-and [search results](reports/AUTORESEARCH.md). The larger/longer [scaling campaign results](reports/scaling_v2/FINAL.md) are also available.
+and [search results](reports/AUTORESEARCH.md). See also the longer
+[scaling results](reports/scaling_v2/FINAL.md) and current
+[pair-trunk experiments](reports/pair_trunk_v1/RUNNING.md).
 
 ## Use
 

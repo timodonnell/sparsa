@@ -21,7 +21,9 @@ from sparsa.vendor.marinfold_metrics import (
 
 
 @torch.inference_mode()
-def evaluate(model, records, device, out=None, label="sparsa", pos_weight=1.0):
+def evaluate(
+    model, records, device, out=None, label="sparsa", pos_weight=1.0, save_scores=True
+):
     model.eval()
     rows, timings = [], []
     if out is not None:
@@ -81,7 +83,7 @@ def evaluate(model, records, device, out=None, label="sparsa", pos_weight=1.0):
                 "timestamp_utc": datetime.now(UTC).isoformat(),
             }
         )
-        if out is not None:
+        if out is not None and save_scores:
             np.savez_compressed(
                 out / "scores" / f"{rec['dataset']}__{rec['stem']}.npz", score=scores
             )

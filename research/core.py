@@ -132,7 +132,17 @@ def validate_source(source, reference=None):
         ):
             raise ValueError("Model imports must be tensor/math utilities only")
         if isinstance(node, ast.ImportFrom) and (
-            node.level or (node.module or "").split(".")[0] not in allowed
+            node.level
+            or (
+                (node.module or "").split(".")[0] not in allowed
+                and not (
+                    node.module == "sparsa.pair_trunk"
+                    and all(
+                        n.name in {"ResidueToPair", "ReasoningBlock"}
+                        for n in node.names
+                    )
+                )
+            )
         ):
             raise ValueError("Model imports must be tensor/math utilities only")
         if isinstance(node, ast.Name) and node.id in forbidden:

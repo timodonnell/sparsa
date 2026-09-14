@@ -1,0 +1,7 @@
+{
+  "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pair-trunk-v1-20260914/encoder.pt",
+  "sha256": "950b0ef3a8da943f6eaf66cde637c2f4cc6575fcf018a9636f4b0dd7fec4c01d",
+  "source": "s3://marin-us-east-02a/marin/protein-structure/sparsa/runs/scale-rank456m50-20260911/checkpoints/step-3000.pt",
+  "source_sha256": "cee033d47cf96b0c35ce52db395e666a1b6c808a46b2c05060e78de7f2cc35cb",
+  "parameters": 453378048
+}

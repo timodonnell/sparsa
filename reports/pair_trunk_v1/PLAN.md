@@ -1,8 +1,9 @@
 # Pair-trunk experiments
 
-Design date: 2026-09-14. Status: proposed experiments; architectures and runner
-extensions below are not implemented or launched. All eventual Iris GPU jobs
-must use batch priority. This campaign selects on the fixed 97 validation
+Design date: 2026-09-14. Approved for execution. C0–J1 and the staged runner
+are implemented; see [execution record](RUNNING.md) for the profiled crop-size
+amendment, launch status, and deferred diagnostics. The original design below
+is retained to make deviations explicit. All Iris GPU jobs use batch priority. This campaign selects on the fixed 97 validation
 proteins only. Previously reported test/de novo scores do not guide experiments.
 
 ## What the current model actually does

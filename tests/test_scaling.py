@@ -159,6 +159,9 @@ def test_recovery_retention_preserves_validated_and_protected(tmp_path):
     for step in (100, 200, 300, 400, 500, 600, 700):
         (tmp_path / f"checkpoints/step-{step}.pt").write_bytes(b"checkpoint")
     (tmp_path / "validation/step-200.json").write_text("{}")
+    # Exposure and per-protein artifacts do not mark recovery steps validated.
+    (tmp_path / "validation/step-100-exposure.json").write_text("{}")
+    (tmp_path / "validation/step-200-summary.json").write_text("{}")
     # Preserve an unusual best pointer even if its validation metadata is absent.
     protected = str(tmp_path / "checkpoints/step-100.pt")
     removed = prune_recovery_checkpoints(str(tmp_path), 2, [protected])

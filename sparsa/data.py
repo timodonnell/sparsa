@@ -115,7 +115,7 @@ def collate(records: list[dict], crop: int, rng: random.Random) -> dict:
     length = (length + 7) // 8 * 8
     tokens = torch.zeros(len(records), length, dtype=torch.long)
     targets = torch.zeros(len(records), length, length)
-    ids = []
+    ids, crop_starts = [], []
     for b, rec in enumerate(records):
         seq = rec["sequence"]
         start = rng.randrange(max(1, len(seq) - crop + 1))
@@ -128,10 +128,17 @@ def collate(records: list[dict], crop: int, rng: random.Random) -> dict:
             targets[b, i, j] = 1
             targets[b, j, i] = 1
         ids.append(rec["entry_id"])
+        crop_starts.append(start)
     valid = tokens != 0
     mask = valid[:, :, None] & valid[:, None, :]
     mask &= torch.ones(length, length, dtype=torch.bool).triu(6)
-    return {"tokens": tokens, "targets": targets, "mask": mask, "ids": ids}
+    return {
+        "tokens": tokens,
+        "targets": targets,
+        "mask": mask,
+        "ids": ids,
+        "crop_starts": crop_starts,
+    }
 
 
 class ShardStream:
@@ -230,11 +237,13 @@ class TeacherBatches(IterableDataset):
         )
         batch_index = 0
         while remaining is None or batch_index < skip + remaining:
-            records = [
-                next(streams["afdb" if rng.random() < self.afdb_probability else "esm"])
+            sources = [
+                "afdb" if rng.random() < self.afdb_probability else "esm"
                 for _ in range(self.batch_size)
             ]
+            records = [next(streams[source]) for source in sources]
             batch = collate(records, self.crop, rng)
+            batch["sources"] = sources
             if batch_index >= skip:
                 batch["worker_id"] = worker_id
                 batch["data_state"] = pickle.dumps(

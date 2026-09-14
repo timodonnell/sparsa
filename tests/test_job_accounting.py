@@ -1,7 +1,5 @@
 """Regression coverage for incomplete Iris cancellation timestamps."""
 
-import pytest
-
 from scripts.job_accounting import attempt_timing
 
 
@@ -66,12 +64,14 @@ def test_queued_attempt_has_no_running_time():
     assert result["running_seconds"] == 0
 
 
-def test_inconsistent_timestamps_are_rejected():
-    with pytest.raises(ValueError, match="end precedes"):
-        attempt_timing(
-            start_ms=2000,
-            finish_ms=1000,
-            state="succeeded",
-            job_finish_ms=4000,
-            observed_ms=9000,
-        )
+def test_inconsistent_timestamps_are_explicitly_unknown_for_guard_fallback():
+    result = attempt_timing(
+        start_ms=2000,
+        finish_ms=1000,
+        state="succeeded",
+        job_finish_ms=4000,
+        observed_ms=9000,
+    )
+    assert result["running_seconds"] is None
+    assert result["end_source"] == "unknown_finish"
+    assert result["timing_anomaly"] == "Attempt end precedes its start"

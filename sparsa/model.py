@@ -37,6 +37,13 @@ class ModelConfig:
     triangle_dim: int = 32
     dropout: float = 0.0
     gradient_checkpointing: bool = True
+    pair_family: str = "conv"
+    pair_directional: bool = False
+    pair_outer_rank: int = 32
+    pair_attention_heads: int = 4
+    pair_attention_every: int = 2
+    pair_attention_chunk: int = 16
+    pair_residue_dim: int = 256
 
 
 def rotary(x: torch.Tensor) -> torch.Tensor:
@@ -105,6 +112,7 @@ class Triangle(nn.Module):
 class PairBlock(nn.Module):
     def __init__(self, c, index):
         super().__init__()
+        self.directional = c.pair_directional
         dilation = [1, 2, 4, 8][index % 4]
         self.norm = nn.LayerNorm(c.pair_dim)
         self.conv = nn.Conv2d(
@@ -128,7 +136,7 @@ class PairBlock(nn.Module):
         z = (z + self.ff(self.norm2(z))) * mask[..., None]
         if self.triangle is not None:
             z = self.triangle(z, mask)
-        return (z + z.transpose(1, 2)) * 0.5
+        return z if self.directional else (z + z.transpose(1, 2)) * 0.5
 
 
 class ContactModel(nn.Module):
@@ -140,6 +148,10 @@ class ContactModel(nn.Module):
         ):
             raise ValueError("Sequence head dimension must be even")
         self.config = config
+        if config.pair_family not in {"conv", "triangle", "attention", "joint"}:
+            raise ValueError("Unknown pair family")
+        if config.pair_family != "conv" and not config.pair_directional:
+            raise ValueError("New pair families require directed state")
         # Optional inference readout, selected using validation only. This is
         # separate from the training architecture for old checkpoint compatibility.
         self.relative_max_distance = None
@@ -150,12 +162,32 @@ class ContactModel(nn.Module):
             [SequenceBlock(config) for _ in range(config.sequence_layers)]
         )
         self.seqnorm = nn.LayerNorm(config.sequence_dim)
-        self.left = nn.Linear(config.sequence_dim, config.pair_dim)
-        self.product = nn.Linear(config.sequence_dim, config.pair_dim)
-        self.relative = nn.Embedding(130, config.pair_dim)
-        self.pairs = nn.ModuleList(
-            [PairBlock(config, i) for i in range(config.pair_layers)]
-        )
+        if config.pair_directional:
+            from sparsa.pair_trunk import ResidueToPair
+
+            self.pair_init = ResidueToPair(
+                config.sequence_dim,
+                config.pair_dim,
+                config.pair_outer_rank,
+                zero_output=False,
+            )
+            self.relative = nn.Embedding(257, config.pair_dim)
+        else:
+            self.left = nn.Linear(config.sequence_dim, config.pair_dim)
+            self.product = nn.Linear(config.sequence_dim, config.pair_dim)
+            self.relative = nn.Embedding(130, config.pair_dim)
+        if config.pair_family == "conv":
+            self.pairs = nn.ModuleList(
+                [PairBlock(config, i) for i in range(config.pair_layers)]
+            )
+        else:
+            from sparsa.pair_trunk import ReasoningBlock
+
+            self.pairs = nn.ModuleList(
+                [ReasoningBlock(config, i) for i in range(config.pair_layers)]
+            )
+        if config.pair_family == "joint":
+            self.residue_init = nn.Linear(config.sequence_dim, config.pair_residue_dim)
         self.head = nn.Sequential(
             nn.LayerNorm(config.pair_dim), nn.Linear(config.pair_dim, 1)
         )
@@ -176,7 +208,11 @@ class ContactModel(nn.Module):
             if max_trained_distance < 64
             else 64 + int(math.log2(max_trained_distance / 64) * 8),
         )
-        self.relative.weight[bucket + 1 :] = self.relative.weight[bucket]
+        if self.config.pair_directional:
+            self.relative.weight[129 + bucket :] = self.relative.weight[128 + bucket]
+            self.relative.weight[: 128 - bucket] = self.relative.weight[128 - bucket]
+        else:
+            self.relative.weight[bucket + 1 :] = self.relative.weight[bucket]
         return bucket
 
     def forward(self, tokens):
@@ -188,7 +224,6 @@ class ContactModel(nn.Module):
             else:
                 x = block(x, valid)
         x = self.seqnorm(x)
-        a, p = self.left(x), self.product(x)
         length = tokens.shape[1]
         positions = torch.arange(length, device=tokens.device)
         sep = (positions[:, None] - positions[None, :]).abs()
@@ -200,14 +235,30 @@ class ContactModel(nn.Module):
             sep < 64, sep, 64 + ((sep.float() / 64).clamp_min(1).log2() * 8).long()
         ).clamp_max(128)
         mask = valid[:, :, None] & valid[:, None, :]
-        z = (
-            a[:, :, None]
-            + a[:, None, :]
-            + p[:, :, None] * p[:, None, :] / math.sqrt(self.config.pair_dim)
-            + self.relative(bucket)[None]
-        ) * mask[..., None]
+        if self.config.pair_directional:
+            signed = (positions[:, None] - positions[None, :]).sign()
+            z = self.pair_init(x) + self.relative(128 + signed * bucket)[None]
+        else:
+            a, p = self.left(x), self.product(x)
+            z = (
+                a[:, :, None]
+                + a[:, None, :]
+                + p[:, :, None] * p[:, None, :] / math.sqrt(self.config.pair_dim)
+                + self.relative(bucket)[None]
+            )
+        z = z * mask[..., None]
+        s = (
+            self.residue_init(x) * valid[..., None]
+            if self.config.pair_family == "joint"
+            else None
+        )
         for block in self.pairs:
-            if self.training and self.config.gradient_checkpointing:
+            if self.config.pair_family == "joint":
+                if self.training and self.config.gradient_checkpointing:
+                    z, s = checkpoint(block, z, mask, s, use_reentrant=False)
+                else:
+                    z, s = block(z, mask, s)
+            elif self.training and self.config.gradient_checkpointing:
                 z = checkpoint(block, z, mask, use_reentrant=False)
             else:
                 z = block(z, mask)

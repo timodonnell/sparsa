@@ -34,7 +34,12 @@ def attempt_timing(*, start_ms, finish_ms, state, observed_ms, job_finish_ms):
             "end_source": "unknown_finish",
         }
     if end < start_ms:
-        raise ValueError("Attempt end precedes its start")
+        return {
+            "running_seconds": None,
+            "accounted_end_ms": None,
+            "end_source": "unknown_finish",
+            "timing_anomaly": "Attempt end precedes its start",
+        }
     return {
         "running_seconds": (end - start_ms) / 1000,
         "accounted_end_ms": end,
@@ -58,6 +63,12 @@ def main():
         raise ValueError("Only explicitly named Sparsa jobs may be inspected")
     now = datetime.now(UTC)
     now_ms = int(now.timestamp() * 1000)
+    out = Path(args.out)
+    previous = (
+        {j["job"]: j for j in json.loads(out.read_text())["jobs"]}
+        if out.exists()
+        else {}
+    )
     jobs = []
     with open_iris_client(
         config_file=Path(args.cluster_config), workspace=None
@@ -117,13 +128,38 @@ def main():
                     }
                 )
             submitted = job.submitted_at.epoch_ms() if job.submitted_at else None
+            terminal = job.state.value in {
+                "succeeded",
+                "failed",
+                "killed",
+                "cancelled",
+                "canceled",
+            }
+            terminal_seen = (
+                (previous.get(name, {}).get("first_terminal_observed_ms") or now_ms)
+                if terminal
+                else None
+            )
+            unknown_timing = any(
+                a["running_seconds"] is None for t in tasks for a in t["attempts"]
+            )
+            # A stale job finish can precede a retried attempt's start. Bound
+            # unknown durations by the first terminal observation, persistently,
+            # rather than making the guard crash or accrue hours forever.
+            wall_end = (
+                (terminal_seen or now_ms) if unknown_timing else (finished or now_ms)
+            )
             jobs.append(
                 {
                     "job": name,
                     "state": job.state.value,
                     "submitted_ms": submitted,
                     "finished_ms": finished,
-                    "wall_seconds": ((finished or now_ms) - submitted) / 1000
+                    "first_terminal_observed_ms": terminal_seen,
+                    "wall_end_source": "terminal_observation_bound"
+                    if unknown_timing and terminal
+                    else "job_lifetime",
+                    "wall_seconds": (wall_end - submitted) / 1000
                     if submitted
                     else None,
                     "preemptions": job.preemption_count,
@@ -148,7 +184,6 @@ def main():
         "timing_definition": "Iris attempt started_at through finished_at; a missing final-attempt finish uses the job finish as a labelled estimate, or observation time only for a still-running attempt.",
         "limitations": "Excludes queue waits and pre-start build/allocation time; attempts without a start timestamp contribute zero. Unknown stopped-attempt durations are null and excluded from the sum, so a nonzero unmeasured_started_attempts count means the total is incomplete. Job-finish fallbacks estimate controller lifetime, not actual pod exit. This is running resource time, not GPU utilization or billing.",
     }
-    out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2))
     print(json.dumps({"jobs": len(jobs), "running_gpu_hours": total, "out": str(out)}))
