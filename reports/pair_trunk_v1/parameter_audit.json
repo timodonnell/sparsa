@@ -1,0 +1,111 @@
+{
+  "source_commit": "f24a88f4075200eae8d36624df7b7657e30f4fae",
+  "model_sha256": "fb0c67084f5a94886d118de8898e863a6b2a0ab7ef33c298e91a9fe97efc4eaa",
+  "method": "PyTorch meta-device module parameter counts; no model training or GPU allocation",
+  "models": [
+    {
+      "name": "production",
+      "model_config": {
+        "sequence_dim": 2048,
+        "sequence_layers": 36,
+        "heads": 32,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 1815192865,
+      "parameters_by_module": {
+        "embedding": 45056,
+        "sequence": 1812676608,
+        "seqnorm": 4096,
+        "left": 196704,
+        "product": 196704,
+        "relative": 12480,
+        "pairs": 2060928,
+        "head": 289
+      },
+      "pair_trunk_fraction": 0.0011353768735753596
+    },
+    {
+      "name": "screen_anchor",
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 96,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 48,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 455648545,
+      "parameters_by_module": {
+        "embedding": 22528,
+        "sequence": 453353472,
+        "seqnorm": 2048,
+        "left": 98400,
+        "product": 98400,
+        "relative": 12480,
+        "pairs": 2060928,
+        "head": 289
+      },
+      "pair_trunk_fraction": 0.004523065030307515
+    },
+    {
+      "name": "wide_deep_control",
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 256,
+        "pair_layers": 24,
+        "triangle_every": 4,
+        "triangle_dim": 128,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 475820289,
+      "parameters_by_module": {
+        "embedding": 22528,
+        "sequence": 453353472,
+        "seqnorm": 2048,
+        "left": 262400,
+        "product": 262400,
+        "relative": 33280,
+        "pairs": 21883392,
+        "head": 769
+      },
+      "pair_trunk_fraction": 0.045990876189812915
+    },
+    {
+      "name": "operator_width_control",
+      "model_config": {
+        "sequence_dim": 1024,
+        "sequence_layers": 36,
+        "heads": 16,
+        "pair_dim": 128,
+        "pair_layers": 16,
+        "triangle_every": 4,
+        "triangle_dim": 64,
+        "dropout": 0.0,
+        "gradient_checkpointing": true
+      },
+      "parameters": 457314689,
+      "parameters_by_module": {
+        "embedding": 22528,
+        "sequence": 453353472,
+        "seqnorm": 2048,
+        "left": 131200,
+        "product": 131200,
+        "relative": 16640,
+        "pairs": 3657216,
+        "head": 385
+      },
+      "pair_trunk_fraction": 0.007997154012256098
+    }
+  ]
+}

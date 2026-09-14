@@ -7,6 +7,12 @@ promising changes with another seed, and retains the better architecture as the
 parent of subsequent proposals. It stops when its budget or candidate limit is
 reached. It does not modify the model in your working repository.
 
+The next proposed [pair-trunk experiments](../reports/pair_trunk_v1/PLAN.md)
+cover directed pair states, triangle attention, residue–pair feedback and
+recurrent refinement with longer matched comparisons. That design requires
+runner extensions and has not been launched; the commands below run the
+existing protocol.
+
 The approach borrows the editable-model/fixed-evaluator loop from
 [autoresearch](https://github.com/karpathy/autoresearch). Sparsa uses equal
 training exposure rather than autoresearch's fixed short wall-clock budget.
