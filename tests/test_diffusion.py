@@ -98,3 +98,26 @@ def test_sampling_runs_shared_cell_over_reverse_steps():
     assert state.shape == probability.shape == (3, 12, 12)
     torch.testing.assert_close(state, state.transpose(1, 2))
     assert torch.isfinite(probability).all()
+
+
+def test_positive_weight_correction_changes_reverse_distribution():
+    torch.manual_seed(10)
+    model = TriangleDiffusionModel(tiny()).eval()
+    schedule = BinaryDiffusion(4, (0.2, 0.1, 0.05))
+    tokens = torch.randint(1, 22, (1, 12))
+    _, uncorrected = sample_contact_maps(
+        model,
+        schedule,
+        tokens,
+        2,
+        torch.Generator().manual_seed(12),
+    )
+    _, corrected = sample_contact_maps(
+        model,
+        schedule,
+        tokens,
+        2,
+        torch.Generator().manual_seed(12),
+        logit_correction=torch.tensor(4.0).log().item(),
+    )
+    assert (corrected < uncorrected).all()

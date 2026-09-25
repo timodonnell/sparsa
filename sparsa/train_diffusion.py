@@ -108,7 +108,9 @@ def main():
         # exact same run.  This avoids poisoning a URI with a startup failure.
         existing = json.loads(fs.cat_file(out_path + "/provenance.json"))
         if existing.get("training_config") != cfg:
-            raise ValueError("Existing pre-checkpoint run has a different configuration")
+            raise ValueError(
+                "Existing pre-checkpoint run has a different configuration"
+            )
     elif provenance_exists and not args.resume:
         raise ValueError("Output run already exists; use auto-resume or a new name")
 
@@ -388,6 +390,7 @@ def main():
         rollout_batch=int(cfg.get("rollout_batch", 4)),
         seed=int(cfg.get("rollout_seed", 20260925)),
         temperature=float(cfg.get("rollout_temperature", 1.0)),
+        pos_weight=float(cfg.get("pos_weight", 4.0)),
     )
     gathered_proteins = [None] * world if rank == 0 else None
     gathered_rollouts = [None] * world if rank == 0 else None

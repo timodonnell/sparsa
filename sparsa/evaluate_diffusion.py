@@ -9,6 +9,7 @@ diversity statistics are diagnostics; oracle best-of-N is the selection metric.
 from __future__ import annotations
 
 import hashlib
+import math
 import time
 
 import numpy as np
@@ -62,10 +63,13 @@ def evaluate_records(
     rollout_batch=4,
     seed=20260925,
     temperature=1.0,
+    pos_weight=4.0,
 ):
     """Evaluate an arbitrary record shard and return auditable per-protein rows."""
     if n_rollouts < 1 or rollout_batch < 1:
         raise ValueError("Rollout counts must be positive")
+    if pos_weight <= 0:
+        raise ValueError("Positive weight must be positive")
     model.eval()
     protein_rows, rollout_rows = [], []
     for rec in records:
@@ -86,6 +90,7 @@ def evaluate_records(
                     count,
                     generator,
                     temperature,
+                    math.log(pos_weight),
                 )
             states = states.cpu().numpy()
             probabilities = probabilities.float().cpu().numpy()

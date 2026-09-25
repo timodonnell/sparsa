@@ -277,6 +277,7 @@ def sample_contact_maps(
     count,
     generator,
     temperature=1.0,
+    logit_correction=0.0,
 ):
     """Sample a batch of complete maps and return final-step clean probabilities."""
     if tokens.shape[0] != 1 or count < 1 or temperature <= 0:
@@ -293,7 +294,9 @@ def sample_contact_maps(
     final_probability = None
     for t in range(schedule.steps, 0, -1):
         timestep = torch.full((count,), t, dtype=torch.long, device=tokens.device)
-        logits = model.denoise(encoded, noisy, timestep) / temperature
+        logits = (
+            model.denoise(encoded, noisy, timestep) - float(logit_correction)
+        ) / temperature
         final_probability = logits.float().sigmoid()
         noisy = schedule.sample_previous(
             noisy, final_probability, expanded_tokens, t, generator
