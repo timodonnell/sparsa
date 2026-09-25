@@ -134,6 +134,9 @@ def main():
         fused=True,
     )
     diffusion_rng = torch.Generator(device=device).manual_seed(seed + 7919 * rank + 101)
+    conditioning_rng = torch.Generator(device=device).manual_seed(
+        seed + 7919 * rank + 303
+    )
     self_condition_probability = float(cfg.get("self_condition_probability", 0.5))
     if not 0 <= self_condition_probability <= 1:
         raise ValueError("Self-conditioning probability must be in [0, 1]")
@@ -171,6 +174,8 @@ def main():
         torch.set_rng_state(local_rng["cpu"])
         torch.cuda.set_rng_state(local_rng["cuda"])
         diffusion_rng.set_state(local_rng["diffusion"])
+        if "conditioning" in local_rng:
+            conditioning_rng.set_state(local_rng["conditioning"])
         provenance_uri = args.resume.rsplit("/checkpoints/", 1)[0] + "/provenance.json"
         pfs, ppath = storage(provenance_uri)
         provenance = json.loads(pfs.cat_file(ppath))
@@ -292,7 +297,7 @@ def main():
             noisy = schedule.sample_forward(target, tokens, timestep, diffusion_rng)
             self_condition = None
             if model_config.self_conditioning and bool(
-                torch.rand((), device=device, generator=diffusion_rng)
+                torch.rand((), device=device, generator=conditioning_rng)
                 < self_condition_probability
             ):
                 with torch.no_grad(), torch.autocast("cuda", dtype=torch.bfloat16):
@@ -358,6 +363,7 @@ def main():
                 "cpu": torch.get_rng_state(),
                 "cuda": torch.cuda.get_rng_state(),
                 "diffusion": diffusion_rng.get_state(),
+                "conditioning": conditioning_rng.get_state(),
                 "data_states": data_states,
                 "data_digest": data_digest,
                 "data_counts": data_counts,
