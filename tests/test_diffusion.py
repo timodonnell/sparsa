@@ -66,17 +66,18 @@ def test_forward_noise_is_symmetric_and_respects_pair_mask():
     assert ((i - j).abs() >= 6).all()
 
 
-def test_looped_and_untied_denoisers_backpropagate_through_all_cells():
+def test_all_denoisers_backpropagate_through_every_parameter():
     torch.manual_seed(8)
     tokens = example_tokens()
     noisy = torch.zeros_like(tokens[:, :, None] * tokens[:, None, :], dtype=torch.bool)
     timestep = torch.tensor([2, 3])
-    for config in (tiny(2, 1), tiny(1, 2)):
+    for config in (tiny(1, 1), tiny(2, 1), tiny(1, 2)):
         model = TriangleDiffusionModel(config)
         output = model(tokens, noisy, timestep)
         output.square().mean().backward()
         assert output.shape == (2, 13, 13)
         torch.testing.assert_close(output, output.transpose(1, 2))
+        assert all(parameter.numel() for parameter in model.parameters())
         assert all(parameter.grad is not None for parameter in model.parameters())
         for cell in model.cells:
             assert cell.transition[-1].weight.grad is not None

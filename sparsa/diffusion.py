@@ -111,7 +111,10 @@ class TriangleDiffusionModel(nn.Module):
         self.condition_norm = (
             nn.LayerNorm(config.pair_dim) if applications > 1 else nn.Identity()
         )
-        self.reinject_gate = nn.Parameter(torch.full((applications - 1,), -4.0))
+        if applications > 1:
+            self.reinject_gate = nn.Parameter(torch.full((applications - 1,), -4.0))
+        else:
+            self.register_parameter("reinject_gate", None)
         self.cells = nn.ModuleList(
             [TriangleDenoiserCell(config) for _ in range(config.untied_cells)]
         )
