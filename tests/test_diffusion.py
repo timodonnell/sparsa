@@ -8,7 +8,7 @@ from sparsa.diffusion import (
 )
 
 
-def tiny(inner_loops=1, untied_cells=1):
+def tiny(inner_loops=1, untied_cells=1, self_conditioning=False):
     return DiffusionModelConfig(
         sequence_dim=32,
         sequence_layers=1,
@@ -22,6 +22,7 @@ def tiny(inner_loops=1, untied_cells=1):
         diffusion_steps=4,
         inner_loops=inner_loops,
         untied_cells=untied_cells,
+        self_conditioning=self_conditioning,
         gradient_checkpointing=False,
     )
 
@@ -97,6 +98,40 @@ def test_sampling_runs_shared_cell_over_reverse_steps():
     )
     assert state.shape == probability.shape == (3, 12, 12)
     torch.testing.assert_close(state, state.transpose(1, 2))
+    assert torch.isfinite(probability).all()
+
+
+def test_self_conditioning_preserves_initial_logits_and_backpropagates():
+    torch.manual_seed(13)
+    model = TriangleDiffusionModel(tiny(self_conditioning=True))
+    tokens = example_tokens()
+    noisy = torch.zeros((2, 13, 13), dtype=torch.bool)
+    timestep = torch.tensor([2, 3])
+    previous = torch.rand(2, 13, 13)
+
+    # The zero-initialized projection exactly preserves the base model before
+    # learning, then receives a gradient from the conditioned prediction.
+    base = model(tokens, noisy, timestep)
+    conditioned = model(tokens, noisy, timestep, previous)
+    torch.testing.assert_close(conditioned, base)
+    conditioned.square().mean().backward()
+    assert model.self_condition.weight.grad is not None
+    assert model.self_condition.weight.grad.abs().sum() > 0
+
+
+def test_self_conditioned_sampling_runs_full_reverse_chain():
+    torch.manual_seed(14)
+    model = TriangleDiffusionModel(tiny(self_conditioning=True)).eval()
+    schedule = BinaryDiffusion(4, (0.2, 0.1, 0.05))
+    tokens = torch.randint(1, 22, (1, 12))
+    state, probability = sample_contact_maps(
+        model,
+        schedule,
+        tokens,
+        2,
+        torch.Generator().manual_seed(15),
+    )
+    assert state.shape == probability.shape == (2, 12, 12)
     assert torch.isfinite(probability).all()
 
 

@@ -51,4 +51,5 @@ snapshot. Training requires Iris and access to the curated CoreWeave S3 data.
 [Architecture search and controls](research/README.md) ·
 [Training and evaluation guide](docs/usage.md) ·
 [Benchmark provenance](data/benchmark/provenance.json) ·
-[Discrete-diffusion screen](reports/diffusion_v1/RESULTS.md)
+[Discrete-diffusion screen](reports/diffusion_v1/RESULTS.md) ·
+[Long diffusion campaign](reports/diffusion_v2/PLAN.md)

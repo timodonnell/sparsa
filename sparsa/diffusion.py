@@ -35,6 +35,7 @@ class DiffusionModelConfig:
     diffusion_steps: int = 8
     inner_loops: int = 1
     untied_cells: int = 1
+    self_conditioning: bool = False
     dropout: float = 0.0
     gradient_checkpointing: bool = True
 
@@ -106,6 +107,15 @@ class TriangleDiffusionModel(nn.Module):
         self.relative = nn.Embedding(257, config.pair_dim)
         self.noisy_state = nn.Embedding(2, config.pair_dim)
         self.time = nn.Embedding(config.diffusion_steps + 1, config.pair_dim)
+        if config.self_conditioning:
+            # Previous x0 probabilities enter as signed probability,
+            # confidence, and a presence flag.  Zero initialization preserves
+            # the non-self-conditioned model at initialization.
+            self.self_condition = zero(
+                nn.Linear(3, config.pair_dim, bias=False)
+            )
+        else:
+            self.self_condition = None
         applications = max(config.inner_loops, config.untied_cells)
         self.loop = nn.Embedding(applications, config.pair_dim)
         self.condition_norm = (
@@ -147,7 +157,7 @@ class TriangleDiffusionModel(nn.Module):
         ]
         return condition, mask
 
-    def denoise(self, encoded, noisy, timestep):
+    def denoise(self, encoded, noisy, timestep, self_condition=None):
         """Predict clean contact logits from one discrete noisy map."""
         condition, mask = encoded
         if noisy.shape != mask.shape:
@@ -155,6 +165,25 @@ class TriangleDiffusionModel(nn.Module):
         if timestep.shape != (noisy.shape[0],):
             raise ValueError("Expected one timestep per protein")
         dynamic = self.noisy_state(noisy.long()) + self.time(timestep)[:, None, None]
+        if self.config.self_conditioning:
+            if self_condition is None:
+                features = torch.zeros(
+                    *noisy.shape,
+                    3,
+                    device=noisy.device,
+                    dtype=condition.dtype,
+                )
+            else:
+                if self_condition.shape != noisy.shape:
+                    raise ValueError("Self-conditioning map shape mismatch")
+                probability = self_condition.to(condition.dtype).clamp(0, 1)
+                signed = probability * 2 - 1
+                features = torch.stack(
+                    (signed, signed.abs(), torch.ones_like(signed)), dim=-1
+                )
+            dynamic = dynamic + self.self_condition(features)
+        elif self_condition is not None:
+            raise ValueError("Self-conditioning is disabled for this model")
         base = (condition + dynamic) * mask[..., None]
         z = base
         applications = max(self.config.inner_loops, self.config.untied_cells)
@@ -172,8 +201,8 @@ class TriangleDiffusionModel(nn.Module):
         logits = self.head(z).squeeze(-1)
         return (logits + logits.transpose(1, 2)) * 0.5
 
-    def forward(self, tokens, noisy, timestep):
-        return self.denoise(self.encode(tokens), noisy, timestep)
+    def forward(self, tokens, noisy, timestep, self_condition=None):
+        return self.denoise(self.encode(tokens), noisy, timestep, self_condition)
 
 
 class BinaryDiffusion(nn.Module):
@@ -292,13 +321,17 @@ def sample_contact_maps(
     )
     noisy = schedule.sample_prior(expanded_tokens, generator)
     final_probability = None
+    self_condition = None
     for t in range(schedule.steps, 0, -1):
         timestep = torch.full((count,), t, dtype=torch.long, device=tokens.device)
         logits = (
-            model.denoise(encoded, noisy, timestep) - float(logit_correction)
+            model.denoise(encoded, noisy, timestep, self_condition)
+            - float(logit_correction)
         ) / temperature
         final_probability = logits.float().sigmoid()
         noisy = schedule.sample_previous(
             noisy, final_probability, expanded_tokens, t, generator
         )
+        if model.config.self_conditioning:
+            self_condition = final_probability
     return noisy, final_probability

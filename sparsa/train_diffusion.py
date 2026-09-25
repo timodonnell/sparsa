@@ -6,6 +6,7 @@ import argparse
 import copy
 import io
 import json
+import math
 import os
 import random
 import time
@@ -133,6 +134,9 @@ def main():
         fused=True,
     )
     diffusion_rng = torch.Generator(device=device).manual_seed(seed + 7919 * rank + 101)
+    self_condition_probability = float(cfg.get("self_condition_probability", 0.5))
+    if not 0 <= self_condition_probability <= 1:
+        raise ValueError("Self-conditioning probability must be in [0, 1]")
     step = 0
     data_states = {}
     data_digest = "00" * 32
@@ -286,10 +290,20 @@ def main():
                 0, timestep - 1, torch.ones_like(timestep, dtype=torch.float)
             )
             noisy = schedule.sample_forward(target, tokens, timestep, diffusion_rng)
+            self_condition = None
+            if model_config.self_conditioning and bool(
+                torch.rand((), device=device, generator=diffusion_rng)
+                < self_condition_probability
+            ):
+                with torch.no_grad(), torch.autocast("cuda", dtype=torch.bfloat16):
+                    preliminary = model(tokens, noisy, timestep)
+                    self_condition = (
+                        preliminary.float() - math.log(cfg.get("pos_weight", 4.0))
+                    ).sigmoid()
             if world > 1:
                 wrapped.require_backward_grad_sync = micro == accumulation - 1
             with torch.autocast("cuda", dtype=torch.bfloat16):
-                logits = wrapped(tokens, noisy, timestep)
+                logits = wrapped(tokens, noisy, timestep, self_condition)
                 loss = contact_loss(logits, target, mask, cfg.get("pos_weight", 4.0))
                 if cfg.get("ranking_weight", 0.0):
                     loss = loss + cfg["ranking_weight"] * contact_ranking_loss(
