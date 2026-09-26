@@ -14,6 +14,7 @@ def main():
     parser.add_argument("--out")
     parser.add_argument("--gpus", type=int, default=8)
     parser.add_argument("--timeout", type=int, default=86400)
+    parser.add_argument("--max-retries", type=int, default=2)
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
@@ -48,7 +49,7 @@ def main():
         "--timeout",
         str(args.timeout),
         "--max-retries",
-        "2",
+        str(args.max_retries),
         "--job-name",
         "sparsa-" + args.name,
         "--no-wait",
