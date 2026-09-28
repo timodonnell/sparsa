@@ -14,6 +14,11 @@ def main():
     parser.add_argument("--pod", required=True)
     parser.add_argument("--uri", required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument(
+        "--kubeconfig", default=str(Path.home() / ".kube/coreweave-iris")
+    )
+    parser.add_argument("--context", default="marin-rn02a_RNO2A")
+    parser.add_argument("--namespace", default="iris")
     args = parser.parse_args()
     if not args.uri.startswith(
         "s3://marin-us-east-02a/marin/protein-structure/sparsa/"
@@ -24,11 +29,11 @@ def main():
     command = [
         "kubectl",
         "--kubeconfig",
-        str(Path.home() / ".kube/coreweave-iris"),
+        args.kubeconfig,
         "--context",
-        "marin-rn02a_RNO2A",
+        args.context,
         "-n",
-        "iris",
+        args.namespace,
         "exec",
         args.pod,
         "-c",

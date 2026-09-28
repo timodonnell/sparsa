@@ -1,0 +1,13 @@
+{
+  "name": "diffusion-v2-g2-wide-125k-eval100-s1-usw04a-1gpu",
+  "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/g2-wide-s23-300k/checkpoints/step-125000.pt",
+  "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/evals/g2-wide-step125000-seed20260925-usw04a",
+  "cluster_config": "/home/bizon/git/marin-freshiris/lib/iris/config/cw-us-west-04a.yaml",
+  "resources": {
+    "gpu": "H100x1",
+    "priority": "batch"
+  },
+  "submitted_utc": "2026-09-28T19:32:40+00:00",
+  "status": "succeeded",
+  "world_size": 1
+}

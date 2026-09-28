@@ -35,6 +35,31 @@ curves were still rising at rollout 100.
 
 CoreWeave preemptions and three distributed-process aborts stopped G1-long and
 G2-wide-SC at step 35k. They were resubmitted from their intact checkpoints with
-larger retry budgets. G2-wide reached step 125k and remains in progress; its
-125k evaluation was submitted as the next milestone because its 100k checkpoint
-had already been pruned.
+larger retry budgets. At this point G2-wide had reached step 125k; its 100k
+checkpoint had already been pruned, so 125k became the next milestone.
+
+## G2-wide at step 125k
+
+The 125k checkpoint represents 16.0 million crop presentations, five times the
+25k exposure. It was evaluated with the same frozen 97-protein split and fixed
+100-rollout seed bank.
+
+| Step | Oracle R@100 | Long R@100 | Mean rollout R | Consensus R |
+|---:|---:|---:|---:|---:|
+| 25,000 | 0.255871 | 0.272289 | 0.145363 | 0.236419 |
+| 125,000 | **0.342294** | **0.365924** | **0.227966** | **0.331418** |
+
+The paired gain from 25k to 125k is 0.086423 oracle R@100, with 95% bootstrap
+interval [0.069411, 0.104713]. Long-range oracle improves by 0.093635 [0.072246,
+0.115739]. Longer training therefore remains strongly productive for the wide
+architecture.
+
+G2-wide at 125k is statistically indistinguishable in oracle R@100 from
+G2-wide-SC at 35k: the difference is -0.007586 [-0.029697, 0.014701]. The
+self-conditioned checkpoint retains more sampling headroom, while the longer
+plain-wide run has a much stronger consensus score (0.331418 versus 0.260265).
+A checkpoint-matched comparison remains necessary after G2-wide-SC catches up.
+
+The 125k oracle curve still rises from 0.331542 at 64 rollouts to 0.342294 at
+100, and all 100 maps remain unique per protein. The remaining gap to MarinFold's
+0.5199 oracle reference is 0.1776.

@@ -13,23 +13,29 @@ def main():
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--gpus", type=int, default=8)
+    parser.add_argument("--gpu-type", default="H100")
     parser.add_argument("--n-rollouts", type=int, default=100)
     parser.add_argument("--validation-limit", type=int, default=0)
     parser.add_argument("--rollout-seed", type=int, default=20260925)
     parser.add_argument("--timeout", type=int, default=21600)
+    parser.add_argument("--iris", default=".tools/iris/bin/iris")
+    parser.add_argument(
+        "--cluster-config",
+        default="/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml",
+    )
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     command = [
-        ".tools/iris/bin/iris",
+        args.iris,
         "--config",
-        "/home/bizon/git/marin-freshiris/lib/iris/config/cw-rno2a.yaml",
+        args.cluster_config,
         "job",
         "run",
         "--priority",
         "batch",
         "--enable-extra-resources",
         "--gpu",
-        f"H100x{args.gpus}",
+        f"{args.gpu_type}x{args.gpus}",
         "--cpu",
         str(args.gpus * 4),
         "--memory",
