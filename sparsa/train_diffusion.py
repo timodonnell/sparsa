@@ -73,17 +73,88 @@ def prune_checkpoints(out, keep=2):
         fs.rm(path)
 
 
+def validation_due(step, steps, every, complete=False):
+    """Return whether this checkpoint still needs fixed-split evaluation."""
+    milestone = step > 0 and (step == steps or (every > 0 and step % every == 0))
+    return milestone and not complete
+
+
+def run_validation(ema, schedule, cfg, out, step, rank, world, device):
+    """Run and durably record one distributed eval-val oracle evaluation."""
+    validation = benchmark()
+    if cfg.get("smoke_validation_limit"):
+        validation = sorted(validation, key=lambda row: row["L"])[
+            : int(cfg["smoke_validation_limit"])
+        ]
+    n_rollouts = int(cfg.get("validation_rollouts", 100))
+    rollout_seed = int(cfg.get("rollout_seed", 20260925))
+    temperature = float(cfg.get("rollout_temperature", 1.0))
+    pos_weight = float(cfg.get("pos_weight", 4.0))
+    local_proteins, local_rollouts = evaluate_records(
+        ema,
+        schedule,
+        validation[rank::world],
+        device,
+        n_rollouts=n_rollouts,
+        rollout_batch=int(cfg.get("rollout_batch", 4)),
+        seed=rollout_seed,
+        temperature=temperature,
+        pos_weight=pos_weight,
+    )
+    gathered_proteins = [None] * world if rank == 0 else None
+    gathered_rollouts = [None] * world if rank == 0 else None
+    if world > 1:
+        dist.gather_object(local_proteins, gathered_proteins, dst=0)
+        dist.gather_object(local_rollouts, gathered_rollouts, dst=0)
+    else:
+        gathered_proteins, gathered_rollouts = [local_proteins], [local_rollouts]
+    if rank == 0:
+        proteins = sorted(
+            [row for shard in gathered_proteins for row in shard],
+            key=lambda row: (row["dataset"], row["stem"]),
+        )
+        rollouts = [row for shard in gathered_rollouts for row in shard]
+        result = summarize(proteins) | {
+            "step": step,
+            "split": "eval-val",
+            "n_rollouts": n_rollouts,
+            "rollout_seed": rollout_seed,
+            "temperature": temperature,
+            "pos_weight_logit_correction": pos_weight,
+            "source_checkpoint": out + f"/checkpoints/step-{step}.pt",
+            "world_size": world,
+            "held_out_used": False,
+        }
+        prefix = out + f"/validation/step-{step}"
+        # The summary is the completion marker and must be written last. A retry
+        # after a partial evaluation will therefore repeat it rather than skip it.
+        write_frame(prefix + "-per_protein.csv", proteins)
+        write_frame(prefix + "-rollouts.csv", rollouts)
+        write_json(prefix + ".json", result)
+        print("ORACLE_VALIDATION " + json.dumps(result), flush=True)
+    if world > 1:
+        dist.barrier()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--auto-resume", action="store_true")
     parser.add_argument("--resume")
+    parser.add_argument(
+        "--eval-every",
+        type=int,
+        default=0,
+        help="Run fixed eval-val oracle evaluation every N steps; zero means final only",
+    )
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
     args = parser.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     if args.smoke_validation_limit:
         cfg["smoke_validation_limit"] = args.smoke_validation_limit
+    if args.eval_every < 0:
+        raise ValueError("Evaluation cadence must be non-negative")
     # Validate a fixed training horizon before creating any durable run marker.
     learning_rate_scale(cfg, 0)
 
@@ -221,6 +292,18 @@ def main():
             flush=True,
         )
 
+    if rank == 0:
+        write_json(
+            args.out + "/evaluation_policy.json",
+            {
+                "every_steps": args.eval_every,
+                "split": "eval-val",
+                "n_rollouts": int(cfg.get("validation_rollouts", 100)),
+                "rollout_seed": int(cfg.get("rollout_seed", 20260925)),
+                "held_out_used": False,
+            },
+        )
+
     logical_size = int(cfg["logical_batch_size"])
     micro_size = int(cfg["batch_size"])
     if logical_size % micro_size:
@@ -254,6 +337,19 @@ def main():
     start_time = last_log = time.monotonic()
     steps = int(cfg["steps"])
     checkpoint_every = int(cfg.get("checkpoint_every", 1000))
+    if args.eval_every and args.eval_every % checkpoint_every:
+        raise ValueError("Evaluation cadence must be divisible by checkpoint cadence")
+
+    if validation_due(step, steps, args.eval_every):
+        validation_marker = out_path + f"/validation/step-{step}.json"
+        complete = fs.exists(validation_marker) if rank == 0 else None
+        if world > 1:
+            completed = [complete]
+            dist.broadcast_object_list(completed, src=0)
+            complete = completed[0]
+        if not complete:
+            run_validation(ema, schedule, cfg, args.out, step, rank, world, device)
+            last_log = time.monotonic()
 
     while step < steps:
         model.train()
@@ -396,47 +492,17 @@ def main():
             if world > 1:
                 dist.barrier()
 
-    validation = benchmark()
-    if cfg.get("smoke_validation_limit"):
-        validation = sorted(validation, key=lambda row: row["L"])[
-            : int(cfg["smoke_validation_limit"])
-        ]
-    local_proteins, local_rollouts = evaluate_records(
-        ema,
-        schedule,
-        validation[rank::world],
-        device,
-        n_rollouts=int(cfg.get("validation_rollouts", 100)),
-        rollout_batch=int(cfg.get("rollout_batch", 4)),
-        seed=int(cfg.get("rollout_seed", 20260925)),
-        temperature=float(cfg.get("rollout_temperature", 1.0)),
-        pos_weight=float(cfg.get("pos_weight", 4.0)),
-    )
-    gathered_proteins = [None] * world if rank == 0 else None
-    gathered_rollouts = [None] * world if rank == 0 else None
-    if world > 1:
-        dist.gather_object(local_proteins, gathered_proteins, dst=0)
-        dist.gather_object(local_rollouts, gathered_rollouts, dst=0)
-    else:
-        gathered_proteins, gathered_rollouts = [local_proteins], [local_rollouts]
-    if rank == 0:
-        proteins = sorted(
-            [row for shard in gathered_proteins for row in shard],
-            key=lambda row: (row["dataset"], row["stem"]),
-        )
-        rollouts = [row for shard in gathered_rollouts for row in shard]
-        result = summarize(proteins) | {
-            "step": step,
-            "split": "eval-val",
-            "n_rollouts": int(cfg.get("validation_rollouts", 100)),
-            "seed": seed,
-            "world_size": world,
-            "held_out_used": False,
-        }
-        write_json(args.out + f"/validation/step-{step}.json", result)
-        write_frame(args.out + f"/validation/step-{step}-per_protein.csv", proteins)
-        write_frame(args.out + f"/validation/step-{step}-rollouts.csv", rollouts)
-        print("ORACLE_VALIDATION " + json.dumps(result), flush=True)
+        if validation_due(step, steps, args.eval_every):
+            marker = out_path + f"/validation/step-{step}.json"
+            complete = fs.exists(marker) if rank == 0 else None
+            if world > 1:
+                completed = [complete]
+                dist.broadcast_object_list(completed, src=0)
+                complete = completed[0]
+            if not complete:
+                run_validation(ema, schedule, cfg, args.out, step, rank, world, device)
+                last_log = time.monotonic()
+
     if world > 1:
         dist.destroy_process_group()
 

@@ -29,11 +29,12 @@ All arms use eight CoreWeave H100s through Iris at batch priority, seed 23, an
 15k warmup and decay over the final 60k steps. They write resumable checkpoints
 every 5,000 steps.
 
-The first calibrated 100-rollout evaluation is at step 25,000. An arm may stop
-there only if it trails G1-long by more than 0.01 oracle R-precision and the
-paired protein-bootstrap upper bound is at most zero. Surviving arms are checked
-again at 100,000 steps. G1-long and the best architectural arm continue to the
-300,000-step endpoint. The second rollout seed bank is reserved for close
-selection decisions. The primary metric remains MarinFold-compatible oracle
-best-of-100 R-precision; long-range oracle, mean rollout, consensus, diversity,
-and inference cost are diagnostics.
+The initial screen evaluated around steps 25,000 and 100,000. Beginning with the
+September 29 resumptions, every arm runs a calibrated 100-rollout evaluation
+every 10,000 steps and at the 300,000-step endpoint. Evaluation runs inside the
+training job after writing its resumable checkpoint. A summary written last is
+the durable completion marker, so a preemption during evaluation causes the
+resumed job to repeat that evaluation before training continues. The second
+rollout seed bank is reserved for close selection decisions. The primary metric
+remains MarinFold-compatible oracle best-of-100 R-precision; long-range oracle,
+mean rollout, consensus, diversity, and inference cost are diagnostics.

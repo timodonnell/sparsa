@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--gpus", type=int, default=8)
     parser.add_argument("--timeout", type=int, default=86400)
     parser.add_argument("--max-retries", type=int, default=2)
+    parser.add_argument("--eval-every", type=int, default=10000)
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
@@ -66,6 +67,8 @@ def main():
         "--out",
         out,
         "--auto-resume",
+        "--eval-every",
+        str(args.eval_every),
     ]
     if args.smoke_validation_limit:
         command += ["--smoke-validation-limit", str(args.smoke_validation_limit)]
