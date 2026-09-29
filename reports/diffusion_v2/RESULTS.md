@@ -63,3 +63,26 @@ A checkpoint-matched comparison remains necessary after G2-wide-SC catches up.
 The 125k oracle curve still rises from 0.331542 at 64 rollouts to 0.342294 at
 100, and all 100 maps remain unique per protein. The remaining gap to MarinFold's
 0.5199 oracle reference is 0.1776.
+
+## Near-matched control at step 115k
+
+G1-long at step 115k has seen 14.72 million crop presentations, close to
+G2-wide's 16.0 million at step 125k.
+
+| Arm | Step | Protein crops | Oracle R@100 | Long R@100 | Mean rollout R | Consensus R |
+|---|---:|---:|---:|---:|---:|---:|
+| G1-long | 35,000 | 4.48M | 0.245386 | 0.257664 | 0.139765 | 0.232834 |
+| G1-long | 115,000 | 14.72M | 0.289951 | 0.307577 | 0.180763 | 0.281096 |
+| G2-wide | 125,000 | 16.00M | **0.342294** | **0.365924** | **0.227966** | **0.331418** |
+
+Longer training improves G1-long from 35k to 115k by 0.044565 oracle R@100,
+with paired 95% interval [0.033337, 0.056790]. At near-matched exposure,
+G2-wide still exceeds G1-long by 0.052344 [0.040348, 0.065436]. Its long-range
+advantage is 0.058347 [0.043396, 0.074316]. The wider sequence and pair state
+therefore provides a material gain beyond training duration alone.
+
+G2-wide-SC at only 35k also exceeds G1-long at 115k by 0.059929 [0.043342,
+0.076525] oracle R@100. Its lower consensus score indicates that this early
+self-conditioned model derives more of its advantage from diverse rollouts.
+The decisive architecture comparison remains G2-wide versus G2-wide-SC at
+matched steps.
