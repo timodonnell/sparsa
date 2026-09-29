@@ -3,6 +3,13 @@
 Architecture and checkpoint decisions use only the frozen 97-protein `eval-val`
 split. Held-out sets have not been read.
 
+![Oracle R-precision by training step](figures/r_precision_by_step.png)
+
+The figure includes every discrete-diffusion checkpoint evaluated with rollout
+seed 20260925. Error bars are pointwise 95% protein-bootstrap intervals. The
+plotted values are available in
+[`figures/r_precision_by_step.csv`](figures/r_precision_by_step.csv).
+
 ## First milestone
 
 Each entry is one fixed 100-rollout bank with rollout seed 20260925. The original
