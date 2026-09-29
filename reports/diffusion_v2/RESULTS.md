@@ -71,6 +71,28 @@ The 125k oracle curve still rises from 0.331542 at 64 rollouts to 0.342294 at
 100, and all 100 maps remain unique per protein. The remaining gap to MarinFold's
 0.5199 oracle reference is 0.1776.
 
+## G2-wide at step 180k
+
+The first automatic 10k-cadence evaluation ran at the resumed 180k checkpoint,
+after 23.04 million crop presentations.
+
+| Step | Oracle R@100 | Long R@100 | Mean rollout R | Consensus R |
+|---:|---:|---:|---:|---:|
+| 125,000 | 0.342294 | 0.365924 | 0.227966 | 0.331418 |
+| 180,000 | **0.357893** | **0.377666** | **0.244460** | **0.349876** |
+
+The paired oracle gain from 125k to 180k is 0.015598, with 95% bootstrap
+interval [0.007795, 0.023260]. Mean-rollout R-precision improves by 0.016493
+[0.010891, 0.022482], and consensus improves by 0.018458 [0.011072,
+0.026412]. The long-range oracle gain is 0.011742, but its interval
+[-0.007290, 0.028909] includes zero.
+
+G2-wide at 180k is 0.008012 above G2-wide-SC at 35k in oracle R@100, though
+the mismatched-step comparison remains statistically unresolved
+[-0.014932, 0.031380]. The gap to MarinFold's 0.5199 oracle reference is now
+0.1620. Evaluation will continue every 10,000 steps on the frozen validation
+split.
+
 ## Near-matched control at step 115k
 
 G1-long at step 115k has seen 14.72 million crop presentations, close to
