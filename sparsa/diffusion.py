@@ -111,9 +111,7 @@ class TriangleDiffusionModel(nn.Module):
             # Previous x0 probabilities enter as signed probability,
             # confidence, and a presence flag.  Zero initialization preserves
             # the non-self-conditioned model at initialization.
-            self.self_condition = zero(
-                nn.Linear(3, config.pair_dim, bias=False)
-            )
+            self.self_condition = zero(nn.Linear(3, config.pair_dim, bias=False))
         else:
             self.self_condition = None
         applications = max(config.inner_loops, config.untied_cells)
@@ -283,15 +281,19 @@ class BinaryDiffusion(nn.Module):
         probability = self.priors[bucket][None].expand(tokens.shape[0], -1, -1)
         return self._symmetric_sample(probability, self.eligible(tokens), generator)
 
-    def sample_previous(
-        self, noisy, clean_probability, tokens, timestep: int, generator
-    ):
-        if not 1 <= timestep <= self.steps:
-            raise ValueError("Reverse timestep out of range")
+    def sample_previous(self, noisy, clean_probability, tokens, timestep, generator):
+        if isinstance(timestep, int):
+            if not 1 <= timestep <= self.steps:
+                raise ValueError("Reverse timestep out of range")
+            time_index = timestep
+        else:
+            if timestep.shape != (noisy.shape[0],):
+                raise ValueError("Expected one reverse timestep per protein")
+            time_index = timestep[:, None, None]
         bucket = self.buckets(noisy.shape[1], noisy.device)
         observed = noisy.long()
-        p_prev_given_0 = self.posterior[timestep, bucket[None], observed, 0, 1]
-        p_prev_given_1 = self.posterior[timestep, bucket[None], observed, 1, 1]
+        p_prev_given_0 = self.posterior[time_index, bucket[None], observed, 0, 1]
+        p_prev_given_1 = self.posterior[time_index, bucket[None], observed, 1, 1]
         probability = (
             1 - clean_probability
         ) * p_prev_given_0 + clean_probability * p_prev_given_1
@@ -307,11 +309,18 @@ def sample_contact_maps(
     generator,
     temperature=1.0,
     logit_correction=0.0,
+    self_condition_guidance=1.0,
 ):
     """Sample a batch of complete maps and return final-step clean probabilities."""
-    if tokens.shape[0] != 1 or count < 1 or temperature <= 0:
+    if (
+        tokens.shape[0] != 1
+        or count < 1
+        or temperature <= 0
+        or self_condition_guidance < 0
+    ):
         raise ValueError(
-            "Sampling expects one sequence, positive count and temperature"
+            "Sampling expects one sequence, positive count/temperature, and "
+            "non-negative self-conditioning guidance"
         )
     base_condition, base_mask = model.encode(tokens)
     expanded_tokens = tokens.expand(count, -1)
@@ -324,10 +333,22 @@ def sample_contact_maps(
     self_condition = None
     for t in range(schedule.steps, 0, -1):
         timestep = torch.full((count,), t, dtype=torch.long, device=tokens.device)
-        logits = (
-            model.denoise(encoded, noisy, timestep, self_condition)
-            - float(logit_correction)
-        ) / temperature
+        if (
+            model.config.self_conditioning
+            and self_condition is not None
+            and self_condition_guidance != 1
+        ):
+            unconditioned = model.denoise(encoded, noisy, timestep, None)
+            if self_condition_guidance == 0:
+                logits = unconditioned
+            else:
+                conditioned = model.denoise(encoded, noisy, timestep, self_condition)
+                logits = unconditioned + self_condition_guidance * (
+                    conditioned - unconditioned
+                )
+        else:
+            logits = model.denoise(encoded, noisy, timestep, self_condition)
+        logits = (logits - float(logit_correction)) / temperature
         final_probability = logits.float().sigmoid()
         noisy = schedule.sample_previous(
             noisy, final_probability, expanded_tokens, t, generator

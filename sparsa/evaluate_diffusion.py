@@ -64,6 +64,7 @@ def evaluate_records(
     seed=20260925,
     temperature=1.0,
     pos_weight=4.0,
+    self_condition_guidance=1.0,
 ):
     """Evaluate an arbitrary record shard and return auditable per-protein rows."""
     if n_rollouts < 1 or rollout_batch < 1:
@@ -91,6 +92,7 @@ def evaluate_records(
                     generator,
                     temperature,
                     math.log(pos_weight),
+                    self_condition_guidance,
                 )
             states = states.cpu().numpy()
             probabilities = probabilities.float().cpu().numpy()

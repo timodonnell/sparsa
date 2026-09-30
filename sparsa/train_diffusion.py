@@ -89,6 +89,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
     n_rollouts = int(cfg.get("validation_rollouts", 100))
     rollout_seed = int(cfg.get("rollout_seed", 20260925))
     temperature = float(cfg.get("rollout_temperature", 1.0))
+    self_condition_guidance = float(cfg.get("rollout_self_condition_guidance", 1.0))
     pos_weight = float(cfg.get("pos_weight", 4.0))
     local_proteins, local_rollouts = evaluate_records(
         ema,
@@ -100,6 +101,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
         seed=rollout_seed,
         temperature=temperature,
         pos_weight=pos_weight,
+        self_condition_guidance=self_condition_guidance,
     )
     gathered_proteins = [None] * world if rank == 0 else None
     gathered_rollouts = [None] * world if rank == 0 else None
@@ -120,6 +122,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
             "n_rollouts": n_rollouts,
             "rollout_seed": rollout_seed,
             "temperature": temperature,
+            "self_condition_guidance": self_condition_guidance,
             "pos_weight_logit_correction": pos_weight,
             "source_checkpoint": out + f"/checkpoints/step-{step}.pt",
             "world_size": world,
@@ -211,6 +214,11 @@ def main():
     self_condition_probability = float(cfg.get("self_condition_probability", 0.5))
     if not 0 <= self_condition_probability <= 1:
         raise ValueError("Self-conditioning probability must be in [0, 1]")
+    self_condition_mode = cfg.get("self_condition_mode", "same_t")
+    if self_condition_mode not in {"same_t", "rollout"}:
+        raise ValueError("Self-conditioning mode must be same_t or rollout")
+    if self_condition_mode == "rollout" and not model_config.self_conditioning:
+        raise ValueError("Rollout self-conditioning requires self-conditioning")
     step = 0
     data_states = {}
     data_digest = "00" * 32
@@ -300,6 +308,9 @@ def main():
                 "split": "eval-val",
                 "n_rollouts": int(cfg.get("validation_rollouts", 100)),
                 "rollout_seed": int(cfg.get("rollout_seed", 20260925)),
+                "self_condition_guidance": float(
+                    cfg.get("rollout_self_condition_guidance", 1.0)
+                ),
                 "held_out_used": False,
             },
         )
@@ -390,17 +401,45 @@ def main():
             timestep_counts.scatter_add_(
                 0, timestep - 1, torch.ones_like(timestep, dtype=torch.float)
             )
-            noisy = schedule.sample_forward(target, tokens, timestep, diffusion_rng)
             self_condition = None
-            if model_config.self_conditioning and bool(
+            use_self_condition = model_config.self_conditioning and bool(
                 torch.rand((), device=device, generator=conditioning_rng)
                 < self_condition_probability
-            ):
+            )
+            if use_self_condition and self_condition_mode == "rollout":
+                previous_timestep = (timestep + 1).clamp_max(
+                    model_config.diffusion_steps
+                )
+                previous_noisy = schedule.sample_forward(
+                    target, tokens, previous_timestep, diffusion_rng
+                )
                 with torch.no_grad(), torch.autocast("cuda", dtype=torch.bfloat16):
-                    preliminary = model(tokens, noisy, timestep)
+                    preliminary = model(tokens, previous_noisy, previous_timestep)
                     self_condition = (
                         preliminary.float() - math.log(cfg.get("pos_weight", 4.0))
                     ).sigmoid()
+                rolled_noisy = schedule.sample_previous(
+                    previous_noisy,
+                    self_condition,
+                    tokens,
+                    previous_timestep,
+                    diffusion_rng,
+                )
+                # At the terminal timestep there is no preceding reverse step;
+                # retain standard same-t self-conditioning for those examples.
+                noisy = torch.where(
+                    (timestep < model_config.diffusion_steps)[:, None, None],
+                    rolled_noisy,
+                    previous_noisy,
+                )
+            else:
+                noisy = schedule.sample_forward(target, tokens, timestep, diffusion_rng)
+                if use_self_condition:
+                    with torch.no_grad(), torch.autocast("cuda", dtype=torch.bfloat16):
+                        preliminary = model(tokens, noisy, timestep)
+                        self_condition = (
+                            preliminary.float() - math.log(cfg.get("pos_weight", 4.0))
+                        ).sigmoid()
             if world > 1:
                 wrapped.require_backward_grad_sync = micro == accumulation - 1
             with torch.autocast("cuda", dtype=torch.bfloat16):

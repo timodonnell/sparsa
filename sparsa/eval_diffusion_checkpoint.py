@@ -25,6 +25,7 @@ def main():
     parser.add_argument("--rollout-batch", type=int, default=4)
     parser.add_argument("--rollout-seed", type=int, default=20260925)
     parser.add_argument("--temperature", type=float, default=1.0)
+    parser.add_argument("--self-condition-guidance", type=float, default=1.0)
     parser.add_argument("--validation-limit", type=int, default=0)
     args = parser.parse_args()
 
@@ -61,6 +62,7 @@ def main():
         seed=args.rollout_seed,
         temperature=args.temperature,
         pos_weight=pos_weight,
+        self_condition_guidance=args.self_condition_guidance,
     )
     proteins_by_rank = [None] * world if rank == 0 else None
     rollouts_by_rank = [None] * world if rank == 0 else None
@@ -81,6 +83,7 @@ def main():
             "n_rollouts": args.n_rollouts,
             "rollout_seed": args.rollout_seed,
             "temperature": args.temperature,
+            "self_condition_guidance": args.self_condition_guidance,
             "pos_weight_logit_correction": pos_weight,
             "source_checkpoint": args.checkpoint,
             "world_size": world,

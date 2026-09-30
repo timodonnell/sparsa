@@ -67,6 +67,24 @@ def test_forward_noise_is_symmetric_and_respects_pair_mask():
     assert ((i - j).abs() >= 6).all()
 
 
+def test_reverse_sampling_accepts_per_protein_timesteps():
+    schedule = BinaryDiffusion(4, (0.2, 0.1, 0.05))
+    tokens = example_tokens()
+    noisy = schedule.sample_prior(tokens, torch.Generator().manual_seed(30))
+    clean_probability = torch.rand(
+        noisy.shape, generator=torch.Generator().manual_seed(31)
+    )
+    previous = schedule.sample_previous(
+        noisy,
+        clean_probability,
+        tokens,
+        torch.tensor([2, 4]),
+        torch.Generator().manual_seed(32),
+    )
+    assert previous.shape == noisy.shape
+    torch.testing.assert_close(previous, previous.transpose(1, 2))
+
+
 def test_all_denoisers_backpropagate_through_every_parameter():
     torch.manual_seed(8)
     tokens = example_tokens()
@@ -133,6 +151,31 @@ def test_self_conditioned_sampling_runs_full_reverse_chain():
     )
     assert state.shape == probability.shape == (2, 12, 12)
     assert torch.isfinite(probability).all()
+
+
+def test_self_condition_guidance_changes_rollout_probabilities():
+    torch.manual_seed(16)
+    model = TriangleDiffusionModel(tiny(self_conditioning=True)).eval()
+    model.self_condition.weight.data.normal_(std=0.5)
+    schedule = BinaryDiffusion(4, (0.2, 0.1, 0.05))
+    tokens = torch.randint(1, 22, (1, 12))
+    _, unconditioned = sample_contact_maps(
+        model,
+        schedule,
+        tokens,
+        2,
+        torch.Generator().manual_seed(17),
+        self_condition_guidance=0,
+    )
+    _, conditioned = sample_contact_maps(
+        model,
+        schedule,
+        tokens,
+        2,
+        torch.Generator().manual_seed(17),
+        self_condition_guidance=1,
+    )
+    assert not torch.allclose(conditioned, unconditioned)
 
 
 def test_positive_weight_correction_changes_reverse_distribution():

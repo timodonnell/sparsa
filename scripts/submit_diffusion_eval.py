@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--n-rollouts", type=int, default=100)
     parser.add_argument("--validation-limit", type=int, default=0)
     parser.add_argument("--rollout-seed", type=int, default=20260925)
+    parser.add_argument("--self-condition-guidance", type=float, default=1.0)
     parser.add_argument("--timeout", type=int, default=21600)
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
@@ -67,6 +68,8 @@ def main():
         "4",
         "--rollout-seed",
         str(args.rollout_seed),
+        "--self-condition-guidance",
+        str(args.self_condition_guidance),
     ]
     if args.validation_limit:
         command += ["--validation-limit", str(args.validation_limit)]
