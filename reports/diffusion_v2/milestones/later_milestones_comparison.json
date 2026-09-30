@@ -1,0 +1,255 @@
+{
+  "split": "eval-val",
+  "proteins": 97,
+  "held_out_used": false,
+  "bootstrap": {
+    "resamples": 100000,
+    "seed": 20260930,
+    "unit": "protein",
+    "paired": true
+  },
+  "pointwise_oracle_r_precision_95_ci": {
+    "g1-long_step150000": [
+      0.265686807889641,
+      0.3340152832419199
+    ],
+    "g1-long_step160000": [
+      0.266875708143762,
+      0.3324171061377961
+    ],
+    "g1-long_step170000": [
+      0.27104708662005417,
+      0.33847467331208136
+    ],
+    "g1-long_step180000": [
+      0.27105661778336954,
+      0.33992964346540117
+    ],
+    "g1-long_step190000": [
+      0.2689968407628699,
+      0.3368578166605262
+    ],
+    "g2-wide_step190000": [
+      0.32609472127279665,
+      0.39690094677860754
+    ],
+    "g2-wide_step200000": [
+      0.32958095728348935,
+      0.4032687345238587
+    ],
+    "g2-wide-sc2_step100000": [
+      0.37873426827902074,
+      0.4452299111721105
+    ],
+    "g2-wide-sc2_step110000": [
+      0.37471554324593315,
+      0.43966122967068616
+    ]
+  },
+  "comparisons": {
+    "g1_long_step190000_minus_step140000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.0002516853764869548,
+        "paired_bootstrap_95_ci": [
+          -0.008653012352590712,
+          0.009035569031839542
+        ],
+        "bootstrap_probability_difference_le_zero": 0.47189
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.0018883135942824303,
+        "paired_bootstrap_95_ci": [
+          -0.011092369415243955,
+          0.01537135995624569
+        ],
+        "bootstrap_probability_difference_le_zero": 0.39094
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.007789349140047003,
+        "paired_bootstrap_95_ci": [
+          0.0022110202029851866,
+          0.014006718851993465
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00228
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.0097627923969643,
+        "paired_bootstrap_95_ci": [
+          0.002233061713627007,
+          0.018159649948280357
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00447
+      }
+    },
+    "g2_wide_step200000_minus_step180000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.0080327525491486,
+        "paired_bootstrap_95_ci": [
+          0.0008787271461335758,
+          0.015509334485407958
+        ],
+        "bootstrap_probability_difference_le_zero": 0.01344
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.011728680512093812,
+        "paired_bootstrap_95_ci": [
+          0.0017500262005006515,
+          0.02292665708190764
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00985
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.003971172890632437,
+        "paired_bootstrap_95_ci": [
+          -0.0011898945360852315,
+          0.009275003966848458
+        ],
+        "bootstrap_probability_difference_le_zero": 0.06494
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.001641984542861646,
+        "paired_bootstrap_95_ci": [
+          -0.006461050230285308,
+          0.009007479470348304
+        ],
+        "bootstrap_probability_difference_le_zero": 0.32474
+      }
+    },
+    "g2_wide_sc_step100000_minus_step90000": {
+      "oracle_r_precision": {
+        "mean_difference": -0.0030703253270911906,
+        "paired_bootstrap_95_ci": [
+          -0.017923391803921832,
+          0.009347400374560158
+        ],
+        "bootstrap_probability_difference_le_zero": 0.65161
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.006833632335533611,
+        "paired_bootstrap_95_ci": [
+          -0.016631310284688647,
+          0.030907736920918902
+        ],
+        "bootstrap_probability_difference_le_zero": 0.28579
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.004656191372532987,
+        "paired_bootstrap_95_ci": [
+          -0.0004963023216385785,
+          0.00976174691759287
+        ],
+        "bootstrap_probability_difference_le_zero": 0.03815
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.008343620745961773,
+        "paired_bootstrap_95_ci": [
+          0.0010401724307555604,
+          0.01576760116727713
+        ],
+        "bootstrap_probability_difference_le_zero": 0.01264
+      }
+    },
+    "g2_wide_sc_step110000_minus_step90000": {
+      "oracle_r_precision": {
+        "mean_difference": -0.00773602040242945,
+        "paired_bootstrap_95_ci": [
+          -0.023131852743842166,
+          0.005447773453509749
+        ],
+        "bootstrap_probability_difference_le_zero": 0.86048
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": -0.004361113896651186,
+        "paired_bootstrap_95_ci": [
+          -0.027462578666574634,
+          0.016252125944425464
+        ],
+        "bootstrap_probability_difference_le_zero": 0.64329
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.00806100427510208,
+        "paired_bootstrap_95_ci": [
+          0.001980020667272115,
+          0.014667554155839034
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00395
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.009362582958341768,
+        "paired_bootstrap_95_ci": [
+          0.002319303883666168,
+          0.016852393421171886
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00424
+      }
+    },
+    "g2_wide_sc_step110000_minus_g2_wide_step200000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.04059300724046822,
+        "paired_bootstrap_95_ci": [
+          0.023995678903052552,
+          0.05786948966638324
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.058567864424851825,
+        "paired_bootstrap_95_ci": [
+          0.030955740617226054,
+          0.08902131533589255
+        ],
+        "bootstrap_probability_difference_le_zero": 1e-05
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.03173230904624831,
+        "paired_bootstrap_95_ci": [
+          0.01952358982264391,
+          0.04485313316164531
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "consensus_r_precision": {
+        "mean_difference": -0.03208448374681404,
+        "paired_bootstrap_95_ci": [
+          -0.04436931286048074,
+          -0.02000408688846138
+        ],
+        "bootstrap_probability_difference_le_zero": 1.0
+      }
+    },
+    "g2_wide_sc_step90000_minus_g2_wide_step200000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.048329027642897676,
+        "paired_bootstrap_95_ci": [
+          0.02573765078110177,
+          0.07391381626073068
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.06292897832150302,
+        "paired_bootstrap_95_ci": [
+          0.0338181420095654,
+          0.09534200771860785
+        ],
+        "bootstrap_probability_difference_le_zero": 1e-05
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.023671304771146234,
+        "paired_bootstrap_95_ci": [
+          0.011661429438025402,
+          0.03588985924868574
+        ],
+        "bootstrap_probability_difference_le_zero": 2e-05
+      },
+      "consensus_r_precision": {
+        "mean_difference": -0.041447066705155806,
+        "paired_bootstrap_95_ci": [
+          -0.05473004135678573,
+          -0.028681541970130016
+        ],
+        "bootstrap_probability_difference_le_zero": 1.0
+      }
+    }
+  }
+}

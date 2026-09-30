@@ -143,3 +143,42 @@ to MarinFold's 0.5199 oracle reference is 0.1056.
 G1-long improves from 115k to 140k by 0.011945 oracle R@100 [0.004284,
 0.020266]. Longer training is still productive for the control, but its rate
 of improvement and absolute result remain well behind G2-wide-SC.
+
+## Later automatic milestones
+
+The evaluator subsequently captured every 10k checkpoint through G1-long
+190k, G2-wide 200k, and G2-wide-SC 110k.
+
+| Arm | Step | Oracle R@100 | Long R@100 | Mean rollout R | Consensus R |
+|---|---:|---:|---:|---:|---:|
+| G1-long | 140,000 | 0.301896 | 0.317990 | 0.185582 | 0.287766 |
+| G1-long | 150,000 | 0.298972 | 0.313022 | 0.186550 | 0.288580 |
+| G1-long | 160,000 | 0.298949 | 0.312530 | 0.189095 | 0.290276 |
+| G1-long | 170,000 | 0.303971 | 0.321663 | 0.191030 | 0.295518 |
+| G1-long | 180,000 | **0.304509** | 0.314697 | 0.191657 | 0.293065 |
+| G1-long | 190,000 | 0.302147 | 0.319878 | **0.193372** | **0.297529** |
+| G2-wide | 180,000 | 0.357893 | 0.377666 | 0.244460 | 0.349876 |
+| G2-wide | 190,000 | 0.360972 | 0.371930 | 0.246097 | **0.353009** |
+| G2-wide | 200,000 | **0.365925** | **0.389395** | **0.248431** | 0.351518 |
+| G2-wide-SC | 90,000 | **0.414254** | 0.452324 | 0.272102 | 0.310071 |
+| G2-wide-SC | 100,000 | 0.411184 | **0.459157** | 0.276758 | 0.318414 |
+| G2-wide-SC | 110,000 | 0.406518 | 0.447963 | **0.280163** | **0.319433** |
+
+G1-long has plateaued in the oracle metric: its 190k-minus-140k difference is
+0.000252 with paired 95% interval [-0.008653, 0.009036]. Mean-rollout and
+consensus scores continue to improve slightly.
+
+Plain G2-wide is still making a small oracle gain. Step 200k exceeds step 180k
+by 0.008033 [0.000879, 0.015509], and its long-range oracle gain is 0.011729
+[0.001750, 0.022927].
+
+G2-wide-SC's oracle score has plateaued after step 90k. The step-100k change is
+-0.003070 [-0.017923, 0.009347], and the step-110k change is -0.007736
+[-0.023132, 0.005448], both relative to 90k. These are unresolved differences,
+while its mean-rollout and consensus scores continue to increase. Step 90k
+therefore remains the validation-selected checkpoint for oracle R@100.
+
+Even the latest G2-wide-SC checkpoint at 110k exceeds plain G2-wide at 200k by
+0.040593 oracle R@100 [0.023996, 0.057869], despite 14.08 million versus 25.60
+million crop presentations. The best observed gap to MarinFold remains 0.1056
+at the self-conditioned 90k checkpoint.
