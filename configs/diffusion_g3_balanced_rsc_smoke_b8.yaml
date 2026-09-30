@@ -15,15 +15,18 @@ model:
   self_conditioning: true
   dropout: 0.0
   gradient_checkpointing: true
-contact_priors: [0.025, 0.016, 0.005]
+contact_priors:
+- 0.025
+- 0.016
+- 0.005
 logical_batch_size: 16
 batch_size: 8
 crop: 384
-workers: 2
-steps: 300000
-warmup: 15000
-schedule: wsd
-schedule_steps: 300000
+workers: 0
+steps: 4
+warmup: 1
+schedule: cosine
+schedule_steps: 4
 decay_start: 240000
 lr: 0.0002
 weight_decay: 0.01
@@ -34,10 +37,10 @@ self_condition_mode: rollout
 ema_decay: 0.999
 grad_clip: 1.0
 afdb_probability: 0.059522
-checkpoint_every: 5000
+checkpoint_every: 2
 keep_recovery_checkpoints: 2
-log_every: 100
-validation_rollouts: 100
+log_every: 1
+validation_rollouts: 2
 rollout_batch: 1
 rollout_seed: 20260925
 rollout_temperature: 1.0

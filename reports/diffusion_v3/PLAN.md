@@ -28,7 +28,7 @@ the preliminary prediction.
 
 Both arms use the established 8-step binary D3PM, self-conditioning probability
 0.5, crop 384, global batch 128, seed 23, AFDB/ESM mixture, 300k WSD horizon,
-and automatic 100-rollout evaluation every 10k steps. G3 uses microbatch 4 and a
+and automatic 100-rollout evaluation every 10k steps. G3 uses microbatch 8 and a
 smaller 2e-4 learning rate. Jobs run on eight H100s at batch priority.
 
 Separately, the existing G2-wide-SC 110k checkpoint is evaluated with
