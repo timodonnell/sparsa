@@ -115,3 +115,31 @@ G2-wide-SC at only 35k also exceeds G1-long at 115k by 0.059929 [0.043342,
 self-conditioned model derives more of its advantage from diverse rollouts.
 The decisive architecture comparison remains G2-wide versus G2-wide-SC at
 matched steps.
+
+## Automatic milestones at G1 140k and G2-wide-SC 90k
+
+The 10k-cadence evaluator recorded the next available checkpoints before batch
+preemptions. G1-long at 140k has seen 17.92 million crop presentations;
+G2-wide-SC at 90k has seen 11.52 million.
+
+| Arm | Step | Oracle R@100 | Long R@100 | Mean rollout R | Consensus R |
+|---|---:|---:|---:|---:|---:|
+| G1-long | 140,000 | 0.301896 | 0.317990 | 0.185582 | 0.287766 |
+| G2-wide | 180,000 | 0.357893 | 0.377666 | 0.244460 | **0.349876** |
+| G2-wide-SC | 90,000 | **0.414254** | **0.452324** | **0.272102** | 0.310071 |
+
+Self-conditioning improves from step 35k to 90k by 0.064374 oracle R@100,
+with a paired 95% interval [0.048535, 0.081164]. At less than half the training
+exposure, it exceeds plain G2-wide at 180k by 0.056362 [0.034284, 0.080844].
+Its long-range advantage is 0.074658 [0.044630, 0.107213]. This establishes
+self-conditioning as the strongest tested architecture for the oracle metric.
+
+The self-conditioned model still has lower consensus R-precision than plain
+G2-wide at 180k by 0.039805 [0.027577, 0.052845], consistent with its larger
+gain from sampling. Its oracle curve rises from 0.398696 at 64 rollouts to
+0.414254 at 100, and all 100 maps remain unique per protein. The remaining gap
+to MarinFold's 0.5199 oracle reference is 0.1056.
+
+G1-long improves from 115k to 140k by 0.011945 oracle R@100 [0.004284,
+0.020266]. Longer training is still productive for the control, but its rate
+of improvement and absolute result remain well behind G2-wide-SC.

@@ -1,0 +1,81 @@
+{
+  "split": "eval-val",
+  "proteins": 97,
+  "held_out_used": false,
+  "bootstrap": {
+    "resamples": 100000,
+    "seed": 20260930,
+    "unit": "protein",
+    "paired": true
+  },
+  "comparisons": {
+    "g2_wide_sc_step90000_minus_g2_wide_sc_step35000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.06437422560213761,
+        "paired_bootstrap_95_ci": [
+          0.04853490140310699,
+          0.08116420774383665
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.06656425345340912,
+        "paired_bootstrap_95_ci": [
+          0.03487919013147755,
+          0.09755307408435819
+        ],
+        "bootstrap_probability_difference_le_zero": 5e-05
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.05272000662344701,
+        "paired_bootstrap_95_ci": [
+          0.03719787545631185,
+          0.06941596096202374
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.04980611481949813,
+        "paired_bootstrap_95_ci": [
+          0.03132890534214469,
+          0.06989681712932426
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      }
+    },
+    "g2_wide_sc_step90000_minus_g2_wide_step180000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.056361780192046275,
+        "paired_bootstrap_95_ci": [
+          0.034283594156701284,
+          0.08084364741117936
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.07465765883359683,
+        "paired_bootstrap_95_ci": [
+          0.044629786432702385,
+          0.10721276831912593
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.027642477661778672,
+        "paired_bootstrap_95_ci": [
+          0.016362225075851836,
+          0.03880593234919786
+        ],
+        "bootstrap_probability_difference_le_zero": 0.0
+      },
+      "consensus_r_precision": {
+        "mean_difference": -0.039805082162294156,
+        "paired_bootstrap_95_ci": [
+          -0.052845465627117325,
+          -0.027576789199156265
+        ],
+        "bootstrap_probability_difference_le_zero": 1.0
+      }
+    }
+  }
+}

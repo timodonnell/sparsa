@@ -1,0 +1,47 @@
+{
+  "split": "eval-val",
+  "proteins": 97,
+  "held_out_used": false,
+  "bootstrap": {
+    "resamples": 100000,
+    "seed": 20260930,
+    "unit": "protein",
+    "paired": true
+  },
+  "comparisons": {
+    "g1_long_step140000_minus_g1_long_step115000": {
+      "oracle_r_precision": {
+        "mean_difference": 0.011944760444822932,
+        "paired_bootstrap_95_ci": [
+          0.004283577747654846,
+          0.020266449617451745
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00089
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.010412603381537856,
+        "paired_bootstrap_95_ci": [
+          -0.00014697710799140872,
+          0.02092018051838643
+        ],
+        "bootstrap_probability_difference_le_zero": 0.02655
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.004819250404255938,
+        "paired_bootstrap_95_ci": [
+          0.0019823355255062865,
+          0.007753718082748452
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00035
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.006669993703030357,
+        "paired_bootstrap_95_ci": [
+          0.0016816570562130674,
+          0.011615740420170327
+        ],
+        "bootstrap_probability_difference_le_zero": 0.00448
+      }
+    }
+  }
+}
