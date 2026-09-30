@@ -1,0 +1,47 @@
+seed: 23
+model:
+  sequence_dim: 768
+  sequence_layers: 12
+  heads: 12
+  pair_dim: 256
+  triangle_dim: 256
+  pair_attention_heads: 16
+  pair_attention_chunk: 24
+  pair_outer_rank: 128
+  transition_expansion: 4
+  diffusion_steps: 8
+  inner_loops: 1
+  untied_cells: 1
+  self_conditioning: true
+  dropout: 0.0
+  gradient_checkpointing: true
+contact_priors:
+- 0.025
+- 0.016
+- 0.005
+logical_batch_size: 16
+batch_size: 4
+crop: 384
+workers: 0
+steps: 2
+warmup: 1
+schedule: cosine
+schedule_steps: 2
+decay_start: 240000
+lr: 0.0002
+weight_decay: 0.01
+pos_weight: 4.0
+ranking_weight: 0.05
+self_condition_probability: 0.5
+self_condition_mode: rollout
+ema_decay: 0.999
+grad_clip: 1.0
+afdb_probability: 0.059522
+checkpoint_every: 1
+keep_recovery_checkpoints: 2
+log_every: 1
+validation_rollouts: 2
+rollout_batch: 1
+rollout_seed: 20260925
+rollout_temperature: 1.0
+rollout_self_condition_guidance: 1.0
