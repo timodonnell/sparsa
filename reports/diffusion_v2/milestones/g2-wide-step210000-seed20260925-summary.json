@@ -1,0 +1,32 @@
+{
+  "proteins": 97,
+  "oracle_r_precision": 0.3685848744396345,
+  "oracle_long_r_precision": 0.3921487842584286,
+  "mean_r_precision": 0.2521051713078585,
+  "mean_long_r_precision": 0.23128062854376946,
+  "consensus_r_precision": 0.3571096462040886,
+  "consensus_long_r_precision": 0.32505680028421097,
+  "mean_contacts": 173.27484536082474,
+  "mean_unique_maps": 100.0,
+  "mean_pairwise_jaccard": 0.12601529887556084,
+  "inference_seconds": 1066.2890811119432,
+  "oracle_curve": {
+    "1": 0.24698712777419074,
+    "2": 0.26923078432436726,
+    "4": 0.29553412610172175,
+    "8": 0.3128722442015801,
+    "16": 0.33159513345851543,
+    "32": 0.34450739209987097,
+    "64": 0.3603162124076525,
+    "100": 0.3685848744396345
+  },
+  "step": 210000,
+  "split": "eval-val",
+  "n_rollouts": 100,
+  "rollout_seed": 20260925,
+  "temperature": 1.0,
+  "pos_weight_logit_correction": 4.0,
+  "source_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/g2-wide-s23-300k/checkpoints/step-210000.pt",
+  "world_size": 8,
+  "held_out_used": false
+}

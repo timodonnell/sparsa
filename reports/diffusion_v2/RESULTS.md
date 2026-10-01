@@ -182,3 +182,25 @@ Even the latest G2-wide-SC checkpoint at 110k exceeds plain G2-wide at 200k by
 0.040593 oracle R@100 [0.023996, 0.057869], despite 14.08 million versus 25.60
 million crop presentations. The best observed gap to MarinFold remains 0.1056
 at the self-conditioned 90k checkpoint.
+
+## October 1 continuation
+
+Fifteen new automatic evaluations extend G1-long through 260k, G2-wide through
+250k, and G2-wide-SC through 140k. The figure and CSV above include every one.
+
+| Arm | Latest evaluated step | Latest oracle R@100 | Best observed oracle R@100 |
+|---|---:|---:|---:|
+| G1-long | 260k | 0.316874 | 0.316874 at 260k |
+| G2-wide | 250k | 0.367824 | 0.374024 at 230k |
+| G2-wide-SC | 140k | 0.419380 | 0.419380 at 140k |
+
+SC's new maximum is only 0.005126 above 90k, with paired 95% interval
+[-0.011687, 0.020361]. Its plateau remains unresolved. Plain wide is essentially
+unchanged from 200k to 250k: +0.001899 [-0.006508, 0.010106]. G1 has improved
+from 190k to 260k by 0.014727 [0.007672, 0.021821]. G1 and plain wide are now
+in the planned learning-rate decay phase beginning at 240k.
+
+The [v3 report](../diffusion_v3/RESULTS.md) includes the combined plot with the
+new RSC runs and comparisons. Their first results are promising, but contact
+coverage differs and there are too few new-model checkpoints to establish a
+sustained scaling trend.

@@ -1,0 +1,80 @@
+{
+  "observed_utc": "2026-10-01T13:22:50.681062+00:00",
+  "target_steps": 300000,
+  "validation_split": "eval-val",
+  "validation_proteins": 97,
+  "validation_rollouts": 100,
+  "validation_every_steps": 10000,
+  "runs": [
+    {
+      "model": "g1-long",
+      "job": "diffusion-v2-g1-long-s23-300k-r3-eval10k",
+      "state": "Running",
+      "last_logged_step": 268500,
+      "last_saved_step": 265000,
+      "seconds_per_step": 0.5935042025800794,
+      "peak_gpu_gb": 10.213758945465088,
+      "recent_errors": [],
+      "latest_eval_step": 260000,
+      "latest_oracle_r_precision": 0.31687440105780046,
+      "best_recorded_auto_eval_step": 260000,
+      "best_recorded_auto_oracle_r_precision": 0.31687440105780046
+    },
+    {
+      "model": "g2-wide",
+      "job": "diffusion-v2-g2-wide-s23-300k-r3-eval10k",
+      "state": "Running",
+      "last_logged_step": 253700,
+      "last_saved_step": 250000,
+      "seconds_per_step": 1.0645645421592054,
+      "peak_gpu_gb": 20.412895679473877,
+      "recent_errors": [],
+      "latest_eval_step": 250000,
+      "latest_oracle_r_precision": 0.36782392470785646,
+      "best_recorded_auto_eval_step": 230000,
+      "best_recorded_auto_oracle_r_precision": 0.3740243600459505
+    },
+    {
+      "model": "g2-wide-sc2",
+      "job": "diffusion-v2-g2-wide-sc2-s23-300k-r3-eval10k",
+      "state": "Running",
+      "last_logged_step": 145000,
+      "last_saved_step": 145000,
+      "seconds_per_step": 1.2742444415100909,
+      "peak_gpu_gb": 20.33412742614746,
+      "recent_errors": [],
+      "latest_eval_step": 140000,
+      "latest_oracle_r_precision": 0.4193803658969942,
+      "best_recorded_auto_eval_step": 140000,
+      "best_recorded_auto_oracle_r_precision": 0.4193803658969942
+    },
+    {
+      "model": "g2-rsc",
+      "job": "diffusion-v3-g2-rsc-s23-300k",
+      "state": "Running",
+      "last_logged_step": 19100,
+      "last_saved_step": 15000,
+      "seconds_per_step": 1.2801746352296322,
+      "peak_gpu_gb": 20.33836030960083,
+      "recent_errors": [],
+      "latest_eval_step": 10000,
+      "latest_oracle_r_precision": 0.25945597855483704,
+      "best_recorded_auto_eval_step": 10000,
+      "best_recorded_auto_oracle_r_precision": 0.25945597855483704
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "job": "diffusion-v3-g3-balanced-rsc-s23-300k",
+      "state": "Running",
+      "last_logged_step": 20600,
+      "last_saved_step": 20000,
+      "seconds_per_step": 2.6413205001596363,
+      "peak_gpu_gb": 41.45348358154297,
+      "recent_errors": [],
+      "latest_eval_step": 20000,
+      "latest_oracle_r_precision": 0.4041270966977251,
+      "best_recorded_auto_eval_step": 20000,
+      "best_recorded_auto_oracle_r_precision": 0.4041270966977251
+    }
+  ]
+}

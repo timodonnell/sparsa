@@ -1,0 +1,322 @@
+{
+  "split": "eval-val",
+  "proteins": 97,
+  "held_out_used": false,
+  "bootstrap": {
+    "resamples": 100000,
+    "seed": 20261001,
+    "unit": "protein",
+    "paired": true
+  },
+  "caveat": "Intervals quantify protein resampling uncertainty for one training seed and one rollout seed bank, not training or sampling variance. Comparisons with different steps are not matched-exposure ablations.",
+  "comparisons": {
+    "g3_rsc_20k_minus_10k": {
+      "oracle_r_precision": {
+        "mean_difference": 0.10104589854405907,
+        "paired_bootstrap_95_ci": [
+          0.08136204428440066,
+          0.12121090901104457
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.05717922250221257,
+        "paired_bootstrap_95_ci": [
+          0.003945245636264507,
+          0.10816117026107155
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.08311573117893167,
+        "paired_bootstrap_95_ci": [
+          0.06621306649944218,
+          0.10073348218682948
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.05025263110774316,
+        "paired_bootstrap_95_ci": [
+          0.03396581552199996,
+          0.06698339045533486
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": -8.447731958762887,
+        "paired_bootstrap_95_ci": [
+          -14.135775773195878,
+          -3.040306701030928
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": 0.029909876007157773,
+        "paired_bootstrap_95_ci": [
+          0.019251577680959864,
+          0.0410229840162539
+        ]
+      }
+    },
+    "g3_rsc_10k_minus_g2_rsc_10k": {
+      "oracle_r_precision": {
+        "mean_difference": 0.043625219598828986,
+        "paired_bootstrap_95_ci": [
+          0.03297503234462166,
+          0.054565289910845506
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.046495719638140545,
+        "paired_bootstrap_95_ci": [
+          0.007792172756993604,
+          0.08787095915225568
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.022921405123500983,
+        "paired_bootstrap_95_ci": [
+          0.015171610705940426,
+          0.030828471323856365
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.01698061148475732,
+        "paired_bootstrap_95_ci": [
+          0.009939128906716313,
+          0.02410846695708
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": -46.02360824742267,
+        "paired_bootstrap_95_ci": [
+          -82.94827061855672,
+          -18.000399484536086
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": -0.026642996489493316,
+        "paired_bootstrap_95_ci": [
+          -0.03279453944389063,
+          -0.02052689886069159
+        ]
+      }
+    },
+    "g3_rsc_20k_minus_g2_sc_35k": {
+      "oracle_r_precision": {
+        "mean_difference": 0.05424696193468669,
+        "paired_bootstrap_95_ci": [
+          0.03612329912834873,
+          0.0726988526607477
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.039863753240635076,
+        "paired_bootstrap_95_ci": [
+          -0.010489562943136627,
+          0.09091043474370604
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.05918411766893244,
+        "paired_bootstrap_95_ci": [
+          0.04608158361860969,
+          0.0722230874645756
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": -0.03274751393154199,
+        "paired_bootstrap_95_ci": [
+          -0.045903986609234906,
+          -0.020570632049979675
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": -52.932680412371134,
+        "paired_bootstrap_95_ci": [
+          -63.418164948453615,
+          -43.52958505154639
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": 0.09144726158380298,
+        "paired_bootstrap_95_ci": [
+          0.08248943073392989,
+          0.10118407707675382
+        ]
+      }
+    },
+    "g3_rsc_20k_minus_g2_sc_140k": {
+      "oracle_r_precision": {
+        "mean_difference": -0.015253269199269144,
+        "paired_bootstrap_95_ci": [
+          -0.041301504836204254,
+          0.010231999023635197
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": -0.01033724837657181,
+        "paired_bootstrap_95_ci": [
+          -0.05833690113860423,
+          0.0411474756978642
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": -0.014157125841852565,
+        "paired_bootstrap_95_ci": [
+          -0.037776570390086306,
+          0.008534789307530386
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": -0.10613346774412724,
+        "paired_bootstrap_95_ci": [
+          -0.13225734945969014,
+          -0.08163552039512469
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": -57.00360824742268,
+        "paired_bootstrap_95_ci": [
+          -68.90004381443299,
+          -45.68057989690722
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": 0.04478960069757907,
+        "paired_bootstrap_95_ci": [
+          0.028206414172135034,
+          0.06148047458823379
+        ]
+      }
+    },
+    "g2_sc_140k_minus_90k": {
+      "oracle_r_precision": {
+        "mean_difference": 0.005126005531818211,
+        "paired_bootstrap_95_ci": [
+          -0.01168662219462554,
+          0.020360999505729793
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": -0.016363251836202228,
+        "paired_bootstrap_95_ci": [
+          -0.04110243441816197,
+          0.005492060405792242
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.020621236887337982,
+        "paired_bootstrap_95_ci": [
+          0.012934979103396785,
+          0.028911111839387986
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.02357983899308712,
+        "paired_bootstrap_95_ci": [
+          0.013214873945103026,
+          0.034767163517094836
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": 3.6186597938144343,
+        "paired_bootstrap_95_ci": [
+          -3.5319948453608236,
+          9.75536597938144
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": 0.017772388274590167,
+        "paired_bootstrap_95_ci": [
+          0.011931687860572561,
+          0.024158323689019264
+        ]
+      }
+    },
+    "g2_wide_250k_minus_200k": {
+      "oracle_r_precision": {
+        "mean_difference": 0.0018985919855780775,
+        "paired_bootstrap_95_ci": [
+          -0.006508308622426834,
+          0.0101056244304084
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.0005603517714446609,
+        "paired_bootstrap_95_ci": [
+          -0.010358928408105525,
+          0.011057423390243619
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.0109532416209146,
+        "paired_bootstrap_95_ci": [
+          0.005773496801538835,
+          0.01639315014278646
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.016724476956808173,
+        "paired_bootstrap_95_ci": [
+          0.008925931308972887,
+          0.024863895261327505
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": 7.768762886597938,
+        "paired_bootstrap_95_ci": [
+          4.362987113402061,
+          11.9571237113402
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": 0.006617779390268375,
+        "paired_bootstrap_95_ci": [
+          0.003027746580640758,
+          0.01008595933455895
+        ]
+      }
+    },
+    "g1_long_260k_minus_190k": {
+      "oracle_r_precision": {
+        "mean_difference": 0.014727088109446625,
+        "paired_bootstrap_95_ci": [
+          0.00767169310443071,
+          0.02182117160333154
+        ]
+      },
+      "oracle_long_r_precision": {
+        "mean_difference": 0.015374118960881748,
+        "paired_bootstrap_95_ci": [
+          -0.0024911930911247463,
+          0.03637240005392174
+        ]
+      },
+      "mean_r_precision": {
+        "mean_difference": 0.01291263862438795,
+        "paired_bootstrap_95_ci": [
+          0.007993112978482176,
+          0.0182460248077049
+        ]
+      },
+      "consensus_r_precision": {
+        "mean_difference": 0.014399648059693685,
+        "paired_bootstrap_95_ci": [
+          0.006003469046153083,
+          0.023455245943260806
+        ]
+      },
+      "mean_contacts": {
+        "mean_difference": 3.3374226804123706,
+        "paired_bootstrap_95_ci": [
+          -0.15237886597938177,
+          7.459721649484531
+        ]
+      },
+      "mean_pairwise_jaccard": {
+        "mean_difference": 0.00798675629905762,
+        "paired_bootstrap_95_ci": [
+          0.005124175047899684,
+          0.010978176427502213
+        ]
+      }
+    }
+  }
+}
