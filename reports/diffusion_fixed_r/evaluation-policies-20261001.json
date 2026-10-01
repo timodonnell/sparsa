@@ -1,0 +1,81 @@
+{
+  "observed_utc": "2026-10-01T20:41:08.653372+00:00",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "saved_step": 260000,
+      "evaluation_policy": {
+        "metric_version": "fixed-r-v2",
+        "oracle_ranking": "final_denoiser_probability_all_eligible_pairs",
+        "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+        "probability_ensemble_ranking": "mean_final_denoiser_probability",
+        "precision_denominator": "ground_truth_contacts_in_resolved_range",
+        "tie_break": "ascending_residue_pair",
+        "zero_ground_truth": "undefined_excluded_from_macro_average",
+        "every_steps": 10000,
+        "split": "eval-val",
+        "n_rollouts": 100,
+        "rollout_seed": 20260925,
+        "self_condition_guidance": 1.0,
+        "held_out_used": false
+      }
+    },
+    {
+      "model": "g2-wide-sc2",
+      "saved_step": 150000,
+      "evaluation_policy": {
+        "metric_version": "fixed-r-v2",
+        "oracle_ranking": "final_denoiser_probability_all_eligible_pairs",
+        "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+        "probability_ensemble_ranking": "mean_final_denoiser_probability",
+        "precision_denominator": "ground_truth_contacts_in_resolved_range",
+        "tie_break": "ascending_residue_pair",
+        "zero_ground_truth": "undefined_excluded_from_macro_average",
+        "every_steps": 10000,
+        "split": "eval-val",
+        "n_rollouts": 100,
+        "rollout_seed": 20260925,
+        "self_condition_guidance": 1.0,
+        "held_out_used": false
+      }
+    },
+    {
+      "model": "g2-rsc",
+      "saved_step": 30000,
+      "evaluation_policy": {
+        "metric_version": "fixed-r-v2",
+        "oracle_ranking": "final_denoiser_probability_all_eligible_pairs",
+        "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+        "probability_ensemble_ranking": "mean_final_denoiser_probability",
+        "precision_denominator": "ground_truth_contacts_in_resolved_range",
+        "tie_break": "ascending_residue_pair",
+        "zero_ground_truth": "undefined_excluded_from_macro_average",
+        "every_steps": 10000,
+        "split": "eval-val",
+        "n_rollouts": 100,
+        "rollout_seed": 20260925,
+        "self_condition_guidance": 1.0,
+        "held_out_used": false
+      }
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "saved_step": 25000,
+      "evaluation_policy": {
+        "metric_version": "fixed-r-v2",
+        "oracle_ranking": "final_denoiser_probability_all_eligible_pairs",
+        "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+        "probability_ensemble_ranking": "mean_final_denoiser_probability",
+        "precision_denominator": "ground_truth_contacts_in_resolved_range",
+        "tie_break": "ascending_residue_pair",
+        "zero_ground_truth": "undefined_excluded_from_macro_average",
+        "every_steps": 10000,
+        "split": "eval-val",
+        "n_rollouts": 100,
+        "rollout_seed": 20260925,
+        "self_condition_guidance": 1.0,
+        "held_out_used": false
+      }
+    }
+  ]
+}

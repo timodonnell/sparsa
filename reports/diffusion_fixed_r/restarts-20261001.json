@@ -1,0 +1,40 @@
+{
+  "metric_version": "fixed-r-v2",
+  "priority": "batch",
+  "reason": "Replace legacy sparse precision with fixed-R evaluation; resume unchanged model, optimizer, EMA, random and data states. Re-evaluate the saved checkpoint before continuing.",
+  "code_commit": "63362b7",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "previous_job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-r3-eval10k",
+      "replacement_job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/g2-wide-s23-300k",
+      "config": "configs/diffusion_g2_wide.yaml",
+      "submitted_utc": "2026-10-01T20:36:42.715154+00:00"
+    },
+    {
+      "model": "g2-wide-sc2",
+      "previous_job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-r3-eval10k",
+      "replacement_job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/g2-wide-sc2-s23-300k",
+      "config": "configs/diffusion_g2_wide_sc.yaml",
+      "submitted_utc": "2026-10-01T20:36:48.642008+00:00"
+    },
+    {
+      "model": "g2-rsc",
+      "previous_job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k",
+      "replacement_job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v3/g2-rsc-s23-300k",
+      "config": "configs/diffusion_g2_wide_rsc.yaml",
+      "submitted_utc": "2026-10-01T20:36:54.797299+00:00"
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "previous_job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k",
+      "replacement_job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v3/g3-balanced-rsc-s23-300k",
+      "config": "configs/diffusion_g3_balanced_rsc.yaml",
+      "submitted_utc": "2026-10-01T20:37:00.883897+00:00"
+    }
+  ]
+}

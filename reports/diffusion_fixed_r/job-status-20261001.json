@@ -1,0 +1,41 @@
+{
+  "observed_utc": "2026-10-01T20:40:10.540486+00:00",
+  "jobs": [
+    {
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0
+    },
+    {
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0
+    },
+    {
+      "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0
+    },
+    {
+      "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-fixed-r-v2",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0
+    },
+    {
+      "job": "/bizon/sparsa-fixed-r-v2-g1-long-step300000",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0
+    },
+    {
+      "job": "/bizon/sparsa-fixed-r-v2-smoke-20261001",
+      "state": "succeeded",
+      "preemptions": 0,
+      "failures": 0
+    }
+  ]
+}

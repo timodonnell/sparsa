@@ -65,8 +65,32 @@ intact. Summary files identify the scoring policy and rollout batch size; rollou
 rows include R, selected count and true-positive counts for both dense and
 sampled rankings. A summary is written only after the detailed rows succeed.
 
-Full validation re-evaluations and training restarts are being recorded in this
-directory and `reports/jobs`. Historical consensus curves remain usable;
+All four active jobs were replaced at batch priority and their durable evaluation
+policies now identify `fixed-r-v2`. They resume at G2-wide 260k, SC 150k, G2-RSC
+30k, and G3 25k, re-evaluating those checkpoints before continuing the original
+300k-step training schedules. G1 completed training; a separate batch-priority
+job re-evaluates its 300k checkpoint. At this update the full evaluations are
+pending; the one-protein GPU smoke succeeded. Job identities, submission
+commands and status snapshots are recorded here and in `reports/jobs`.
+
+Historical consensus curves remain usable;
 historical oracle curves require fresh sampling because saved summaries do not
 contain the full probability rankings or enough sparse denominators to repair
 all scores exactly.
+
+## Current comparisons
+
+![Fixed-R oracle and frequency-consensus comparisons](figures/r_precision_by_step.png)
+
+The oracle panel excludes every legacy score. The consensus panel retains the
+valid historical measurements and uses the consensus reference, not the oracle
+reference. Recover completed corrected evaluations and regenerate both panels:
+
+```bash
+uv run python scripts/fetch_fixed_r_evaluations.py --pod iris-bizon-sparsa-REPLACE-WITH-LIVE-POD
+python scripts/plot_fixed_r_progress.py
+```
+
+The plotting environment needs matplotlib, pandas and numpy. Corrected results
+are stored under `milestones/`; each recovered evaluation is checked against
+the frozen protein identities and its per-protein metric means.
