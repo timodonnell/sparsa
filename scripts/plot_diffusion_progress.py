@@ -202,7 +202,9 @@ def render(rows, destination, early_panel, as_of):
         ax.set_ylim(0.12, 0.565)
         ax.set_xlabel("Training steps (thousands)", labelpad=10)
         ax.yaxis.set_major_locator(MultipleLocator(0.05))
-        ax.set_xlim(0, 285 if axis_index == 0 else 40)
+        ax.set_xlim(
+            0, max(285, data.step_thousands.max() + 25) if axis_index == 0 else 40
+        )
         ax.xaxis.set_major_locator(MultipleLocator(50 if axis_index == 0 else 10))
         ax.set_title(
             "Full training history"
@@ -243,8 +245,9 @@ def render(rows, destination, early_panel, as_of):
     )
     fig.text(
         0.08,
-        0.035,
-        "Bars: pointwise 95% protein-bootstrap intervals. Lines connect evaluated checkpoints; no extrapolation.",
+        0.025,
+        "Bars: pointwise 95% protein-bootstrap intervals. Lines connect evaluated checkpoints; no extrapolation.\n"
+        "Scores use emitted contacts when fewer than R are available; contact coverage differs between models.",
         fontsize=9,
         color="#606872",
     )

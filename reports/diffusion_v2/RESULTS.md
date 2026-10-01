@@ -204,3 +204,16 @@ The [v3 report](../diffusion_v3/RESULTS.md) includes the combined plot with the
 new RSC runs and comparisons. Their first results are promising, but contact
 coverage differs and there are too few new-model checkpoints to establish a
 sustained scaling trend.
+
+## October 1, 20:16 UTC continuation
+
+G1 completed 300k steps successfully, with final oracle R@100 of 0.321551.
+The new 270k, 280k, and 290k scores are 0.314974, 0.313057, and 0.318850.
+Plain G2-wide reaches a new best of 0.377787 at 260k. G2-wide-SC is 0.417097
+at 150k, leaving its best observed score at 0.419380 (140k); it remains near
+the plateau. These six new checkpoints are included in the updated figure.
+
+The [v3 report](../diffusion_v3/RESULTS.md) includes two new G2-RSC evaluations:
+0.377204 at 20k and 0.446965 at 30k. The latter is the new best observed oracle
+score, with substantially lower contact coverage than original SC. The paired
+advantage over SC's best checkpoint remains statistically unresolved.

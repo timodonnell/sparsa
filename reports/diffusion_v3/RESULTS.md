@@ -3,9 +3,58 @@
 Architecture and checkpoint decisions use only the frozen 97-protein `eval-val`
 split. Held-out sets remain untouched.
 
-## Training update: October 1
+## Training update: October 1, 20:16 UTC
 
 ![All diffusion training curves](figures/r_precision_by_step.png)
+
+G2-RSC reaches **0.446965 at 30k**, the best observed Sparsa oracle R@100 so far.
+Its trajectory is 0.259456 at 10k, 0.377204 at 20k, and 0.446965 at 30k.
+The latest 10k-step gain is +0.069761, with paired 95% protein-bootstrap
+interval [0.052741, 0.086719]. This is continued early learning; it does not
+yet establish how far a longer run will improve.
+
+| Model | Status / progress | Latest evaluation | Oracle R@100 | Long oracle R@100 | Mean contacts |
+|---|---|---:|---:|---:|---:|
+| G1-long | Completed, 300k saved | 300k | 0.321551 | 0.332541 | 226.4 |
+| G2-wide | Running, 260.3k logged | 260k | 0.377787 | 0.400805 | 179.6 |
+| G2-wide-SC | Running, 150.2k logged | 150k | 0.417097 | 0.452249 | 143.6 |
+| G2-RSC | Running, 30.2k logged | 30k | **0.446965** | **0.518998** | 74.4 |
+| G3-balanced-RSC | Restart pending, 25k saved | 20k | 0.404127 | 0.425623 | 85.0 |
+
+Iris confirms G1 succeeded. The G3 job remains active, with its replacement
+task building / pod pending following preemption; its 30k evaluation is not
+available yet. Recent attempts across the campaign include batch-priority
+preemptions and pod deletion, so elapsed wall time has not all been training.
+All runs retain their 300k targets and 10k-step validation cadence.
+
+G2-RSC at 30k exceeds SC's best observed 140k score by 0.027585, but the paired
+interval [-0.002205, 0.056258] includes zero. It exceeds SC at 35k by 0.097085
+[0.073080, 0.120600]. The gap to MarinFold's 0.5199 all-contact oracle reference
+is now 0.072935; G2-RSC's long-range score is a different metric and should not
+be compared directly with that reference.
+
+Coverage remains a substantial caveat: G2-RSC emits only 74 contacts per rollout
+on average, versus 142 for SC's best 140k checkpoint (144 at 150k). The inherited
+scorer divides by available selected contacts when fewer than R are emitted.
+These scores therefore do not establish an improvement at equal contact
+coverage or improved usefulness for Helico. G2-RSC's mean rollout R is 0.298841;
+consensus R is 0.231885.
+
+At matched 20k steps, G3 exceeds G2-RSC by 0.026923 [0.010036, 0.043074]. G3
+still merits continuation, but it has no new evaluated checkpoint this update.
+Original SC remains near its plateau: 150k minus 90k is +0.002842
+[-0.017399, 0.020419]. Plain G2-wide sets a new best at 260k, while completed
+G1 remains well behind the newer models.
+
+Eight new evaluations bring the plot to 49 checkpoints. Paired intervals use
+100,000 protein resamples with seed 20261001, one training seed, and one rollout
+seed bank; they omit training-seed and rollout-bank uncertainty. Evidence is in
+`milestones/comparison-20261001-pm.json` and `training-status-20261001-pm.json`.
+All results use the frozen 97-protein validation split, with 100 rollouts;
+held-out data was not used. Rebuild the current plot with
+`python scripts/plot_diffusion_progress.py --as-of '2026-10-01 20:16 UTC'`.
+
+## Training update: October 1, morning
 
 All five long runs are active on eight H100s each at batch priority. The latest
 training logs at 13:22 UTC reported G1-long 268.5k, G2-wide 253.7k, G2-wide-SC
