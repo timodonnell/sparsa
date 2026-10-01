@@ -1,5 +1,12 @@
 # Rollout-consistent diffusion results
 
+> **Metric correction (October 1):** The oracle and mean-rollout scores below used
+> precision among emitted contacts, not fixed-R precision, and must not guide
+> model selection as R-precision. Consensus scores were already fixed-R.
+> The old 0.5199 line was also a long-range MarinFold reference, not all-range.
+> See the [corrected evaluation](../diffusion_fixed_r/README.md) for matched
+> consensus and oracle baselines and versioned re-evaluations.
+
 Architecture and checkpoint decisions use only the frozen 97-protein `eval-val`
 split. Held-out sets remain untouched.
 

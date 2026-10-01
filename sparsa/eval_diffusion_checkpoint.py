@@ -82,6 +82,7 @@ def main():
             "split": "eval-val",
             "n_rollouts": args.n_rollouts,
             "rollout_seed": args.rollout_seed,
+            "rollout_batch": args.rollout_batch,
             "temperature": args.temperature,
             "self_condition_guidance": args.self_condition_guidance,
             "pos_weight_logit_correction": pos_weight,
@@ -89,9 +90,9 @@ def main():
             "world_size": world,
             "held_out_used": False,
         }
-        write_json(args.out + "/summary.json", result)
         write_frame(args.out + "/per_protein.csv", proteins)
         write_frame(args.out + "/rollouts.csv", rollouts)
+        write_json(args.out + "/summary.json", result)
         print("CALIBRATED_ORACLE " + json.dumps(result), flush=True)
     if world > 1:
         dist.destroy_process_group()

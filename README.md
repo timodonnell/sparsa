@@ -15,8 +15,7 @@ them with MarinFold's autoregressive LLM approach. Predictions can be passed to
   train candidates at **batch priority**. Experiments use matched training
   exposure, two-seed confirmation, a bounded compute allocation, and a persistent
   results ledger.
-- **Evaluation:** MarinFold's frozen experimental splits and unmodified scoring
-  code. Contacts are native-amino-acid ConFind degree >= 0.001 at sequence
+- **Evaluation:** MarinFold's frozen experimental splits and contact definition. Contacts are native-amino-acid ConFind degree >= 0.001 at sequence
   separation >= 6. Only the 97 validation proteins guide search; the 217 test and
   19 de novo proteins were held out until final model selection.
 
@@ -34,6 +33,12 @@ completed; none met the promotion rule. See [results and checkpoint](reports/FIN
 and [search results](reports/AUTORESEARCH.md). See also the longer
 [scaling results](reports/scaling_v2/FINAL.md) and current
 [pair-trunk experiments](reports/pair_trunk_v1/RUNNING.md).
+
+Current diffusion evaluations use **fixed-R precision**: rank all eligible pairs
+by final denoiser probabilities for oracle best-of-100, and by rollout occurrence
+counts for consensus. Compare consensus with MarinFold consensus, and oracle
+with its oracle reference. Earlier diffusion oracle plots used an incorrect
+denominator for sparse maps; see the [metric correction](reports/diffusion_fixed_r/README.md).
 
 ## Use
 

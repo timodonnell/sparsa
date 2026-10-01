@@ -1,9 +1,9 @@
-"""Oracle-best rollout evaluation for discrete contact diffusion.
+"""Fixed-R evaluation of probability-ranked rollouts and contact ensembles.
 
-The per-rollout score intentionally matches MarinFold's diagnostic: retain the
-rollout's ordered selected contacts, take its first R resolved contacts in each
-range, and then take the maximum precision across N rollouts.  Consensus and
-diversity statistics are diagnostics; oracle best-of-N is the selection metric.
+For each range, R is the ground-truth contact count in the resolved pair
+universe. Every precision denominator is R, including sparse sampled maps.
+Oracle selection uses each rollout's dense final denoiser probabilities;
+frequency consensus and mean-probability ensembles are separate readouts.
 """
 
 from __future__ import annotations
@@ -17,8 +17,18 @@ import torch
 
 from sparsa.diffusion import sample_contact_maps
 from sparsa.model import tokenize
-from sparsa.vendor.marinfold_metrics import metric_rows, resolved_pairs, true_matrix
+from sparsa.vendor.marinfold_metrics import resolved_pairs, true_matrix
 
+METRIC_VERSION = "fixed-r-v2"
+METRIC_POLICY = {
+    "metric_version": METRIC_VERSION,
+    "oracle_ranking": "final_denoiser_probability_all_eligible_pairs",
+    "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+    "probability_ensemble_ranking": "mean_final_denoiser_probability",
+    "precision_denominator": "ground_truth_contacts_in_resolved_range",
+    "tie_break": "ascending_residue_pair",
+    "zero_ground_truth": "undefined_excluded_from_macro_average",
+}
 RANGES = {"all": (6, None), "short": (6, 11), "medium": (12, 23), "long": (24, None)}
 CURVE = (1, 2, 4, 8, 16, 32, 64, 100)
 
@@ -28,17 +38,41 @@ def _seed(base, record):
     return int.from_bytes(hashlib.sha256(key).digest()[:8], "little") % (2**63 - 1)
 
 
+def _ranked_counts(scores, labels, n_true):
+    """Return hits and selected count; missing predictions never reduce R."""
+    scores, labels = np.asarray(scores), np.asarray(labels, dtype=bool)
+    if scores.ndim != 1 or scores.shape != labels.shape:
+        raise ValueError("Expected equally sized score and label vectors")
+    if not np.isfinite(scores).all() or n_true < 0:
+        raise ValueError("Expected finite scores and non-negative ground-truth count")
+    order = np.argsort(-scores, kind="stable")[:n_true]
+    return int(labels[order].sum()), len(order)
+
+
+def _precision(hits, n_true):
+    return hits / n_true if n_true > 0 else float("nan")
+
+
 def _score_ordered(pairs, truth, resolved, lo, hi, n_true):
+    """Score a possibly incomplete unique contact ranking, always dividing by R."""
     if n_true <= 0:
         return float("nan")
-    hits = []
+    hits, selected, seen = 0, 0, set()
     for i, j in pairs:
         sep = j - i
-        if resolved[i] and resolved[j] and sep >= lo and (hi is None or sep <= hi):
-            hits.append(bool(truth[i, j]))
-            if len(hits) == n_true:
+        if (
+            (i, j) not in seen
+            and resolved[i]
+            and resolved[j]
+            and sep >= lo
+            and (hi is None or sep <= hi)
+        ):
+            seen.add((i, j))
+            hits += bool(truth[i, j])
+            selected += 1
+            if selected == n_true:
                 break
-    return float(np.mean(hits)) if hits else 0.0
+    return hits / n_true
 
 
 def _mean_jaccard(sets):
@@ -50,6 +84,12 @@ def _mean_jaccard(sets):
             union = len(left | right)
             values.append(len(left & right) / union if union else 1.0)
     return float(np.mean(values))
+
+
+def _reduce(values, operation):
+    values = np.asarray(values, dtype=float)
+    values = values[np.isfinite(values)]
+    return float(operation(values)) if len(values) else float("nan")
 
 
 @torch.inference_mode()
@@ -66,7 +106,7 @@ def evaluate_records(
     pos_weight=4.0,
     self_condition_guidance=1.0,
 ):
-    """Evaluate an arbitrary record shard and return auditable per-protein rows."""
+    """Score all resolved pairs; ground truth sets R but never the ranking."""
     if n_rollouts < 1 or rollout_batch < 1:
         raise ValueError("Rollout counts must be positive")
     if pos_weight <= 0:
@@ -76,8 +116,21 @@ def evaluate_records(
     for rec in records:
         tokens = tokenize(rec["sequence"])[None].to(device)
         generator = torch.Generator(device=device).manual_seed(_seed(seed, rec))
-        ordered, contact_sets = [], []
-        vote = np.zeros((rec["L"], rec["L"]), dtype=np.float32)
+        truth = true_matrix(rec["L"], rec["contacts"])
+        # Canonical pair order makes ties independent of labels and input ordering.
+        pi, pj, sep = resolved_pairs(np.unique(rec["resolved"]).astype(np.int64))
+        eligible = sep >= 6
+        pi, pj, sep = pi[eligible], pj[eligible], sep[eligible]
+        labels = truth[pi, pj]
+        masks, counts = {}, {}
+        for name, (lo, hi) in RANGES.items():
+            masks[name] = (sep >= lo) & ((sep <= hi) if hi is not None else True)
+            counts[name] = int(labels[masks[name]].sum())
+        by_range = {name: [] for name in RANGES}
+        sampled_by_range = {name: [] for name in RANGES}
+        contact_sets = []
+        vote = np.zeros(len(pi), dtype=np.int64)
+        probability_sum = np.zeros(len(pi), dtype=np.float64)
         start = time.perf_counter()
         for offset in range(0, n_rollouts, rollout_batch):
             count = min(rollout_batch, n_rollouts - offset)
@@ -97,87 +150,96 @@ def evaluate_records(
             states = states.cpu().numpy()
             probabilities = probabilities.float().cpu().numpy()
             for index in range(count):
-                i, j = np.nonzero(np.triu(states[index], 6))
-                if len(i):
-                    order = np.argsort(-probabilities[index, i, j], kind="mergesort")
-                    pairs = list(zip(i[order].tolist(), j[order].tolist(), strict=True))
-                    vote[i, j] += 1
-                    vote[j, i] += 1
-                else:
-                    pairs = []
-                ordered.append(pairs)
-                contact_sets.append(set(pairs))
+                selected = states[index, pi, pj].astype(bool)
+                scores = probabilities[index, pi, pj]
+                vote += selected
+                probability_sum += scores
+                si, sj = np.nonzero(np.triu(states[index], 6))
+                contact_sets.append(set(zip(si.tolist(), sj.tolist(), strict=True)))
+                for name, mask in masks.items():
+                    nt = counts[name]
+                    hits, n_top = _ranked_counts(scores[mask], labels[mask], nt)
+                    chosen = mask & selected
+                    sampled_hits, sampled_top = _ranked_counts(
+                        scores[chosen], labels[chosen], nt
+                    )
+                    score = _precision(hits, nt)
+                    sampled_score = _precision(sampled_hits, nt)
+                    by_range[name].append(score)
+                    sampled_by_range[name].append(sampled_score)
+                    rollout_rows.append(
+                        {
+                            "dataset": rec["dataset"],
+                            "stem": rec["stem"],
+                            "metric_version": METRIC_VERSION,
+                            "range": name,
+                            "rollout": offset + index,
+                            "r_precision": score,
+                            "n_true": nt,
+                            "n_candidate": int(mask.sum()),
+                            "n_top": n_top,
+                            "true_positives": hits,
+                            "sampled_r_precision": sampled_score,
+                            "sampled_n_top": sampled_top,
+                            "sampled_true_positives": sampled_hits,
+                            "sampled_contacts_in_range": int(chosen.sum()),
+                            "n_contacts": len(contact_sets[-1]),
+                        }
+                    )
         elapsed = time.perf_counter() - start
-
-        truth = true_matrix(rec["L"], rec["contacts"])
-        resolved = np.zeros(rec["L"], dtype=bool)
-        resolved[np.asarray(rec["resolved"], dtype=np.int64)] = True
-        pi, pj, sep = resolved_pairs(np.asarray(rec["resolved"], dtype=np.int64))
-        counts, by_range = {}, {}
-        for name, (lo, hi) in RANGES.items():
-            in_range = sep >= lo
-            if hi is not None:
-                in_range &= sep <= hi
-            n_true = int(truth[pi[in_range], pj[in_range]].sum())
-            counts[name] = n_true
-            scores = [
-                _score_ordered(pairs, truth, resolved, lo, hi, n_true)
-                for pairs in ordered
-            ]
-            by_range[name] = scores
-            for rollout, score in enumerate(scores):
-                rollout_rows.append(
-                    {
-                        "dataset": rec["dataset"],
-                        "stem": rec["stem"],
-                        "range": name,
-                        "rollout": rollout,
-                        "r_precision": score,
-                        "n_true": n_true,
-                        "n_contacts": len(ordered[rollout]),
-                    }
-                )
-
-        consensus_rows = metric_rows(
-            vote / n_rollouts,
-            truth,
-            pi,
-            pj,
-            sep,
-            rec["L"],
-            with_precision=True,
-        )
-        consensus = {
-            row["range"]: float(row["precision"])
-            for row in consensus_rows
-            if row["cut"] == "R"
-        }
-        all_scores = np.asarray(by_range["all"], dtype=float)
-        long_scores = np.asarray(by_range["long"], dtype=float)
+        consensus, probability_ensemble = {}, {}
+        for name, mask in masks.items():
+            nt = counts[name]
+            consensus[name] = _precision(
+                _ranked_counts(vote[mask], labels[mask], nt)[0], nt
+            )
+            probability_ensemble[name] = _precision(
+                _ranked_counts(probability_sum[mask] / n_rollouts, labels[mask], nt)[0],
+                nt,
+            )
+        all_scores = np.asarray(by_range["all"])
+        sampled_scores = np.asarray(sampled_by_range["all"])
         curve = {
-            str(n): float(np.nanmax(all_scores[: min(n, n_rollouts)]))
-            for n in CURVE
-            if n <= n_rollouts
+            str(n): _reduce(all_scores[:n], np.max) for n in CURVE if n <= n_rollouts
         }
         protein_rows.append(
             {
                 "dataset": rec["dataset"],
                 "stem": rec["stem"],
                 "eval_set": rec["eval_set"],
+                "metric_version": METRIC_VERSION,
                 "L": rec["L"],
                 "n_rollouts": n_rollouts,
-                "oracle_r_precision": float(np.nanmax(all_scores)),
-                "oracle_long_r_precision": float(np.nanmax(long_scores)),
-                "mean_r_precision": float(np.nanmean(all_scores)),
-                "mean_long_r_precision": float(np.nanmean(long_scores)),
+                "oracle_r_precision": _reduce(all_scores, np.max),
+                "oracle_long_r_precision": _reduce(by_range["long"], np.max),
+                "mean_r_precision": _reduce(all_scores, np.mean),
+                "mean_long_r_precision": _reduce(by_range["long"], np.mean),
+                "sampled_oracle_r_precision": _reduce(sampled_scores, np.max),
+                "sampled_oracle_long_r_precision": _reduce(
+                    sampled_by_range["long"], np.max
+                ),
+                "sampled_mean_r_precision": _reduce(sampled_scores, np.mean),
+                "sampled_mean_long_r_precision": _reduce(
+                    sampled_by_range["long"], np.mean
+                ),
                 "consensus_r_precision": consensus["all"],
                 "consensus_long_r_precision": consensus["long"],
-                "oracle_rollout": int(np.nanargmax(all_scores)),
-                "mean_contacts": float(np.mean([len(x) for x in ordered])),
+                "probability_ensemble_r_precision": probability_ensemble["all"],
+                "probability_ensemble_long_r_precision": probability_ensemble["long"],
+                "oracle_rollout": int(np.nanargmax(all_scores))
+                if np.isfinite(all_scores).any()
+                else None,
+                "mean_contacts": float(np.mean([len(x) for x in contact_sets])),
                 "unique_maps": len({frozenset(x) for x in contact_sets}),
                 "mean_pairwise_jaccard": _mean_jaccard(contact_sets),
                 "n_true": counts["all"],
+                "n_true_long": counts["long"],
                 "oracle_curve": curve,
+                "sampled_oracle_curve": {
+                    str(n): _reduce(sampled_scores[:n], np.max)
+                    for n in CURVE
+                    if n <= n_rollouts
+                },
                 "inference_seconds": elapsed,
             }
         )
@@ -187,32 +249,42 @@ def evaluate_records(
 def summarize(protein_rows):
     if not protein_rows:
         raise ValueError("Cannot summarize an empty evaluation")
+    if any(row.get("metric_version") != METRIC_VERSION for row in protein_rows):
+        raise ValueError("Cannot combine legacy or mixed scoring versions")
 
     def mean(key):
-        values = np.asarray([row[key] for row in protein_rows], dtype=float)
-        return float(np.nanmean(values))
+        value = _reduce([row[key] for row in protein_rows], np.mean)
+        return value if np.isfinite(value) else None
 
-    curve_keys = sorted(
-        {int(n) for row in protein_rows for n in row["oracle_curve"]},
-    )
-    return {
-        "proteins": len(protein_rows),
-        "oracle_r_precision": mean("oracle_r_precision"),
-        "oracle_long_r_precision": mean("oracle_long_r_precision"),
-        "mean_r_precision": mean("mean_r_precision"),
-        "mean_long_r_precision": mean("mean_long_r_precision"),
-        "consensus_r_precision": mean("consensus_r_precision"),
-        "consensus_long_r_precision": mean("consensus_long_r_precision"),
-        "mean_contacts": mean("mean_contacts"),
-        "mean_unique_maps": mean("unique_maps"),
-        "mean_pairwise_jaccard": mean("mean_pairwise_jaccard"),
-        "inference_seconds": float(
-            sum(row["inference_seconds"] for row in protein_rows)
-        ),
-        "oracle_curve": {
-            str(n): float(
-                np.nanmean([row["oracle_curve"][str(n)] for row in protein_rows])
-            )
-            for n in curve_keys
-        },
-    }
+    result = dict(METRIC_POLICY)
+    result["proteins"] = len(protein_rows)
+    for key in (
+        "oracle_r_precision",
+        "oracle_long_r_precision",
+        "mean_r_precision",
+        "mean_long_r_precision",
+        "sampled_oracle_r_precision",
+        "sampled_oracle_long_r_precision",
+        "sampled_mean_r_precision",
+        "sampled_mean_long_r_precision",
+        "consensus_r_precision",
+        "consensus_long_r_precision",
+        "probability_ensemble_r_precision",
+        "probability_ensemble_long_r_precision",
+        "mean_contacts",
+        "mean_pairwise_jaccard",
+    ):
+        result[key] = mean(key)
+    result["mean_unique_maps"] = mean("unique_maps")
+    result["scored_proteins"] = sum(row["n_true"] > 0 for row in protein_rows)
+    result["scored_long_proteins"] = sum(row["n_true_long"] > 0 for row in protein_rows)
+    result["inference_seconds"] = sum(row["inference_seconds"] for row in protein_rows)
+    for name in ("oracle_curve", "sampled_oracle_curve"):
+        keys = set(protein_rows[0][name])
+        if any(set(row[name]) != keys for row in protein_rows):
+            raise ValueError("Cannot combine evaluations with different rollout curves")
+        result[name] = {}
+        for n in sorted(keys, key=int):
+            value = _reduce([row[name][n] for row in protein_rows], np.mean)
+            result[name][n] = value if np.isfinite(value) else None
+    return result

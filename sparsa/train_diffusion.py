@@ -27,7 +27,12 @@ from sparsa.diffusion import (
     DiffusionModelConfig,
     TriangleDiffusionModel,
 )
-from sparsa.evaluate_diffusion import evaluate_records, summarize
+from sparsa.evaluate_diffusion import (
+    METRIC_POLICY,
+    METRIC_VERSION,
+    evaluate_records,
+    summarize,
+)
 from sparsa.experiment import advance_data_digest, learning_rate_scale, microbatches
 from sparsa.model import ALPHABET
 from sparsa.train import contact_loss, contact_ranking_loss, storage
@@ -79,6 +84,11 @@ def validation_due(step, steps, every, complete=False):
     return milestone and not complete
 
 
+def validation_prefix(out, step):
+    """Keep corrected evaluations separate from legacy sparse precision."""
+    return out + f"/validation-{METRIC_VERSION}/step-{step}"
+
+
 def run_validation(ema, schedule, cfg, out, step, rank, world, device):
     """Run and durably record one distributed eval-val oracle evaluation."""
     validation = benchmark()
@@ -121,6 +131,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
             "split": "eval-val",
             "n_rollouts": n_rollouts,
             "rollout_seed": rollout_seed,
+            "rollout_batch": int(cfg.get("rollout_batch", 4)),
             "temperature": temperature,
             "self_condition_guidance": self_condition_guidance,
             "pos_weight_logit_correction": pos_weight,
@@ -128,7 +139,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
             "world_size": world,
             "held_out_used": False,
         }
-        prefix = out + f"/validation/step-{step}"
+        prefix = validation_prefix(out, step)
         # The summary is the completion marker and must be written last. A retry
         # after a partial evaluation will therefore repeat it rather than skip it.
         write_frame(prefix + "-per_protein.csv", proteins)
@@ -145,6 +156,7 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--auto-resume", action="store_true")
     parser.add_argument("--resume")
+    parser.add_argument("--validate-on-resume", action="store_true")
     parser.add_argument(
         "--eval-every",
         type=int,
@@ -304,6 +316,7 @@ def main():
         write_json(
             args.out + "/evaluation_policy.json",
             {
+                **METRIC_POLICY,
                 "every_steps": args.eval_every,
                 "split": "eval-val",
                 "n_rollouts": int(cfg.get("validation_rollouts", 100)),
@@ -351,8 +364,10 @@ def main():
     if args.eval_every and args.eval_every % checkpoint_every:
         raise ValueError("Evaluation cadence must be divisible by checkpoint cadence")
 
-    if validation_due(step, steps, args.eval_every):
-        validation_marker = out_path + f"/validation/step-{step}.json"
+    if validation_due(step, steps, args.eval_every) or (
+        args.validate_on_resume and args.resume and step > 0
+    ):
+        validation_marker = validation_prefix(out_path, step) + ".json"
         complete = fs.exists(validation_marker) if rank == 0 else None
         if world > 1:
             completed = [complete]
@@ -532,7 +547,7 @@ def main():
                 dist.barrier()
 
         if validation_due(step, steps, args.eval_every):
-            marker = out_path + f"/validation/step-{step}.json"
+            marker = validation_prefix(out_path, step) + ".json"
             complete = fs.exists(marker) if rank == 0 else None
             if world > 1:
                 completed = [complete]

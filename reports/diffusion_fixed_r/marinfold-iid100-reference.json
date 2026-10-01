@@ -1,0 +1,37 @@
+{
+  "model": "contacts-v1-exp277-m2-p06-full-epoch-1.5B",
+  "checkpoint_step": 266344,
+  "experiment": "MarinFold exp321",
+  "arm": "full_iid_single",
+  "split": "eval-val",
+  "proteins": 97,
+  "n_rollouts": 100,
+  "held_out_used": false,
+  "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+  "oracle_ranking": "unique_contacts_in_emission_order",
+  "precision_denominator": "ground_truth_contacts_in_resolved_range",
+  "oracle_validity_gate": "unfinished or malformed rollout scores zero",
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "provenance": "Imported published per-protein values; verified identical sequences, ground truth and resolved residues for all 97 proteins; scorer source uses fixed R. Raw rollout artifacts not present locally.",
+  "source_sha256": {
+    "experiments/exp321_evals_null_sequence_contrastive_guidance_for_contacts/data/full_dev_natural.csv": "1abff837c30a2c618868e44733d05762ae6998920d9a208d9300833a29cffd02",
+    "experiments/exp321_evals_null_sequence_contrastive_guidance_for_contacts/data/heldout_natural.csv": "a4c23123ba3722f1767009a462b15c7a7fca010a37a346b8de8140f216f07099",
+    "experiments/exp321_evals_null_sequence_contrastive_guidance_for_contacts/data/targets.csv": "f53b8173df66178022f2127d6cbb93347dde01ab265ee061eb1af4883358e31a",
+    "experiments/exp321_evals_null_sequence_contrastive_guidance_for_contacts/analyze_results.py": "e104edd7446f947d15e97b2306395f8a98cd92e63ae58c11e43fca0b91762ca6",
+    "experiments/exp321_evals_null_sequence_contrastive_guidance_for_contacts/README.md": "1131bb9186c34e78ece99a28b88399af2ca5346cb408e8545e05868abf66e01d",
+    "experiments/exp245_evals_foldbench_held_out_monomers/data/gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5"
+  },
+  "metrics": {
+    "all": {
+      "consensus_r_precision": 0.5526335673535959,
+      "oracle_r_precision": 0.5243089654288267,
+      "ungated_oracle_r_precision": 0.5243450749852206
+    },
+    "long": {
+      "consensus_r_precision": 0.5394164402069223,
+      "oracle_r_precision": 0.5199013964963985,
+      "ungated_oracle_r_precision": 0.5199013964963985
+    }
+  }
+}

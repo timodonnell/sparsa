@@ -1,5 +1,12 @@
 # Triangle discrete-diffusion screen results
 
+> **Metric correction (October 1):** The oracle and mean-rollout scores below used
+> precision among emitted contacts, not fixed-R precision, and must not guide
+> model selection as R-precision. Consensus scores were already fixed-R.
+> The old 0.5199 line was also a long-range MarinFold reference, not all-range.
+> See the [corrected evaluation](../diffusion_fixed_r/README.md) for matched
+> consensus and oracle baselines and versioned re-evaluations.
+
 This screen trained G1, shared-loop G1-L2, and untied G1-U2 for 25,000 steps
 (1.6 million examples) on eight CoreWeave H100s per arm at batch priority. Model
 and checkpoint decisions used only the fixed 97-protein `eval-val` split. The

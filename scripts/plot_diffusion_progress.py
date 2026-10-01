@@ -50,6 +50,8 @@ def collect_rows():
                 continue
             step = int(rest.split("-", 1)[0])
             summary = json.loads(path.read_text())
+            if summary.get("metric_version") is not None:
+                raise ValueError("Do not mix corrected metrics into legacy curves")
             per_path = path.with_name(
                 path.name.replace("-summary.json", "-per-protein.csv")
             )
@@ -195,7 +197,6 @@ def render(rows, destination, early_panel, as_of):
                         fontsize=10,
                         weight="bold",
                     )
-        ax.axhline(0.5199, color="#963547", lw=1.7, ls=(0, (7, 4)))
         ax.spines[["top", "right"]].set_visible(False)
         ax.grid(True, color="#e3e7eb", lw=0.8)
         ax.set_axisbelow(True)
@@ -214,15 +215,7 @@ def render(rows, destination, early_panel, as_of):
             fontsize=11,
             pad=12,
         )
-    axes[0].set_ylabel("Oracle R-precision, best of 100 rollouts", labelpad=10)
-    axes[0].text(
-        5,
-        0.530,
-        "MarinFold reference: 0.5199",
-        fontsize=10.5,
-        color="#963547",
-        weight="bold",
-    )
+    axes[0].set_ylabel("Legacy oracle precision among emitted contacts", labelpad=10)
     handles.append(Line2D([0], [0], color="#a6a9ad", ls="--", label="v1 pilot models"))
     fig.legend(
         handles=handles,
@@ -233,7 +226,12 @@ def render(rows, destination, early_panel, as_of):
         fontsize=10,
     )
     fig.text(
-        0.08, 0.965, "Diffusion training progress", fontsize=21, weight="bold", va="top"
+        0.08,
+        0.965,
+        "Legacy scores — not R-precision",
+        fontsize=21,
+        weight="bold",
+        va="top",
     )
     fig.text(
         0.08,
@@ -247,7 +245,7 @@ def render(rows, destination, early_panel, as_of):
         0.08,
         0.025,
         "Bars: pointwise 95% protein-bootstrap intervals. Lines connect evaluated checkpoints; no extrapolation.\n"
-        "Scores use emitted contacts when fewer than R are available; contact coverage differs between models.",
+        "Incorrect denominator for sparse maps. Retained for audit only; use reports/diffusion_fixed_r for corrected comparisons.",
         fontsize=9,
         color="#606872",
     )

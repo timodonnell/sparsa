@@ -16,6 +16,7 @@ def main():
     parser.add_argument("--timeout", type=int, default=86400)
     parser.add_argument("--max-retries", type=int, default=2)
     parser.add_argument("--eval-every", type=int, default=10000)
+    parser.add_argument("--validate-on-resume", action="store_true")
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
@@ -72,6 +73,8 @@ def main():
     ]
     if args.smoke_validation_limit:
         command += ["--smoke-validation-limit", str(args.smoke_validation_limit)]
+    if args.validate_on_resume:
+        command += ["--validate-on-resume"]
     result = subprocess.run(
         command, cwd=root, check=True, capture_output=True, text=True
     )

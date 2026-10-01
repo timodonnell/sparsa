@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--gpus", type=int, default=8)
     parser.add_argument("--gpu-type", default="H100")
     parser.add_argument("--n-rollouts", type=int, default=100)
+    parser.add_argument("--rollout-batch", type=int, default=2)
     parser.add_argument("--validation-limit", type=int, default=0)
     parser.add_argument("--rollout-seed", type=int, default=20260925)
     parser.add_argument("--self-condition-guidance", type=float, default=1.0)
@@ -65,7 +66,7 @@ def main():
         "--n-rollouts",
         str(args.n_rollouts),
         "--rollout-batch",
-        "4",
+        str(args.rollout_batch),
         "--rollout-seed",
         str(args.rollout_seed),
         "--self-condition-guidance",
