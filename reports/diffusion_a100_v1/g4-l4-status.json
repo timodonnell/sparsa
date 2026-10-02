@@ -1,0 +1,220 @@
+{
+  "observed_utc": "2026-10-02T01:58:43.275437+00:00",
+  "node_label": "a100-2",
+  "service": "sparsa-g4-l4-s23",
+  "service_status": [
+    "Result=success",
+    "NRestarts=0",
+    "ActiveState=active",
+    "SubState=running"
+  ],
+  "latest_checkpoint": {
+    "step": 10,
+    "checkpoint": "/home/ubuntu/sparsa-runs/g4-l4-s23-300k/checkpoints/step-10.pt"
+  },
+  "checkpoint_bytes": 4950420518,
+  "world_size": 8,
+  "parameters": 309359620,
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch_version": "2.10.0+cu128",
+  "started_utc": "2026-10-02T01:56:11Z",
+  "source_counts": {
+    "afdb": 2067,
+    "esm": 3338
+  },
+  "training_config": {
+    "seed": 23,
+    "model": {
+      "sequence_dim": 1024,
+      "sequence_layers": 24,
+      "heads": 16,
+      "pair_dim": 256,
+      "triangle_dim": 256,
+      "pair_attention_heads": 8,
+      "pair_attention_chunk": 32,
+      "pair_outer_rank": 128,
+      "transition_expansion": 4,
+      "diffusion_steps": 8,
+      "inner_loops": 4,
+      "untied_cells": 1,
+      "self_conditioning": false,
+      "dropout": 0.0,
+      "gradient_checkpointing": true
+    },
+    "contact_priors": [
+      0.025,
+      0.016,
+      0.005
+    ],
+    "logical_batch_size": 16,
+    "batch_size": 8,
+    "crop": 384,
+    "workers": 2,
+    "steps": 300000,
+    "warmup": 15000,
+    "schedule": "wsd",
+    "schedule_steps": 300000,
+    "decay_start": 240000,
+    "lr": 0.0002,
+    "weight_decay": 0.01,
+    "pos_weight": 4.0,
+    "ranking_weight": 0.05,
+    "ema_decay": 0.999,
+    "grad_clip": 1.0,
+    "afdb_probability": 0.059522,
+    "checkpoint_every": 1000,
+    "keep_recovery_checkpoints": 3,
+    "log_every": 50,
+    "validation_rollouts": 100,
+    "rollout_batch": 1,
+    "rollout_seed": 20260925,
+    "rollout_temperature": 1.0,
+    "data_root": "/home/ubuntu/sparsa-data/teachers",
+    "execution_backend": "dedicated",
+    "keep_checkpoint_every": 10000,
+    "extra_checkpoint_steps": [
+      10,
+      100
+    ]
+  },
+  "evaluation_policy": {
+    "metric_version": "fixed-r-v2",
+    "oracle_ranking": "final_denoiser_probability_all_eligible_pairs",
+    "consensus_ranking": "sampled_contact_frequency_all_eligible_pairs",
+    "probability_ensemble_ranking": "mean_final_denoiser_probability",
+    "precision_denominator": "ground_truth_contacts_in_resolved_range",
+    "tie_break": "ascending_residue_pair",
+    "zero_ground_truth": "undefined_excluded_from_macro_average",
+    "every_steps": 10000,
+    "split": "eval-val",
+    "n_rollouts": 100,
+    "rollout_seed": 20260925,
+    "self_condition_guidance": 1.0,
+    "held_out_used": false
+  },
+  "code_sha256": {
+    "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+    "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+    "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+    "sparsa/diffusion.py": "63d96629b765634b81d1914059599adee4e1a28fae0e7f8632cf6239efd928ed",
+    "sparsa/eval_diffusion_checkpoint.py": "e53d43bb22ed9b24e3c55b374b77e8ad4cace1d9d75c65acbc711c8243f3c528",
+    "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+    "sparsa/evaluate_diffusion.py": "659f7e085f198103fd06ae17be57ee950ddc4e164ef998134b0a6671d82756ae",
+    "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+    "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+    "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+    "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+    "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+    "sparsa/train_diffusion.py": "bd7a1b58da60e890ee762dc3d1bb0e29b2455be4ae855e6e7763a10e110581f3",
+    "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+  },
+  "benchmark_sha256": {
+    "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+    "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5",
+    "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+    "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+    "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+    "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861"
+  },
+  "data_state": [
+    {
+      "rank": 0,
+      "data_digest": "95df0e9d5cc6ff63d373400aae6196b9cee62b560ecf559bfb22384165474b92",
+      "data_counts": {
+        "residues": 34802,
+        "positive_pairs": 28175,
+        "proteins": 160,
+        "afdb": 9,
+        "esm": 151
+      }
+    },
+    {
+      "rank": 1,
+      "data_digest": "7c7e7b9f92177dfa627f46088940ea227a6bc9882a937e975f7753a46c75abf1",
+      "data_counts": {
+        "residues": 33973,
+        "positive_pairs": 26422,
+        "proteins": 160,
+        "afdb": 9,
+        "esm": 151
+      }
+    },
+    {
+      "rank": 2,
+      "data_digest": "1209cf988727194c8b8377696e2e27b07ae276a292465678243c3656849ff0dd",
+      "data_counts": {
+        "residues": 34604,
+        "positive_pairs": 26901,
+        "proteins": 160,
+        "afdb": 11,
+        "esm": 149
+      }
+    },
+    {
+      "rank": 3,
+      "data_digest": "149f17fc8afbef5c525a7400aaf6b09c07de5b08afeafefcac3a271ae211684c",
+      "data_counts": {
+        "residues": 33827,
+        "positive_pairs": 26957,
+        "proteins": 160,
+        "afdb": 11,
+        "esm": 149
+      }
+    },
+    {
+      "rank": 4,
+      "data_digest": "9a6dbdf1f9c1f4049384564c94a95019ca3e2051f28744403cb7d3e7a9957e95",
+      "data_counts": {
+        "residues": 33466,
+        "positive_pairs": 26926,
+        "proteins": 160,
+        "afdb": 6,
+        "esm": 154
+      }
+    },
+    {
+      "rank": 5,
+      "data_digest": "74c4a6239e2201926f9f68db6a402ff1962eb02d7de548faf1c2922806bfbfc3",
+      "data_counts": {
+        "residues": 33857,
+        "positive_pairs": 26446,
+        "proteins": 160,
+        "afdb": 8,
+        "esm": 152
+      }
+    },
+    {
+      "rank": 6,
+      "data_digest": "76f2d2a112ddfe075ca97ceb10c5f27e29366ce18ce57eb773962c5c163045b1",
+      "data_counts": {
+        "residues": 34743,
+        "positive_pairs": 27024,
+        "proteins": 160,
+        "afdb": 6,
+        "esm": 154
+      }
+    },
+    {
+      "rank": 7,
+      "data_digest": "9a9e339bdda9b53b1936aa9589ff07ad348f80959f04bff1faa70fda5a144416",
+      "data_counts": {
+        "residues": 35197,
+        "positive_pairs": 28232,
+        "proteins": 160,
+        "afdb": 9,
+        "esm": 151
+      }
+    }
+  ],
+  "gpus": [
+    "0, NVIDIA A100-SXM4-80GB, 100 %, 62755 MiB",
+    "1, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
+    "2, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB",
+    "3, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
+    "4, NVIDIA A100-SXM4-80GB, 100 %, 59777 MiB",
+    "5, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
+    "6, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
+    "7, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB"
+  ],
+  "held_out_used": false
+}

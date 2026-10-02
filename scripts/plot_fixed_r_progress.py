@@ -20,6 +20,10 @@ from plot_diffusion_progress import LABELS
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "reports/diffusion_fixed_r"
+LABELS = LABELS | {
+    "g4-u4": ("G4-U4", "#00868b", "v"),
+    "g4-l4": ("G4-L4", "#65503e", "X"),
+}
 
 
 def collect():

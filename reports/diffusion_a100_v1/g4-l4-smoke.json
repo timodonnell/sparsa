@@ -1,0 +1,192 @@
+{
+  "node_label": "a100-2",
+  "source_commit": "6a95e8428364dc558a36eb9b2c817670cf7325a0",
+  "world_size": 8,
+  "resume_from_step": 2,
+  "resumed_through_step": 4,
+  "all_rank_data_digests_match": true,
+  "all_rank_data_counts_match": true,
+  "initial_training": [
+    {
+      "step": 1,
+      "loss": 0.40118443965911865,
+      "grad_norm": 0.37299129366874695,
+      "lr": 0.0002,
+      "seconds": 10.850738619003096,
+      "seconds_per_step": 10.850738619003096,
+      "examples": 128,
+      "peak_gpu_gb": 51.991865158081055,
+      "timestep_counts": [
+        17.0,
+        17.0,
+        17.0,
+        9.0,
+        20.0,
+        10.0,
+        23.0,
+        15.0
+      ],
+      "rank0_data_digest": "caca1de10c63cce9f3c00096b9b677727bbd63cb6f4b82796868ab39a8315884",
+      "rank0_data_counts": {
+        "residues": 2868,
+        "positive_pairs": 2404,
+        "proteins": 16,
+        "afdb": 1,
+        "esm": 15
+      }
+    },
+    {
+      "step": 2,
+      "loss": 0.4579293429851532,
+      "grad_norm": 2.834357976913452,
+      "lr": 0.0002,
+      "seconds": 20.65679512800125,
+      "seconds_per_step": 9.806056508998154,
+      "examples": 256,
+      "peak_gpu_gb": 54.29876947402954,
+      "timestep_counts": [
+        19.0,
+        12.0,
+        15.0,
+        22.0,
+        20.0,
+        13.0,
+        13.0,
+        14.0
+      ],
+      "rank0_data_digest": "6e67aca5c176d7e4181f53957931e9a92b14fae41f13d048b66914f4a1070312",
+      "rank0_data_counts": {
+        "residues": 6847,
+        "positive_pairs": 5628,
+        "proteins": 32,
+        "afdb": 3,
+        "esm": 29
+      }
+    },
+    {
+      "step": 3,
+      "loss": 0.42198383808135986,
+      "grad_norm": 0.5997379422187805,
+      "lr": 0.0002,
+      "seconds": 45.007019397002296,
+      "seconds_per_step": 24.350224269001046,
+      "examples": 384,
+      "peak_gpu_gb": 54.29876947402954,
+      "timestep_counts": [
+        18.0,
+        12.0,
+        15.0,
+        13.0,
+        13.0,
+        15.0,
+        24.0,
+        18.0
+      ],
+      "rank0_data_digest": "647bddc312eeaf19527809189018c3a4c4a662c85d79bd0125e75e92d10558c3",
+      "rank0_data_counts": {
+        "residues": 10371,
+        "positive_pairs": 8570,
+        "proteins": 48,
+        "afdb": 4,
+        "esm": 44
+      }
+    },
+    {
+      "step": 4,
+      "loss": 0.3829250633716583,
+      "grad_norm": 0.5060497522354126,
+      "lr": 0.0002,
+      "seconds": 54.808550526002364,
+      "seconds_per_step": 9.801531129000068,
+      "examples": 512,
+      "peak_gpu_gb": 54.29921627044678,
+      "timestep_counts": [
+        20.0,
+        15.0,
+        12.0,
+        12.0,
+        11.0,
+        18.0,
+        20.0,
+        20.0
+      ],
+      "rank0_data_digest": "6db80bf7a9d57968c4c4284dd29e1daa949c36a75850a60daa010eaac7dbc1eb",
+      "rank0_data_counts": {
+        "residues": 14059,
+        "positive_pairs": 11361,
+        "proteins": 64,
+        "afdb": 5,
+        "esm": 59
+      }
+    }
+  ],
+  "resumed_training": [
+    {
+      "step": 3,
+      "loss": 0.42198383808135986,
+      "grad_norm": 0.5997379422187805,
+      "lr": 0.0002,
+      "seconds": 11.063401467999938,
+      "seconds_per_step": 11.063401467999938,
+      "examples": 384,
+      "peak_gpu_gb": 54.29632616043091,
+      "timestep_counts": [
+        18.0,
+        12.0,
+        15.0,
+        13.0,
+        13.0,
+        15.0,
+        24.0,
+        18.0
+      ],
+      "rank0_data_digest": "647bddc312eeaf19527809189018c3a4c4a662c85d79bd0125e75e92d10558c3",
+      "rank0_data_counts": {
+        "residues": 10371,
+        "positive_pairs": 8570,
+        "proteins": 48,
+        "afdb": 4,
+        "esm": 44
+      }
+    },
+    {
+      "step": 4,
+      "loss": 0.3829230070114136,
+      "grad_norm": 0.5060741901397705,
+      "lr": 0.0002,
+      "seconds": 20.852392862998386,
+      "seconds_per_step": 9.788991394998448,
+      "examples": 512,
+      "peak_gpu_gb": 54.29749345779419,
+      "timestep_counts": [
+        20.0,
+        15.0,
+        12.0,
+        12.0,
+        11.0,
+        18.0,
+        20.0,
+        20.0
+      ],
+      "rank0_data_digest": "6db80bf7a9d57968c4c4284dd29e1daa949c36a75850a60daa010eaac7dbc1eb",
+      "rank0_data_counts": {
+        "residues": 14059,
+        "positive_pairs": 11361,
+        "proteins": 64,
+        "afdb": 5,
+        "esm": 59
+      }
+    }
+  ],
+  "evaluation_metric_version": "fixed-r-v2",
+  "evaluation_smoke_proteins": 1,
+  "evaluation_smoke_rollouts": 2,
+  "evaluation_smoke_passed": true,
+  "longest_validation_smoke": {
+    "length": 761,
+    "rollouts": 2,
+    "passed": true,
+    "wall_seconds": 16.524685911001143,
+    "peak_allocated_gib": 7.557129383087158
+  }
+}

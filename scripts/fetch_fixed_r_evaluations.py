@@ -1,4 +1,4 @@
-"""Recover only versioned fixed-validation metrics via a live project Iris pod."""
+"""Recover versioned fixed-validation metrics from Iris or a dedicated node."""
 
 import argparse
 import io
@@ -12,16 +12,9 @@ import pandas as pd
 from sparsa.data import benchmark
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--pod", required=True)
-    parser.add_argument(
-        "--kubeconfig", default=str(Path.home() / ".kube/coreweave-iris-rno2a")
-    )
-    args = parser.parse_args()
+def fetch_iris(args, report):
     if not args.pod.startswith("iris-bizon-sparsa-"):
         raise ValueError("Expected our own project task")
-    report = Path("reports/diffusion_fixed_r")
     runs = json.loads((report / "restarts-20261001.json").read_text())["runs"]
     configs = [
         {"model": r["model"], "root": r["output"], "automatic": True} for r in runs
@@ -67,7 +60,49 @@ print(json.dumps(result))
     result = subprocess.run(
         command, check=True, capture_output=True, text=True, timeout=60
     )
-    records = json.loads(result.stdout)
+    return json.loads(result.stdout)
+
+
+def fetch_dedicated(args):
+    if not args.run_dir or not args.model:
+        raise ValueError("Dedicated recovery requires --run-dir and --model")
+    # Only the source text travels over stdin; paths are quoted Python literals,
+    # never interpolated into the remote shell command. Connection details are
+    # supplied by the caller and are not written to evaluation artifacts.
+    remote = f"""import json
+from pathlib import Path
+root=Path({args.run_dir!r})
+assert root.is_absolute() and (root/'provenance.json').is_file()
+result=[]
+for path in sorted((root/'validation-fixed-r-v2').glob('step-*.json')):
+    per=path.with_name(path.stem+'-per_protein.csv')
+    result.append({{'model':{args.model!r},'summary':json.loads(path.read_text()),'per_protein':per.read_text()}})
+print(json.dumps(result))
+"""
+    result = subprocess.run(
+        ["ssh", "--", args.host, "python3 -"],
+        input=remote,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    return json.loads(result.stdout)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--pod")
+    source.add_argument("--host", help="Dedicated node SSH destination")
+    parser.add_argument("--run-dir", help="Absolute output directory on that node")
+    parser.add_argument("--model", choices=("g4-u4", "g4-l4"))
+    parser.add_argument(
+        "--kubeconfig", default=str(Path.home() / ".kube/coreweave-iris-rno2a")
+    )
+    args = parser.parse_args()
+    report = Path("reports/diffusion_fixed_r")
+    records = fetch_dedicated(args) if args.host else fetch_iris(args, report)
     expected = {(r["dataset"], r["stem"]) for r in benchmark()}
     out = report / "milestones"
     out.mkdir(exist_ok=True)
