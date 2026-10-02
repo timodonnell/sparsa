@@ -1,0 +1,49 @@
+{
+  "observed_utc": "2026-10-02T12:05:17.426146+00:00",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v2-g2-7c750687-29-d413946d84d3a870",
+      "created": "2026-10-02T11:52:49Z",
+      "latest_logged_step": 270400,
+      "saved_step": 270000,
+      "latest_evaluation_step": 270000,
+      "oracle_r_precision": 0.3555466399040389,
+      "consensus_r_precision": 0.36875423381087424
+    },
+    {
+      "model": "g2-wide-sc2",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v2-g2-3de9ce45-31-77f6de2a6ce4264c",
+      "created": "2026-10-02T10:46:29Z",
+      "latest_logged_step": 163300,
+      "saved_step": 160000,
+      "latest_evaluation_step": 160000,
+      "oracle_r_precision": 0.34761071463132,
+      "consensus_r_precision": 0.33372991651031225
+    },
+    {
+      "model": "g2-rsc",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v3-g2-3b798508-26-442f092c0c06440d",
+      "created": "2026-10-02T11:52:49Z",
+      "latest_logged_step": 40300,
+      "saved_step": 40000,
+      "latest_evaluation_step": 40000,
+      "oracle_r_precision": 0.27225794537412296,
+      "consensus_r_precision": 0.24670135975466342
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v3-g3-0dd24233-36-589cf41ceaaae318",
+      "created": "2026-10-02T11:52:49Z",
+      "latest_logged_step": 25100,
+      "saved_step": 25000,
+      "latest_evaluation_step": 25000,
+      "oracle_r_precision": 0.2711346566718876,
+      "consensus_r_precision": 0.24659883675605904
+    }
+  ]
+}

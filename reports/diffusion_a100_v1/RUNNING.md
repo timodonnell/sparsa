@@ -1,14 +1,15 @@
 # Dedicated A100 run status
 
 Both production runs launched **October 2, 2026 at 01:55:55 UTC**
-(October 1 at 9:55:55 p.m. ET). At 01:58:43 UTC both services were active,
-with zero restarts and durable step-10 checkpoints. All sixteen GPUs were
+(October 1 at 9:55:55 p.m. ET). At **12:02 UTC / 8:02 a.m. ET on October 2**,
+both services were active, with zero restarts, logs through step 3,700 and
+durable step-3,000 checkpoints. All sixteen GPUs were
 allocated to training. The [plan](PLAN.md) describes the scientific comparison.
 
 | Arm | Parameters | Hardware | Service | Latest saved step |
 |---|---:|---|---|---:|
-| G4-U4 | 315,297,028 | a100-1: 8 A100-SXM4-80GB | `sparsa-g4-u4-s23` | 10 |
-| G4-L4 | 309,359,620 | a100-2: 8 A100-SXM4-80GB | `sparsa-g4-l4-s23` | 10 |
+| G4-U4 | 315,297,028 | a100-1: 8 A100-SXM4-80GB | `sparsa-g4-u4-s23` | 3,000 |
+| G4-L4 | 309,359,620 | a100-2: 8 A100-SXM4-80GB | `sparsa-g4-l4-s23` | 3,000 |
 
 U4 has four independent triangle blocks; L4 reuses one block four times.
 Both use a 24-layer, width-1024 sequence encoder, width-256 pairs, eight reverse
@@ -20,9 +21,27 @@ Training uses the complete local teacher inventory: 2,067 AFDB and 3,338 ESM
 Parquet files, totaling 139,371,683,675 bytes. Footer counts are 3,963,003 and
 65,553,178 document rows, respectively; these are **not unique-protein counts**.
 Size checks, download-time content hashes and readable footers agree on both
-nodes. Production provenance confirms no shard limit. At step 10, each run had
-consumed 1,280 crops, with matching per-rank data digests and source counts
-between arms.
+nodes. Production provenance confirms no shard limit. At logged step 3,700,
+each run had consumed **473,600 crops**. Saved step-3,000 checkpoints have
+matching per-rank data digests and source counts between arms.
+
+## October 2 morning update
+
+Both runs have trained uninterrupted for about ten hours, with no logged
+tracebacks, OOMs or non-finite gradient failures. Both remain in the 15k-step
+learning-rate warmup. Loss is the teacher training objective, not experimental
+R-precision; it does not establish an architecture winner.
+
+| Arm | Latest logged step | Latest loss | Mean of last 10 logged losses | Median recent seconds / step |
+|---|---:|---:|---:|---:|
+| G4-U4 | 3,700 | 0.159754 | 0.159904 | 9.759 |
+| G4-L4 | 3,700 | 0.158821 | 0.159511 | 9.770 |
+
+The first logged losses at step 50 were 0.385112 / 0.373878, respectively.
+Neither run has a completed full validation. At current throughput they should
+reach 10k around **05:10 UTC / 1:10 a.m. ET on October 3**, approximately 17 hours
+after this check, followed by evaluation time. The 300k horizon is unchanged.
+Evidence: `training-progress-20261002.json` and the refreshed status snapshots.
 
 ## Launch verification
 

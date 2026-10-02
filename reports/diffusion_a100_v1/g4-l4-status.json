@@ -1,5 +1,5 @@
 {
-  "observed_utc": "2026-10-02T01:58:43.275437+00:00",
+  "observed_utc": "2026-10-02T12:01:17.214862+00:00",
   "node_label": "a100-2",
   "service": "sparsa-g4-l4-s23",
   "service_status": [
@@ -9,10 +9,10 @@
     "SubState=running"
   ],
   "latest_checkpoint": {
-    "step": 10,
-    "checkpoint": "/home/ubuntu/sparsa-runs/g4-l4-s23-300k/checkpoints/step-10.pt"
+    "step": 3000,
+    "checkpoint": "/home/ubuntu/sparsa-runs/g4-l4-s23-300k/checkpoints/step-3000.pt"
   },
-  "checkpoint_bytes": 4950420518,
+  "checkpoint_bytes": 4950421094,
   "world_size": 8,
   "parameters": 309359620,
   "gpu": "NVIDIA A100-SXM4-80GB",
@@ -119,102 +119,102 @@
   "data_state": [
     {
       "rank": 0,
-      "data_digest": "95df0e9d5cc6ff63d373400aae6196b9cee62b560ecf559bfb22384165474b92",
+      "data_digest": "b6051f4bb4ec945881c04186658e3495faa36b9b9ab3c20fd9ef9175172485b1",
       "data_counts": {
-        "residues": 34802,
-        "positive_pairs": 28175,
-        "proteins": 160,
-        "afdb": 9,
-        "esm": 151
+        "residues": 10405385,
+        "positive_pairs": 8265175,
+        "proteins": 48000,
+        "afdb": 2912,
+        "esm": 45088
       }
     },
     {
       "rank": 1,
-      "data_digest": "7c7e7b9f92177dfa627f46088940ea227a6bc9882a937e975f7753a46c75abf1",
+      "data_digest": "922ad148c2d32657c8ee3c1e935e379ea40c0bcdb10c7a2f0f155cd4b2c40d3a",
       "data_counts": {
-        "residues": 33973,
-        "positive_pairs": 26422,
-        "proteins": 160,
-        "afdb": 9,
-        "esm": 151
+        "residues": 10362875,
+        "positive_pairs": 8223905,
+        "proteins": 48000,
+        "afdb": 2801,
+        "esm": 45199
       }
     },
     {
       "rank": 2,
-      "data_digest": "1209cf988727194c8b8377696e2e27b07ae276a292465678243c3656849ff0dd",
+      "data_digest": "90324b86f60012449e3291facdfed62cb4bedbc7b143c9beaa2d6439fb6391fd",
       "data_counts": {
-        "residues": 34604,
-        "positive_pairs": 26901,
-        "proteins": 160,
-        "afdb": 11,
-        "esm": 149
+        "residues": 10442756,
+        "positive_pairs": 8284597,
+        "proteins": 48000,
+        "afdb": 2854,
+        "esm": 45146
       }
     },
     {
       "rank": 3,
-      "data_digest": "149f17fc8afbef5c525a7400aaf6b09c07de5b08afeafefcac3a271ae211684c",
+      "data_digest": "648c7c7ac7c21bc06a23880a95f845c9583d4753d36f9e8c29f668895393cc11",
       "data_counts": {
-        "residues": 33827,
-        "positive_pairs": 26957,
-        "proteins": 160,
-        "afdb": 11,
-        "esm": 149
+        "residues": 10342625,
+        "positive_pairs": 8215386,
+        "proteins": 48000,
+        "afdb": 2817,
+        "esm": 45183
       }
     },
     {
       "rank": 4,
-      "data_digest": "9a6dbdf1f9c1f4049384564c94a95019ca3e2051f28744403cb7d3e7a9957e95",
+      "data_digest": "20ed50faca90c3f262ba3955449045e7871c4e1f245d5aa9a992ae5fe055dba1",
       "data_counts": {
-        "residues": 33466,
-        "positive_pairs": 26926,
-        "proteins": 160,
-        "afdb": 6,
-        "esm": 154
+        "residues": 10407164,
+        "positive_pairs": 8279856,
+        "proteins": 48000,
+        "afdb": 2848,
+        "esm": 45152
       }
     },
     {
       "rank": 5,
-      "data_digest": "74c4a6239e2201926f9f68db6a402ff1962eb02d7de548faf1c2922806bfbfc3",
+      "data_digest": "4d0f1acda5588939f5147ef62f4814992281d62b5ffd9eeb52892a734a496ed8",
       "data_counts": {
-        "residues": 33857,
-        "positive_pairs": 26446,
-        "proteins": 160,
-        "afdb": 8,
-        "esm": 152
+        "residues": 10470575,
+        "positive_pairs": 8303809,
+        "proteins": 48000,
+        "afdb": 2948,
+        "esm": 45052
       }
     },
     {
       "rank": 6,
-      "data_digest": "76f2d2a112ddfe075ca97ceb10c5f27e29366ce18ce57eb773962c5c163045b1",
+      "data_digest": "d5663600d0af10246a899b13da5d2da15f04dd6cbb5cce0155d47a2428ba5372",
       "data_counts": {
-        "residues": 34743,
-        "positive_pairs": 27024,
-        "proteins": 160,
-        "afdb": 6,
-        "esm": 154
+        "residues": 10414228,
+        "positive_pairs": 8261816,
+        "proteins": 48000,
+        "afdb": 2815,
+        "esm": 45185
       }
     },
     {
       "rank": 7,
-      "data_digest": "9a9e339bdda9b53b1936aa9589ff07ad348f80959f04bff1faa70fda5a144416",
+      "data_digest": "3625f47f102c99212d395e4d7e811b81dab270f3b45f9fd4331375f3080e7114",
       "data_counts": {
-        "residues": 35197,
-        "positive_pairs": 28232,
-        "proteins": 160,
-        "afdb": 9,
-        "esm": 151
+        "residues": 10399769,
+        "positive_pairs": 8232683,
+        "proteins": 48000,
+        "afdb": 2864,
+        "esm": 45136
       }
     }
   ],
   "gpus": [
     "0, NVIDIA A100-SXM4-80GB, 100 %, 62755 MiB",
-    "1, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
+    "1, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB",
     "2, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB",
-    "3, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
+    "3, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB",
     "4, NVIDIA A100-SXM4-80GB, 100 %, 59777 MiB",
-    "5, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
-    "6, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB",
-    "7, NVIDIA A100-SXM4-80GB, 100 %, 59961 MiB"
+    "5, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB",
+    "6, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB",
+    "7, NVIDIA A100-SXM4-80GB, 100 %, 59965 MiB"
   ],
   "held_out_used": false
 }

@@ -82,6 +82,44 @@ all scores exactly.
 
 ![Fixed-R oracle and frequency-consensus comparisons](figures/r_precision_by_step.png)
 
+### October 2, 12:05 UTC update (8:05 a.m. ET)
+
+Four additional complete fixed-R evaluations have arrived. There are now ten
+corrected oracle checkpoints and 49 valid consensus checkpoints in the plot.
+All evaluations below use 97 validation proteins and 100 rollouts.
+
+| Model | Latest evaluated step | Probability oracle @100 | Frequency consensus |
+|---|---:|---:|---:|
+| G1-long | 300k | 0.301375 | 0.314962 |
+| G2-wide | 270k | **0.355547** | **0.368754** |
+| G2-wide-SC | 160k | 0.347611 | 0.333730 |
+| G2-RSC | 40k | 0.272258 | 0.246701 |
+| G3-balanced-RSC | 25k | 0.271135 | 0.246599 |
+
+G2-wide remains essentially flat: 260k to 270k changes oracle by +0.001666,
+paired protein bootstrap 95% interval [-0.003424, 0.006764], and consensus by
+-0.000418 [-0.005526, 0.004650]. SC is slightly lower at 160k than 155k,
+with intervals spanning zero for both metrics. These checks do not demonstrate
+a meaningful late-training improvement for either model.
+
+G2-RSC improves from 30k to 40k: oracle +0.016646 [0.008052, 0.025201] and
+consensus +0.014816 [0.006071, 0.023558]. It is learning under corrected scoring,
+but remains well below the longer-trained wide model. Intervals use 100,000
+paired protein resamples (seed 20261002); they condition on one training seed
+and rollout bank. The 35k result is an additional resume evaluation; regular
+evaluations remain every 10k steps.
+
+All four Iris pods were running at the check. Latest logged steps were 270.4k /
+163.3k / 40.3k / 25.1k for wide / SC / RSC / G3; saved steps were 270k / 160k /
+40k / 25k. G3 has no new durable training milestone or evaluation since the
+previous update. The [two new dedicated A100 runs](../diffusion_a100_v1/RUNNING.md)
+have reached logged step 3,700 each without restarts; their first full validation
+is pending step 10k. They do not yet appear as accuracy curves.
+
+Evidence: `training-status-20261002-am.json`, `comparison-20261002-am.json`,
+and four new summary/per-protein milestone pairs. Matched MarinFold references
+remain 0.524309 oracle and 0.552634 consensus.
+
 ### October 2, 01:27 UTC update (October 1, 9:27 p.m. ET)
 
 Six full corrected evaluations are now available, covering all five models.

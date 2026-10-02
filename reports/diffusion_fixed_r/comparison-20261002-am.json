@@ -1,0 +1,58 @@
+{
+  "split": "eval-val",
+  "held_out_used": false,
+  "metric_version": "fixed-r-v2",
+  "seed": 20261002,
+  "bootstrap_resamples": 100000,
+  "caveat": "Paired protein uncertainty only, conditional on a single training seed and rollout bank.",
+  "comparisons": {
+    "g2-wide_260000_to_270000": {
+      "oracle_r_precision": {
+        "change": 0.0016657313635328448,
+        "paired_bootstrap_95_ci": [
+          -0.0034235411020324884,
+          0.006763940853670333
+        ]
+      },
+      "consensus_r_precision": {
+        "change": -0.0004177119346324087,
+        "paired_bootstrap_95_ci": [
+          -0.005526062486869263,
+          0.004650498706199572
+        ]
+      }
+    },
+    "g2-wide-sc2_155000_to_160000": {
+      "oracle_r_precision": {
+        "change": -0.0030194142041052303,
+        "paired_bootstrap_95_ci": [
+          -0.008670848589488394,
+          0.0022506038492704017
+        ]
+      },
+      "consensus_r_precision": {
+        "change": -0.0055277023745404445,
+        "paired_bootstrap_95_ci": [
+          -0.011400159204407095,
+          0.00048444792730401704
+        ]
+      }
+    },
+    "g2-rsc_30000_to_40000": {
+      "oracle_r_precision": {
+        "change": 0.016646326678810382,
+        "paired_bootstrap_95_ci": [
+          0.008052450290652732,
+          0.02520091883454598
+        ]
+      },
+      "consensus_r_precision": {
+        "change": 0.014816065663924575,
+        "paired_bootstrap_95_ci": [
+          0.006071377508932489,
+          0.023557780324151727
+        ]
+      }
+    }
+  }
+}
