@@ -90,7 +90,7 @@ def test_all_denoisers_backpropagate_through_every_parameter():
     tokens = example_tokens()
     noisy = torch.zeros_like(tokens[:, :, None] * tokens[:, None, :], dtype=torch.bool)
     timestep = torch.tensor([2, 3])
-    for config in (tiny(1, 1), tiny(2, 1), tiny(1, 2)):
+    for config in (tiny(1, 1), tiny(2, 1), tiny(1, 2), tiny(4, 1), tiny(1, 4)):
         model = TriangleDiffusionModel(config)
         output = model(tokens, noisy, timestep)
         output.square().mean().backward()

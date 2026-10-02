@@ -1,0 +1,20 @@
+{
+  "sources": {
+    "afdb": {
+      "files": 2067,
+      "rows": 3963003,
+      "bytes": 12128381115
+    },
+    "esm": {
+      "files": 3338,
+      "rows": 65553178,
+      "bytes": 127243302560
+    }
+  },
+  "files": 5405,
+  "bytes": 139371683675,
+  "public_manifest_sha256": "6bd9c2b63b1913778ec0efe1136e6b3d430bcb257f77a476527764a1d66d754d",
+  "content_receipts_sha256": "c3c55f76666a51d65b64ca0bc7730e64a86e9fe6a5632c0bb45129d20fca419c",
+  "verification": "All files match source inventory sizes; SHA256 receipts computed during download; all Parquet footers readable. Row counts are documents, not verified unique proteins.",
+  "node_label": "a100-1"
+}

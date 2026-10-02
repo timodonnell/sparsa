@@ -40,9 +40,20 @@ from sparsa.train import contact_loss, contact_ranking_loss, storage
 
 def write_bytes(uri, content):
     fs, path = storage(uri)
-    if "://" not in uri:
-        Path(path).parent.mkdir(parents=True, exist_ok=True)
-    fs.pipe_file(path, content)
+    if "://" not in uri or uri.startswith("file://"):
+        target = Path(path)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        temporary = target.with_name(f".{target.name}.{os.getpid()}.partial")
+        try:
+            with temporary.open("wb") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(temporary, target)
+        finally:
+            temporary.unlink(missing_ok=True)
+    else:
+        fs.pipe_file(path, content)
 
 
 def write_json(uri, value):
@@ -65,7 +76,7 @@ def write_frame(uri, rows):
     write_bytes(uri, pd.DataFrame(rows).to_csv(index=False).encode())
 
 
-def prune_checkpoints(out, keep=2):
+def prune_checkpoints(out, keep=2, keep_every=0):
     fs, root = storage(out)
     paths = []
     for path in fs.glob(root + "/checkpoints/step-*.pt"):
@@ -74,8 +85,9 @@ def prune_checkpoints(out, keep=2):
         except ValueError:
             continue
         paths.append((step, path))
-    for _, path in sorted(paths, reverse=True)[keep:]:
-        fs.rm(path)
+    for step, path in sorted(paths, reverse=True)[keep:]:
+        if not keep_every or step % keep_every:
+            fs.rm(path)
 
 
 def validation_due(step, steps, every, complete=False):
@@ -177,7 +189,7 @@ def main():
     local_rank = int(os.getenv("LOCAL_RANK", "0"))
     world = int(os.getenv("WORLD_SIZE", "1"))
     if not torch.cuda.is_available():
-        raise RuntimeError("Diffusion training requires an Iris GPU")
+        raise RuntimeError("Diffusion training requires a CUDA GPU")
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
     torch.set_num_threads(4)
@@ -300,7 +312,10 @@ def main():
                 for path in sorted(Path("sparsa").rglob("*.py"))
             },
             "iris_job": os.getenv("IRIS_JOB_ID"),
-            "priority": "batch",
+            "execution_backend": cfg.get("execution_backend", "iris"),
+            "priority": "dedicated"
+            if cfg.get("execution_backend") == "dedicated"
+            else "batch",
             "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "selection_split": "eval-val",
             "held_out_used": False,
@@ -506,7 +521,11 @@ def main():
                 print(json.dumps(row), flush=True)
                 last_log = now
 
-        save_now = step % checkpoint_every == 0 or step == steps
+        save_now = (
+            step % checkpoint_every == 0
+            or step == steps
+            or step in cfg.get("extra_checkpoint_steps", ())
+        )
         if save_now:
             optimizer.zero_grad(set_to_none=True)
             local_rng = {
@@ -542,7 +561,11 @@ def main():
                 )
                 write_json(args.out + "/latest.json", {"step": step, "checkpoint": uri})
                 write_json(args.out + "/training_log.json", history)
-                prune_checkpoints(args.out, cfg.get("keep_recovery_checkpoints", 2))
+                prune_checkpoints(
+                    args.out,
+                    cfg.get("keep_recovery_checkpoints", 2),
+                    cfg.get("keep_checkpoint_every", 0),
+                )
             if world > 1:
                 dist.barrier()
 
