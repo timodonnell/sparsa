@@ -82,6 +82,40 @@ all scores exactly.
 
 ![Fixed-R oracle and frequency-consensus comparisons](figures/r_precision_by_step.png)
 
+### October 2, 17:58 UTC update (1:58 p.m. ET)
+
+Two additional complete evaluations are available: G2-wide at 275k and G2-RSC
+at 45k, both triggered by resume. Regular evaluations remain every 10k steps.
+The plot now contains 12 corrected oracle and 51 valid consensus checkpoints.
+
+| Model | Latest evaluated step | Probability oracle @100 | Frequency consensus |
+|---|---:|---:|---:|
+| G1-long | 300k | 0.301375 | 0.314962 |
+| G2-wide | 275k | **0.356665** | **0.373360** |
+| G2-wide-SC | 160k | 0.347611 | 0.333730 |
+| G2-RSC | 45k | 0.279010 | 0.252944 |
+| G3-balanced-RSC | 25k | 0.271135 | 0.246599 |
+
+Wide's 270k→275k oracle change is +0.001118, paired protein bootstrap 95%
+interval [-0.003243, 0.005681]; consensus changes +0.004606
+[0.000431, 0.009329]. This is a modest consensus gain, with little oracle
+movement. The gap to MarinFold remains 0.167644 oracle / 0.179274 consensus.
+RSC's 40k→45k point estimates increase by +0.006752 oracle and +0.006242
+consensus, though both paired intervals include zero. Its trajectory remains
+encouraging at this early exposure, with no large gap-closing result yet.
+Intervals condition on one training seed and rollout bank and use 100,000
+paired protein resamples (seed 20261002).
+
+All four Iris pods were running. Logged steps were 276.9k / 160.2k / 46.9k /
+25.6k for wide / SC / RSC / G3. Saved steps were 275k / 160k / 45k / 25k;
+SC and G3 have no new durable milestone since the morning update. SC's latest
+pod had restarted from 160k after an earlier pod logged 163.3k. The dedicated
+[A100 models](../diffusion_a100_v1/RUNNING.md) have advanced uninterrupted to
+logged step 5,850 each, with no full validation yet.
+
+Evidence: `training-status-20261002-pm.json`, `comparison-20261002-pm.json`,
+and the two new summary/per-protein milestone pairs.
+
 ### October 2, 12:05 UTC update (8:05 a.m. ET)
 
 Four additional complete fixed-R evaluations have arrived. There are now ten

@@ -1,0 +1,147 @@
+{
+  "observed_utc": "2026-10-02T17:57:29.464329+00:00",
+  "runs": [
+    {
+      "model": "g4-u4",
+      "observed_utc": "2026-10-02T17:57:29.449324+00:00",
+      "first_logged": {
+        "step": 50,
+        "loss": 0.38511231541633606,
+        "grad_norm": 0.32043322920799255,
+        "lr": 6.666666666666667e-07,
+        "seconds": 503.85779022299903,
+        "seconds_per_step": 10.07715580445998,
+        "examples": 6400,
+        "peak_gpu_gb": 54.43554973602295,
+        "timestep_counts": [
+          18.0,
+          13.0,
+          11.0,
+          20.0,
+          18.0,
+          15.0,
+          16.0,
+          17.0
+        ],
+        "rank0_data_digest": "e867f1a50aea1ef6257dc4ebf3f7f0d6d5d6d4ebe15a7201f5ce4bc190a14aa0",
+        "rank0_data_counts": {
+          "residues": 178020,
+          "positive_pairs": 141378,
+          "proteins": 800,
+          "afdb": 47,
+          "esm": 753
+        }
+      },
+      "latest_logged": {
+        "step": 5850,
+        "loss": 0.1230129674077034,
+        "grad_norm": 0.07010754197835922,
+        "lr": 7.800000000000001e-05,
+        "seconds": 57232.92421294001,
+        "seconds_per_step": 9.773081774300081,
+        "examples": 748800,
+        "peak_gpu_gb": 54.43685817718506,
+        "timestep_counts": [
+          20.0,
+          21.0,
+          20.0,
+          16.0,
+          12.0,
+          15.0,
+          15.0,
+          9.0
+        ],
+        "rank0_data_digest": "f8d9f99c14ab440c6d62cdf5dd0bda9e05424ff4649f47ddfad0bc37b5e65bfc",
+        "rank0_data_counts": {
+          "residues": 20342851,
+          "positive_pairs": 16121999,
+          "proteins": 93600,
+          "afdb": 5557,
+          "esm": 88043
+        }
+      },
+      "recent_logged_points": 10,
+      "recent_mean_loss": 0.14699079915881158,
+      "recent_median_seconds_per_step": 9.766291225220048,
+      "estimated_step_10000_utc": "2026-10-03T05:12:59.557909+00:00",
+      "completed_evaluations": [],
+      "saved_checkpoints": [
+        "step-3000.pt",
+        "step-4000.pt",
+        "step-5000.pt"
+      ],
+      "errors": []
+    },
+    {
+      "model": "g4-l4",
+      "observed_utc": "2026-10-02T17:57:29.269261+00:00",
+      "first_logged": {
+        "step": 50,
+        "loss": 0.3738783597946167,
+        "grad_norm": 0.3561593294143677,
+        "lr": 6.666666666666667e-07,
+        "seconds": 502.73251581800287,
+        "seconds_per_step": 10.054650316360057,
+        "examples": 6400,
+        "peak_gpu_gb": 54.30491876602173,
+        "timestep_counts": [
+          18.0,
+          13.0,
+          11.0,
+          20.0,
+          18.0,
+          15.0,
+          16.0,
+          17.0
+        ],
+        "rank0_data_digest": "e867f1a50aea1ef6257dc4ebf3f7f0d6d5d6d4ebe15a7201f5ce4bc190a14aa0",
+        "rank0_data_counts": {
+          "residues": 178020,
+          "positive_pairs": 141378,
+          "proteins": 800,
+          "afdb": 47,
+          "esm": 753
+        }
+      },
+      "latest_logged": {
+        "step": 5850,
+        "loss": 0.12170384079217911,
+        "grad_norm": 0.12202110886573792,
+        "lr": 7.800000000000001e-05,
+        "seconds": 57234.789615658,
+        "seconds_per_step": 9.758774749239965,
+        "examples": 748800,
+        "peak_gpu_gb": 54.305731773376465,
+        "timestep_counts": [
+          20.0,
+          21.0,
+          20.0,
+          16.0,
+          12.0,
+          15.0,
+          15.0,
+          9.0
+        ],
+        "rank0_data_digest": "f8d9f99c14ab440c6d62cdf5dd0bda9e05424ff4649f47ddfad0bc37b5e65bfc",
+        "rank0_data_counts": {
+          "residues": 20342851,
+          "positive_pairs": 16121999,
+          "proteins": 93600,
+          "afdb": 5557,
+          "esm": 88043
+        }
+      },
+      "recent_logged_points": 10,
+      "recent_mean_loss": 0.1450445182621479,
+      "recent_median_seconds_per_step": 9.76551355299991,
+      "estimated_step_10000_utc": "2026-10-03T05:12:56.150506+00:00",
+      "completed_evaluations": [],
+      "saved_checkpoints": [
+        "step-3000.pt",
+        "step-4000.pt",
+        "step-5000.pt"
+      ],
+      "errors": []
+    }
+  ]
+}

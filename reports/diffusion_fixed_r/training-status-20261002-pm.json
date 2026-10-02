@@ -1,0 +1,53 @@
+{
+  "observed_utc": "2026-10-02T17:57:41.460848+00:00",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v2-g2-7c750687-35-579c973780d0a88a",
+      "created": "2026-10-02T17:16:09Z",
+      "latest_logged_step": 276900,
+      "errors": [],
+      "saved_step": 275000,
+      "latest_evaluation_step": 275000,
+      "oracle_r_precision": 0.35666490283287744,
+      "consensus_r_precision": 0.37335979580572864
+    },
+    {
+      "model": "g2-wide-sc2",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v2-g2-3de9ce45-40-ed6613df8710c745",
+      "created": "2026-10-02T17:52:12Z",
+      "latest_logged_step": 160200,
+      "errors": [],
+      "saved_step": 160000,
+      "latest_evaluation_step": 160000,
+      "oracle_r_precision": 0.34761071463132,
+      "consensus_r_precision": 0.33372991651031225
+    },
+    {
+      "model": "g2-rsc",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v3-g2-3b798508-30-ffdeb34fcdc3fd2b",
+      "created": "2026-10-02T17:11:16Z",
+      "latest_logged_step": 46900,
+      "errors": [],
+      "saved_step": 45000,
+      "latest_evaluation_step": 45000,
+      "oracle_r_precision": 0.2790097220292025,
+      "consensus_r_precision": 0.25294376635616916
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v3-g3-0dd24233-45-d9afa024a8a571f3",
+      "created": "2026-10-02T17:16:09Z",
+      "latest_logged_step": 25600,
+      "errors": [],
+      "saved_step": 25000,
+      "latest_evaluation_step": 25000,
+      "oracle_r_precision": 0.2711346566718876,
+      "consensus_r_precision": 0.24659883675605904
+    }
+  ]
+}

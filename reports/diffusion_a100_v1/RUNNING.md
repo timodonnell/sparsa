@@ -1,15 +1,15 @@
 # Dedicated A100 run status
 
 Both production runs launched **October 2, 2026 at 01:55:55 UTC**
-(October 1 at 9:55:55 p.m. ET). At **12:02 UTC / 8:02 a.m. ET on October 2**,
-both services were active, with zero restarts, logs through step 3,700 and
-durable step-3,000 checkpoints. All sixteen GPUs were
+(October 1 at 9:55:55 p.m. ET). At **17:58 UTC / 1:58 p.m. ET on October 2**,
+both services were active, with zero restarts, logs through step 5,850 and
+durable step-5,000 checkpoints. All sixteen GPUs were
 allocated to training. The [plan](PLAN.md) describes the scientific comparison.
 
 | Arm | Parameters | Hardware | Service | Latest saved step |
 |---|---:|---|---|---:|
-| G4-U4 | 315,297,028 | a100-1: 8 A100-SXM4-80GB | `sparsa-g4-u4-s23` | 3,000 |
-| G4-L4 | 309,359,620 | a100-2: 8 A100-SXM4-80GB | `sparsa-g4-l4-s23` | 3,000 |
+| G4-U4 | 315,297,028 | a100-1: 8 A100-SXM4-80GB | `sparsa-g4-u4-s23` | 5,000 |
+| G4-L4 | 309,359,620 | a100-2: 8 A100-SXM4-80GB | `sparsa-g4-l4-s23` | 5,000 |
 
 U4 has four independent triangle blocks; L4 reuses one block four times.
 Both use a 24-layer, width-1024 sequence encoder, width-256 pairs, eight reverse
@@ -21,9 +21,28 @@ Training uses the complete local teacher inventory: 2,067 AFDB and 3,338 ESM
 Parquet files, totaling 139,371,683,675 bytes. Footer counts are 3,963,003 and
 65,553,178 document rows, respectively; these are **not unique-protein counts**.
 Size checks, download-time content hashes and readable footers agree on both
-nodes. Production provenance confirms no shard limit. At logged step 3,700,
-each run had consumed **473,600 crops**. Saved step-3,000 checkpoints have
+nodes. Production provenance confirms no shard limit. At logged step 5,850,
+each run had consumed **748,800 crops**. Saved step-5,000 checkpoints have
 matching per-rank data digests and source counts between arms.
+
+## October 2 afternoon update
+
+Both runs have trained for about sixteen hours without restarts or logged
+errors, advancing 2,150 steps since the morning check. GPU allocation remains
+eight A100s per model. Both are still in the 15k-step warmup.
+
+| Arm | Latest logged step | Latest loss | Mean of last 10 logged losses | Median recent seconds / step |
+|---|---:|---:|---:|---:|
+| G4-U4 | 5,850 | 0.123013 | 0.146991 | 9.766 |
+| G4-L4 | 5,850 | 0.121704 | 0.145045 | 9.766 |
+
+Recent mean losses have fallen from 0.159904 / 0.159511 at the morning check.
+L4 has the slightly lower teacher training loss on matched data, but no full
+validation exists yet, so this is not evidence of better contact R-precision.
+Step 10k is projected around **05:15 UTC / 1:15 a.m. ET on October 3**, roughly
+11.3 hours after this check, followed by evaluation time. Evaluation remains
+97 validation proteins × 100 rollouts; the 300k training horizon is unchanged.
+Evidence: `training-progress-20261002-pm.json` and the current status snapshots.
 
 ## October 2 morning update
 

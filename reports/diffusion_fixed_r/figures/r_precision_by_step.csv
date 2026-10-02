@@ -23,6 +23,7 @@ G2-RSC,20000,0.21171534474672699,,,,legacy_consensus_only,reports/diffusion_v3/m
 G2-RSC,30000,0.23188529409073888,0.25561161869531257,0.23708376447780724,0.14897224307496804,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-rsc-step30000-seed20260925-summary.json
 G2-RSC,35000,0.23893027639589617,0.2633245482690695,0.24398042662815805,0.14727441633723137,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-rsc-step35000-seed20260925-summary.json
 G2-RSC,40000,0.24670135975466342,0.27225794537412296,0.25072000391142524,0.14811662054542682,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-rsc-step40000-seed20260925-summary.json
+G2-RSC,45000,0.25294376635616916,0.2790097220292025,0.2579233769518648,0.15024799949150347,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-rsc-step45000-seed20260925-summary.json
 G2-wide,25000,0.236418535487595,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-step25000-seed20260925-summary.json
 G2-wide,125000,0.3314176636640992,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-step125000-seed20260925-summary.json
 G2-wide,180000,0.34987592246788224,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-step180000-seed20260925-summary.json
@@ -35,6 +36,7 @@ G2-wide,240000,0.3634777543717564,,,,legacy_consensus_only,reports/diffusion_v2/
 G2-wide,250000,0.36824238396755204,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-step250000-seed20260925-summary.json
 G2-wide,260000,0.36917194574550677,0.353880908540506,0.3725890512437175,0.2869514435179811,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-wide-step260000-seed20260925-summary.json
 G2-wide,270000,0.36875423381087424,0.3555466399040389,0.3725061475688398,0.2881489525897246,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-wide-step270000-seed20260925-summary.json
+G2-wide,275000,0.37335979580572864,0.35666490283287744,0.37759559388645847,0.2879530071437383,fixed-r-v2,reports/diffusion_fixed_r/milestones/g2-wide-step275000-seed20260925-summary.json
 G2-wide-SC,35000,0.26026472548609,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-sc2-step35000-seed20260925-summary.json
 G2-wide-SC,90000,0.3100708403055881,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-sc2-step90000-seed20260925-summary.json
 G2-wide-SC,100000,0.3184144610515499,,,,legacy_consensus_only,reports/diffusion_v2/milestones/g2-wide-sc2-step100000-seed20260925-summary.json
