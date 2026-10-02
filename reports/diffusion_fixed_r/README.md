@@ -69,8 +69,8 @@ All four active jobs were replaced at batch priority and their durable evaluatio
 policies now identify `fixed-r-v2`. They resume at G2-wide 260k, SC 150k, G2-RSC
 30k, and G3 25k, re-evaluating those checkpoints before continuing the original
 300k-step training schedules. G1 completed training; a separate batch-priority
-job re-evaluates its 300k checkpoint. At this update the full evaluations are
-pending; the one-protein GPU smoke succeeded. Job identities, submission
+job re-evaluates its 300k checkpoint. At rollout of the correction, the full
+evaluations were pending; the one-protein GPU smoke succeeded. Job identities, submission
 commands and status snapshots are recorded here and in `reports/jobs`.
 
 Historical consensus curves remain usable;
@@ -81,6 +81,58 @@ all scores exactly.
 ## Current comparisons
 
 ![Fixed-R oracle and frequency-consensus comparisons](figures/r_precision_by_step.png)
+
+### October 2, 01:27 UTC update (October 1, 9:27 p.m. ET)
+
+Six full corrected evaluations are now available, covering all five models.
+The table uses the latest completed evaluation for each model; every row uses
+97 validation proteins and 100 rollouts. All precision denominators are R.
+
+| Model | Evaluated step | Probability oracle @100 | Frequency consensus | Mean-probability ensemble | Sampled-map oracle @100 |
+|---|---:|---:|---:|---:|---:|
+| G1-long | 300k | 0.301375 | 0.314962 | 0.318721 | 0.238739 |
+| G2-wide | 260k | **0.353881** | **0.369172** | **0.372589** | **0.286951** |
+| G2-wide-SC | 155k | 0.350630 | 0.339258 | 0.340880 | 0.269945 |
+| G2-RSC | 30k | 0.255612 | 0.231885 | 0.237084 | 0.148972 |
+| G3-balanced-RSC | 25k | 0.271135 | 0.246599 | 0.249960 | 0.156521 |
+
+The corrected results do not support the previously reported RSC advantage.
+For the same G2-RSC 30k checkpoint, legacy sparse precision was 0.446965;
+correcting only the denominator gives sampled-map oracle 0.148972. Ranking all
+pairs by model probabilities gives oracle 0.255612. These are different
+readouts, and none of the legacy oracle points is included in the corrected
+panel. The best corrected oracle gap to MarinFold is 0.170428; the best
+frequency-consensus gap is 0.183462.
+
+G2-wide and SC have similar oracle scores: wide at 260k minus SC at 155k is
++0.003251, paired 95% interval [-0.008033, 0.015332]. Wide's consensus advantage
+is +0.029914 [0.017526, 0.043157]. SC changed little from 150k to 155k:
+-0.000985 oracle [-0.009181, 0.006539]. The 155k evaluation was triggered by a
+resume; the regular evaluation cadence remains 10k steps.
+
+G3 at 25k exceeds G2-RSC at 30k by +0.015523 oracle [0.002725, 0.027398]. This
+is not a matched-exposure architecture ablation. There is only one corrected
+oracle checkpoint for each RSC model, so no corrected oracle learning trend
+can yet be inferred. Intervals use 100,000 paired protein bootstrap resamples
+(seed 20261002); they do not quantify training-seed or rollout-bank uncertainty.
+
+Training is being interrupted frequently by batch-priority preemptions. Since
+the corrected jobs were submitted, Iris reports 9 / 11 / 10 / 13 preemptions
+for wide / SC / G2-RSC / G3, respectively, and zero job failures. At the status
+check G2-RSC was training at 32.7k; wide was starting a replacement pod from
+260k, while SC and G3 had pending replacement pods with 155k and 25k saved.
+G1 training and its corrected 300k evaluation both completed successfully.
+The active runs retain their original 300k-step targets and batch priority.
+
+The G1 re-evaluation used rollout batch 2 rather than its original batch 4,
+which changes random-number assignment even with the same base seed. Its
+small consensus difference from the legacy record therefore is not solely a
+scoring-code comparison. Other overlapping corrected records (wide 260k,
+SC 150k, G2-RSC 30k) preserve their earlier consensus values.
+
+Evidence: `training-status-20261002.json`, `job-status-20261002.json`,
+`comparison-20261002.json`, and the six summary/per-protein milestone pairs.
+The plot contains six corrected oracle points and 45 valid consensus points.
 
 The oracle panel excludes every legacy score. The consensus panel retains the
 valid historical measurements and uses the consensus reference, not the oracle

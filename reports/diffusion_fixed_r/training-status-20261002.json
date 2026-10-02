@@ -1,0 +1,62 @@
+{
+  "observed_utc": "2026-10-02T01:27:17.844076+00:00",
+  "metric_version": "fixed-r-v2",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+      "job_state": "running",
+      "pod_state": "Running",
+      "last_logged_step": null,
+      "saved_step": 260000,
+      "preemptions": 9,
+      "failures": 0,
+      "latest_evaluation_step": 260000,
+      "oracle_r_precision": 0.353880908540506,
+      "consensus_r_precision": 0.36917194574550677
+    },
+    {
+      "model": "g2-wide-sc2",
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "job_state": "running",
+      "pod_state": "Pending",
+      "last_logged_step": null,
+      "saved_step": 155000,
+      "preemptions": 11,
+      "failures": 0,
+      "latest_evaluation_step": 155000,
+      "oracle_r_precision": 0.3506301288354253,
+      "consensus_r_precision": 0.3392576188848527
+    },
+    {
+      "model": "g2-rsc",
+      "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "job_state": "running",
+      "pod_state": "Running",
+      "last_logged_step": 32700,
+      "saved_step": 30000,
+      "preemptions": 10,
+      "failures": 0,
+      "latest_evaluation_step": 30000,
+      "oracle_r_precision": 0.25561161869531257,
+      "consensus_r_precision": 0.23188529409073888
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-fixed-r-v2",
+      "job_state": "running",
+      "pod_state": "Pending",
+      "last_logged_step": null,
+      "saved_step": 25000,
+      "preemptions": 13,
+      "failures": 0,
+      "latest_evaluation_step": 25000,
+      "oracle_r_precision": 0.2711346566718876,
+      "consensus_r_precision": 0.24659883675605904
+    }
+  ],
+  "g1_long": {
+    "training": "completed_300000",
+    "evaluation_job_state": "succeeded"
+  }
+}
