@@ -12,7 +12,13 @@
       "new_job": "/bizon/sparsa-pairformer-v1-pf-c128-s23-300k-opt1",
       "new_service": null,
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "armed"
+      "status": "waiting",
+      "verified_utc": null,
+      "completed_utc": null,
+      "last_confirmed_checkpoint": {
+        "step": 10,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-10.pt"
+      }
     },
     {
       "model": "pf-c256",
@@ -24,7 +30,13 @@
       "new_job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-opt1",
       "new_service": null,
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "armed"
+      "status": "resumed",
+      "verified_utc": "2026-10-05T18:18:34.410379+00:00",
+      "completed_utc": null,
+      "last_confirmed_checkpoint": {
+        "step": 100,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-100.pt"
+      }
     },
     {
       "model": "pf-n128",
@@ -36,7 +48,13 @@
       "new_job": null,
       "new_service": "sparsa-pf-n128-s23-opt1",
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "armed"
+      "status": "complete",
+      "verified_utc": "2026-10-05T18:40:00.668934+00:00",
+      "completed_utc": "2026-10-05T18:45:48.893675+00:00",
+      "last_confirmed_checkpoint": {
+        "step": 10,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k/checkpoints/step-10.pt"
+      }
     },
     {
       "model": "pf-n256",
@@ -48,7 +66,14 @@
       "new_job": null,
       "new_service": "sparsa-pf-n256-s23-opt1",
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "armed"
+      "status": "waiting",
+      "verified_utc": null,
+      "completed_utc": null,
+      "last_confirmed_checkpoint": {
+        "step": 4,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-4.pt"
+      }
     }
-  ]
+  ],
+  "observed_utc": "2026-10-05T19:18:07.369644+00:00"
 }

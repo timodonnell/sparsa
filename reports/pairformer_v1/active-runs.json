@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-05T16:29:26.346449+00:00",
+  "updated_utc": "2026-10-05T18:40:05.670926+00:00",
   "campaign": "pairformer_v1",
   "previous_series_retired": true,
   "runs": [
@@ -33,17 +33,19 @@
       "parameters": 244826689,
       "target_steps": 300000,
       "world_size": 8,
-      "source_commit": "90aca06bcca50e864c762fa35cc93fa176b30658",
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
       "backend": "iris",
       "priority": "batch",
       "gpu": "H100 80GB",
-      "job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-r2",
+      "job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-opt1",
       "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k",
       "submitted_utc": "2026-10-05T16:29:13.325241+00:00",
       "original_source_commit": "11373b7c3a41263f910534a74e0ae0e53f90a9a0",
       "checkpoint_every": 100,
-      "previous_job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k",
-      "relaunch_reason": "Shorten recovery saves to 100 steps; architecture, optimizer, data and horizon preserved."
+      "previous_job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-r2",
+      "relaunch_reason": "Numerically verified attention/chunk checkpoint optimization.",
+      "restarted_from_step": 100,
+      "restart_verified_utc": "2026-10-05T18:18:34.410379+00:00"
     },
     {
       "model": "pf-n128",
@@ -54,17 +56,20 @@
       "parameters": 157211713,
       "target_steps": 300000,
       "world_size": 8,
-      "source_commit": "90aca06bcca50e864c762fa35cc93fa176b30658",
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
       "backend": "dedicated",
       "priority": "dedicated",
       "gpu": "A100-SXM4-80GB",
       "node_label": "a100-1",
-      "service": "sparsa-pf-n128-s23",
+      "service": "sparsa-pf-n128-s23-opt1",
       "output": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k",
       "submitted_utc": "2026-10-05T16:27:36.604000+00:00",
       "original_source_commit": "11373b7c3a41263f910534a74e0ae0e53f90a9a0",
       "checkpoint_every": 100,
-      "relaunch_reason": "Shorten recovery saves to 100 steps; architecture, optimizer, data and horizon preserved."
+      "relaunch_reason": "Numerically verified attention/chunk checkpoint optimization.",
+      "previous_service": "sparsa-pf-n128-s23",
+      "restarted_from_step": 4,
+      "restart_verified_utc": "2026-10-05T18:40:00.668934+00:00"
     },
     {
       "model": "pf-n256",
