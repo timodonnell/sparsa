@@ -23,6 +23,7 @@ def main():
     parser.add_argument("--unit", required=True)
     parser.add_argument("--node-label", required=True)
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
+    parser.add_argument("--pairformer-preflight", action="store_true")
     args = parser.parse_args()
     if not re.fullmatch(r"sparsa-[a-z0-9-]+", args.unit):
         raise ValueError("Expected a project-scoped service name")
@@ -46,6 +47,7 @@ def main():
         f"--property=StandardError=append:{args.out}/train.log",
         "--setenv=OMP_NUM_THREADS=4",
         "--setenv=PYTHONUNBUFFERED=1",
+        f"--setenv=PYTHONPATH={root}",
         "--setenv=NCCL_DEBUG=WARN",
         sys.executable,
         "-m",
@@ -64,6 +66,20 @@ def main():
     ]
     if args.smoke_validation_limit:
         command += ["--smoke-validation-limit", str(args.smoke_validation_limit)]
+    if args.pairformer_preflight:
+        if args.smoke_validation_limit:
+            raise ValueError("Pairformer preflight requires full validation")
+        command = command[: command.index(sys.executable) + 1] + [
+            str(root / "scripts/run_pairformer.py"),
+            "--config",
+            str(config),
+            "--out",
+            str(args.out),
+            "--gpus",
+            "8",
+            "--eval-every",
+            "10000",
+        ]
     subprocess.run(command, check=True)
     record = {
         "node_label": args.node_label,

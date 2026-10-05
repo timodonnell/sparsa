@@ -38,6 +38,17 @@ class DiffusionModelConfig:
     self_conditioning: bool = False
     dropout: float = 0.0
     gradient_checkpointing: bool = True
+    pairformer_layers: int = 0
+    pairformer_mode: str = "cached"
+    denoiser_layers: int = 4
+
+
+def build_diffusion_model(config: DiffusionModelConfig):
+    if config.pairformer_layers:
+        from sparsa.pairformer import PairformerDiffusionModel
+
+        return PairformerDiffusionModel(config)
+    return TriangleDiffusionModel(config)
 
 
 class TriangleDenoiserCell(nn.Module):
@@ -310,6 +321,8 @@ def sample_contact_maps(
     temperature=1.0,
     logit_correction=0.0,
     self_condition_guidance=1.0,
+    *,
+    encoded=None,
 ):
     """Sample a batch of complete maps and return final-step clean probabilities."""
     if (
@@ -322,12 +335,10 @@ def sample_contact_maps(
             "Sampling expects one sequence, positive count/temperature, and "
             "non-negative self-conditioning guidance"
         )
-    base_condition, base_mask = model.encode(tokens)
+    if encoded is None:
+        encoded = model.encode(tokens)
     expanded_tokens = tokens.expand(count, -1)
-    encoded = (
-        base_condition.expand(count, -1, -1, -1),
-        base_mask.expand(count, -1, -1),
-    )
+    encoded = tuple(value.expand(count, *value.shape[1:]) for value in encoded)
     noisy = schedule.sample_prior(expanded_tokens, generator)
     final_probability = None
     self_condition = None

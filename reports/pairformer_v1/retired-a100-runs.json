@@ -1,0 +1,33 @@
+{
+  "observed_utc": "2026-10-05T15:59:36.532597+00:00",
+  "runs": [
+    {
+      "node_label": "a100-1",
+      "service": "sparsa-g4-u4-s23",
+      "latest_saved": {
+        "step": 10000,
+        "checkpoint": "/home/ubuntu/sparsa-runs/g4-u4-s23-300k/checkpoints/step-10000.pt"
+      },
+      "latest_logged_step": 10750,
+      "state": [
+        "ActiveState=failed",
+        "SubState=failed"
+      ],
+      "gpu_processes": []
+    },
+    {
+      "node_label": "a100-2",
+      "service": "sparsa-g4-l4-s23",
+      "latest_saved": {
+        "step": 10000,
+        "checkpoint": "/home/ubuntu/sparsa-runs/g4-l4-s23-300k/checkpoints/step-10000.pt"
+      },
+      "latest_logged_step": 10750,
+      "state": [
+        "ActiveState=failed",
+        "SubState=failed"
+      ],
+      "gpu_processes": []
+    }
+  ]
+}

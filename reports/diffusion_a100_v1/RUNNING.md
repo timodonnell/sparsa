@@ -1,5 +1,10 @@
 # Dedicated A100 run status
 
+**Retired October 5 at the user's request.** Both services were explicitly stopped
+at logged step 10,750; their step-10k checkpoints are retained. The nodes are being
+reassigned to the [Pairformer campaign](../pairformer_v1/PLAN.md). The status below
+records the earlier G4 campaign and is historical.
+
 Both production runs launched **October 2, 2026 at 01:55:55 UTC**
 (October 1 at 9:55:55 p.m. ET). The October 5 check found both runs stuck in
 repeated evaluation timeouts at step 10,000. The services had restarted 129 / 128

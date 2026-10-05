@@ -11,7 +11,7 @@ from sparsa.data import benchmark
 from sparsa.diffusion import (
     BinaryDiffusion,
     DiffusionModelConfig,
-    TriangleDiffusionModel,
+    build_diffusion_model,
 )
 from sparsa.evaluate_diffusion import (
     COLLECTIVE_TIMEOUT,
@@ -47,7 +47,7 @@ def main():
 
     state = load_checkpoint(args.checkpoint)
     config = DiffusionModelConfig(**state["model_config"])
-    model = TriangleDiffusionModel(config).to(device).eval()
+    model = build_diffusion_model(config).to(device).eval()
     model.load_state_dict(state["ema"])
     training = state["training_config"]
     pos_weight = float(training.get("pos_weight", 4.0))
@@ -58,6 +58,24 @@ def main():
     records = benchmark()
     if args.validation_limit:
         records = sorted(records, key=lambda row: row["L"])[: args.validation_limit]
+
+    def progress(completed, total, row):
+        print(
+            "VALIDATION_PROGRESS "
+            + json.dumps(
+                {
+                    "step": int(state["step"]),
+                    "rank": rank,
+                    "completed": completed,
+                    "total": total,
+                    "length": row["L"],
+                    "stem": row["stem"],
+                    "inference_seconds": row["inference_seconds"],
+                }
+            ),
+            flush=True,
+        )
+
     local_proteins, local_rollouts = evaluate_records(
         model,
         schedule,
@@ -69,6 +87,7 @@ def main():
         temperature=args.temperature,
         pos_weight=pos_weight,
         self_condition_guidance=args.self_condition_guidance,
+        progress_callback=progress,
     )
     proteins_by_rank = [None] * world if rank == 0 else None
     rollouts_by_rank = [None] * world if rank == 0 else None

@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--eval-every", type=int, default=10000)
     parser.add_argument("--validate-on-resume", action="store_true")
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
+    parser.add_argument("--pairformer-preflight", action="store_true")
     parser.add_argument("--iris", default=".tools/iris/bin/iris")
     parser.add_argument(
         "--cluster-config",
@@ -75,6 +76,23 @@ def main():
         command += ["--smoke-validation-limit", str(args.smoke_validation_limit)]
     if args.validate_on_resume:
         command += ["--validate-on-resume"]
+    if args.pairformer_preflight:
+        if args.smoke_validation_limit or args.validate_on_resume:
+            raise ValueError(
+                "Pairformer preflight controls its own complete validation"
+            )
+        command = command[: command.index("--") + 1] + [
+            "python",
+            "scripts/run_pairformer.py",
+            "--config",
+            args.config,
+            "--out",
+            out,
+            "--gpus",
+            str(args.gpus),
+            "--eval-every",
+            str(args.eval_every),
+        ]
     result = subprocess.run(
         command, cwd=root, check=False, capture_output=True, text=True
     )

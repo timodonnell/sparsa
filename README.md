@@ -40,10 +40,10 @@ counts for consensus. Compare consensus with MarinFold consensus, and oracle
 with its oracle reference. Earlier diffusion oracle plots used an incorrect
 denominator for sparse maps; see the [metric correction](reports/diffusion_fixed_r/README.md).
 
-The current scaling experiment compares **315M untied-depth** and **309M shared-depth**
-triangle diffusion models, each on a dedicated 8× A100 80GB node, with a 300k-step
-training horizon. See the [experiment plan](reports/diffusion_a100_v1/PLAN.md)
-and [run status](reports/diffusion_a100_v1/RUNNING.md).
+The current experiment uses a **4-layer sequence encoder and 48-block Pairformer**.
+Four arms compare pair width 128/256 and sequence-only cached conditioning versus
+injecting the noisy contact map before the first Pairformer block. Previous
+G2/G3/G4 runs were retired. See the [new campaign](reports/pairformer_v1/PLAN.md).
 
 ## Use
 

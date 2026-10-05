@@ -13,14 +13,14 @@ import yaml
 from sparsa.diffusion import (
     BinaryDiffusion,
     DiffusionModelConfig,
-    TriangleDiffusionModel,
+    build_diffusion_model,
 )
 from sparsa.train import contact_loss, contact_ranking_loss
 
 
 def profile(cfg, batch, crop):
     torch.cuda.empty_cache()
-    model = TriangleDiffusionModel(DiffusionModelConfig(**cfg["model"])).cuda().train()
+    model = build_diffusion_model(DiffusionModelConfig(**cfg["model"])).cuda().train()
     ema = copy.deepcopy(model).eval().requires_grad_(False)
     opt = torch.optim.AdamW(
         model.parameters(), lr=cfg["lr"], betas=(0.9, 0.95), fused=True
@@ -77,6 +77,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--batches", type=int, nargs="+", default=[4, 8])
+    parser.add_argument("--crops", type=int, nargs="+", default=[384, 512])
     args = parser.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     torch.set_num_threads(4)
@@ -89,7 +91,7 @@ def main():
         "config": cfg,
         "results": [],
     }
-    for batch, crop in [(4, 384), (8, 384), (4, 512), (8, 512)]:
+    for batch, crop in [(b, c) for c in args.crops for b in args.batches]:
         try:
             result = profile(cfg, batch, crop)
         except torch.cuda.OutOfMemoryError:

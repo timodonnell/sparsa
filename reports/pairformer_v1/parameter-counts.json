@@ -1,0 +1,78 @@
+[
+  {
+    "config": "configs/pairformer_cached_128.yaml",
+    "parameters": 157211713,
+    "modules": {
+      "embedding": 8448,
+      "sequence": 7093248,
+      "seqnorm": 768,
+      "pair_init": 271552,
+      "relative": 32896,
+      "trunk": 147456000,
+      "noisy_state": 256,
+      "time": 1152,
+      "single_norm": 768,
+      "single_left": 49280,
+      "single_right": 49280,
+      "denoiser": 2247680,
+      "head": 385
+    }
+  },
+  {
+    "config": "configs/pairformer_cached_256.yaml",
+    "parameters": 244826689,
+    "modules": {
+      "embedding": 8448,
+      "sequence": 7093248,
+      "seqnorm": 768,
+      "pair_init": 550464,
+      "relative": 65792,
+      "trunk": 227954688,
+      "noisy_state": 512,
+      "time": 2304,
+      "single_norm": 768,
+      "single_left": 98560,
+      "single_right": 98560,
+      "denoiser": 8951808,
+      "head": 769
+    }
+  },
+  {
+    "config": "configs/pairformer_noisy_128.yaml",
+    "parameters": 157211713,
+    "modules": {
+      "embedding": 8448,
+      "sequence": 7093248,
+      "seqnorm": 768,
+      "pair_init": 271552,
+      "relative": 32896,
+      "trunk": 147456000,
+      "noisy_state": 256,
+      "time": 1152,
+      "single_norm": 768,
+      "single_left": 49280,
+      "single_right": 49280,
+      "denoiser": 2247680,
+      "head": 385
+    }
+  },
+  {
+    "config": "configs/pairformer_noisy_256.yaml",
+    "parameters": 244826689,
+    "modules": {
+      "embedding": 8448,
+      "sequence": 7093248,
+      "seqnorm": 768,
+      "pair_init": 550464,
+      "relative": 65792,
+      "trunk": 227954688,
+      "noisy_state": 512,
+      "time": 2304,
+      "single_norm": 768,
+      "single_left": 98560,
+      "single_right": 98560,
+      "denoiser": 8951808,
+      "head": 769
+    }
+  }
+]

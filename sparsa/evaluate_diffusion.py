@@ -152,6 +152,15 @@ def evaluate_records(
         vote = np.zeros(len(pi), dtype=np.int64)
         probability_sum = np.zeros(len(pi), dtype=np.float64)
         start = time.perf_counter()
+        sampling_options = {}
+        if getattr(getattr(model, "config", None), "pairformer_layers", 0):
+            # This cache is per protein, outside both the reverse chain and
+            # rollout batching. In noisy mode encode contains only the shallow
+            # sequence encoder; every pair block still sees each sampled map.
+            with torch.autocast(
+                device.type, dtype=torch.bfloat16, enabled=device.type == "cuda"
+            ):
+                sampling_options["encoded"] = model.encode(tokens)
         for offset in range(0, n_rollouts, rollout_batch):
             count = min(rollout_batch, n_rollouts - offset)
             with torch.autocast(
@@ -166,6 +175,7 @@ def evaluate_records(
                     temperature,
                     math.log(pos_weight),
                     self_condition_guidance,
+                    **sampling_options,
                 )
             states = states.cpu().numpy()
             probabilities = probabilities.float().cpu().numpy()

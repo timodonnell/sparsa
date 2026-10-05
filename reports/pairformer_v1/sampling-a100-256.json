@@ -1,0 +1,15 @@
+{
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "pair_width": 256,
+  "scope": "Operational sampling profile only; random initial weights, no accuracy claims.",
+  "results": [
+    {
+      "mode": "cached",
+      "length": 761,
+      "rollouts": 4,
+      "wall_seconds": 33.290409269044176,
+      "peak_allocated_gib": 24.0518217086792,
+      "finite_probabilities": true
+    }
+  ]
+}

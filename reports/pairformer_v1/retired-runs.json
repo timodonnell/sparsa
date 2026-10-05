@@ -1,0 +1,21 @@
+{
+  "observed_utc": "2026-10-05T15:59:30.152156+00:00",
+  "reason": "User requested retirement of all previous Sparsa experiments for Pairformer factorial campaign.",
+  "iris": [
+    {
+      "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-r2-evalfix",
+      "previous_state": "running",
+      "state_after_cancel": "killed"
+    },
+    {
+      "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "previous_state": "running",
+      "state_after_cancel": "killed"
+    },
+    {
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "previous_state": "running",
+      "state_after_cancel": "killed"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+afdb_probability: 0.059522
+batch_size: 4
+checkpoint_every: 1000
+contact_priors:
+- 0.025
+- 0.016
+- 0.005
+crop: 384
+decay_start: 240000
+ema_decay: 0.999
+extra_checkpoint_steps:
+- 1
+- 10
+- 100
+grad_clip: 1.0
+keep_checkpoint_every: 10000
+keep_recovery_checkpoints: 3
+log_every: 10
+logical_batch_size: 16
+lr: 0.0002
+model:
+  denoiser_layers: 4
+  diffusion_steps: 8
+  dropout: 0.0
+  gradient_checkpointing: true
+  heads: 6
+  inner_loops: 1
+  pair_attention_chunk: 32
+  pair_attention_heads: 4
+  pair_dim: 256
+  pair_outer_rank: 32
+  pairformer_layers: 48
+  self_conditioning: false
+  sequence_dim: 384
+  sequence_layers: 4
+  transition_expansion: 4
+  triangle_dim: 256
+  untied_cells: 1
+  pairformer_mode: cached
+pos_weight: 4.0
+ranking_weight: 0.05
+rollout_batch: 4
+rollout_seed: 20260925
+rollout_temperature: 1.0
+schedule: wsd
+schedule_steps: 300000
+seed: 23
+steps: 300000
+validation_rollouts: 100
+warmup: 15000
+weight_decay: 0.01
+workers: 2

@@ -25,7 +25,7 @@ from sparsa.data import ROOT, TeacherBatches, benchmark, file_sha256, inventory
 from sparsa.diffusion import (
     BinaryDiffusion,
     DiffusionModelConfig,
-    TriangleDiffusionModel,
+    build_diffusion_model,
 )
 from sparsa.evaluate_diffusion import (
     COLLECTIVE_TIMEOUT,
@@ -206,12 +206,19 @@ def main():
         help="Run fixed eval-val oracle evaluation every N steps; zero means final only",
     )
     parser.add_argument("--smoke-validation-limit", type=int, default=0)
+    parser.add_argument(
+        "--stop-after",
+        type=int,
+        help="Stop at this absolute step, preserving the configured training schedule",
+    )
     args = parser.parse_args()
     cfg = yaml.safe_load(Path(args.config).read_text())
     if args.smoke_validation_limit:
         cfg["smoke_validation_limit"] = args.smoke_validation_limit
     if args.eval_every < 0:
         raise ValueError("Evaluation cadence must be non-negative")
+    if args.stop_after is not None and args.stop_after < 1:
+        raise ValueError("Stop step must be positive")
     # Validate a fixed training horizon before creating any durable run marker.
     learning_rate_scale(cfg, 0)
 
@@ -248,7 +255,7 @@ def main():
     random.seed(seed + rank)
     np.random.seed(seed + rank)
     model_config = DiffusionModelConfig(**cfg["model"])
-    model = TriangleDiffusionModel(model_config).to(device)
+    model = build_diffusion_model(model_config).to(device)
     ema = copy.deepcopy(model).eval().requires_grad_(False)
     schedule = BinaryDiffusion(
         model_config.diffusion_steps,
@@ -290,7 +297,9 @@ def main():
         state = load_checkpoint(args.resume)
         if state.get("format_version") != 3:
             raise ValueError("Not a resumable diffusion checkpoint")
-        if state["model_config"] != asdict(model_config):
+        if asdict(DiffusionModelConfig(**state["model_config"])) != asdict(
+            model_config
+        ):
             raise ValueError("Resume architecture mismatch")
         if state["training_config"] != cfg:
             raise ValueError("Resume training configuration mismatch")
@@ -421,7 +430,9 @@ def main():
         DistributedDataParallel(model, device_ids=[local_rank]) if world > 1 else model
     )
     start_time = last_log = time.monotonic()
+    last_log_step = step
     steps = int(cfg["steps"])
+    stop_step = min(steps, args.stop_after) if args.stop_after is not None else steps
     checkpoint_every = int(cfg.get("checkpoint_every", 1000))
     if args.eval_every and args.eval_every % checkpoint_every:
         raise ValueError("Evaluation cadence must be divisible by checkpoint cadence")
@@ -439,7 +450,7 @@ def main():
             run_validation(ema, schedule, cfg, args.out, step, rank, world, device)
             last_log = time.monotonic()
 
-    while step < steps:
+    while step < stop_step:
         model.train()
         optimizer.zero_grad(set_to_none=True)
         scale = learning_rate_scale(cfg, step)
@@ -545,7 +556,7 @@ def main():
                 list(ema.parameters()), list(model.parameters()), 1 - decay
             )
 
-        if step % cfg.get("log_every", 50) == 0:
+        if step % cfg.get("log_every", 50) == 0 or step == stop_step:
             if world > 1:
                 dist.all_reduce(total_loss, op=dist.ReduceOp.AVG)
                 dist.all_reduce(timestep_counts, op=dist.ReduceOp.SUM)
@@ -557,7 +568,7 @@ def main():
                     "grad_norm": float(norm),
                     "lr": cfg["lr"] * scale,
                     "seconds": now - start_time,
-                    "seconds_per_step": (now - last_log) / cfg.get("log_every", 50),
+                    "seconds_per_step": (now - last_log) / (step - last_log_step),
                     "examples": step * logical_size * world,
                     "peak_gpu_gb": torch.cuda.max_memory_allocated() / 2**30,
                     "timestep_counts": timestep_counts.tolist(),
@@ -567,10 +578,12 @@ def main():
                 history.append(row)
                 print(json.dumps(row), flush=True)
                 last_log = now
+                last_log_step = step
 
         save_now = (
             step % checkpoint_every == 0
             or step == steps
+            or step == stop_step
             or step in cfg.get("extra_checkpoint_steps", ())
         )
         if save_now:
@@ -626,6 +639,7 @@ def main():
             if not complete:
                 run_validation(ema, schedule, cfg, args.out, step, rank, world, device)
                 last_log = time.monotonic()
+                last_log_step = step
 
     if world > 1:
         dist.destroy_process_group()
