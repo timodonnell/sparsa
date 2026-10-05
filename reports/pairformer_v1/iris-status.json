@@ -1,0 +1,19 @@
+{
+  "observed_utc": "2026-10-05T16:30:29.889307+00:00",
+  "active_sparsa_jobs": [
+    {
+      "job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-r2",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0,
+      "error": ""
+    },
+    {
+      "job": "/bizon/sparsa-pairformer-v1-pf-c128-s23-300k-r2",
+      "state": "running",
+      "preemptions": 0,
+      "failures": 0,
+      "error": ""
+    }
+  ]
+}

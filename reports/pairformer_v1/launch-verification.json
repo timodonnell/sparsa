@@ -1,0 +1,21 @@
+{
+  "observed_utc": "2026-10-05T16:32:15.143598+00:00",
+  "arms": [
+    "pf-c128",
+    "pf-c256",
+    "pf-n128",
+    "pf-n256"
+  ],
+  "verified_optimizer_step": 4,
+  "world_size": 8,
+  "crop_presentations_per_arm": 512,
+  "all_rank_data_counts_match": true,
+  "all_rank_data_digests_match": true,
+  "same_teacher_pool_files": {
+    "afdb": 2067,
+    "esm": 3338
+  },
+  "full_validation_complete": false,
+  "held_out_used": false,
+  "cpu_tests_passed": 97
+}

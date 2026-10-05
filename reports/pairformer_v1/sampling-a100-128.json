@@ -10,6 +10,14 @@
       "wall_seconds": 22.172357095987536,
       "peak_allocated_gib": 12.251156330108643,
       "finite_probabilities": true
+    },
+    {
+      "mode": "noisy",
+      "length": 761,
+      "rollouts": 4,
+      "wall_seconds": 206.9002746400074,
+      "peak_allocated_gib": 13.355869770050049,
+      "finite_probabilities": true
     }
   ]
 }

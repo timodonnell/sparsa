@@ -43,7 +43,8 @@ denominator for sparse maps; see the [metric correction](reports/diffusion_fixed
 The current experiment uses a **4-layer sequence encoder and 48-block Pairformer**.
 Four arms compare pair width 128/256 and sequence-only cached conditioning versus
 injecting the noisy contact map before the first Pairformer block. Previous
-G2/G3/G4 runs were retired. See the [new campaign](reports/pairformer_v1/PLAN.md).
+G2/G3/G4 runs were retired. See the [plan](reports/pairformer_v1/PLAN.md) and
+[live campaign status](reports/pairformer_v1/RUNNING.md).
 
 ## Use
 

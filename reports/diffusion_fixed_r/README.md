@@ -1,5 +1,9 @@
 # Fixed-R diffusion evaluation
 
+**Active training moved to the [Pairformer campaign](../pairformer_v1/RUNNING.md)
+on October 5.** The G2/G3/G4 jobs are retired; the comparisons below are retained
+as historical results and metric documentation.
+
 The earlier diffusion oracle scores divided by the number of emitted contacts
 when a rollout supplied fewer than R. They were precision among emitted contacts,
 not R-precision. In particular, the reported G2-RSC 30k value of 0.446965 is not

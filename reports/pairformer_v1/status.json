@@ -1,0 +1,1050 @@
+{
+  "observed_utc": "2026-10-05T16:32:15.143598+00:00",
+  "runs": [
+    {
+      "model": "pf-c128",
+      "backend": "iris",
+      "observed_utc": "2026-10-05T16:32:11.299345+00:00",
+      "pod": "iris-bizon-sparsa-pairformer-v1-pf-80624e7b-0-081e1a4f770ccd2e",
+      "phase": "Running",
+      "stage": {
+        "phase": "full_validation_97x100",
+        "observed_utc": "2026-10-05T16:28:06.281779+00:00"
+      },
+      "latest": {
+        "step": 4,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-4.pt"
+      },
+      "runtime": {
+        "started_utc": "2026-10-05T16:21:03Z",
+        "resumed_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-2.pt",
+        "resumed_step": 2,
+        "world_size": 8,
+        "collective_timeout_seconds": 14400.0,
+        "validation_partition": "greedy_length_cubed_v1",
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        }
+      },
+      "resume": {
+        "checkpoint": {
+          "step": 4,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-4.pt"
+        },
+        "world_size": 8,
+        "all_rank_data_counts": [
+          {
+            "residues": 13946,
+            "positive_pairs": 11141,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 14167,
+            "positive_pairs": 11319,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 13292,
+            "positive_pairs": 10376,
+            "proteins": 64,
+            "afdb": 9,
+            "esm": 55
+          },
+          {
+            "residues": 13922,
+            "positive_pairs": 11161,
+            "proteins": 64,
+            "afdb": 6,
+            "esm": 58
+          },
+          {
+            "residues": 13065,
+            "positive_pairs": 10428,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 13366,
+            "positive_pairs": 10206,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14539,
+            "positive_pairs": 11297,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14637,
+            "positive_pairs": 11957,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          }
+        ],
+        "all_rank_data_digests": [
+          "68bdfeb589e54735f4b7740c53b74b2b717ec3d9b9f1c38a3ff5193d0ac60671",
+          "4330c817b598cf5c0a01f2b3aef0bfb74302a1ebbd3667d359f6925e4d9194b2",
+          "fbdf51da82775f3e9a64dbf1f4c5df80dcd63a55ba8354babc9dc1b041f0cadf",
+          "29842c1fde3481714b9bf2794aae61618f6755adffe7f78ff27c6162af146a42",
+          "5d6aff2afda65c65c50b431b73ee38d20fa81e4ea60f8e8da82d2eeef5e20720",
+          "b94bcc25e78ddf76dbf68ec38755a33cb9c446c99d4f87b8b8167cc35c065c1b",
+          "c9ffc6005d6c3f2f367726bd770686ae781759ef38a5ac7de42eff0f02e1a76c",
+          "3cb65da6a2b2484728aa0a62311666c9f9c012fb5266df0fecbcb423a6c6300f"
+        ],
+        "optimizer_parameters": 3033
+      },
+      "preflight": null,
+      "provenance": {
+        "parameters": 157211713,
+        "world_size": 8,
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch_version": "2.10.0+cu128",
+        "model_config": {
+          "sequence_dim": 384,
+          "sequence_layers": 4,
+          "heads": 6,
+          "pair_dim": 128,
+          "triangle_dim": 128,
+          "pair_attention_heads": 4,
+          "pair_attention_chunk": 32,
+          "pair_outer_rank": 32,
+          "transition_expansion": 4,
+          "diffusion_steps": 8,
+          "inner_loops": 1,
+          "untied_cells": 1,
+          "self_conditioning": false,
+          "dropout": 0.0,
+          "gradient_checkpointing": true,
+          "pairformer_layers": 48,
+          "pairformer_mode": "cached",
+          "denoiser_layers": 4
+        },
+        "training_config": {
+          "afdb_probability": 0.059522,
+          "batch_size": 4,
+          "checkpoint_every": 1000,
+          "contact_priors": [
+            0.025,
+            0.016,
+            0.005
+          ],
+          "crop": 384,
+          "decay_start": 240000,
+          "ema_decay": 0.999,
+          "extra_checkpoint_steps": [
+            1,
+            10,
+            100
+          ],
+          "grad_clip": 1.0,
+          "keep_checkpoint_every": 10000,
+          "keep_recovery_checkpoints": 3,
+          "log_every": 10,
+          "logical_batch_size": 16,
+          "lr": 0.0002,
+          "model": {
+            "denoiser_layers": 4,
+            "diffusion_steps": 8,
+            "dropout": 0.0,
+            "gradient_checkpointing": true,
+            "heads": 6,
+            "inner_loops": 1,
+            "pair_attention_chunk": 32,
+            "pair_attention_heads": 4,
+            "pair_dim": 128,
+            "pair_outer_rank": 32,
+            "pairformer_layers": 48,
+            "self_conditioning": false,
+            "sequence_dim": 384,
+            "sequence_layers": 4,
+            "transition_expansion": 4,
+            "triangle_dim": 128,
+            "untied_cells": 1,
+            "pairformer_mode": "cached"
+          },
+          "pos_weight": 4.0,
+          "ranking_weight": 0.05,
+          "rollout_batch": 4,
+          "rollout_seed": 20260925,
+          "rollout_temperature": 1.0,
+          "schedule": "wsd",
+          "schedule_steps": 300000,
+          "seed": 23,
+          "steps": 300000,
+          "validation_rollouts": 100,
+          "warmup": 15000,
+          "weight_decay": 0.01,
+          "workers": 2
+        },
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        },
+        "benchmark_sha256": {
+          "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861",
+          "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+          "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+          "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+          "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+          "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5"
+        },
+        "held_out_used": false,
+        "source_counts": {
+          "afdb": 2067,
+          "esm": 3338
+        }
+      },
+      "rows": [],
+      "progress": [
+        {
+          "step": 4,
+          "rank": 7,
+          "completed": 2,
+          "total": 13,
+          "length": 489,
+          "stem": "8dmu_A",
+          "inference_seconds": 76.9641510869842
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 2,
+          "total": 13,
+          "length": 492,
+          "stem": "7wzm_A",
+          "inference_seconds": 77.47779999009799
+        },
+        {
+          "step": 4,
+          "rank": 4,
+          "completed": 2,
+          "total": 13,
+          "length": 459,
+          "stem": "8b5w_A",
+          "inference_seconds": 66.58318994799629
+        },
+        {
+          "step": 4,
+          "rank": 3,
+          "completed": 2,
+          "total": 13,
+          "length": 398,
+          "stem": "7xrx_A",
+          "inference_seconds": 46.572887297021225
+        },
+        {
+          "step": 4,
+          "rank": 2,
+          "completed": 2,
+          "total": 12,
+          "length": 394,
+          "stem": "7uk8_A",
+          "inference_seconds": 45.59409378806595
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 3,
+          "total": 13,
+          "length": 399,
+          "stem": "8amo_A",
+          "inference_seconds": 47.27934414194897
+        },
+        {
+          "step": 4,
+          "rank": 5,
+          "completed": 3,
+          "total": 14,
+          "length": 426,
+          "stem": "8bfy_A",
+          "inference_seconds": 54.253140836022794
+        },
+        {
+          "step": 4,
+          "rank": 7,
+          "completed": 3,
+          "total": 13,
+          "length": 413,
+          "stem": "7y3h_A",
+          "inference_seconds": 51.08662883308716
+        }
+      ],
+      "errors": 0
+    },
+    {
+      "model": "pf-c256",
+      "backend": "iris",
+      "observed_utc": "2026-10-05T16:32:11.299687+00:00",
+      "pod": "iris-bizon-sparsa-pairformer-v1-pf-83698d6c-0-9e7bc774ac187800",
+      "phase": "Running",
+      "stage": {
+        "phase": "full_validation_97x100",
+        "observed_utc": "2026-10-05T16:30:21.894799+00:00"
+      },
+      "latest": {
+        "step": 4,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-4.pt"
+      },
+      "runtime": {
+        "started_utc": "2026-10-05T16:23:38Z",
+        "resumed_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-2.pt",
+        "resumed_step": 2,
+        "world_size": 8,
+        "collective_timeout_seconds": 14400.0,
+        "validation_partition": "greedy_length_cubed_v1",
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        }
+      },
+      "resume": {
+        "checkpoint": {
+          "step": 4,
+          "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-4.pt"
+        },
+        "world_size": 8,
+        "all_rank_data_counts": [
+          {
+            "residues": 13946,
+            "positive_pairs": 11141,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 14167,
+            "positive_pairs": 11319,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 13292,
+            "positive_pairs": 10376,
+            "proteins": 64,
+            "afdb": 9,
+            "esm": 55
+          },
+          {
+            "residues": 13922,
+            "positive_pairs": 11161,
+            "proteins": 64,
+            "afdb": 6,
+            "esm": 58
+          },
+          {
+            "residues": 13065,
+            "positive_pairs": 10428,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 13366,
+            "positive_pairs": 10206,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14539,
+            "positive_pairs": 11297,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14637,
+            "positive_pairs": 11957,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          }
+        ],
+        "all_rank_data_digests": [
+          "68bdfeb589e54735f4b7740c53b74b2b717ec3d9b9f1c38a3ff5193d0ac60671",
+          "4330c817b598cf5c0a01f2b3aef0bfb74302a1ebbd3667d359f6925e4d9194b2",
+          "fbdf51da82775f3e9a64dbf1f4c5df80dcd63a55ba8354babc9dc1b041f0cadf",
+          "29842c1fde3481714b9bf2794aae61618f6755adffe7f78ff27c6162af146a42",
+          "5d6aff2afda65c65c50b431b73ee38d20fa81e4ea60f8e8da82d2eeef5e20720",
+          "b94bcc25e78ddf76dbf68ec38755a33cb9c446c99d4f87b8b8167cc35c065c1b",
+          "c9ffc6005d6c3f2f367726bd770686ae781759ef38a5ac7de42eff0f02e1a76c",
+          "3cb65da6a2b2484728aa0a62311666c9f9c012fb5266df0fecbcb423a6c6300f"
+        ],
+        "optimizer_parameters": 3033
+      },
+      "preflight": null,
+      "provenance": {
+        "parameters": 244826689,
+        "world_size": 8,
+        "gpu": "NVIDIA H100 80GB HBM3",
+        "torch_version": "2.10.0+cu128",
+        "model_config": {
+          "sequence_dim": 384,
+          "sequence_layers": 4,
+          "heads": 6,
+          "pair_dim": 256,
+          "triangle_dim": 256,
+          "pair_attention_heads": 4,
+          "pair_attention_chunk": 32,
+          "pair_outer_rank": 32,
+          "transition_expansion": 4,
+          "diffusion_steps": 8,
+          "inner_loops": 1,
+          "untied_cells": 1,
+          "self_conditioning": false,
+          "dropout": 0.0,
+          "gradient_checkpointing": true,
+          "pairformer_layers": 48,
+          "pairformer_mode": "cached",
+          "denoiser_layers": 4
+        },
+        "training_config": {
+          "afdb_probability": 0.059522,
+          "batch_size": 4,
+          "checkpoint_every": 1000,
+          "contact_priors": [
+            0.025,
+            0.016,
+            0.005
+          ],
+          "crop": 384,
+          "decay_start": 240000,
+          "ema_decay": 0.999,
+          "extra_checkpoint_steps": [
+            1,
+            10,
+            100
+          ],
+          "grad_clip": 1.0,
+          "keep_checkpoint_every": 10000,
+          "keep_recovery_checkpoints": 3,
+          "log_every": 10,
+          "logical_batch_size": 16,
+          "lr": 0.0002,
+          "model": {
+            "denoiser_layers": 4,
+            "diffusion_steps": 8,
+            "dropout": 0.0,
+            "gradient_checkpointing": true,
+            "heads": 6,
+            "inner_loops": 1,
+            "pair_attention_chunk": 32,
+            "pair_attention_heads": 4,
+            "pair_dim": 256,
+            "pair_outer_rank": 32,
+            "pairformer_layers": 48,
+            "self_conditioning": false,
+            "sequence_dim": 384,
+            "sequence_layers": 4,
+            "transition_expansion": 4,
+            "triangle_dim": 256,
+            "untied_cells": 1,
+            "pairformer_mode": "cached"
+          },
+          "pos_weight": 4.0,
+          "ranking_weight": 0.05,
+          "rollout_batch": 4,
+          "rollout_seed": 20260925,
+          "rollout_temperature": 1.0,
+          "schedule": "wsd",
+          "schedule_steps": 300000,
+          "seed": 23,
+          "steps": 300000,
+          "validation_rollouts": 100,
+          "warmup": 15000,
+          "weight_decay": 0.01,
+          "workers": 2
+        },
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        },
+        "benchmark_sha256": {
+          "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861",
+          "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+          "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+          "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+          "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+          "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5"
+        },
+        "held_out_used": false,
+        "source_counts": {
+          "afdb": 2067,
+          "esm": 3338
+        }
+      },
+      "rows": [],
+      "progress": [],
+      "errors": 0
+    },
+    {
+      "model": "pf-n128",
+      "backend": "dedicated",
+      "observed_utc": "2026-10-05T16:32:11.301285+00:00",
+      "stage": {
+        "phase": "full_validation_97x100",
+        "observed_utc": "2026-10-05T16:27:42.007510+00:00"
+      },
+      "latest": {
+        "step": 4,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k/checkpoints/step-4.pt"
+      },
+      "runtime": {
+        "started_utc": "2026-10-05T16:22:06Z",
+        "resumed_from": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k/checkpoints/step-2.pt",
+        "resumed_step": 2,
+        "world_size": 8,
+        "collective_timeout_seconds": 14400.0,
+        "validation_partition": "greedy_length_cubed_v1",
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        }
+      },
+      "resume": {
+        "checkpoint": {
+          "step": 4,
+          "checkpoint": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k/checkpoints/step-4.pt"
+        },
+        "world_size": 8,
+        "all_rank_data_counts": [
+          {
+            "residues": 13946,
+            "positive_pairs": 11141,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 14167,
+            "positive_pairs": 11319,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 13292,
+            "positive_pairs": 10376,
+            "proteins": 64,
+            "afdb": 9,
+            "esm": 55
+          },
+          {
+            "residues": 13922,
+            "positive_pairs": 11161,
+            "proteins": 64,
+            "afdb": 6,
+            "esm": 58
+          },
+          {
+            "residues": 13065,
+            "positive_pairs": 10428,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 13366,
+            "positive_pairs": 10206,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14539,
+            "positive_pairs": 11297,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14637,
+            "positive_pairs": 11957,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          }
+        ],
+        "all_rank_data_digests": [
+          "68bdfeb589e54735f4b7740c53b74b2b717ec3d9b9f1c38a3ff5193d0ac60671",
+          "4330c817b598cf5c0a01f2b3aef0bfb74302a1ebbd3667d359f6925e4d9194b2",
+          "fbdf51da82775f3e9a64dbf1f4c5df80dcd63a55ba8354babc9dc1b041f0cadf",
+          "29842c1fde3481714b9bf2794aae61618f6755adffe7f78ff27c6162af146a42",
+          "5d6aff2afda65c65c50b431b73ee38d20fa81e4ea60f8e8da82d2eeef5e20720",
+          "b94bcc25e78ddf76dbf68ec38755a33cb9c446c99d4f87b8b8167cc35c065c1b",
+          "c9ffc6005d6c3f2f367726bd770686ae781759ef38a5ac7de42eff0f02e1a76c",
+          "3cb65da6a2b2484728aa0a62311666c9f9c012fb5266df0fecbcb423a6c6300f"
+        ],
+        "optimizer_parameters": 3033
+      },
+      "preflight": null,
+      "provenance": {
+        "parameters": 157211713,
+        "world_size": 8,
+        "gpu": "NVIDIA A100-SXM4-80GB",
+        "torch_version": "2.10.0+cu128",
+        "model_config": {
+          "sequence_dim": 384,
+          "sequence_layers": 4,
+          "heads": 6,
+          "pair_dim": 128,
+          "triangle_dim": 128,
+          "pair_attention_heads": 4,
+          "pair_attention_chunk": 32,
+          "pair_outer_rank": 32,
+          "transition_expansion": 4,
+          "diffusion_steps": 8,
+          "inner_loops": 1,
+          "untied_cells": 1,
+          "self_conditioning": false,
+          "dropout": 0.0,
+          "gradient_checkpointing": true,
+          "pairformer_layers": 48,
+          "pairformer_mode": "noisy",
+          "denoiser_layers": 4
+        },
+        "training_config": {
+          "afdb_probability": 0.059522,
+          "batch_size": 4,
+          "checkpoint_every": 1000,
+          "contact_priors": [
+            0.025,
+            0.016,
+            0.005
+          ],
+          "crop": 384,
+          "data_root": "/home/ubuntu/sparsa-data/teachers",
+          "decay_start": 240000,
+          "ema_decay": 0.999,
+          "execution_backend": "dedicated",
+          "extra_checkpoint_steps": [
+            1,
+            10,
+            100
+          ],
+          "grad_clip": 1.0,
+          "keep_checkpoint_every": 10000,
+          "keep_recovery_checkpoints": 3,
+          "log_every": 10,
+          "logical_batch_size": 16,
+          "lr": 0.0002,
+          "model": {
+            "denoiser_layers": 4,
+            "diffusion_steps": 8,
+            "dropout": 0.0,
+            "gradient_checkpointing": true,
+            "heads": 6,
+            "inner_loops": 1,
+            "pair_attention_chunk": 32,
+            "pair_attention_heads": 4,
+            "pair_dim": 128,
+            "pair_outer_rank": 32,
+            "pairformer_layers": 48,
+            "self_conditioning": false,
+            "sequence_dim": 384,
+            "sequence_layers": 4,
+            "transition_expansion": 4,
+            "triangle_dim": 128,
+            "untied_cells": 1,
+            "pairformer_mode": "noisy"
+          },
+          "pos_weight": 4.0,
+          "ranking_weight": 0.05,
+          "rollout_batch": 4,
+          "rollout_seed": 20260925,
+          "rollout_temperature": 1.0,
+          "schedule": "wsd",
+          "schedule_steps": 300000,
+          "seed": 23,
+          "steps": 300000,
+          "validation_rollouts": 100,
+          "warmup": 15000,
+          "weight_decay": 0.01,
+          "workers": 2
+        },
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        },
+        "benchmark_sha256": {
+          "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+          "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5",
+          "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+          "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+          "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+          "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861"
+        },
+        "held_out_used": false,
+        "source_counts": {
+          "afdb": 2067,
+          "esm": 3338
+        }
+      },
+      "service_state": [
+        "NRestarts=0",
+        "ActiveState=active",
+        "SubState=running"
+      ],
+      "rows": [],
+      "progress": [],
+      "errors": 0
+    },
+    {
+      "model": "pf-n256",
+      "backend": "dedicated",
+      "observed_utc": "2026-10-05T16:32:11.301550+00:00",
+      "stage": {
+        "phase": "full_validation_97x100",
+        "observed_utc": "2026-10-05T16:32:10.407577+00:00"
+      },
+      "latest": {
+        "step": 4,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-4.pt"
+      },
+      "runtime": {
+        "started_utc": "2026-10-05T16:28:10Z",
+        "resumed_from": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-2.pt",
+        "resumed_step": 2,
+        "checkpoint_every": 100,
+        "world_size": 8,
+        "collective_timeout_seconds": 14400.0,
+        "validation_partition": "greedy_length_cubed_v1",
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "f57c8a010719f4191cdcbd7d44c21a70593ea706ab70a52291abb88cbedcc9f7",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        }
+      },
+      "resume": {
+        "checkpoint": {
+          "step": 4,
+          "checkpoint": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-4.pt"
+        },
+        "world_size": 8,
+        "all_rank_data_counts": [
+          {
+            "residues": 13946,
+            "positive_pairs": 11141,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 14167,
+            "positive_pairs": 11319,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          },
+          {
+            "residues": 13292,
+            "positive_pairs": 10376,
+            "proteins": 64,
+            "afdb": 9,
+            "esm": 55
+          },
+          {
+            "residues": 13922,
+            "positive_pairs": 11161,
+            "proteins": 64,
+            "afdb": 6,
+            "esm": 58
+          },
+          {
+            "residues": 13065,
+            "positive_pairs": 10428,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 13366,
+            "positive_pairs": 10206,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14539,
+            "positive_pairs": 11297,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          },
+          {
+            "residues": 14637,
+            "positive_pairs": 11957,
+            "proteins": 64,
+            "afdb": 3,
+            "esm": 61
+          }
+        ],
+        "all_rank_data_digests": [
+          "68bdfeb589e54735f4b7740c53b74b2b717ec3d9b9f1c38a3ff5193d0ac60671",
+          "4330c817b598cf5c0a01f2b3aef0bfb74302a1ebbd3667d359f6925e4d9194b2",
+          "fbdf51da82775f3e9a64dbf1f4c5df80dcd63a55ba8354babc9dc1b041f0cadf",
+          "29842c1fde3481714b9bf2794aae61618f6755adffe7f78ff27c6162af146a42",
+          "5d6aff2afda65c65c50b431b73ee38d20fa81e4ea60f8e8da82d2eeef5e20720",
+          "b94bcc25e78ddf76dbf68ec38755a33cb9c446c99d4f87b8b8167cc35c065c1b",
+          "c9ffc6005d6c3f2f367726bd770686ae781759ef38a5ac7de42eff0f02e1a76c",
+          "3cb65da6a2b2484728aa0a62311666c9f9c012fb5266df0fecbcb423a6c6300f"
+        ],
+        "optimizer_parameters": 3033
+      },
+      "preflight": null,
+      "provenance": {
+        "parameters": 244826689,
+        "world_size": 8,
+        "gpu": "NVIDIA A100-SXM4-80GB",
+        "torch_version": "2.10.0+cu128",
+        "model_config": {
+          "sequence_dim": 384,
+          "sequence_layers": 4,
+          "heads": 6,
+          "pair_dim": 256,
+          "triangle_dim": 256,
+          "pair_attention_heads": 4,
+          "pair_attention_chunk": 32,
+          "pair_outer_rank": 32,
+          "transition_expansion": 4,
+          "diffusion_steps": 8,
+          "inner_loops": 1,
+          "untied_cells": 1,
+          "self_conditioning": false,
+          "dropout": 0.0,
+          "gradient_checkpointing": true,
+          "pairformer_layers": 48,
+          "pairformer_mode": "noisy",
+          "denoiser_layers": 4
+        },
+        "training_config": {
+          "afdb_probability": 0.059522,
+          "batch_size": 4,
+          "checkpoint_every": 1000,
+          "contact_priors": [
+            0.025,
+            0.016,
+            0.005
+          ],
+          "crop": 384,
+          "data_root": "/home/ubuntu/sparsa-data/teachers",
+          "decay_start": 240000,
+          "ema_decay": 0.999,
+          "execution_backend": "dedicated",
+          "extra_checkpoint_steps": [
+            1,
+            10,
+            100
+          ],
+          "grad_clip": 1.0,
+          "keep_checkpoint_every": 10000,
+          "keep_recovery_checkpoints": 3,
+          "log_every": 10,
+          "logical_batch_size": 16,
+          "lr": 0.0002,
+          "model": {
+            "denoiser_layers": 4,
+            "diffusion_steps": 8,
+            "dropout": 0.0,
+            "gradient_checkpointing": true,
+            "heads": 6,
+            "inner_loops": 1,
+            "pair_attention_chunk": 32,
+            "pair_attention_heads": 4,
+            "pair_dim": 256,
+            "pair_outer_rank": 32,
+            "pairformer_layers": 48,
+            "self_conditioning": false,
+            "sequence_dim": 384,
+            "sequence_layers": 4,
+            "transition_expansion": 4,
+            "triangle_dim": 256,
+            "untied_cells": 1,
+            "pairformer_mode": "noisy"
+          },
+          "pos_weight": 4.0,
+          "ranking_weight": 0.05,
+          "rollout_batch": 4,
+          "rollout_seed": 20260925,
+          "rollout_temperature": 1.0,
+          "schedule": "wsd",
+          "schedule_steps": 300000,
+          "seed": 23,
+          "steps": 300000,
+          "validation_rollouts": 100,
+          "warmup": 15000,
+          "weight_decay": 0.01,
+          "workers": 2
+        },
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "f26d29b166d9ab686dc264ab67361fc8aa83cfac75615ad9fa09949c63a0d8c2",
+          "sparsa/eval_diffusion_checkpoint.py": "1ff15a8978671c55fbe21ec934fb15b9f975f394fec5c53b38d5b011cf000100",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "d72f4fef6cf1225ce0378e1ea70f49f515b55f5f44ebc5ef967dd5059b7a35ff",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        },
+        "benchmark_sha256": {
+          "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+          "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5",
+          "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+          "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+          "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+          "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861"
+        },
+        "held_out_used": false,
+        "source_counts": {
+          "afdb": 2067,
+          "esm": 3338
+        }
+      },
+      "service_state": [
+        "NRestarts=0",
+        "ActiveState=active",
+        "SubState=running"
+      ],
+      "rows": [
+        {
+          "step": 4,
+          "loss": 0.4084428548812866,
+          "grad_norm": 0.6325653195381165,
+          "lr": 5.333333333333334e-08,
+          "seconds": 210.32213153201155,
+          "seconds_per_step": 105.16106576600578,
+          "examples": 512,
+          "peak_gpu_gb": 56.93068599700928,
+          "timestep_counts": [
+            13.0,
+            20.0,
+            14.0,
+            17.0,
+            14.0,
+            20.0,
+            13.0,
+            17.0
+          ],
+          "rank0_data_digest": "68bdfeb589e54735f4b7740c53b74b2b717ec3d9b9f1c38a3ff5193d0ac60671",
+          "rank0_data_counts": {
+            "residues": 13946,
+            "positive_pairs": 11141,
+            "proteins": 64,
+            "afdb": 4,
+            "esm": 60
+          }
+        }
+      ],
+      "progress": [],
+      "errors": 0
+    }
+  ]
+}
