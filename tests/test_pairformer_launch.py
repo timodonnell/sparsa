@@ -5,6 +5,20 @@ import pytest
 
 from scripts.run_pairformer import verify_preflight
 from sparsa.data import benchmark
+from sparsa.train_diffusion import training_configs_compatible
+
+
+def test_resume_allows_only_recovery_cadence_changes():
+    saved = {
+        "checkpoint_every": 1000,
+        "lr": 0.0002,
+        "steps": 300000,
+        "crop": 384,
+        "seed": 23,
+    }
+    assert training_configs_compatible(saved, saved | {"checkpoint_every": 100})
+    for key, value in [("lr", 0.001), ("steps", 30000), ("crop", 256), ("seed", 24)]:
+        assert not training_configs_compatible(saved, saved | {key: value})
 
 
 def fixture():

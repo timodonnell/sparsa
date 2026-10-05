@@ -23,6 +23,10 @@ REPORT = ROOT / "reports/diffusion_fixed_r"
 LABELS = LABELS | {
     "g4-u4": ("G4-U4", "#00868b", "v"),
     "g4-l4": ("G4-L4", "#65503e", "X"),
+    "pf-c128": ("PF-C128", "#238b45", "o"),
+    "pf-c256": ("PF-C256", "#006d2c", "s"),
+    "pf-n128": ("PF-N128", "#6a51a3", "^"),
+    "pf-n256": ("PF-N256", "#3f007d", "D"),
 }
 
 
@@ -86,14 +90,24 @@ def main():
     parser.add_argument(
         "--as-of", default=datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     )
+    parser.add_argument(
+        "--models", nargs="+", help="Model labels, e.g. PF-C128 PF-C256 PF-N128 PF-N256"
+    )
+    parser.add_argument("--out", type=Path, default=REPORT / "figures")
     args = parser.parse_args()
     rows = collect()
+    if args.models:
+        rows = [r for r in rows if r["model"] in args.models]
+    if not rows:
+        raise SystemExit(
+            "No completed scientific validation checkpoints for the selected models yet."
+        )
     data = pd.DataFrame(rows)
     ref = json.loads((REPORT / "marinfold-iid100-reference.json").read_text())[
         "metrics"
     ]["all"]
-    out = REPORT / "figures"
-    out.mkdir(exist_ok=True)
+    out = args.out
+    out.mkdir(exist_ok=True, parents=True)
     with (out / "r_precision_by_step.csv").open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()

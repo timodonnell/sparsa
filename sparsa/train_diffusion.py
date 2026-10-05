@@ -99,6 +99,14 @@ def validation_due(step, steps, every, complete=False):
     return milestone and not complete
 
 
+def training_configs_compatible(saved, current):
+    """Allow recovery cadence changes without allowing a scientific recipe change."""
+    saved, current = dict(saved), dict(current)
+    saved.pop("checkpoint_every", None)
+    current.pop("checkpoint_every", None)
+    return saved == current
+
+
 def validation_prefix(out, step):
     """Keep corrected evaluations separate from legacy sparse precision."""
     return out + f"/validation-{METRIC_VERSION}/step-{step}"
@@ -301,7 +309,7 @@ def main():
             model_config
         ):
             raise ValueError("Resume architecture mismatch")
-        if state["training_config"] != cfg:
+        if not training_configs_compatible(state["training_config"], cfg):
             raise ValueError("Resume training configuration mismatch")
         if state["world_size"] != world:
             raise ValueError("Resume must preserve world size")
@@ -373,6 +381,7 @@ def main():
                 "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "resumed_from": args.resume,
                 "resumed_step": step,
+                "checkpoint_every": int(cfg.get("checkpoint_every", 1000)),
                 "world_size": world,
                 "collective_timeout_seconds": COLLECTIVE_TIMEOUT.total_seconds(),
                 "validation_partition": VALIDATION_PARTITION,

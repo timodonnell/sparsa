@@ -47,7 +47,7 @@ eight-step sampling trajectory.
   nodes use their verified local mirrors; Iris reads the same inventory from S3.
 - 300k optimizer steps: 38.4M crop presentations per arm. AdamW lr 2e-4, 15k warmup,
   WSD decay from 240k, EMA 0.999, weighted contact loss plus ranking loss as before.
-- Checkpoints every 1k; retain three newest and every 10k milestone. Initial
+- Checkpoints every 100 steps; retain three newest and every 10k milestone. Initial
   checkpoints also cover steps 1, 10 and 100. No held-out set is used.
 - Full frozen 97-protein validation, 100 rollouts, every 10k steps. Primary metric
   is dense-probability oracle best@100 R-precision. Frequency consensus is compared
@@ -75,7 +75,7 @@ per-protein progress logging. Stage status is in `preflight/stage.json`.
 
 ## Measured launch profiles
 
-All 96 CPU tests passed, including every-parameter gradient connectivity, exact
+All 97 CPU tests passed, including every-parameter gradient connectivity, exact
 seeded cached/uncached sampling, noise entry at the correct block, padding,
 activation checkpointing, and rejection of incomplete validation by the gate.
 At crop 384 and microbatch 4, single-A100 AdamW/EMA profiles peak at 28.17 GiB

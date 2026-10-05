@@ -1,6 +1,6 @@
 afdb_probability: 0.059522
 batch_size: 4
-checkpoint_every: 1000
+checkpoint_every: 100
 contact_priors:
 - 0.025
 - 0.016

@@ -19,7 +19,11 @@ import yaml
 
 from sparsa.data import benchmark
 from sparsa.train import storage
-from sparsa.train_diffusion import load_checkpoint, write_json
+from sparsa.train_diffusion import (
+    load_checkpoint,
+    training_configs_compatible,
+    write_json,
+)
 
 
 def verify_preflight(summary, per, config):
@@ -93,7 +97,9 @@ def main():
                 subprocess.run(train + ["--stop-after", str(boundary)], check=True)
         latest = json.loads(fs.cat_file(root + "/latest.json"))
         state = load_checkpoint(latest["checkpoint"])
-        if state["world_size"] != args.gpus or state["training_config"] != config:
+        if state["world_size"] != args.gpus or not training_configs_compatible(
+            state["training_config"], config
+        ):
             raise ValueError("Preflight checkpoint configuration mismatch")
         if len(state["rng"]) != args.gpus or state["step"] < 4:
             raise ValueError("Preflight did not resume through four steps")

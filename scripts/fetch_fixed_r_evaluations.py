@@ -15,17 +15,21 @@ from sparsa.data import benchmark
 def fetch_iris(args, report):
     if not args.pod.startswith("iris-bizon-sparsa-"):
         raise ValueError("Expected our own project task")
-    runs = json.loads((report / "restarts-20261001.json").read_text())["runs"]
+    manifest = args.manifest or report / "restarts-20261001.json"
+    runs = json.loads(manifest.read_text())["runs"]
     configs = [
-        {"model": r["model"], "root": r["output"], "automatic": True} for r in runs
+        {"model": r["model"], "root": r["output"], "automatic": True}
+        for r in runs
+        if r["output"].startswith("s3://")
     ]
-    configs.append(
-        {
-            "model": "g1-long",
-            "root": "s3://marin-us-east-02a/marin/protein-structure/sparsa/fixed-r-v2/g1-long-step300000",
-            "automatic": False,
-        }
-    )
+    if args.manifest is None:
+        configs.append(
+            {
+                "model": "g1-long",
+                "root": "s3://marin-us-east-02a/marin/protein-structure/sparsa/fixed-r-v2/g1-long-step300000",
+                "automatic": False,
+            }
+        )
     remote = """import json,sys,fsspec
 fs=fsspec.filesystem("s3")
 result=[]
@@ -96,7 +100,10 @@ def main():
     source.add_argument("--pod")
     source.add_argument("--host", help="Dedicated node SSH destination")
     parser.add_argument("--run-dir", help="Absolute output directory on that node")
-    parser.add_argument("--model", choices=("g4-u4", "g4-l4"))
+    parser.add_argument("--model", choices=("g4-u4", "g4-l4", "pf-n128", "pf-n256"))
+    parser.add_argument(
+        "--manifest", type=Path, help="Campaign run manifest for Iris recovery"
+    )
     parser.add_argument(
         "--kubeconfig", default=str(Path.home() / ".kube/coreweave-iris-rno2a")
     )
