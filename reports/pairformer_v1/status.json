@@ -1,24 +1,25 @@
 {
-  "observed_utc": "2026-10-05T16:32:15.143598+00:00",
+  "observed_utc": "2026-10-05T16:49:42.565573+00:00",
   "runs": [
     {
       "model": "pf-c128",
       "backend": "iris",
-      "observed_utc": "2026-10-05T16:32:11.299345+00:00",
+      "observed_utc": "2026-10-05T16:49:38.870028+00:00",
       "pod": "iris-bizon-sparsa-pairformer-v1-pf-80624e7b-0-081e1a4f770ccd2e",
       "phase": "Running",
       "stage": {
-        "phase": "full_validation_97x100",
-        "observed_utc": "2026-10-05T16:28:06.281779+00:00"
+        "phase": "long_training",
+        "observed_utc": "2026-10-05T16:35:01.659532+00:00"
       },
       "latest": {
-        "step": 4,
-        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-4.pt"
+        "step": 10,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-10.pt"
       },
       "runtime": {
-        "started_utc": "2026-10-05T16:21:03Z",
-        "resumed_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-2.pt",
-        "resumed_step": 2,
+        "started_utc": "2026-10-05T16:35:31Z",
+        "resumed_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-4.pt",
+        "resumed_step": 4,
+        "checkpoint_every": 100,
         "world_size": 8,
         "collective_timeout_seconds": 14400.0,
         "validation_partition": "greedy_length_cubed_v1",
@@ -36,7 +37,7 @@
           "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
           "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
           "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
-          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/train_diffusion.py": "f57c8a010719f4191cdcbd7d44c21a70593ea706ab70a52291abb88cbedcc9f7",
           "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
         }
       },
@@ -116,7 +117,15 @@
         ],
         "optimizer_parameters": 3033
       },
-      "preflight": null,
+      "preflight": {
+        "completed_utc": "2026-10-05T16:35:01.362496+00:00",
+        "config_sha256": "3c574a462ee40a4e27d6f0d9179e5fb2a9081d807f0ced2cdd9ddb099d3c8190",
+        "resumed_through_step": 4,
+        "full_validation_proteins": 97,
+        "rollouts": 100,
+        "held_out_used": false,
+        "metric_version": "fixed-r-v2"
+      },
       "provenance": {
         "parameters": 157211713,
         "world_size": 8,
@@ -230,79 +239,136 @@
           "esm": 3338
         }
       },
-      "rows": [],
+      "rows": [
+        {
+          "step": 10,
+          "loss": 0.43104690313339233,
+          "grad_norm": 0.6073368191719055,
+          "lr": 1.3333333333333334e-07,
+          "seconds": 238.0444393210346,
+          "seconds_per_step": 39.67407322017243,
+          "examples": 1280,
+          "peak_gpu_gb": 29.444580078125,
+          "timestep_counts": [
+            23.0,
+            13.0,
+            13.0,
+            13.0,
+            17.0,
+            17.0,
+            20.0,
+            12.0
+          ],
+          "rank0_data_digest": "95df0e9d5cc6ff63d373400aae6196b9cee62b560ecf559bfb22384165474b92",
+          "rank0_data_counts": {
+            "residues": 34802,
+            "positive_pairs": 28175,
+            "proteins": 160,
+            "afdb": 9,
+            "esm": 151
+          }
+        },
+        {
+          "step": 20,
+          "loss": 0.42509666085243225,
+          "grad_norm": 0.6058813333511353,
+          "lr": 2.6666666666666667e-07,
+          "seconds": 645.1271521759918,
+          "seconds_per_step": 40.70827128549572,
+          "examples": 2560,
+          "peak_gpu_gb": 29.444580078125,
+          "timestep_counts": [
+            16.0,
+            27.0,
+            11.0,
+            12.0,
+            12.0,
+            16.0,
+            17.0,
+            17.0
+          ],
+          "rank0_data_digest": "29e69769603c8484dd4a6fbf9d450eef1f2956eafbcaafcd7966b8589f11d2b2",
+          "rank0_data_counts": {
+            "residues": 68702,
+            "positive_pairs": 53987,
+            "proteins": 320,
+            "afdb": 19,
+            "esm": 301
+          }
+        }
+      ],
       "progress": [
         {
           "step": 4,
-          "rank": 7,
-          "completed": 2,
-          "total": 13,
-          "length": 489,
-          "stem": "8dmu_A",
-          "inference_seconds": 76.9641510869842
+          "rank": 5,
+          "completed": 12,
+          "total": 14,
+          "length": 105,
+          "stem": "7y5r_A",
+          "inference_seconds": 2.587256867089309
         },
         {
           "step": 4,
           "rank": 6,
-          "completed": 2,
+          "completed": 11,
           "total": 13,
-          "length": 492,
-          "stem": "7wzm_A",
-          "inference_seconds": 77.47779999009799
-        },
-        {
-          "step": 4,
-          "rank": 4,
-          "completed": 2,
-          "total": 13,
-          "length": 459,
-          "stem": "8b5w_A",
-          "inference_seconds": 66.58318994799629
-        },
-        {
-          "step": 4,
-          "rank": 3,
-          "completed": 2,
-          "total": 13,
-          "length": 398,
-          "stem": "7xrx_A",
-          "inference_seconds": 46.572887297021225
-        },
-        {
-          "step": 4,
-          "rank": 2,
-          "completed": 2,
-          "total": 12,
-          "length": 394,
-          "stem": "7uk8_A",
-          "inference_seconds": 45.59409378806595
-        },
-        {
-          "step": 4,
-          "rank": 6,
-          "completed": 3,
-          "total": 13,
-          "length": 399,
-          "stem": "8amo_A",
-          "inference_seconds": 47.27934414194897
+          "length": 173,
+          "stem": "8dez_A",
+          "inference_seconds": 7.0020143520087
         },
         {
           "step": 4,
           "rank": 5,
-          "completed": 3,
+          "completed": 13,
           "total": 14,
-          "length": 426,
-          "stem": "8bfy_A",
-          "inference_seconds": 54.253140836022794
+          "length": 105,
+          "stem": "7ykm_A",
+          "inference_seconds": 2.5354657910065725
         },
         {
           "step": 4,
           "rank": 7,
-          "completed": 3,
+          "completed": 12,
           "total": 13,
-          "length": 413,
-          "stem": "7y3h_A",
-          "inference_seconds": 51.08662883308716
+          "length": 136,
+          "stem": "7zv1_A",
+          "inference_seconds": 4.108009370043874
+        },
+        {
+          "step": 4,
+          "rank": 5,
+          "completed": 14,
+          "total": 14,
+          "length": 74,
+          "stem": "8b2g_A",
+          "inference_seconds": 1.4771980229998007
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 12,
+          "total": 13,
+          "length": 136,
+          "stem": "7tlh_A",
+          "inference_seconds": 4.130450421944261
+        },
+        {
+          "step": 4,
+          "rank": 7,
+          "completed": 13,
+          "total": 13,
+          "length": 100,
+          "stem": "7y8h_A",
+          "inference_seconds": 2.3775022849440575
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 13,
+          "total": 13,
+          "length": 100,
+          "stem": "7y54_A",
+          "inference_seconds": 2.3939361969241872
         }
       ],
       "errors": 0
@@ -310,21 +376,22 @@
     {
       "model": "pf-c256",
       "backend": "iris",
-      "observed_utc": "2026-10-05T16:32:11.299687+00:00",
+      "observed_utc": "2026-10-05T16:49:38.870798+00:00",
       "pod": "iris-bizon-sparsa-pairformer-v1-pf-83698d6c-0-9e7bc774ac187800",
       "phase": "Running",
       "stage": {
-        "phase": "full_validation_97x100",
-        "observed_utc": "2026-10-05T16:30:21.894799+00:00"
+        "phase": "long_training",
+        "observed_utc": "2026-10-05T16:40:10.201273+00:00"
       },
       "latest": {
-        "step": 4,
-        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-4.pt"
+        "step": 10,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-10.pt"
       },
       "runtime": {
-        "started_utc": "2026-10-05T16:23:38Z",
-        "resumed_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-2.pt",
-        "resumed_step": 2,
+        "started_utc": "2026-10-05T16:40:46Z",
+        "resumed_from": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-4.pt",
+        "resumed_step": 4,
+        "checkpoint_every": 100,
         "world_size": 8,
         "collective_timeout_seconds": 14400.0,
         "validation_partition": "greedy_length_cubed_v1",
@@ -342,7 +409,7 @@
           "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
           "sparsa/pairformer.py": "101a1f607d373a9dcfb646c575af542a121aa3373a28706ee8598e226d1d6ae8",
           "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
-          "sparsa/train_diffusion.py": "aaf8b7e3f6d506196979919de5560c81ca88c992441584d8ff1f4afb5ea61e6f",
+          "sparsa/train_diffusion.py": "f57c8a010719f4191cdcbd7d44c21a70593ea706ab70a52291abb88cbedcc9f7",
           "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
         }
       },
@@ -422,7 +489,15 @@
         ],
         "optimizer_parameters": 3033
       },
-      "preflight": null,
+      "preflight": {
+        "completed_utc": "2026-10-05T16:40:09.903556+00:00",
+        "config_sha256": "7c3ec74478a5bea3136b293b61f1ff1b886fb5fa73c3c25c26d9d9a2141c5776",
+        "resumed_through_step": 4,
+        "full_validation_proteins": 97,
+        "rollouts": 100,
+        "held_out_used": false,
+        "metric_version": "fixed-r-v2"
+      },
       "provenance": {
         "parameters": 244826689,
         "world_size": 8,
@@ -536,14 +611,116 @@
           "esm": 3338
         }
       },
-      "rows": [],
-      "progress": [],
+      "rows": [
+        {
+          "step": 10,
+          "loss": 0.4158276915550232,
+          "grad_norm": 0.5708755850791931,
+          "lr": 1.3333333333333334e-07,
+          "seconds": 354.38976119598374,
+          "seconds_per_step": 59.06496019933062,
+          "examples": 1280,
+          "peak_gpu_gb": 56.97956466674805,
+          "timestep_counts": [
+            23.0,
+            13.0,
+            13.0,
+            13.0,
+            17.0,
+            17.0,
+            20.0,
+            12.0
+          ],
+          "rank0_data_digest": "95df0e9d5cc6ff63d373400aae6196b9cee62b560ecf559bfb22384165474b92",
+          "rank0_data_counts": {
+            "residues": 34802,
+            "positive_pairs": 28175,
+            "proteins": 160,
+            "afdb": 9,
+            "esm": 151
+          }
+        }
+      ],
+      "progress": [
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 11,
+          "total": 13,
+          "length": 173,
+          "stem": "8dez_A",
+          "inference_seconds": 10.722958063008264
+        },
+        {
+          "step": 4,
+          "rank": 5,
+          "completed": 12,
+          "total": 14,
+          "length": 105,
+          "stem": "7y5r_A",
+          "inference_seconds": 4.020488127018325
+        },
+        {
+          "step": 4,
+          "rank": 7,
+          "completed": 12,
+          "total": 13,
+          "length": 136,
+          "stem": "7zv1_A",
+          "inference_seconds": 6.34241771401139
+        },
+        {
+          "step": 4,
+          "rank": 5,
+          "completed": 13,
+          "total": 14,
+          "length": 105,
+          "stem": "7ykm_A",
+          "inference_seconds": 3.9727698159986176
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 12,
+          "total": 13,
+          "length": 136,
+          "stem": "7tlh_A",
+          "inference_seconds": 6.346084401011467
+        },
+        {
+          "step": 4,
+          "rank": 5,
+          "completed": 14,
+          "total": 14,
+          "length": 74,
+          "stem": "8b2g_A",
+          "inference_seconds": 2.209750988986343
+        },
+        {
+          "step": 4,
+          "rank": 7,
+          "completed": 13,
+          "total": 13,
+          "length": 100,
+          "stem": "7y8h_A",
+          "inference_seconds": 3.667187493003439
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 13,
+          "total": 13,
+          "length": 100,
+          "stem": "7y54_A",
+          "inference_seconds": 3.6568233690049965
+        }
+      ],
       "errors": 0
     },
     {
       "model": "pf-n128",
       "backend": "dedicated",
-      "observed_utc": "2026-10-05T16:32:11.301285+00:00",
+      "observed_utc": "2026-10-05T16:49:38.871312+00:00",
       "stage": {
         "phase": "full_validation_97x100",
         "observed_utc": "2026-10-05T16:27:42.007510+00:00"
@@ -781,7 +958,7 @@
     {
       "model": "pf-n256",
       "backend": "dedicated",
-      "observed_utc": "2026-10-05T16:32:11.301550+00:00",
+      "observed_utc": "2026-10-05T16:49:38.872390+00:00",
       "stage": {
         "phase": "full_validation_97x100",
         "observed_utc": "2026-10-05T16:32:10.407577+00:00"

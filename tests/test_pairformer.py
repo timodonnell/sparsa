@@ -1,8 +1,10 @@
 from dataclasses import replace
+from unittest.mock import patch
 
 import pytest
 import torch
 
+from scripts.profile_pairformer_overhead import original_attention_forward
 from sparsa.diffusion import (
     BinaryDiffusion,
     DiffusionModelConfig,
@@ -10,6 +12,7 @@ from sparsa.diffusion import (
     sample_contact_maps,
 )
 from sparsa.evaluate_diffusion import evaluate_records
+from sparsa.pair_trunk import TriangleAttention
 
 
 def config(mode, checkpointing=False, width=8):
@@ -154,3 +157,44 @@ def test_pairformer_valid_logits_ignore_padding_and_checkpointing_matches(mode):
     padded = torch.nn.functional.pad(tokens, (0, 3))
     out = plain(padded, torch.zeros(1, 11, 11, dtype=torch.bool), t)
     torch.testing.assert_close(out[:, :8, :8], a, atol=2e-6, rtol=2e-6)
+
+
+@pytest.mark.parametrize("mode", ["cached", "noisy"])
+@pytest.mark.parametrize("checkpointing", [False, True])
+def test_attention_bookkeeping_preserves_logits_gradients_and_updates(
+    mode, checkpointing
+):
+    torch.manual_seed(36)
+    original = build_diffusion_model(config(mode, checkpointing))
+    # Nonzero residual projections exercise every path, unlike fresh zero init.
+    with torch.no_grad():
+        for module in original.modules():
+            if isinstance(module, torch.nn.Linear) and not module.weight.any():
+                torch.nn.init.normal_(module.weight, std=0.02)
+    optimized = build_diffusion_model(config(mode, checkpointing))
+    optimized.load_state_dict(original.state_dict())
+    optimizers = [
+        torch.optim.AdamW(m.parameters(), lr=1e-3) for m in (original, optimized)
+    ]
+    tokens = torch.randint(1, 22, (2, 9))
+    tokens[0, 7:] = 0  # Partial final chunk and padding in both attention axes.
+    noisy = torch.rand(2, 9, 9) > 0.5
+    timesteps = torch.tensor([1, 2])
+    for _ in range(2):
+        outputs = []
+        for model, optimizer, forward in zip(
+            (original, optimized),
+            optimizers,
+            (original_attention_forward, TriangleAttention.forward),
+            strict=True,
+        ):
+            optimizer.zero_grad(set_to_none=True)
+            with patch.object(TriangleAttention, "forward", forward):
+                logits = model(tokens, noisy, timesteps)
+                logits.square().mean().backward()
+            outputs.append(logits.detach())
+            optimizer.step()
+        torch.testing.assert_close(*outputs, rtol=0, atol=0)
+        for a, b in zip(original.parameters(), optimized.parameters(), strict=True):
+            torch.testing.assert_close(a.grad, b.grad, rtol=0, atol=0)
+            torch.testing.assert_close(a, b, rtol=0, atol=0)

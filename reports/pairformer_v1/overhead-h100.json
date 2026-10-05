@@ -1,0 +1,60 @@
+{
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "torch": "2.10.0+cu128",
+  "scope": "Synthetic full-model microsteps; no DDP or data I/O",
+  "steps": 4,
+  "warmup": 1,
+  "results": [
+    {
+      "batch_size": 4,
+      "crop": 384,
+      "parameters": 157211713,
+      "seconds_per_microbatch": 9.733580498335263,
+      "estimated_seconds_per_optimizer_step": 38.93432199334105,
+      "peak_gpu_gib": 28.223493099212646,
+      "loss": 0.36726707220077515,
+      "grad_norm": 0.3855181932449341,
+      "width": 128,
+      "variant": "original"
+    },
+    {
+      "batch_size": 4,
+      "crop": 384,
+      "parameters": 157211713,
+      "seconds_per_microbatch": 8.324163469020277,
+      "estimated_seconds_per_optimizer_step": 33.29665387608111,
+      "peak_gpu_gib": 32.4476752281189,
+      "loss": 0.36726707220077515,
+      "grad_norm": 0.3855181932449341,
+      "width": 128,
+      "variant": "optimized"
+    },
+    {
+      "batch_size": 4,
+      "crop": 384,
+      "parameters": 244826689,
+      "seconds_per_microbatch": 14.617274148001647,
+      "estimated_seconds_per_optimizer_step": 58.469096592006586,
+      "peak_gpu_gib": 55.11881351470947,
+      "loss": 0.31107306480407715,
+      "grad_norm": 0.4632335603237152,
+      "width": 256,
+      "variant": "original"
+    },
+    {
+      "batch_size": 4,
+      "crop": 384,
+      "parameters": 244826689,
+      "seconds_per_microbatch": 12.699679271007577,
+      "estimated_seconds_per_optimizer_step": 50.79871708403031,
+      "peak_gpu_gib": 60.20365238189697,
+      "loss": 0.31107306480407715,
+      "grad_norm": 0.4632335603237152,
+      "width": 256,
+      "variant": "optimized"
+    }
+  ],
+  "job": "/bizon/sparsa-pairformer-overhead-20261005",
+  "priority": "batch",
+  "source_uri": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/profiling/overhead-h100.json"
+}

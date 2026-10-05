@@ -18,7 +18,9 @@ from sparsa.diffusion import (
 from sparsa.train import contact_loss, contact_ranking_loss
 
 
-def profile(cfg, batch, crop):
+def profile(cfg, batch, crop, steps=6, warmup=2):
+    if not 0 <= warmup < steps:
+        raise ValueError("Profile needs at least one timed step")
     torch.cuda.empty_cache()
     model = build_diffusion_model(DiffusionModelConfig(**cfg["model"])).cuda().train()
     ema = copy.deepcopy(model).eval().requires_grad_(False)
@@ -36,8 +38,8 @@ def profile(cfg, batch, crop):
     target = target + target.transpose(1, 2)
     mask = torch.ones_like(target, dtype=torch.bool).triu(6)
     torch.cuda.reset_peak_memory_stats()
-    for step in range(6):
-        if step == 2:
+    for step in range(steps):
+        if step == warmup:
             torch.cuda.synchronize()
             start = time.perf_counter()
         opt.zero_grad(set_to_none=True)
@@ -58,7 +60,7 @@ def profile(cfg, batch, crop):
                 list(ema.parameters()), list(model.parameters()), 0.001
             )
     torch.cuda.synchronize()
-    seconds = (time.perf_counter() - start) / 4
+    seconds = (time.perf_counter() - start) / (steps - warmup)
     return {
         "batch_size": batch,
         "crop": crop,

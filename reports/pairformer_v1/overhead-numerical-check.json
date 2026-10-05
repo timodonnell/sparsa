@@ -1,0 +1,23 @@
+{
+  "gpu": "NVIDIA RTX A5000",
+  "torch": "2.10.0+cu128",
+  "scope": "Deterministic BF16 block outputs and gradients with nonzero residual weights",
+  "results": [
+    {
+      "width": 128,
+      "batch": 2,
+      "length": 384,
+      "deterministic": true,
+      "bitwise_equal_outputs_and_gradients": true,
+      "compared_tensors": 62
+    },
+    {
+      "width": 256,
+      "batch": 2,
+      "length": 384,
+      "deterministic": true,
+      "bitwise_equal_outputs_and_gradients": true,
+      "compared_tensors": 62
+    }
+  ]
+}

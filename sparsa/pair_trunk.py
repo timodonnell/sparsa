@@ -68,11 +68,12 @@ class TriangleUpdate(nn.Module):
 
 
 class TriangleAttention(nn.Module):
-    def __init__(self, channels, heads, chunk, ending=False):
+    def __init__(self, channels, heads, chunk, ending=False, checkpoint_chunks=True):
         super().__init__()
         if channels % heads or chunk < 1:
             raise ValueError("Invalid triangle attention dimensions/chunk")
         self.heads, self.chunk, self.ending = heads, chunk, ending
+        self.checkpoint_chunks = checkpoint_chunks
         self.norm = nn.LayerNorm(channels)
         self.qkv = nn.Linear(channels, 3 * channels, bias=False)
         self.bias = nn.Linear(channels, heads, bias=False)
@@ -105,13 +106,13 @@ class TriangleAttention(nn.Module):
         x = self.norm(z) * mask[..., None]
         bias = self.bias(x).permute(0, 3, 1, 2)
         chunks = []
-        for start in range(0, z.shape[1], self.chunk):
-            args = (
-                x[:, start : start + self.chunk],
-                bias,
-                mask[:, start : start + self.chunk],
-            )
-            if self.training and torch.is_grad_enabled():
+        # SplitBackward concatenates disjoint gradients once. Repeated slices
+        # instead allocate and accumulate a full pair-sized buffer per chunk.
+        for chunk_x, chunk_mask in zip(
+            x.split(self.chunk, dim=1), mask.split(self.chunk, dim=1), strict=True
+        ):
+            args = (chunk_x, bias, chunk_mask)
+            if self.checkpoint_chunks and self.training and torch.is_grad_enabled():
                 y = checkpoint(self._chunk, *args, use_reentrant=False)
             else:
                 y = self._chunk(*args)

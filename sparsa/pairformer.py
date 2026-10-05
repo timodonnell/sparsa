@@ -31,16 +31,23 @@ class GatedTransition(nn.Module):
 
 
 class PairUpdate(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, checkpoint_chunks=True):
         super().__init__()
         c = config.pair_dim
         self.outgoing = TriangleUpdate(c, config.triangle_dim)
         self.incoming = TriangleUpdate(c, config.triangle_dim, incoming=True)
         self.starting = TriangleAttention(
-            c, config.pair_attention_heads, config.pair_attention_chunk
+            c,
+            config.pair_attention_heads,
+            config.pair_attention_chunk,
+            checkpoint_chunks=checkpoint_chunks,
         )
         self.ending = TriangleAttention(
-            c, config.pair_attention_heads, config.pair_attention_chunk, ending=True
+            c,
+            config.pair_attention_heads,
+            config.pair_attention_chunk,
+            ending=True,
+            checkpoint_chunks=checkpoint_chunks,
         )
         self.transition = GatedTransition(c, config.transition_expansion)
 
@@ -53,11 +60,11 @@ class PairUpdate(nn.Module):
 class PairformerBlock(nn.Module):
     """Pair operations followed by pair-biased single attention and SwiGLU."""
 
-    def __init__(self, config):
+    def __init__(self, config, checkpoint_chunks=True):
         super().__init__()
         single = config.sequence_dim
         self.heads = config.heads
-        self.pair = PairUpdate(config)
+        self.pair = PairUpdate(config, checkpoint_chunks=checkpoint_chunks)
         self.single_norm = nn.LayerNorm(single)
         self.pair_norm = nn.LayerNorm(config.pair_dim)
         self.pair_bias = nn.Linear(config.pair_dim, self.heads, bias=False)
@@ -120,8 +127,12 @@ class PairformerDiffusionModel(nn.Module):
             zero_output=False,
         )
         self.relative = nn.Embedding(257, config.pair_dim)
+        # The outer block checkpoint already bounds activation lifetime. Inner
+        # chunk checkpoints would recompute attention a second time in backward.
+        checkpoint_chunks = not config.gradient_checkpointing
         self.trunk = nn.ModuleList(
-            PairformerBlock(config) for _ in range(config.pairformer_layers)
+            PairformerBlock(config, checkpoint_chunks=checkpoint_chunks)
+            for _ in range(config.pairformer_layers)
         )
         self.noisy_state = nn.Embedding(2, config.pair_dim)
         self.time = nn.Embedding(config.diffusion_steps + 1, config.pair_dim)
@@ -129,7 +140,8 @@ class PairformerDiffusionModel(nn.Module):
         self.single_left = nn.Linear(config.sequence_dim, config.pair_dim)
         self.single_right = nn.Linear(config.sequence_dim, config.pair_dim)
         self.denoiser = nn.ModuleList(
-            PairUpdate(config) for _ in range(config.denoiser_layers)
+            PairUpdate(config, checkpoint_chunks=checkpoint_chunks)
+            for _ in range(config.denoiser_layers)
         )
         self.head = nn.Sequential(
             nn.LayerNorm(config.pair_dim), nn.Linear(config.pair_dim, 1)
