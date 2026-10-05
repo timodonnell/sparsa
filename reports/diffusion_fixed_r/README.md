@@ -82,6 +82,62 @@ all scores exactly.
 
 ![Fixed-R oracle and frequency-consensus comparisons](figures/r_precision_by_step.png)
 
+![Early-training comparison](figures/r_precision_early_by_step.png)
+
+### October 5 update
+
+G2-wide completed its 300k-step schedule. G3's previous Iris job exceeded its
+execution-time allowance at saved step 75k; it has resumed optimizer updates
+from that checkpoint in a replacement batch-priority eight-H100 job. SC and
+G2-RSC continue toward 300k. Current job identities are in `active-runs.json`.
+
+| Model | Latest evaluated step | Probability oracle @100 | Frequency consensus |
+|---|---:|---:|---:|
+| G1-long | 300k | 0.301375 | 0.314962 |
+| G2-wide | 300k | 0.360549 | 0.373444 |
+| G2-wide-SC | 280k | 0.366298 | 0.355817 |
+| G2-RSC | 180k | 0.338322 | 0.310476 |
+| G3-balanced-RSC | 70k | 0.350326 | 0.319972 |
+| G4-U4 (315M, independent blocks) | 10k | 0.214326 | 0.211588 |
+| G4-L4 (309M, shared block) | 10k | 0.217606 | 0.215978 |
+
+Both G4 arms have their first complete evaluation. L4 minus U4 is +0.003279
+oracle [-0.003134, 0.010476] and +0.004390 consensus [-0.002297, 0.010876];
+these results do not establish a winner. Both checkpoints are within the 15k-step
+learning-rate warmup. There is no matched-step corrected oracle point for the
+older models at 10k. The plots now contain 59 corrected oracle checkpoints and
+98 valid consensus checkpoints, with a separate early-training view.
+
+The most encouraging scaling result is G3 versus G2-RSC at **the same 70k
+step**: +0.051857 oracle, paired protein bootstrap 95% interval
+[0.036009, 0.069158], and +0.045899 consensus [0.029977, 0.063177]. Architecture
+and learning rate both differ, and rollout batch sizes are 1 versus 2, so this
+is evidence for the overall G3 configuration rather than an isolated parameter
+count effect. It remains well below MarinFold.
+
+SC improves oracle from 0.347611 at 160k to 0.368204 at 270k, then scores
+0.366298 at 280k (change -0.001905, interval [-0.008109, 0.003874]). At matched 270k,
+SC exceeds wide by +0.012657 oracle [0.003351, 0.021925], while its consensus
+is lower by 0.010939. Wide's 275k to 300k change is only +0.003884 oracle
+[-0.002524, 0.009987] and +0.000085 consensus [-0.004045, 0.004265]. This does
+not demonstrate a substantial late-training gain. G2-RSC's 180k values are
+slightly below 160k; both paired intervals include zero. Intervals use 100,000
+paired protein resamples (seed 20261005), conditional on one training seed and
+one rollout bank.
+
+The two dedicated A100 runs lost roughly 56 hours to repeated distributed
+validation timeouts at step 10k. Their intact checkpoints were resumed with
+balanced validation assignments and an explicit collective timeout. The
+[incident report](../diffusion_a100_v1/RECOVERY-20261005.md) records the cause,
+missed launch-test coverage and recovery verification. Both full evaluations
+completed, and both models advanced to logged step 10,050 with finite gradients
+and zero post-recovery restarts by 14:01 UTC.
+
+Evidence: `training-status-20261005.json`, `comparison-20261005.json`,
+`job-status-20261005.json`, and complete summary/per-protein milestone pairs.
+All comparisons use the frozen 97-protein validation split and 100 rollouts;
+no held-out data is used.
+
 ### October 2, 17:58 UTC update (1:58 p.m. ET)
 
 Two additional complete evaluations are available: G2-wide at 275k and G2-RSC

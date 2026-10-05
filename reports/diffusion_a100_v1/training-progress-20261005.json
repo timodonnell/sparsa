@@ -1,0 +1,221 @@
+{
+  "observed_utc": "2026-10-05T14:01:07.916910+00:00",
+  "runs": [
+    {
+      "model": "g4-u4",
+      "observed_utc": "2026-10-05T14:01:07.731103+00:00",
+      "runtime": {
+        "started_utc": "2026-10-05T13:30:30Z",
+        "resumed_from": "/home/ubuntu/sparsa-runs/g4-u4-s23-300k/checkpoints/step-10000.pt",
+        "resumed_step": 10000,
+        "world_size": 8,
+        "collective_timeout_seconds": 14400.0,
+        "validation_partition": "greedy_length_cubed_v1",
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "63d96629b765634b81d1914059599adee4e1a28fae0e7f8632cf6239efd928ed",
+          "sparsa/eval_diffusion_checkpoint.py": "f5201c594c53e57d307e45776d143f70465d0efc5f4045f1c9b86c4556f4b774",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "b84242fe8204fc8f2495643872c013a96a84fbcf9a4591e95506f3826457aa2f",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "c692d658ab9d4f2f5296a050c47abdf1dda6c3c68d63ecbb857ffb413258866f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        }
+      },
+      "latest_checkpoint": {
+        "step": 10000,
+        "checkpoint": "/home/ubuntu/sparsa-runs/g4-u4-s23-300k/checkpoints/step-10000.pt"
+      },
+      "first_logged_after_recovery": {
+        "step": 10050,
+        "loss": 0.12669289112091064,
+        "grad_norm": 0.11649054288864136,
+        "lr": 0.000134,
+        "seconds": 1753.592679184978,
+        "seconds_per_step": 9.782739982819185,
+        "examples": 1286400,
+        "peak_gpu_gb": 54.43102788925171,
+        "timestep_counts": [
+          18.0,
+          13.0,
+          20.0,
+          12.0,
+          18.0,
+          14.0,
+          19.0,
+          14.0
+        ],
+        "rank0_data_digest": "f5eeb3ac3e7751c3870706819e368f0b7312dabc4d11a65984efc53170086711",
+        "rank0_data_counts": {
+          "residues": 34978331,
+          "positive_pairs": 27731948,
+          "proteins": 160800,
+          "afdb": 9592,
+          "esm": 151208
+        }
+      },
+      "latest_logged_after_recovery": {
+        "step": 10050,
+        "loss": 0.12669289112091064,
+        "grad_norm": 0.11649054288864136,
+        "lr": 0.000134,
+        "seconds": 1753.592679184978,
+        "seconds_per_step": 9.782739982819185,
+        "examples": 1286400,
+        "peak_gpu_gb": 54.43102788925171,
+        "timestep_counts": [
+          18.0,
+          13.0,
+          20.0,
+          12.0,
+          18.0,
+          14.0,
+          19.0,
+          14.0
+        ],
+        "rank0_data_digest": "f5eeb3ac3e7751c3870706819e368f0b7312dabc4d11a65984efc53170086711",
+        "rank0_data_counts": {
+          "residues": 34978331,
+          "positive_pairs": 27731948,
+          "proteins": 160800,
+          "afdb": 9592,
+          "esm": 151208
+        }
+      },
+      "service_state": [
+        "Result=success",
+        "NRestarts=0",
+        "ActiveState=active",
+        "SubState=running"
+      ],
+      "evaluations": [
+        {
+          "completed_utc": "2026-10-05T13:51:41.251264+00:00",
+          "step": 10000,
+          "metric_version": "fixed-r-v2",
+          "proteins": 97,
+          "n_rollouts": 100,
+          "oracle_r_precision": 0.2143261534508611,
+          "consensus_r_precision": 0.21158823327420173,
+          "validation_partition": "greedy_length_cubed_v1",
+          "held_out_used": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "model": "g4-l4",
+      "observed_utc": "2026-10-05T14:01:07.896977+00:00",
+      "runtime": {
+        "started_utc": "2026-10-05T13:30:31Z",
+        "resumed_from": "/home/ubuntu/sparsa-runs/g4-l4-s23-300k/checkpoints/step-10000.pt",
+        "resumed_step": 10000,
+        "world_size": 8,
+        "collective_timeout_seconds": 14400.0,
+        "validation_partition": "greedy_length_cubed_v1",
+        "code_sha256": {
+          "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+          "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+          "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+          "sparsa/diffusion.py": "63d96629b765634b81d1914059599adee4e1a28fae0e7f8632cf6239efd928ed",
+          "sparsa/eval_diffusion_checkpoint.py": "f5201c594c53e57d307e45776d143f70465d0efc5f4045f1c9b86c4556f4b774",
+          "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+          "sparsa/evaluate_diffusion.py": "b84242fe8204fc8f2495643872c013a96a84fbcf9a4591e95506f3826457aa2f",
+          "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+          "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+          "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+          "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+          "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+          "sparsa/train_diffusion.py": "c692d658ab9d4f2f5296a050c47abdf1dda6c3c68d63ecbb857ffb413258866f",
+          "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+        }
+      },
+      "latest_checkpoint": {
+        "step": 10000,
+        "checkpoint": "/home/ubuntu/sparsa-runs/g4-l4-s23-300k/checkpoints/step-10000.pt"
+      },
+      "first_logged_after_recovery": {
+        "step": 10050,
+        "loss": 0.12385910749435425,
+        "grad_norm": 0.11964771151542664,
+        "lr": 0.000134,
+        "seconds": 1808.8463786240318,
+        "seconds_per_step": 9.782821628559613,
+        "examples": 1286400,
+        "peak_gpu_gb": 54.2993278503418,
+        "timestep_counts": [
+          18.0,
+          13.0,
+          20.0,
+          12.0,
+          18.0,
+          14.0,
+          19.0,
+          14.0
+        ],
+        "rank0_data_digest": "f5eeb3ac3e7751c3870706819e368f0b7312dabc4d11a65984efc53170086711",
+        "rank0_data_counts": {
+          "residues": 34978331,
+          "positive_pairs": 27731948,
+          "proteins": 160800,
+          "afdb": 9592,
+          "esm": 151208
+        }
+      },
+      "latest_logged_after_recovery": {
+        "step": 10050,
+        "loss": 0.12385910749435425,
+        "grad_norm": 0.11964771151542664,
+        "lr": 0.000134,
+        "seconds": 1808.8463786240318,
+        "seconds_per_step": 9.782821628559613,
+        "examples": 1286400,
+        "peak_gpu_gb": 54.2993278503418,
+        "timestep_counts": [
+          18.0,
+          13.0,
+          20.0,
+          12.0,
+          18.0,
+          14.0,
+          19.0,
+          14.0
+        ],
+        "rank0_data_digest": "f5eeb3ac3e7751c3870706819e368f0b7312dabc4d11a65984efc53170086711",
+        "rank0_data_counts": {
+          "residues": 34978331,
+          "positive_pairs": 27731948,
+          "proteins": 160800,
+          "afdb": 9592,
+          "esm": 151208
+        }
+      },
+      "service_state": [
+        "Result=success",
+        "NRestarts=0",
+        "ActiveState=active",
+        "SubState=running"
+      ],
+      "evaluations": [
+        {
+          "completed_utc": "2026-10-05T13:52:37.866398+00:00",
+          "step": 10000,
+          "metric_version": "fixed-r-v2",
+          "proteins": 97,
+          "n_rollouts": 100,
+          "oracle_r_precision": 0.21760557059076951,
+          "consensus_r_precision": 0.21597791844703404,
+          "validation_partition": "greedy_length_cubed_v1",
+          "held_out_used": false
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

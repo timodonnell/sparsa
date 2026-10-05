@@ -1,5 +1,5 @@
 {
-  "observed_utc": "2026-10-02T17:57:31.683243+00:00",
+  "observed_utc": "2026-10-05T13:57:41.852123+00:00",
   "node_label": "a100-1",
   "service": "sparsa-g4-u4-s23",
   "service_status": [
@@ -9,10 +9,10 @@
     "SubState=running"
   ],
   "latest_checkpoint": {
-    "step": 5000,
-    "checkpoint": "/home/ubuntu/sparsa-runs/g4-u4-s23-300k/checkpoints/step-5000.pt"
+    "step": 10000,
+    "checkpoint": "/home/ubuntu/sparsa-runs/g4-u4-s23-300k/checkpoints/step-10000.pt"
   },
-  "checkpoint_bytes": 5045639400,
+  "checkpoint_bytes": 5045639080,
   "world_size": 8,
   "parameters": 315297028,
   "gpu": "NVIDIA A100-SXM4-80GB",
@@ -89,6 +89,8 @@
     "split": "eval-val",
     "n_rollouts": 100,
     "rollout_seed": 20260925,
+    "validation_partition": "greedy_length_cubed_v1",
+    "collective_timeout_seconds": 14400.0,
     "self_condition_guidance": 1.0,
     "held_out_used": false
   },
@@ -119,102 +121,126 @@
   "data_state": [
     {
       "rank": 0,
-      "data_digest": "ea5f84b983e495dff32719f4474168e4c15af6650905152307c6a84acad5a6c2",
+      "data_digest": "34b84c1fbe3a284801c188c799ca792c44c1684d91c087755117a0886f167c9f",
       "data_counts": {
-        "residues": 17369775,
-        "positive_pairs": 13773414,
-        "proteins": 80000,
-        "afdb": 4747,
-        "esm": 75253
+        "residues": 34805713,
+        "positive_pairs": 27594693,
+        "proteins": 160000,
+        "afdb": 9543,
+        "esm": 150457
       }
     },
     {
       "rank": 1,
-      "data_digest": "9b4460803057cb0374b679d4b1b70ac986b39f05450c1177190d92385cd0534b",
+      "data_digest": "77cfaff24784e34389fbf3e4d4e801cb6276a65983f5bf667c9d75062be0a615",
       "data_counts": {
-        "residues": 17274089,
-        "positive_pairs": 13709827,
-        "proteins": 80000,
-        "afdb": 4739,
-        "esm": 75261
+        "residues": 34565469,
+        "positive_pairs": 27445106,
+        "proteins": 160000,
+        "afdb": 9379,
+        "esm": 150621
       }
     },
     {
       "rank": 2,
-      "data_digest": "e6e34ecc3e7a10f88cb5f9e9939408e5238237330e1d8c4d3943c09aaca5bd8f",
+      "data_digest": "35bb24218e822f9660e7c8d137b5e678043e8194a648eaf72ed98cd02768d20e",
       "data_counts": {
-        "residues": 17420976,
-        "positive_pairs": 13825071,
-        "proteins": 80000,
-        "afdb": 4690,
-        "esm": 75310
+        "residues": 34777115,
+        "positive_pairs": 27575376,
+        "proteins": 160000,
+        "afdb": 9501,
+        "esm": 150499
       }
     },
     {
       "rank": 3,
-      "data_digest": "bee0a879c231f3ab50abfcb57604ad367144f2c04dd602a9eaa50cc2c0a0edbe",
+      "data_digest": "eb5afd20bdb490b7a8e94ef761bd963a109d14e0b1c8e77913cd13780d18c9a0",
       "data_counts": {
-        "residues": 17279399,
-        "positive_pairs": 13718439,
-        "proteins": 80000,
-        "afdb": 4734,
-        "esm": 75266
+        "residues": 34626907,
+        "positive_pairs": 27502436,
+        "proteins": 160000,
+        "afdb": 9480,
+        "esm": 150520
       }
     },
     {
       "rank": 4,
-      "data_digest": "0b65325c3251968a81b7cf1efb368d280817c1782407f90b2db3474b87e70925",
+      "data_digest": "f7631cd036a87d26d2d94193b9659eb998806bb9fcabf2d85e88c01d81cbaca7",
       "data_counts": {
-        "residues": 17332725,
-        "positive_pairs": 13789312,
-        "proteins": 80000,
-        "afdb": 4708,
-        "esm": 75292
+        "residues": 34703371,
+        "positive_pairs": 27544462,
+        "proteins": 160000,
+        "afdb": 9434,
+        "esm": 150566
       }
     },
     {
       "rank": 5,
-      "data_digest": "d6acfa899e7c008cb61d140335c32df416c863250351b8c4009bc51ba9bd30e3",
+      "data_digest": "f42afc4ee5704b641d0f9692eaaceee02b91fd3c5e18d79830235823411907bb",
       "data_counts": {
-        "residues": 17395584,
-        "positive_pairs": 13791296,
-        "proteins": 80000,
-        "afdb": 4889,
-        "esm": 75111
+        "residues": 34628407,
+        "positive_pairs": 27413728,
+        "proteins": 160000,
+        "afdb": 9653,
+        "esm": 150347
       }
     },
     {
       "rank": 6,
-      "data_digest": "e1abc537bfc6655c56dfe83edc5510f3b6cc02567e02f2c9992913d084eee1f3",
+      "data_digest": "2d6b71c6f9223eb17ff2e2854cbb411474522d4e5cae93909c7267b81f782759",
       "data_counts": {
-        "residues": 17380707,
-        "positive_pairs": 13807536,
-        "proteins": 80000,
-        "afdb": 4750,
-        "esm": 75250
+        "residues": 34693755,
+        "positive_pairs": 27592292,
+        "proteins": 160000,
+        "afdb": 9630,
+        "esm": 150370
       }
     },
     {
       "rank": 7,
-      "data_digest": "98503bdd90b2c4f519605d185cc5a4f25b2eb342f5c52158fe7bd6294281eead",
+      "data_digest": "34c8c990654295665e532adcc098d3213a0080eb8fef02c52d0e5ed2181a74d9",
       "data_counts": {
-        "residues": 17279405,
-        "positive_pairs": 13699217,
-        "proteins": 80000,
-        "afdb": 4726,
-        "esm": 75274
+        "residues": 34576157,
+        "positive_pairs": 27438375,
+        "proteins": 160000,
+        "afdb": 9466,
+        "esm": 150534
       }
     }
   ],
   "gpus": [
-    "0, NVIDIA A100-SXM4-80GB, 100 %, 62899 MiB",
-    "1, NVIDIA A100-SXM4-80GB, 100 %, 60109 MiB",
-    "2, NVIDIA A100-SXM4-80GB, 100 %, 60109 MiB",
-    "3, NVIDIA A100-SXM4-80GB, 100 %, 60109 MiB",
-    "4, NVIDIA A100-SXM4-80GB, 100 %, 59921 MiB",
-    "5, NVIDIA A100-SXM4-80GB, 100 %, 60109 MiB",
-    "6, NVIDIA A100-SXM4-80GB, 100 %, 60109 MiB",
-    "7, NVIDIA A100-SXM4-80GB, 100 %, 60109 MiB"
+    "0, NVIDIA A100-SXM4-80GB, 100 %, 66555 MiB",
+    "1, NVIDIA A100-SXM4-80GB, 100 %, 64873 MiB",
+    "2, NVIDIA A100-SXM4-80GB, 100 %, 62397 MiB",
+    "3, NVIDIA A100-SXM4-80GB, 100 %, 62341 MiB",
+    "4, NVIDIA A100-SXM4-80GB, 100 %, 61413 MiB",
+    "5, NVIDIA A100-SXM4-80GB, 100 %, 61503 MiB",
+    "6, NVIDIA A100-SXM4-80GB, 100 %, 61153 MiB",
+    "7, NVIDIA A100-SXM4-80GB, 100 %, 80051 MiB"
   ],
-  "held_out_used": false
+  "held_out_used": false,
+  "runtime": {
+    "started_utc": "2026-10-05T13:30:30Z",
+    "resumed_from": "/home/ubuntu/sparsa-runs/g4-u4-s23-300k/checkpoints/step-10000.pt",
+    "resumed_step": 10000,
+    "world_size": 8,
+    "collective_timeout_seconds": 14400.0,
+    "validation_partition": "greedy_length_cubed_v1",
+    "code_sha256": {
+      "sparsa/__init__.py": "ff5d0aa6bee468a91411c47313bbb1f99e588283766643a27d1b687c7b769ade",
+      "sparsa/cli.py": "72fc9272a234824474e2463ebf3f55de94da601d9c31771debae4d6ff5d35088",
+      "sparsa/data.py": "90edc782473a24c9c2fb90e694a3f2ddb1357f46e9486e12b04a218b89818a0c",
+      "sparsa/diffusion.py": "63d96629b765634b81d1914059599adee4e1a28fae0e7f8632cf6239efd928ed",
+      "sparsa/eval_diffusion_checkpoint.py": "f5201c594c53e57d307e45776d143f70465d0efc5f4045f1c9b86c4556f4b774",
+      "sparsa/evaluate.py": "5e18cf3286b6bd5be1e0c781920c92e6676a6c715764b3dcfbd163ce73424bd7",
+      "sparsa/evaluate_diffusion.py": "b84242fe8204fc8f2495643872c013a96a84fbcf9a4591e95506f3826457aa2f",
+      "sparsa/experiment.py": "f63a26e5d99e57961c02b0374b55be3839fb87fbcc905987e17ade87b1b31240",
+      "sparsa/grow.py": "8f6a14da1907f5ffcbc2eb1d03ff6fdb45827650bb84f35010957dca1d0b2051",
+      "sparsa/model.py": "439d9c02aec93a8d6cfcf0f31dca9a465fdf02fa70c2c12485fe22ba6ca5c2ac",
+      "sparsa/pair_trunk.py": "9250a90a44147603afb14c6d981b82cdf6405ee982796b603d82775fbb90947d",
+      "sparsa/train.py": "558877d9b83b33970fc348be58ac0327dec6373f3fe7ace968657b8802bf6ae7",
+      "sparsa/train_diffusion.py": "c692d658ab9d4f2f5296a050c47abdf1dda6c3c68d63ecbb857ffb413258866f",
+      "sparsa/vendor/marinfold_metrics.py": "6cbaa1c555763df07cb94ee81accebef25a5565590d47a32470ade78e36d824a"
+    }
+  }
 }

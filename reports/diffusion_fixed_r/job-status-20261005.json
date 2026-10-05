@@ -1,0 +1,74 @@
+{
+  "observed_utc": "2026-10-05T13:31:34.361924+00:00",
+  "jobs": [
+    {
+      "model": "g2-wide",
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+      "state": "succeeded",
+      "preemptions": 43,
+      "failures": 1,
+      "error": ""
+    },
+    {
+      "model": "g2-wide-sc2",
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "state": "running",
+      "preemptions": 67,
+      "failures": 9,
+      "error": ""
+    },
+    {
+      "model": "g2-rsc",
+      "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "state": "running",
+      "preemptions": 54,
+      "failures": 10,
+      "error": ""
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-fixed-r-v2",
+      "state": "failed",
+      "preemptions": 73,
+      "failures": 4,
+      "error": "Execution timeout exceeded"
+    }
+  ],
+  "after_recovery": {
+    "observed_utc": "2026-10-05T13:54:58.052009+00:00",
+    "jobs": [
+      {
+        "model": "g2-wide",
+        "job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+        "state": "succeeded",
+        "preemptions": 43,
+        "failures": 1,
+        "error": ""
+      },
+      {
+        "model": "g2-wide-sc2",
+        "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+        "state": "running",
+        "preemptions": 67,
+        "failures": 9,
+        "error": ""
+      },
+      {
+        "model": "g2-rsc",
+        "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+        "state": "running",
+        "preemptions": 54,
+        "failures": 10,
+        "error": ""
+      },
+      {
+        "model": "g3-balanced-rsc",
+        "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-r2-evalfix",
+        "state": "running",
+        "preemptions": 0,
+        "failures": 0,
+        "error": ""
+      }
+    ]
+  }
+}

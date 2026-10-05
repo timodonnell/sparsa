@@ -76,8 +76,10 @@ def main():
     if args.validate_on_resume:
         command += ["--validate-on-resume"]
     result = subprocess.run(
-        command, cwd=root, check=True, capture_output=True, text=True
+        command, cwd=root, check=False, capture_output=True, text=True
     )
+    if result.returncode:
+        raise RuntimeError(f"Iris submission failed:\n{result.stderr}")
     record = {
         "name": args.name,
         "output": out,

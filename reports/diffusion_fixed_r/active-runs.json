@@ -1,0 +1,41 @@
+{
+  "updated_utc": "2026-10-05T13:40:44.537140+00:00",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/g2-wide-s23-300k",
+      "config": "configs/diffusion_g2_wide.yaml",
+      "target_steps": 300000,
+      "priority": "batch"
+    },
+    {
+      "model": "g2-wide-sc2",
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v2/g2-wide-sc2-s23-300k",
+      "config": "configs/diffusion_g2_wide_sc.yaml",
+      "target_steps": 300000,
+      "priority": "batch"
+    },
+    {
+      "model": "g2-rsc",
+      "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v3/g2-rsc-s23-300k",
+      "config": "configs/diffusion_g2_wide_rsc.yaml",
+      "target_steps": 300000,
+      "priority": "batch"
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-r2-evalfix",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v3/g3-balanced-rsc-s23-300k",
+      "config": "configs/diffusion_g3_balanced_rsc.yaml",
+      "target_steps": 300000,
+      "priority": "batch",
+      "resumed_from_step": 75000,
+      "previous_job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-fixed-r-v2",
+      "restart_reason": "Previous job exceeded its execution-time allowance.",
+      "execution_timeout_seconds": 2592000
+    }
+  ]
+}

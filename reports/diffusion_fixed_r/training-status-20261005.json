@@ -1,0 +1,65 @@
+{
+  "observed_utc": "2026-10-05T13:51:21.659412+00:00",
+  "runs": [
+    {
+      "model": "g2-wide",
+      "phase": "no_pod",
+      "saved_step": 300000,
+      "latest_evaluation_step": 300000,
+      "oracle_r_precision": 0.3605492800611072,
+      "consensus_r_precision": 0.3734443748257954,
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-s23-300k-fixed-r-v2",
+      "job_state": "succeeded",
+      "preemptions": 43,
+      "failures": 1
+    },
+    {
+      "model": "g2-wide-sc2",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v2-g2-3de9ce45-78-c69288316fe9e463",
+      "created": "2026-10-05T04:23:20Z",
+      "latest_logged_step": 280800,
+      "errors": [],
+      "saved_step": 280000,
+      "latest_evaluation_step": 280000,
+      "oracle_r_precision": 0.3662984163083201,
+      "consensus_r_precision": 0.3558167089796513,
+      "job": "/bizon/sparsa-diffusion-v2-g2-wide-sc2-s23-300k-fixed-r-v2",
+      "job_state": "running",
+      "preemptions": 67,
+      "failures": 9
+    },
+    {
+      "model": "g2-rsc",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v3-g2-3b798508-65-ee4d5c2b7744bc11",
+      "created": "2026-10-05T12:45:36Z",
+      "latest_logged_step": 183000,
+      "errors": [],
+      "saved_step": 180000,
+      "latest_evaluation_step": 180000,
+      "oracle_r_precision": 0.33832154224579,
+      "consensus_r_precision": 0.31047567869894355,
+      "job": "/bizon/sparsa-diffusion-v3-g2-rsc-s23-300k-fixed-r-v2",
+      "job_state": "running",
+      "preemptions": 54,
+      "failures": 10
+    },
+    {
+      "model": "g3-balanced-rsc",
+      "phase": "Running",
+      "pod": "iris-bizon-sparsa-diffusion-v3-g3-b-949c8682-0-bad0a81c3089f6f1",
+      "created": "2026-10-05T13:38:52Z",
+      "latest_logged_step": 75200,
+      "errors": [],
+      "saved_step": 75000,
+      "latest_evaluation_step": 70000,
+      "oracle_r_precision": 0.3503259126906543,
+      "consensus_r_precision": 0.31997211978733403,
+      "job": "/bizon/sparsa-diffusion-v3-g3-balanced-rsc-s23-300k-r2-evalfix",
+      "job_state": "running",
+      "preemptions": 0,
+      "failures": 0
+    }
+  ]
+}

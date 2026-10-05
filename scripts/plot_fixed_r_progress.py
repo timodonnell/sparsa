@@ -166,7 +166,7 @@ def main():
         frameon=False,
         fontsize=10,
     )
-    fig.text(
+    title_artist = fig.text(
         0.08,
         0.97,
         "Corrected R-precision comparisons",
@@ -189,14 +189,24 @@ def main():
         color="#606872",
     )
     fig.subplots_adjust(left=0.08, right=0.98, bottom=0.16, top=0.77, wspace=0.13)
-    for ext in ("png", "svg"):
-        path = out / f"r_precision_by_step.{ext}"
-        fig.savefig(path, dpi=180, metadata={"Date": None} if ext == "svg" else None)
-        if ext == "svg":
-            path.write_text(
-                "\n".join(line.rstrip() for line in path.read_text().splitlines())
-                + "\n"
+    for name, early in [
+        ("r_precision_by_step", False),
+        ("r_precision_early_by_step", True),
+    ]:
+        if early:
+            title_artist.set_text("Early training · corrected R-precision")
+            for ax in axes:
+                ax.set_xlim(0, 105)
+        for ext in ("png", "svg"):
+            path = out / f"{name}.{ext}"
+            fig.savefig(
+                path, dpi=180, metadata={"Date": None} if ext == "svg" else None
             )
+            if ext == "svg":
+                path.write_text(
+                    "\n".join(line.rstrip() for line in path.read_text().splitlines())
+                    + "\n"
+                )
     plt.close(fig)
     print(
         f"Plotted {data.consensus_r_precision.notna().sum()} consensus and {data.oracle_r_precision.notna().sum()} corrected oracle checkpoints."

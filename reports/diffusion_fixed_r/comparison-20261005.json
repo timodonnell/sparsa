@@ -1,0 +1,220 @@
+{
+  "split": "eval-val",
+  "held_out_used": false,
+  "metric_version": "fixed-r-v2",
+  "seed": 20261005,
+  "bootstrap_resamples": 100000,
+  "caveat": "Paired protein uncertainty only; conditional on one training seed and rollout bank.",
+  "comparisons": {
+    "g3_70k_minus_g2_rsc_70k": {
+      "oracle_r_precision": {
+        "difference": 0.051856804811502066,
+        "paired_bootstrap_95_ci": [
+          0.03600850225920318,
+          0.06915813622534128
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": 0.04589922847391209,
+        "paired_bootstrap_95_ci": [
+          0.029976659954403795,
+          0.0631767817461062
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": 0.04865045013914004,
+        "paired_bootstrap_95_ci": [
+          0.032426517458350616,
+          0.06633235413918977
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": 0.042031086390623335,
+        "paired_bootstrap_95_ci": [
+          0.03040698813170094,
+          0.05478890665839937
+        ]
+      }
+    },
+    "sc_270k_minus_wide_270k": {
+      "oracle_r_precision": {
+        "difference": 0.012657093759352603,
+        "paired_bootstrap_95_ci": [
+          0.0033507952006402316,
+          0.0219251976177104
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": -0.010938519880987619,
+        "paired_bootstrap_95_ci": [
+          -0.02098052376880937,
+          -0.0007063718037593771
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": -0.013204432560449762,
+        "paired_bootstrap_95_ci": [
+          -0.023231336878049715,
+          -0.002831112994896087
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": 0.006746881185920639,
+        "paired_bootstrap_95_ci": [
+          -0.002888032569127129,
+          0.016524578645038316
+        ]
+      }
+    },
+    "wide_300k_minus_275k": {
+      "oracle_r_precision": {
+        "difference": 0.0038843772282299086,
+        "paired_bootstrap_95_ci": [
+          -0.002523781919843876,
+          0.009987445744418653
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": 8.457902006675624e-05,
+        "paired_bootstrap_95_ci": [
+          -0.004045249483332812,
+          0.0042645317029246545
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": -0.001674229135301517,
+        "paired_bootstrap_95_ci": [
+          -0.00840551785165516,
+          0.004196945103001823
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": 0.002856735390496226,
+        "paired_bootstrap_95_ci": [
+          -0.0022048377561424593,
+          0.007026266022919655
+        ]
+      }
+    },
+    "sc_270k_minus_160k": {
+      "oracle_r_precision": {
+        "difference": 0.020593019032071436,
+        "paired_bootstrap_95_ci": [
+          0.010382733547486677,
+          0.03148403702809506
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": 0.02408579741957445,
+        "paired_bootstrap_95_ci": [
+          0.012202712813621676,
+          0.036724939649460615
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": 0.024373839726769278,
+        "paired_bootstrap_95_ci": [
+          0.012612128731648655,
+          0.03690928675702826
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": 0.025086536251816838,
+        "paired_bootstrap_95_ci": [
+          0.015281235753412267,
+          0.03547246875765001
+        ]
+      }
+    },
+    "rsc_180k_minus_160k": {
+      "oracle_r_precision": {
+        "difference": -0.006690448888076856,
+        "paired_bootstrap_95_ci": [
+          -0.01589165861189216,
+          0.001531275318223985
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": -0.004995989683909661,
+        "paired_bootstrap_95_ci": [
+          -0.01440413542282366,
+          0.0033608280024945343
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": -0.004599187829748948,
+        "paired_bootstrap_95_ci": [
+          -0.01384620750580017,
+          0.0033152730762873043
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": -0.0003469713879961062,
+        "paired_bootstrap_95_ci": [
+          -0.007455466312889141,
+          0.005474885901820328
+        ]
+      }
+    },
+    "g4_l4_10k_minus_u4_10k": {
+      "oracle_r_precision": {
+        "difference": 0.0032794171399083815,
+        "paired_bootstrap_95_ci": [
+          -0.00313401018572646,
+          0.010475924307359104
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": 0.004389685172832281,
+        "paired_bootstrap_95_ci": [
+          -0.002297457669912806,
+          0.010875848486438095
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": 0.003562588179198589,
+        "paired_bootstrap_95_ci": [
+          -0.003113337025175639,
+          0.01010761905798988
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": 0.009312757009530909,
+        "paired_bootstrap_95_ci": [
+          0.004018041483803385,
+          0.0146331852056275
+        ]
+      }
+    },
+    "sc_280k_minus_270k": {
+      "oracle_r_precision": {
+        "difference": -0.0019053173550714227,
+        "paired_bootstrap_95_ci": [
+          -0.008108560808735935,
+          0.0038741450622619992
+        ]
+      },
+      "consensus_r_precision": {
+        "difference": -0.001999004950235439,
+        "paired_bootstrap_95_ci": [
+          -0.00875118019337129,
+          0.004287076672303329
+        ]
+      },
+      "probability_ensemble_r_precision": {
+        "difference": -0.002013854936663767,
+        "paired_bootstrap_95_ci": [
+          -0.00882736867513362,
+          0.004311046782077846
+        ]
+      },
+      "sampled_oracle_r_precision": {
+        "difference": -0.001933459546739671,
+        "paired_bootstrap_95_ci": [
+          -0.0077915803927705585,
+          0.003343801431235943
+        ]
+      }
+    }
+  }
+}
