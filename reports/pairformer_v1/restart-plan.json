@@ -1,0 +1,54 @@
+{
+  "campaign": "pairformer_v1",
+  "optimization_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+  "runs": [
+    {
+      "model": "pf-c128",
+      "supervisor_service": "sparsa-restart-pf-c128",
+      "state_file": "/home/bizon/.local/state/sparsa/pairformer-overhead-restart/pf-c128/status.json",
+      "restart_after": "fresh step-100 checkpoint",
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+      "backend": "iris",
+      "new_job": "/bizon/sparsa-pairformer-v1-pf-c128-s23-300k-opt1",
+      "new_service": null,
+      "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
+      "status": "armed"
+    },
+    {
+      "model": "pf-c256",
+      "supervisor_service": "sparsa-restart-pf-c256",
+      "state_file": "/home/bizon/.local/state/sparsa/pairformer-overhead-restart/pf-c256/status.json",
+      "restart_after": "fresh step-100 checkpoint",
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+      "backend": "iris",
+      "new_job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-opt1",
+      "new_service": null,
+      "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
+      "status": "armed"
+    },
+    {
+      "model": "pf-n128",
+      "supervisor_service": "sparsa-restart-pf-n128",
+      "state_file": "/home/bizon/.local/state/sparsa/pairformer-overhead-restart/pf-n128/status.json",
+      "restart_after": "completion of current 97x100 validation; next fresh checkpoint if that boundary is missed",
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+      "backend": "dedicated",
+      "new_job": null,
+      "new_service": "sparsa-pf-n128-s23-opt1",
+      "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
+      "status": "armed"
+    },
+    {
+      "model": "pf-n256",
+      "supervisor_service": "sparsa-restart-pf-n256",
+      "state_file": "/home/bizon/.local/state/sparsa/pairformer-overhead-restart/pf-n256/status.json",
+      "restart_after": "completion of current 97x100 validation; next fresh checkpoint if that boundary is missed",
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+      "backend": "dedicated",
+      "new_job": null,
+      "new_service": "sparsa-pf-n256-s23-opt1",
+      "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
+      "status": "armed"
+    }
+  ]
+}

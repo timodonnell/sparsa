@@ -62,7 +62,21 @@ python -m scripts.profile_pairformer_overhead --out overhead.json
 
 ## Deployment status
 
-The optimization is in the repository. The four existing training services
-still use their immutable `90aca06` snapshots. They were not interrupted for
-this investigation; deploying this change requires a checkpointed restart
-using the updated source. Inference calculations are unchanged.
+The optimization is in commit `6a5af01`. On October 5, supervised one-shot
+handoffs were armed for all four runs; see [restart-plan.json](restart-plan.json).
+The cached H100 runs switch at a fresh step-100 checkpoint. The noisy A100
+runs finish their current full validation first, then switch at the validation
+boundary (or the next fresh checkpoint if that boundary is missed).
+
+The handoff stops the old job before launching its replacement, preserves the
+same output directory and eight-GPU world size, and checks the resumed step
+and source hashes in `runtime.json`. It updates the active-run manifests after
+verification and continues monitoring through the first new checkpoint.
+Iris replacements retain batch priority. Architecture, optimizer, data order,
+random-generator state and evaluation cadence are preserved by checkpoint
+resume; inference calculations are unchanged.
+
+The supervisors are `sparsa-restart-pf-{c128,c256,n128,n256}` user services on
+the workspace host, with lingering enabled. Their durable state paths are in
+the restart plan; connection details are kept in private local files outside
+the repository. "Armed" records the scheduled handoff, not its completion.

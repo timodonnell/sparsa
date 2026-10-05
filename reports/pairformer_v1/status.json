@@ -1,10 +1,10 @@
 {
-  "observed_utc": "2026-10-05T16:49:42.565573+00:00",
+  "observed_utc": "2026-10-05T17:06:14.425567+00:00",
   "runs": [
     {
       "model": "pf-c128",
       "backend": "iris",
-      "observed_utc": "2026-10-05T16:49:38.870028+00:00",
+      "observed_utc": "2026-10-05T17:06:10.873070+00:00",
       "pod": "iris-bizon-sparsa-pairformer-v1-pf-80624e7b-0-081e1a4f770ccd2e",
       "phase": "Running",
       "stage": {
@@ -241,59 +241,59 @@
       },
       "rows": [
         {
-          "step": 10,
-          "loss": 0.43104690313339233,
-          "grad_norm": 0.6073368191719055,
-          "lr": 1.3333333333333334e-07,
-          "seconds": 238.0444393210346,
-          "seconds_per_step": 39.67407322017243,
-          "examples": 1280,
+          "step": 40,
+          "loss": 0.4109749495983124,
+          "grad_norm": 0.493146151304245,
+          "lr": 5.333333333333333e-07,
+          "seconds": 1432.7191234519705,
+          "seconds_per_step": 39.3551128558931,
+          "examples": 5120,
           "peak_gpu_gb": 29.444580078125,
           "timestep_counts": [
-            23.0,
-            13.0,
-            13.0,
-            13.0,
+            12.0,
+            14.0,
+            10.0,
+            14.0,
+            27.0,
             17.0,
-            17.0,
-            20.0,
-            12.0
+            11.0,
+            23.0
           ],
-          "rank0_data_digest": "95df0e9d5cc6ff63d373400aae6196b9cee62b560ecf559bfb22384165474b92",
+          "rank0_data_digest": "c84acbfdcdffaaf6baea5fbc7cf0505cc3d5ccf580f337f2f6f4bac5537ae939",
           "rank0_data_counts": {
-            "residues": 34802,
-            "positive_pairs": 28175,
-            "proteins": 160,
-            "afdb": 9,
-            "esm": 151
+            "residues": 143339,
+            "positive_pairs": 113519,
+            "proteins": 640,
+            "afdb": 38,
+            "esm": 602
           }
         },
         {
-          "step": 20,
-          "loss": 0.42509666085243225,
-          "grad_norm": 0.6058813333511353,
-          "lr": 2.6666666666666667e-07,
-          "seconds": 645.1271521759918,
-          "seconds_per_step": 40.70827128549572,
-          "examples": 2560,
+          "step": 50,
+          "loss": 0.40282195806503296,
+          "grad_norm": 0.46379104256629944,
+          "lr": 6.666666666666667e-07,
+          "seconds": 1826.654697992024,
+          "seconds_per_step": 39.39355745400535,
+          "examples": 6400,
           "peak_gpu_gb": 29.444580078125,
           "timestep_counts": [
             16.0,
-            27.0,
-            11.0,
-            12.0,
-            12.0,
-            16.0,
+            14.0,
+            14.0,
+            14.0,
+            20.0,
             17.0,
-            17.0
+            12.0,
+            21.0
           ],
-          "rank0_data_digest": "29e69769603c8484dd4a6fbf9d450eef1f2956eafbcaafcd7966b8589f11d2b2",
+          "rank0_data_digest": "e867f1a50aea1ef6257dc4ebf3f7f0d6d5d6d4ebe15a7201f5ce4bc190a14aa0",
           "rank0_data_counts": {
-            "residues": 68702,
-            "positive_pairs": 53987,
-            "proteins": 320,
-            "afdb": 19,
-            "esm": 301
+            "residues": 178020,
+            "positive_pairs": 141378,
+            "proteins": 800,
+            "afdb": 47,
+            "esm": 753
           }
         }
       ],
@@ -376,7 +376,7 @@
     {
       "model": "pf-c256",
       "backend": "iris",
-      "observed_utc": "2026-10-05T16:49:38.870798+00:00",
+      "observed_utc": "2026-10-05T17:06:10.873685+00:00",
       "pod": "iris-bizon-sparsa-pairformer-v1-pf-83698d6c-0-9e7bc774ac187800",
       "phase": "Running",
       "stage": {
@@ -639,6 +639,34 @@
             "afdb": 9,
             "esm": 151
           }
+        },
+        {
+          "step": 20,
+          "loss": 0.409623384475708,
+          "grad_norm": 0.5617696046829224,
+          "lr": 2.6666666666666667e-07,
+          "seconds": 960.8679462180007,
+          "seconds_per_step": 60.6478185022017,
+          "examples": 2560,
+          "peak_gpu_gb": 56.979565143585205,
+          "timestep_counts": [
+            16.0,
+            27.0,
+            11.0,
+            12.0,
+            12.0,
+            16.0,
+            17.0,
+            17.0
+          ],
+          "rank0_data_digest": "29e69769603c8484dd4a6fbf9d450eef1f2956eafbcaafcd7966b8589f11d2b2",
+          "rank0_data_counts": {
+            "residues": 68702,
+            "positive_pairs": 53987,
+            "proteins": 320,
+            "afdb": 19,
+            "esm": 301
+          }
         }
       ],
       "progress": [
@@ -720,7 +748,7 @@
     {
       "model": "pf-n128",
       "backend": "dedicated",
-      "observed_utc": "2026-10-05T16:49:38.871312+00:00",
+      "observed_utc": "2026-10-05T17:06:10.874011+00:00",
       "stage": {
         "phase": "full_validation_97x100",
         "observed_utc": "2026-10-05T16:27:42.007510+00:00"
@@ -952,13 +980,41 @@
         "SubState=running"
       ],
       "rows": [],
-      "progress": [],
+      "progress": [
+        {
+          "step": 4,
+          "rank": 7,
+          "completed": 1,
+          "total": 13,
+          "length": 514,
+          "stem": "7xq4_A",
+          "inference_seconds": 1869.6252235170105
+        },
+        {
+          "step": 4,
+          "rank": 6,
+          "completed": 1,
+          "total": 13,
+          "length": 514,
+          "stem": "7x8l_A",
+          "inference_seconds": 1870.4964962440426
+        },
+        {
+          "step": 4,
+          "rank": 5,
+          "completed": 1,
+          "total": 14,
+          "length": 521,
+          "stem": "8azb_A",
+          "inference_seconds": 1937.2170175120118
+        }
+      ],
       "errors": 0
     },
     {
       "model": "pf-n256",
       "backend": "dedicated",
-      "observed_utc": "2026-10-05T16:49:38.872390+00:00",
+      "observed_utc": "2026-10-05T17:06:10.874599+00:00",
       "stage": {
         "phase": "full_validation_97x100",
         "observed_utc": "2026-10-05T16:32:10.407577+00:00"
