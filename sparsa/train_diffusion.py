@@ -28,10 +28,13 @@ from sparsa.diffusion import (
     TriangleDiffusionModel,
 )
 from sparsa.evaluate_diffusion import (
+    COLLECTIVE_TIMEOUT,
     METRIC_POLICY,
     METRIC_VERSION,
+    VALIDATION_PARTITION,
     evaluate_records,
     summarize,
+    validation_shards,
 )
 from sparsa.experiment import advance_data_digest, learning_rate_scale, microbatches
 from sparsa.model import ALPHABET
@@ -113,10 +116,35 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
     temperature = float(cfg.get("rollout_temperature", 1.0))
     self_condition_guidance = float(cfg.get("rollout_self_condition_guidance", 1.0))
     pos_weight = float(cfg.get("pos_weight", 4.0))
+    local_records = validation_shards(validation, world)[rank]
+    print(
+        "VALIDATION_START "
+        + json.dumps({"step": step, "rank": rank, "proteins": len(local_records)}),
+        flush=True,
+    )
+
+    def progress(completed, total, row):
+        print(
+            "VALIDATION_PROGRESS "
+            + json.dumps(
+                {
+                    "step": step,
+                    "rank": rank,
+                    "completed": completed,
+                    "total": total,
+                    "dataset": row["dataset"],
+                    "stem": row["stem"],
+                    "length": row["L"],
+                    "inference_seconds": row["inference_seconds"],
+                }
+            ),
+            flush=True,
+        )
+
     local_proteins, local_rollouts = evaluate_records(
         ema,
         schedule,
-        validation[rank::world],
+        local_records,
         device,
         n_rollouts=n_rollouts,
         rollout_batch=int(cfg.get("rollout_batch", 4)),
@@ -124,6 +152,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
         temperature=temperature,
         pos_weight=pos_weight,
         self_condition_guidance=self_condition_guidance,
+        progress_callback=progress,
     )
     gathered_proteins = [None] * world if rank == 0 else None
     gathered_rollouts = [None] * world if rank == 0 else None
@@ -149,6 +178,7 @@ def run_validation(ema, schedule, cfg, out, step, rank, world, device):
             "pos_weight_logit_correction": pos_weight,
             "source_checkpoint": out + f"/checkpoints/step-{step}.pt",
             "world_size": world,
+            "validation_partition": VALIDATION_PARTITION,
             "held_out_used": False,
         }
         prefix = validation_prefix(out, step)
@@ -195,7 +225,7 @@ def main():
     torch.set_num_threads(4)
     torch.set_float32_matmul_precision("high")
     if world > 1:
-        dist.init_process_group("nccl", device_id=device)
+        dist.init_process_group("nccl", device_id=device, timeout=COLLECTIVE_TIMEOUT)
 
     fs, out_path = storage(args.out)
     latest_exists = fs.exists(out_path + "/latest.json")
@@ -329,6 +359,21 @@ def main():
 
     if rank == 0:
         write_json(
+            args.out + "/runtime.json",
+            {
+                "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "resumed_from": args.resume,
+                "resumed_step": step,
+                "world_size": world,
+                "collective_timeout_seconds": COLLECTIVE_TIMEOUT.total_seconds(),
+                "validation_partition": VALIDATION_PARTITION,
+                "code_sha256": {
+                    str(path): file_sha256(path)
+                    for path in sorted(Path("sparsa").rglob("*.py"))
+                },
+            },
+        )
+        write_json(
             args.out + "/evaluation_policy.json",
             {
                 **METRIC_POLICY,
@@ -336,6 +381,8 @@ def main():
                 "split": "eval-val",
                 "n_rollouts": int(cfg.get("validation_rollouts", 100)),
                 "rollout_seed": int(cfg.get("rollout_seed", 20260925)),
+                "validation_partition": VALIDATION_PARTITION,
+                "collective_timeout_seconds": COLLECTIVE_TIMEOUT.total_seconds(),
                 "self_condition_guidance": float(
                     cfg.get("rollout_self_condition_guidance", 1.0)
                 ),

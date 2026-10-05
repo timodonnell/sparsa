@@ -161,3 +161,58 @@ def test_legacy_results_cannot_be_mixed_or_skip_corrected_validation():
         validation_prefix("s3://run", 10000)
         == "s3://run/validation-fixed-r-v2/step-10000"
     )
+
+
+def test_validation_partition_covers_once_and_balances_long_proteins():
+    lengths = [800, 20, 700, 20, 600, 20, 500, 20]
+    records = [
+        {"dataset": "test", "stem": str(i), "L": length}
+        for i, length in enumerate(lengths)
+    ]
+    shards = evaluation.validation_shards(records, 2)
+    assert sorted(r["stem"] for shard in shards for r in shard) == sorted(
+        r["stem"] for r in records
+    )
+    assert shards == evaluation.validation_shards(list(reversed(records)), 2)
+    cost = lambda rows: sum(r["L"] ** 3 for r in rows)
+    assert max(map(cost, shards)) < 0.6 * max(cost(records[i::2]) for i in range(2))
+    assert len(evaluation.validation_shards(records, 10)) == 10
+    with pytest.raises(ValueError, match="positive"):
+        evaluation.validation_shards(records, 0)
+
+
+def test_repartitioning_preserves_seeded_metrics_and_reports_completion(monkeypatch):
+    record, _, _ = fixture(monkeypatch)
+    records = [dict(record, stem=f"protein-{i}") for i in range(3)]
+
+    def sample(model, schedule, tokens, count, generator, *args):
+        length = tokens.shape[1]
+        probabilities = torch.rand(count, length, length, generator=generator)
+        return probabilities > 0.95, probabilities
+
+    monkeypatch.setattr(evaluation, "sample_contact_maps", sample)
+    completed = []
+
+    def run(rows):
+        proteins, _rollouts = evaluation.evaluate_records(
+            torch.nn.Identity(),
+            None,
+            rows,
+            torch.device("cpu"),
+            n_rollouts=3,
+            rollout_batch=2,
+            progress_callback=lambda n, total, row: completed.append(
+                (n, total, row["stem"])
+            ),
+        )
+        return {
+            r["stem"]: (r["oracle_r_precision"], r["consensus_r_precision"])
+            for r in proteins
+        }
+
+    expected = run(records)
+    assert completed == [(1, 3, "protein-0"), (2, 3, "protein-1"), (3, 3, "protein-2")]
+    actual = {}
+    for shard in evaluation.validation_shards(list(reversed(records)), 2):
+        actual.update(run(shard))
+    assert actual == expected

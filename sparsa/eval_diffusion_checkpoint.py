@@ -13,7 +13,13 @@ from sparsa.diffusion import (
     DiffusionModelConfig,
     TriangleDiffusionModel,
 )
-from sparsa.evaluate_diffusion import evaluate_records, summarize
+from sparsa.evaluate_diffusion import (
+    COLLECTIVE_TIMEOUT,
+    VALIDATION_PARTITION,
+    evaluate_records,
+    summarize,
+    validation_shards,
+)
 from sparsa.train_diffusion import load_checkpoint, write_frame, write_json
 
 
@@ -33,11 +39,11 @@ def main():
     local_rank = int(os.getenv("LOCAL_RANK", "0"))
     world = int(os.getenv("WORLD_SIZE", "1"))
     if not torch.cuda.is_available():
-        raise RuntimeError("Checkpoint evaluation requires an Iris GPU")
+        raise RuntimeError("Checkpoint evaluation requires a CUDA GPU")
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
     if world > 1:
-        dist.init_process_group("nccl", device_id=device)
+        dist.init_process_group("nccl", device_id=device, timeout=COLLECTIVE_TIMEOUT)
 
     state = load_checkpoint(args.checkpoint)
     config = DiffusionModelConfig(**state["model_config"])
@@ -55,7 +61,7 @@ def main():
     local_proteins, local_rollouts = evaluate_records(
         model,
         schedule,
-        records[rank::world],
+        validation_shards(records, world)[rank],
         device,
         n_rollouts=args.n_rollouts,
         rollout_batch=args.rollout_batch,
@@ -88,6 +94,7 @@ def main():
             "pos_weight_logit_correction": pos_weight,
             "source_checkpoint": args.checkpoint,
             "world_size": world,
+            "validation_partition": VALIDATION_PARTITION,
             "held_out_used": False,
         }
         write_frame(args.out + "/per_protein.csv", proteins)

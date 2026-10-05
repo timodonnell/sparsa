@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import math
 import time
+from datetime import timedelta
 
 import numpy as np
 import torch
@@ -31,6 +32,24 @@ METRIC_POLICY = {
 }
 RANGES = {"all": (6, None), "short": (6, 11), "medium": (12, 23), "long": (24, None)}
 CURVE = (1, 2, 4, 8, 16, 32, 64, 100)
+# Full 100-rollout validation can leave faster ranks waiting longer than the
+# default ten-minute NCCL timeout. This is a communication wait budget, not a
+# sampling or training parameter.
+COLLECTIVE_TIMEOUT = timedelta(hours=4)
+VALIDATION_PARTITION = "greedy_length_cubed_v1"
+
+
+def validation_shards(records, world):
+    """Balance triangle work without changing per-protein seeds or rollouts."""
+    if world < 1:
+        raise ValueError("Expected a positive world size")
+    shards, costs = [[] for _ in range(world)], [0] * world
+    ordered = sorted(records, key=lambda r: (-r["L"], r["dataset"], r["stem"]))
+    for record in ordered:
+        rank = min(range(world), key=lambda i: (costs[i], i))
+        shards[rank].append(record)
+        costs[rank] += record["L"] ** 3
+    return shards
 
 
 def _seed(base, record):
@@ -105,6 +124,7 @@ def evaluate_records(
     temperature=1.0,
     pos_weight=4.0,
     self_condition_guidance=1.0,
+    progress_callback=None,
 ):
     """Score all resolved pairs; ground truth sets R but never the ranking."""
     if n_rollouts < 1 or rollout_batch < 1:
@@ -243,6 +263,8 @@ def evaluate_records(
                 "inference_seconds": elapsed,
             }
         )
+        if progress_callback is not None:
+            progress_callback(len(protein_rows), len(records), protein_rows[-1])
     return protein_rows, rollout_rows
 
 

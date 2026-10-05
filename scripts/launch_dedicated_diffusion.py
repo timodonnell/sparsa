@@ -40,7 +40,7 @@ def main():
         f"--property=WorkingDirectory={root}",
         "--property=Restart=on-failure",
         "--property=RestartSec=60",
-        "--property=StartLimitIntervalSec=1800",
+        "--property=StartLimitIntervalSec=21600",
         "--property=StartLimitBurst=3",
         f"--property=StandardOutput=append:{args.out}/train.log",
         f"--property=StandardError=append:{args.out}/train.log",
