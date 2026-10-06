@@ -12,12 +12,12 @@
       "new_job": "/bizon/sparsa-pairformer-v1-pf-c128-s23-300k-opt1",
       "new_service": null,
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "waiting",
-      "verified_utc": null,
-      "completed_utc": null,
+      "status": "complete",
+      "verified_utc": "2026-10-05T21:52:11.565554+00:00",
+      "completed_utc": "2026-10-05T22:48:25.285126+00:00",
       "last_confirmed_checkpoint": {
-        "step": 10,
-        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-10.pt"
+        "step": 200,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c128-s23-300k/checkpoints/step-200.pt"
       }
     },
     {
@@ -30,12 +30,12 @@
       "new_job": "/bizon/sparsa-pairformer-v1-pf-c256-s23-300k-opt1",
       "new_service": null,
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "resumed",
+      "status": "complete",
       "verified_utc": "2026-10-05T18:18:34.410379+00:00",
-      "completed_utc": null,
+      "completed_utc": "2026-10-05T21:16:03.873720+00:00",
       "last_confirmed_checkpoint": {
-        "step": 100,
-        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-100.pt"
+        "step": 200,
+        "checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-c256-s23-300k/checkpoints/step-200.pt"
       }
     },
     {
@@ -66,14 +66,14 @@
       "new_job": null,
       "new_service": "sparsa-pf-n256-s23-opt1",
       "deadline_utc": "2026-10-06T17:12:43.316940+00:00",
-      "status": "waiting",
-      "verified_utc": null,
-      "completed_utc": null,
+      "status": "complete",
+      "verified_utc": "2026-10-05T20:00:31.469766+00:00",
+      "completed_utc": "2026-10-05T20:10:06.579352+00:00",
       "last_confirmed_checkpoint": {
-        "step": 4,
-        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-4.pt"
+        "step": 10,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-10.pt"
       }
     }
   ],
-  "observed_utc": "2026-10-05T19:18:07.369644+00:00"
+  "observed_utc": "2026-10-06T13:09:26.258067+00:00"
 }
