@@ -1,0 +1,9 @@
+{
+  "source_url": "https://protenix.tos-cn-beijing.volces.com/checkpoint/protenix_base_default_v1.0.0.pt",
+  "source_sha256": "2b7d5a8b30494514fc47fd2271a16260528cdba170ba09cc112fdecd8f85ec04",
+  "upstream_commit": "85767b811c40ed46e73a9b39519cf6bfca8701ba",
+  "parameters": 148895680,
+  "keys": 2840,
+  "precision": "unchanged float32",
+  "artifact_sha256": "cc9b6048c01739561bf95f75c3a664a9ef2a86e07352f125f4f33cbf662b0209"
+}

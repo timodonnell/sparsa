@@ -23,6 +23,7 @@ from sparsa.pair_trunk import ResidueToPair, TriangleAttention, TriangleUpdate, 
 
 @dataclass
 class DiffusionModelConfig:
+    backbone: str = "sparsa"
     sequence_dim: int = 384
     sequence_layers: int = 6
     heads: int = 6
@@ -44,6 +45,12 @@ class DiffusionModelConfig:
 
 
 def build_diffusion_model(config: DiffusionModelConfig):
+    if config.backbone == "protenix_v1":
+        from sparsa.protenix import ProtenixContactDiffusion
+
+        return ProtenixContactDiffusion(config)
+    if config.backbone != "sparsa":
+        raise ValueError(f"Unknown diffusion backbone: {config.backbone}")
     if config.pairformer_layers:
         from sparsa.pairformer import PairformerDiffusionModel
 

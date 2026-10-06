@@ -129,6 +129,23 @@ def training_configs_compatible(saved, current):
     return saved == current
 
 
+def validate_transfer_branch(state, cfg, world):
+    """Preserve the warmup experiment and streams; only unfreezing may differ."""
+    saved = state["training_config"]
+    if state["world_size"] != world:
+        raise ValueError("Transfer branch must preserve world size")
+    if cfg["model"].get("backbone") != "protenix_v1":
+        raise ValueError("Transfer branching is reserved for the Protenix pilot")
+    if {k: v for k, v in saved.items() if k != "train_backbone"} != {
+        k: v for k, v in cfg.items() if k != "train_backbone"
+    }:
+        raise ValueError("Transfer branch may change only train_backbone")
+    if saved.get("train_backbone", True):
+        raise ValueError("Transfer parent must be the frozen-backbone warmup")
+    if len(state["rng"]) != world:
+        raise ValueError("Incomplete parent RNG/data states")
+
+
 def validate_parallel_fork(state, cfg, world):
     """A new stochastic branch with unchanged model, optimizer recipe and batch."""
     saved = state["training_config"]
@@ -297,6 +314,10 @@ def main():
     parser.add_argument("--auto-resume", action="store_true")
     parser.add_argument("--resume")
     parser.add_argument(
+        "--branch-from",
+        help="Transfer-pilot branch preserving RNG, data, EMA and optimizer state",
+    )
+    parser.add_argument(
         "--fork-from",
         help="Branch weights, EMA, optimizer and step; start fresh data/noise streams",
     )
@@ -314,6 +335,8 @@ def main():
         help="Stop at this absolute step, preserving the configured training schedule",
     )
     args = parser.parse_args()
+    if args.branch_from and args.fork_from:
+        raise ValueError("Choose transfer branching or parallel branching")
     cfg = yaml.safe_load(Path(args.config).read_text())
     if args.smoke_validation_limit:
         cfg["smoke_validation_limit"] = args.smoke_validation_limit
@@ -355,6 +378,12 @@ def main():
             != args.fork_from
         ):
             raise ValueError("Existing pre-checkpoint run has a different parent")
+        if (
+            args.branch_from
+            and (existing.get("branch_metadata") or {}).get("parent_checkpoint")
+            != args.branch_from
+        ):
+            raise ValueError("Existing transfer branch has a different parent")
     elif provenance_exists and not args.resume:
         raise ValueError("Output run already exists; use auto-resume or a new name")
 
@@ -365,13 +394,22 @@ def main():
     np.random.seed(seed + rank)
     model_config = DiffusionModelConfig(**cfg["model"])
     model = build_diffusion_model(model_config).to(device)
+    initialization = None
+    if model_config.backbone == "protenix_v1":
+        if not (args.resume or args.branch_from or args.fork_from):
+            initial_state = load_checkpoint(cfg["pretrained_backbone"])
+            initialization = model.initialize_backbone(initial_state)
+            del initial_state
+        model.configure_trainability(bool(cfg["train_backbone"]))
     ema = copy.deepcopy(model).eval().requires_grad_(False)
     schedule = BinaryDiffusion(
         model_config.diffusion_steps,
         tuple(cfg.get("contact_priors", (0.025, 0.016, 0.005))),
     ).to(device)
     optimizer = torch.optim.AdamW(
-        model.parameters(),
+        model.optimizer_groups(cfg["lr"], cfg["backbone_lr"])
+        if model_config.backbone == "protenix_v1"
+        else model.parameters(),
         lr=cfg["lr"],
         betas=(0.9, 0.95),
         weight_decay=cfg.get("weight_decay", 0.01),
@@ -404,9 +442,10 @@ def main():
     frozen_shards = None
     inherited_data_counts = {}
     fork_metadata = None
+    branch_metadata = None
     history = []
 
-    checkpoint = args.resume or args.fork_from
+    checkpoint = args.resume or args.branch_from or args.fork_from
     if checkpoint:
         state = load_checkpoint(checkpoint)
         if state.get("format_version") != 3:
@@ -421,13 +460,29 @@ def main():
             raise ValueError("Resume training configuration mismatch")
         if args.resume and state["world_size"] != world:
             raise ValueError("Resume must preserve world size")
-        if not args.resume:
+        if args.branch_from and not args.resume:
+            validate_transfer_branch(state, cfg, world)
+        elif not args.resume:
             validate_parallel_fork(state, cfg, world)
         model.load_state_dict(state["model"])
         ema.load_state_dict(state["ema"])
         optimizer.load_state_dict(state["optimizer"])
         step = int(state["step"])
-        if args.resume:
+        initialization = state.get("initialization")
+        branch_metadata = state.get("branch_metadata")
+        if args.branch_from and not args.resume:
+            branch_metadata = {
+                "parent_checkpoint": checkpoint,
+                "parent_step": step,
+                "train_backbone": bool(cfg["train_backbone"]),
+                "stochastic_streams_restarted": False,
+            }
+        if (
+            args.branch_from
+            and (branch_metadata or {}).get("parent_checkpoint") != args.branch_from
+        ):
+            raise ValueError("Resumed transfer branch has a different parent")
+        if args.resume or args.branch_from:
             local_rng = state["rng"][rank]
             data_states = local_rng["data_states"]
             data_digest = local_rng["data_digest"]
@@ -508,6 +563,11 @@ def main():
             "selection_split": "eval-val",
             "held_out_used": False,
             "fork_metadata": fork_metadata,
+            "branch_metadata": branch_metadata,
+            "initialization": initialization,
+            "trainable_parameters": sum(
+                p.numel() for p in model.parameters() if p.requires_grad
+            ),
         }
         write_json(args.out + "/provenance.json", provenance)
         print(
@@ -523,6 +583,7 @@ def main():
                 "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "resumed_from": args.resume,
                 "fork_metadata": fork_metadata,
+                "branch_metadata": branch_metadata,
                 "resumed_step": step,
                 "checkpoint_every": int(cfg.get("checkpoint_every", 1000)),
                 "world_size": world,
@@ -611,7 +672,7 @@ def main():
         optimizer.zero_grad(set_to_none=True)
         scale = learning_rate_scale(cfg, step)
         for group in optimizer.param_groups:
-            group["lr"] = cfg["lr"] * scale
+            group["lr"] = group.get("base_lr", cfg["lr"]) * scale
         logical = next(batches)
         data_states[logical["worker_id"]] = logical["data_state"]
         data_digest = advance_data_digest(data_digest, logical)
@@ -781,6 +842,8 @@ def main():
                         "rng": states,
                         "inherited_data_counts": inherited_data_counts,
                         "fork_metadata": fork_metadata,
+                        "branch_metadata": branch_metadata,
+                        "initialization": initialization,
                     },
                 )
                 write_json(args.out + "/latest.json", {"step": step, "checkpoint": uri})

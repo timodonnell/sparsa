@@ -1,0 +1,16 @@
+{
+  "source_url": "https://protenix.tos-cn-beijing.volces.com/protenix.20260101/indices.tar.gz",
+  "index_file": "indices_20260107-20chains_before_2021-09-30_res4.5.csv.gz",
+  "index_sha256": "e9fc812d2250c8d19a995dbd38991ac05204d2ace5e1e4878d4760e708ad2bc1",
+  "training_rows": 1417835,
+  "training_pdb_ids": 166168,
+  "max_training_release_date": "2021-09-29",
+  "validation_proteins": 97,
+  "validation_pdb_ids": 97,
+  "overlapping_pdb_ids": [],
+  "held_out_used": false,
+  "limitations": [
+    "This is the public 2026 regeneration of the default pre-2021-09-30 training index, not an immutable inventory packaged with the 2025 v1 weights.",
+    "Exact PDB-ID audit only; no proof of homolog/sequence disjointness or disjointness from upstream distillation data."
+  ]
+}

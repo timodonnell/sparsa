@@ -1,0 +1,63 @@
+afdb_probability: 0.059522
+backbone_lr: 1.0e-05
+batch_size: 2
+checkpoint_every: 100
+contact_priors:
+- 0.025
+- 0.016
+- 0.005
+crop: 384
+data_root: s3://marin-us-east-02a/MarinFold/exp232_sweep_cv1_decontam/data
+decay_start: 5000
+ema_decay: 0.999
+execution_backend: iris
+extra_checkpoint_steps:
+- 1
+- 2
+- 4
+- 5
+- 6
+- 10
+grad_clip: 1.0
+keep_checkpoint_every: 1000
+keep_recovery_checkpoints: 3
+log_every: 10
+logical_batch_size: 8
+lr: 0.0002
+model:
+  backbone: protenix_v1
+  denoiser_layers: 0
+  diffusion_steps: 8
+  dropout: 0.0
+  gradient_checkpointing: true
+  heads: 16
+  inner_loops: 1
+  pair_attention_chunk: 32
+  pair_attention_heads: 4
+  pair_dim: 128
+  pair_outer_rank: 32
+  pairformer_layers: 48
+  pairformer_mode: noisy
+  self_conditioning: false
+  sequence_dim: 384
+  sequence_layers: 0
+  transition_expansion: 4
+  triangle_dim: 128
+  untied_cells: 1
+pos_weight: 4.0
+pretrained_backbone: s3://marin-us-east-02a/marin/protein-structure/sparsa/protenix-v1/assets/backbone-v1-cc9b6048.pt
+ranking_group_size: 2
+ranking_weight: 0.05
+rollout_batch: 4
+rollout_seed: 20260925
+rollout_temperature: 1.0
+schedule: wsd
+schedule_steps: 6000
+seed: 23
+steps: 6000
+stream_seed: 20261006
+train_backbone: true
+validation_rollouts: 100
+warmup: 100
+weight_decay: 0.01
+workers: 2

@@ -1,0 +1,54 @@
+{
+  "repository": "https://github.com/bytedance/Protenix",
+  "commit": "85767b811c40ed46e73a9b39519cf6bfca8701ba",
+  "changes": [
+    "Namespace imports changed from protenix to sparsa.vendor.protenix.",
+    "Empty package initializers; only the dependency closure for the retained native modules is included."
+  ],
+  "files": {
+    "model/modules/embedders.py": {
+      "upstream_sha256": "05e9e8d7bc8e9f917a6cadb3534b4b95764ea9968c19bc38d4743a29daf982f8",
+      "vendored_sha256": "d3a3c13198499e913beb29473a2ac2adaad2a35f3dfc6a72072892489f7e76fa"
+    },
+    "model/modules/primitives.py": {
+      "upstream_sha256": "48474abdd5b37a70f5d2579c0c2f1b2d2e6876961db7100f0eb9ebfad0198363",
+      "vendored_sha256": "6e214a5dc2d108a18d1e4af3afdf1d830b519d2df019cac44955e4265f25ccaf"
+    },
+    "model/modules/transformer.py": {
+      "upstream_sha256": "4d4d56b0fdf0f0fd6eff2cbcafd4a2f35b24f217746e671cac4e1238ae649ed6",
+      "vendored_sha256": "96a02dfab44d2b8dac68a7e61ddec6783d8212c562162424e488dd6e00a136ee"
+    },
+    "model/modules/pairformer.py": {
+      "upstream_sha256": "876b29a323ebf5a9929be0b8efa6b45027108640784a250e3ce446e39ccae2eb",
+      "vendored_sha256": "46e4c49321af45fd59913b9ed38761208f03dcfbf09a4734b43662920a95fde9"
+    },
+    "model/modules/fused_ops.py": {
+      "upstream_sha256": "89d80eae7d5fd688fac7c2c3f956de943022acd486427047eb1c584b0b58cd23",
+      "vendored_sha256": "89d80eae7d5fd688fac7c2c3f956de943022acd486427047eb1c584b0b58cd23"
+    },
+    "model/triangular/layers.py": {
+      "upstream_sha256": "1928d7fcb21750ce613949461ecd8ab5ff2323c19761be5b2d6f24064c3c1bbd",
+      "vendored_sha256": "b5c7ad1fb23170e9d03eacf6fb8589f88c624fcd8a117b6e80e5915942ffe348"
+    },
+    "model/triangular/triangular.py": {
+      "upstream_sha256": "4700a0abe41253a44a6504b1d11051010e5a67f9b63c29fd7535dfb033337ca2",
+      "vendored_sha256": "e93f1e38c5ffbf878536d27ac9f862c4c35eaf2eeaccdfda2ff4e00d2e813e3d"
+    },
+    "model/utils.py": {
+      "upstream_sha256": "81784461673c929002f59a43c4a8980e7c638a01e0d0a7d8ec14263b0c76f5ef",
+      "vendored_sha256": "e5a4876f649638ef5261e5b6c47827bab41ef4dbe662957f25b64b5b45ddba61"
+    },
+    "data/constants.py": {
+      "upstream_sha256": "10a526bd64e1206052c307239ff92109c245aec3d2c10e6ef0d4deae295092a4",
+      "vendored_sha256": "10a526bd64e1206052c307239ff92109c245aec3d2c10e6ef0d4deae295092a4"
+    },
+    "utils/scatter_utils.py": {
+      "upstream_sha256": "5a4683c560140529f2ffc9e948206d46d80586c2a06ca17a9d498fc2e8917dad",
+      "vendored_sha256": "5a4683c560140529f2ffc9e948206d46d80586c2a06ca17a9d498fc2e8917dad"
+    },
+    "utils/logger.py": {
+      "upstream_sha256": "d4597c92f044ea5a3c9954e44824928aeb7f6f222e0050754eb495025280995a",
+      "vendored_sha256": "d4597c92f044ea5a3c9954e44824928aeb7f6f222e0050754eb495025280995a"
+    }
+  }
+}

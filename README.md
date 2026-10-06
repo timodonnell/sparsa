@@ -1,7 +1,7 @@
 # Sparsa
 
 Protein residue-contact prediction from amino-acid sequence alone. We train
-models from scratch on [MarinFold](https://github.com/Open-Athena/MarinFold)'s
+models on [MarinFold](https://github.com/Open-Athena/MarinFold)'s
 curated AF2 and ESMFold2 contact maps, without MSAs or pretrained protein language
 model features as inputs.
 
@@ -48,6 +48,10 @@ G2/G3/G4 runs were retired. See the [plan](reports/pairformer_v1/PLAN.md) and
 tests removing gradient accumulation at the same global batch of 128. See the
 [exact diffusion setup](reports/pairformer_v1/diffusion_spec.md) and
 [Protenix transfer assessment](reports/protenix_transfer/feasibility.md).
+A [Protenix v1 pilot](reports/protenix_transfer/RUNNING.md) tests transferring its
+pretrained 48-block trunk, with a noisy-contact adapter at the recycling input,
+against frozen-backbone and full-fine-tuning branches. Runtime inputs remain
+sequence-only; the backbone has prior structural pretraining.
 
 ## Use
 
