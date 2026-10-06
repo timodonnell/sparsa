@@ -2,16 +2,19 @@
 
 ## October 6: 32-GPU N128 comparison
 
-Submitted at **13:53 UTC**, at Iris **batch priority**:
-`/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k-r1`. At 13:54 UTC it is
-**queued for four 8-H100 nodes**. Kueue could fit only one of four nodes; an
-independent allocation check also found only one fully free H100 node. No
-32-GPU training steps or throughput results are available yet.
+The **32-H100 N128 clone is training**, as of October 6, 14:00 UTC:
+`/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k-r1`, at Iris **batch priority**.
+It passed a real 32-rank NCCL collective, trained/saved at step 1,202, resumed
+through 1,204, and entered long training. Latest observed step: **1,220**.
+The most recent ten-step segment measured **8.49 s/step**, compared with
+**55.23 s/step** for the original 8-A100 run. This is an early measurement;
+the hardware change contributes to the difference.
 
-The original four runs have completed their launch validation and are training
-with the optimized implementation. The new run clones N128 at step **1,200**
-(153,600 historical crop exposures), preserving model, EMA, AdamW state and the
-300k learning-rate schedule. The archived checkpoint was verified by SHA-256.
+The clone branches N128 at step **1,200** (153,600 historical crop exposures),
+preserving model, EMA, AdamW state and the 300k learning-rate schedule. The
+archived checkpoint was verified by SHA-256. The original N128 service is
+confirmed active. The two cached Iris runs were preempted and awaiting capacity
+at the latest cluster check; their automatic resume remains configured.
 
 | | Original N128 | N128-32GPU |
 |---|---:|---:|
@@ -29,9 +32,9 @@ equivalent loss and gradients when a fixed batch is partitioned across 32 ranks.
 The hardware change also affects throughput, so any speedup against the A100
 baseline is not a pure GPU-count scaling result.
 
-Startup automatically checks a real 32-rank NCCL all-reduce, trains two steps,
-saves, resumes for two more, and audits all-rank data exposure before entering
-long training. The branch retains the fixed 97-protein validation split, 100
+The completed startup gate verified **154,112 total crop exposures** at step
+1,204: 153,600 inherited plus 512 new, with all 3,033 optimizer parameter states
+restored. It checks all-rank data exposure before entering long training. The branch retains the fixed 97-protein validation split, 100
 rollouts and evaluations every 10k optimizer steps. Checkpoints remain every
 100 steps; recovery preserves 32-rank RNG and data cursors.
 
@@ -40,7 +43,8 @@ Evidence: [parent checkpoint](n128_32gpu_parent.json),
 [active run manifest](active-runs.json). Implementation source: `0f83221`.
 **35 relevant CPU tests passed**, including loss partitioning, fork guardrails,
 exposure accounting and concurrent/interrupted checkpoint-cache downloads.
-The GPU startup gate is pending allocation.
+The GPU startup gate also passed. See the [resume audit](n128_32gpu_preflight.json)
+and [live launch evidence](n128_32gpu_launch.json).
 
 The [diffusion specification](diffusion_spec.md) documents the exact noise,
 loss, reverse sampler and scoring. The [Protenix assessment](../protenix_transfer/feasibility.md)

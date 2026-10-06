@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-06T13:55:07.065376+00:00",
+  "updated_utc": "2026-10-06T14:00:25.842865+00:00",
   "campaign": "pairformer_v1",
   "previous_series_retired": true,
   "runs": [
@@ -123,7 +123,10 @@
       "gradient_accumulation": 1,
       "stream_seed": 20261006,
       "stochastic_streams_restarted": true,
-      "previous_job": "/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k"
+      "previous_job": "/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k",
+      "restarted_from_step": 1200,
+      "startup_verified_utc": "2026-10-06T14:00:25.842865+00:00",
+      "parallelism_preflight_resumed_step": 1204
     }
   ]
 }

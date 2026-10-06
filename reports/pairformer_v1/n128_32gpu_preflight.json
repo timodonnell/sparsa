@@ -1,0 +1,35 @@
+{
+  "resumed_through_step": 1204,
+  "world_size": 32,
+  "global_data_counts": {
+    "residues": 33417744,
+    "positive_pairs": 26517248,
+    "proteins": 154112,
+    "afdb": 9136,
+    "esm": 144976
+  },
+  "inherited_data_counts": {
+    "residues": 33305445,
+    "positive_pairs": 26429941,
+    "proteins": 153600,
+    "afdb": 9109,
+    "esm": 144491
+  },
+  "optimizer_parameters": 3033,
+  "fork_metadata": {
+    "parent_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/n128-parallel-parent-1200/checkpoints/step-1200.pt",
+    "parent_world_size": 8,
+    "parent_step": 1200,
+    "stream_seed": 20261006,
+    "stochastic_streams_restarted": true,
+    "inherited_data_counts": {
+      "residues": 33305445,
+      "positive_pairs": 26429941,
+      "proteins": 153600,
+      "afdb": 9109,
+      "esm": 144491
+    }
+  },
+  "validation_split": "eval-val",
+  "held_out_used": false
+}

@@ -1,8 +1,8 @@
 {
-  "observed_utc": "2026-10-06T13:55:07.065376+00:00",
+  "observed_utc": "2026-10-06T14:01:02.131201+00:00",
   "job": "/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k-r1",
-  "state": "queued_for_four_nodes",
-  "training_started": false,
+  "state": "training",
+  "training_started": true,
   "source_commit": "0f83221143c2c4dc2ba3cc5ed4a9dc707a4419e2",
   "priority": "batch",
   "nodes": 4,
@@ -13,7 +13,126 @@
   "parent_step": 1200,
   "parent_sha256_verified": true,
   "relevant_cpu_tests_passed": 35,
-  "gpu_startup_gate": "pending allocation",
+  "gpu_startup_gate": "passed 32-rank collective and training/checkpoint/resume through step 1204",
   "held_out_used": false,
-  "capacity_observation": "Only one fully free 8-H100 node; four required. Kueue reports insufficient topology capacity."
+  "capacity_observation": "Four 8-H100 nodes allocated; long training started.",
+  "latest_observed_step": 1220,
+  "initial_training_log": [
+    {
+      "step": 1202,
+      "loss": 0.19080504775047302,
+      "grad_norm": 0.07707555592060089,
+      "lr": 1.6026666666666667e-05,
+      "seconds": 19.828176721930504,
+      "seconds_per_step": 9.914088360965252,
+      "examples": 153856,
+      "peak_gpu_gb": 21.481750011444092,
+      "timestep_counts": [
+        24.0,
+        14.0,
+        8.0,
+        17.0,
+        20.0,
+        14.0,
+        14.0,
+        17.0
+      ],
+      "rank0_data_digest": "4bfb65f8877f0c924d02c2766f2b1998ea09d6bd12b343b188d974b535454c4c",
+      "rank0_data_counts": {
+        "residues": 1643,
+        "positive_pairs": 1393,
+        "proteins": 8,
+        "afdb": 0,
+        "esm": 8
+      }
+    },
+    {
+      "step": 1204,
+      "loss": 0.19875851273536682,
+      "grad_norm": 0.08002004027366638,
+      "lr": 1.6053333333333334e-05,
+      "seconds": 18.922586797969416,
+      "seconds_per_step": 9.461293398984708,
+      "examples": 154112,
+      "peak_gpu_gb": 11.474501609802246,
+      "timestep_counts": [
+        16.0,
+        15.0,
+        12.0,
+        24.0,
+        20.0,
+        13.0,
+        18.0,
+        10.0
+      ],
+      "rank0_data_digest": "6fc3a41f29557f1d7989594652ba0f0276a7406ce4ac7224e2e61aa26e96fbd9",
+      "rank0_data_counts": {
+        "residues": 2552,
+        "positive_pairs": 2045,
+        "proteins": 16,
+        "afdb": 0,
+        "esm": 16
+      }
+    },
+    {
+      "step": 1210,
+      "loss": 0.19668634235858917,
+      "grad_norm": 0.0793694481253624,
+      "lr": 1.6133333333333334e-05,
+      "seconds": 52.847535912063904,
+      "seconds_per_step": 8.807922652010651,
+      "examples": 154880,
+      "peak_gpu_gb": 33.06813192367554,
+      "timestep_counts": [
+        15.0,
+        24.0,
+        10.0,
+        19.0,
+        15.0,
+        14.0,
+        15.0,
+        16.0
+      ],
+      "rank0_data_digest": "91609165a5dfa9fb8e26d9e5e2c495b6e49cad1358ca0a1d90fb566751819764",
+      "rank0_data_counts": {
+        "residues": 7095,
+        "positive_pairs": 5716,
+        "proteins": 40,
+        "afdb": 0,
+        "esm": 40
+      }
+    },
+    {
+      "step": 1220,
+      "loss": 0.19863948225975037,
+      "grad_norm": 0.08804064244031906,
+      "lr": 1.6266666666666665e-05,
+      "seconds": 137.70046771108173,
+      "seconds_per_step": 8.485293179901783,
+      "examples": 156160,
+      "peak_gpu_gb": 33.07204484939575,
+      "timestep_counts": [
+        20.0,
+        15.0,
+        18.0,
+        14.0,
+        13.0,
+        16.0,
+        18.0,
+        14.0
+      ],
+      "rank0_data_digest": "8b6ea7433bbd10247a03de8e2fcfad46575af938b7fb27a9ceb302dae587a37d",
+      "rank0_data_counts": {
+        "residues": 15455,
+        "positive_pairs": 12215,
+        "proteins": 80,
+        "afdb": 2,
+        "esm": 78
+      }
+    }
+  ],
+  "original_n128_service_confirmed_active": true,
+  "reference_a100_seconds_per_step": 55.23413590639829,
+  "latest_seconds_per_step": 8.485293179901783,
+  "early_speed_ratio_vs_8_a100": 6.509396285472558
 }
