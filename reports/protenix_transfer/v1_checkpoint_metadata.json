@@ -1,0 +1,25 @@
+{
+  "parameters_by_module": {
+    "input_embedder": 1041472,
+    "relative_position_encoding": 17792,
+    "template_embedder": 420224,
+    "msa_module": 3001024,
+    "pairformer_stack": 147400704,
+    "diffusion_module": 203257585,
+    "distogram_head": 8256,
+    "confidence_head": 12901966,
+    "linear_no_bias_sinit": 172416,
+    "linear_no_bias_zinit1": 49152,
+    "linear_no_bias_zinit2": 49152,
+    "linear_no_bias_token_bond": 128,
+    "linear_no_bias_z_cycle": 16384,
+    "linear_no_bias_s": 147456,
+    "layernorm_z_cycle": 256,
+    "layernorm_s": 768
+  },
+  "total_parameters": 368484735,
+  "upstream_commit": "85767b811c40ed46e73a9b39519cf6bfca8701ba",
+  "checkpoint_url": "https://protenix.tos-cn-beijing.volces.com/checkpoint/protenix_base_default_v1.0.0.pt",
+  "inspection": "HTTP-range checkpoint metadata only; tensors not loaded or executed",
+  "retained_backbone_parameters": 148895680
+}

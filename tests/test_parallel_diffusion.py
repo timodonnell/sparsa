@@ -116,3 +116,34 @@ def test_iris_identity_scopes_rendezvous_to_job_and_attempt():
             "IRIS_ADVERTISE_HOST": "192.0.2.2",
         }
     ) == {"job": "/user/job", "rank": 3, "attempt": 9, "nodes": 4, "host": "192.0.2.2"}
+
+
+def test_checkpoint_cache_downloads_once_and_recovers_partial(tmp_path, monkeypatch):
+    import shutil
+    from concurrent.futures import ThreadPoolExecutor
+
+    from sparsa import train_diffusion
+
+    source = tmp_path / "source.pt"
+    torch.save({"step": 1200, "weight": torch.arange(4)}, source)
+    calls = []
+
+    class Store:
+        def get_file(self, remote, local):
+            calls.append(remote)
+            if len(calls) == 1:
+                Path(local).write_bytes(b"incomplete download")
+                raise OSError("interrupted download")
+            shutil.copyfile(source, local)
+
+    monkeypatch.setenv("SPARSA_CHECKPOINT_CACHE", str(tmp_path / "cache"))
+    monkeypatch.setattr(train_diffusion, "storage", lambda uri: (Store(), uri))
+    uri = "s3://test/run/checkpoints/step-1200.pt"
+    with pytest.raises(OSError, match="interrupted"):
+        train_diffusion.load_checkpoint(uri)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        results = list(pool.map(train_diffusion.load_checkpoint, [uri] * 4))
+    assert len(calls) == 2
+    for result in results:
+        assert result["step"] == 1200
+        torch.testing.assert_close(result["weight"], torch.arange(4))

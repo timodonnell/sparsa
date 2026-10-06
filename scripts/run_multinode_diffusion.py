@@ -116,6 +116,7 @@ def main():
         str(args.eval_every),
     ]
     fs, root = storage(args.out)
+    gate_complete = fs.exists(root + "/parallelism_preflight.json")
     subprocess.run(
         launch
         + [
@@ -127,38 +128,39 @@ def main():
     )
     # Every node uses the same stages even if rank zero publishes latest.json
     # before another launcher gets here. Completed boundaries safely no-op.
-    for boundary in (args.fork_step + 2, args.fork_step + 4):
-        subprocess.run(train + ["--stop-after", str(boundary)], check=True)
-    if info["rank"] == 0:
-        latest = json.loads(fs.cat_file(root + "/latest.json"))
-        state = load_checkpoint(latest["checkpoint"])
-        if state["world_size"] != args.nodes * args.gpus_per_node:
-            raise ValueError("Resumed world size mismatch")
-        if (
-            state["training_config"]["logical_batch_size"]
-            != state["training_config"]["batch_size"]
-        ):
-            raise ValueError("This experiment must not accumulate gradients")
-        if (
-            state["fork_metadata"]["parent_step"] != args.fork_step
-            or state["step"] < args.fork_step + 4
-        ):
-            raise ValueError("Fork/resume gate used an unexpected parent or step")
-        counts = inherited_counts(state)
-        write_json(
-            args.out + "/parallelism_preflight.json",
-            {
-                "resumed_through_step": state["step"],
-                "world_size": state["world_size"],
-                "global_data_counts": counts,
-                "inherited_data_counts": state["inherited_data_counts"],
-                "optimizer_parameters": len(state["optimizer"]["state"]),
-                "fork_metadata": state["fork_metadata"],
-                "validation_split": "eval-val",
-                "held_out_used": False,
-            },
-        )
-        del state
+    if not gate_complete:
+        for boundary in (args.fork_step + 2, args.fork_step + 4):
+            subprocess.run(train + ["--stop-after", str(boundary)], check=True)
+        if info["rank"] == 0:
+            latest = json.loads(fs.cat_file(root + "/latest.json"))
+            state = load_checkpoint(latest["checkpoint"])
+            if state["world_size"] != args.nodes * args.gpus_per_node:
+                raise ValueError("Resumed world size mismatch")
+            if (
+                state["training_config"]["logical_batch_size"]
+                != state["training_config"]["batch_size"]
+            ):
+                raise ValueError("This experiment must not accumulate gradients")
+            if (
+                state["fork_metadata"]["parent_step"] != args.fork_step
+                or state["step"] < args.fork_step + 4
+            ):
+                raise ValueError("Fork/resume gate used an unexpected parent or step")
+            counts = inherited_counts(state)
+            write_json(
+                args.out + "/parallelism_preflight.json",
+                {
+                    "resumed_through_step": state["step"],
+                    "world_size": state["world_size"],
+                    "global_data_counts": counts,
+                    "inherited_data_counts": state["inherited_data_counts"],
+                    "optimizer_parameters": len(state["optimizer"]["state"]),
+                    "fork_metadata": state["fork_metadata"],
+                    "validation_split": "eval-val",
+                    "held_out_used": False,
+                },
+            )
+            del state
     # Other torchrun nodes wait for rank zero during process-group init.
     if args.stop_after:
         train += ["--stop-after", str(args.stop_after)]

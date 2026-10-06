@@ -439,6 +439,11 @@ def main():
                 conditioning_rng.set_state(local_rng["conditioning"])
             inherited_data_counts = state.get("inherited_data_counts", {})
             fork_metadata = state.get("fork_metadata")
+            if (
+                args.fork_from
+                and (fork_metadata or {}).get("parent_checkpoint") != args.fork_from
+            ):
+                raise ValueError("Resumed branch has a different parent checkpoint")
         else:
             inherited_data_counts = inherited_counts(state)
             fork_metadata = {

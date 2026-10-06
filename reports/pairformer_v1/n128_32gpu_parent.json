@@ -1,0 +1,25 @@
+{
+  "parent_step": 1200,
+  "parent_world_size": 8,
+  "global_batch_size": 128,
+  "checkpoint_sha256": "44f8f7e78964fce35bfc67873e52e06966f405e7d95a69de1fca0ea2e3a5c689",
+  "checkpoint_bytes": 2520289415,
+  "parent_crop_exposures": 153600,
+  "parent_residues": 33305445,
+  "parent_positive_pairs": 26429941,
+  "parent_teacher_counts": {
+    "afdb": 9109,
+    "esm": 144491
+  },
+  "stream_seed": 20261006,
+  "stochastic_streams_restarted": true,
+  "parent_validation_preflight": {
+    "completed_utc": "2026-10-05T18:39:21.839823+00:00",
+    "config_sha256": "261e1c755d54a146b14335ae88a6af0f62a4c1abdbd1871bf3304297e0032061",
+    "resumed_through_step": 4,
+    "full_validation_proteins": 97,
+    "rollouts": 100,
+    "held_out_used": false,
+    "metric_version": "fixed-r-v2"
+  }
+}
