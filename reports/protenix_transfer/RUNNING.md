@@ -1,5 +1,12 @@
 # Protenix v1 transfer pilot
 
+**Observed 2026-10-06:** launched on 16 H100s at batch priority. Native model
+checks and the 16-rank collective passed; training saved at step 2 and resumed
+through step 4. The cluster then preempted the job during the frozen-branch
+startup test. Iris has queued attempt 1 with zero application failures. The
+durable driver resumes the remaining branch checks before continuing warmup.
+No validation-quality result is available yet.
+
 The approved pilot transfers the native `protenix_base_default_v1.0.0` backbone
 (148,895,680 pretrained parameters), using a new contact/time adapter at its
 learned recycling projection and a symmetric binary contact head. One native
@@ -9,9 +16,9 @@ single-update parameters receive gradients.
 
 | Stage | Optimizer steps | Trainable parameters | Peak learning rates |
 |---|---:|---|---|
-| Shared warmup | 0–1,000 | Adapter and new head | 2e-4 |
-| Full fine-tuning | 1,000–6,000 | Entire retained backbone, adapter and head | Backbone 1e-5; new layers 2e-4 |
-| Frozen control | 1,000–6,000 | Adapter and new head | 2e-4 |
+| Shared warmup | 0–1,000 | Adapter and new head (101,250 parameters) | 2e-4 |
+| Full fine-tuning | 1,000–6,000 | Entire retained backbone, adapter and head (148,996,930) | Backbone 1e-5; new layers 2e-4 |
+| Frozen control | 1,000–6,000 | Adapter and new head (101,250 parameters) | 2e-4 |
 
 The two branches inherit **the same step-1,000 weights, EMA, optimizer, RNG and
 data position**. One 16-H100 Iris gang runs the stages sequentially at **batch
@@ -50,11 +57,15 @@ Initialization loads all 2,840 retained tensor keys strictly, at unchanged FP32
 precision. [Checkpoint hashes](initialization.json) and
 [pretraining overlap audit](overlap_audit.json) are recorded.
 
-Local GPU checks passed for adapter gradients through the frozen trunk, full
-backbone gradients, exact padding invariance and symmetric predictions. Before
-long training, the cluster driver additionally tests full-crop gradients,
-longest-validation rollouts, actual DDP checkpoint/resume, and branch/resume data
-digests and optimizer-state separation. Any failed stage stops the driver.
+Local and H100 GPU checks passed for adapter gradients through the frozen trunk,
+full-backbone gradients, exact padding invariance and symmetric predictions. The
+H100 full-crop, two-protein fine-tuning microbatch took 8.13 seconds and peaked at
+13.0 GB; four complete eight-step rollouts of the longest validation protein
+(761 residues) took 119.9 seconds and peaked at 20.3 GB. These are preflight
+measurements, not steady-state optimizer-step times. See [evidence](preflight.json).
+Before long training, the driver also tests actual DDP checkpoint/resume and
+branch/resume data digests and optimizer-state separation. Any failed stage stops
+the driver.
 
 The public pre-2021-09-30 training index has no exact PDB-ID overlap with the 97
 validation proteins. This is a regenerated public index; it does not prove

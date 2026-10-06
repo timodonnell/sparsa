@@ -1,0 +1,69 @@
+{
+  "job": "/bizon/sparsa-protenix-v1-pilot-s23-r1",
+  "dashboard": "https://iris-cw-rno2a.oa.dev/#/job/%2Fbizon%2Fsparsa-protenix-v1-pilot-s23-r1",
+  "submitted_utc": "2026-10-06T14:32:54Z",
+  "observed_utc": "2026-10-06T14:44:53.437948+00:00",
+  "status": "queued_after_preemption",
+  "priority": "batch",
+  "nodes": 2,
+  "gpus_per_node": 8,
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "world_size": 16,
+  "source_commit": "f3478fcc6ba78d078985e5c708cf0b372db030a7",
+  "output_root": "s3://marin-us-east-02a/marin/protein-structure/sparsa/protenix-v1/pilot-s23",
+  "global_batch": 128,
+  "warmup_steps": 1000,
+  "branch_additional_steps": 5000,
+  "branches": [
+    "finetune",
+    "frozen"
+  ],
+  "selection_split": "eval-val",
+  "validation_proteins": 97,
+  "rollouts": 100,
+  "held_out_used": false,
+  "tests": {
+    "unit_tests_passed": 116,
+    "local_gpu_padding_symmetry_adapter_and_full_gradients": "passed",
+    "uploaded_backbone_sha256": "cc9b6048c01739561bf95f75c3a664a9ef2a86e07352f125f4f33cbf662b0209",
+    "cluster_model_preflight": "passed",
+    "distributed_16_gpu_collective": "passed",
+    "warmup_save_at_2_resume_through_4": "passed",
+    "branch_save_and_resume": "pending_automatic_retry"
+  },
+  "model_parameters": 148996930,
+  "warmup_trainable_parameters": 101250,
+  "warmup_checkpoint_step": 4,
+  "iris_failures": 0,
+  "iris_preemptions": 1,
+  "current_attempt": 1,
+  "resume_stage": "gate-frozen-5",
+  "last_training_metrics": {
+    "step": 4,
+    "loss": 0.4139325022697449,
+    "grad_norm": 0.305563747882843,
+    "lr": 8.000000000000001e-06,
+    "seconds": 35.563433641102165,
+    "seconds_per_step": 17.781716820551082,
+    "examples": 512,
+    "peak_gpu_gb": 6.479855060577393,
+    "timestep_counts": [
+      16.0,
+      18.0,
+      14.0,
+      15.0,
+      22.0,
+      16.0,
+      10.0,
+      17.0
+    ],
+    "rank0_data_digest": "48db6f6e54eca2cf9127b0471d7ad7e84e2e9d91a001ef77761b321101ead0d2",
+    "rank0_data_counts": {
+      "residues": 5666,
+      "positive_pairs": 4535,
+      "proteins": 32,
+      "afdb": 1,
+      "esm": 31
+    }
+  }
+}
