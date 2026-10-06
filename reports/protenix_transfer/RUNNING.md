@@ -1,11 +1,18 @@
 # Protenix v1 transfer pilot
 
-**Observed 2026-10-06:** launched on 16 H100s at batch priority. Native model
-checks and the 16-rank collective passed; training saved at step 2 and resumed
-through step 4. The cluster then preempted the job during the frozen-branch
-startup test. Iris has queued attempt 1 with zero application failures. The
-durable driver resumes the remaining branch checks before continuing warmup.
-No validation-quality result is available yet.
+**Observed October 6, 2026, 17:17 UTC:** the pilot recovered from its one
+cluster preemption and is training on 16 H100s at batch priority, with zero
+application failures. Latest logged warmup step **460 / 1,000** (58,880 teacher
+crop presentations); latest verified saved checkpoint **400**. Recent throughput
+is approximately **16.7 seconds/step**. Training loss declined from 0.414 at step
+4 to about 0.21–0.23 recently; this is not a validation-quality measurement.
+
+All startup gates passed, including frozen and full-fine-tuning branches saved
+at step 5 and resumed to step 6. Their 16 rank data digests match exactly; optimizer
+state covers 17 adapter/head tensors in the frozen branch and 2,857 tensors in the
+full branch. See [branch/resume evidence](branch-resume.json). The first full
+97-protein × 100-rollout validation follows warmup step 1,000; neither long
+5,000-step branch has started yet.
 
 The approved pilot transfers the native `protenix_base_default_v1.0.0` backbone
 (148,895,680 pretrained parameters), using a new contact/time adapter at its

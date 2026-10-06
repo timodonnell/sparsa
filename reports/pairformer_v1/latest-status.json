@@ -1,0 +1,192 @@
+{
+  "observed_utc": "2026-10-06T17:18:03.246338+00:00",
+  "selection_split": "eval-val",
+  "held_out_used": false,
+  "runs": [
+    {
+      "model": "pf-c128",
+      "hardware": "8 x H100 80GB",
+      "status": "running",
+      "latest_logged_step": 1630,
+      "checkpoint_step": 1600,
+      "last_training_metrics": {
+        "step": 1630,
+        "loss": 0.19030587375164032,
+        "grad_norm": 0.15215004980564117,
+        "lr": 2.1733333333333334e-05,
+        "seconds": 7729.382948326878,
+        "seconds_per_step": 33.48412131769582,
+        "examples": 208640,
+        "peak_gpu_gb": 33.686267375946045,
+        "timestep_counts": [
+          10.0,
+          27.0,
+          14.0,
+          11.0,
+          18.0,
+          20.0,
+          15.0,
+          13.0
+        ],
+        "rank0_data_digest": "8dfbb9b5bcba04bb4378257014d2d0432c42808b8da95ab4ae5828e147b4da93",
+        "rank0_data_counts": {
+          "residues": 5656131,
+          "positive_pairs": 4493183,
+          "proteins": 26080,
+          "afdb": 1606,
+          "esm": 24474
+        }
+      },
+      "complete_scientific_validations": 0,
+      "pod_phase": "Running"
+    },
+    {
+      "model": "pf-c256",
+      "hardware": "8 x H100 80GB",
+      "status": "running",
+      "latest_logged_step": 920,
+      "checkpoint_step": 900,
+      "last_training_metrics": {
+        "step": 920,
+        "loss": 0.19635771214962006,
+        "grad_norm": 0.1175755113363266,
+        "lr": 1.2266666666666667e-05,
+        "seconds": 1022.9611727830488,
+        "seconds_per_step": 51.06293143678922,
+        "examples": 117760,
+        "peak_gpu_gb": 62.05491018295288,
+        "timestep_counts": [
+          16.0,
+          15.0,
+          18.0,
+          17.0,
+          16.0,
+          16.0,
+          16.0,
+          14.0
+        ],
+        "rank0_data_digest": "34a4c14c970bea488ab5e84d92b33ce555549d8d09a284b1bd725f1241c28719",
+        "rank0_data_counts": {
+          "residues": 3200932,
+          "positive_pairs": 2545133,
+          "proteins": 14720,
+          "afdb": 921,
+          "esm": 13799
+        }
+      },
+      "complete_scientific_validations": 0,
+      "pod_phase": "Running"
+    },
+    {
+      "model": "pf-n128",
+      "hardware": "8 x A100-SXM4-80GB",
+      "status": "running",
+      "latest_logged_step": 1470,
+      "checkpoint_step": 1400,
+      "last_training_metrics": {
+        "step": 1470,
+        "loss": 0.18420085310935974,
+        "grad_norm": 0.14904367923736572,
+        "lr": 1.9600000000000002e-05,
+        "seconds": 81103.09164801199,
+        "seconds_per_step": 55.202131191495575,
+        "examples": 188160,
+        "peak_gpu_gb": 33.62103033065796,
+        "timestep_counts": [
+          22.0,
+          18.0,
+          11.0,
+          16.0,
+          11.0,
+          22.0,
+          12.0,
+          16.0
+        ],
+        "rank0_data_digest": "c8bccd9edb894d664404afc1d1eb3e84993abbdc55ca50f9ab55671444bf8f6a",
+        "rank0_data_counts": {
+          "residues": 5106736,
+          "positive_pairs": 4057051,
+          "proteins": 23520,
+          "afdb": 1474,
+          "esm": 22046
+        }
+      },
+      "complete_scientific_validations": 0,
+      "service": "NRestarts=0\nActiveState=active\nSubState=running\n"
+    },
+    {
+      "model": "pf-n256",
+      "hardware": "8 x A100-SXM4-80GB",
+      "status": "running",
+      "latest_logged_step": 830,
+      "checkpoint_step": 800,
+      "last_training_metrics": {
+        "step": 830,
+        "loss": 0.21532641351222992,
+        "grad_norm": 0.1109439954161644,
+        "lr": 1.1066666666666667e-05,
+        "seconds": 76376.076239335,
+        "seconds_per_step": 92.28293162109912,
+        "examples": 106240,
+        "peak_gpu_gb": 62.00266742706299,
+        "timestep_counts": [
+          13.0,
+          17.0,
+          11.0,
+          19.0,
+          16.0,
+          19.0,
+          24.0,
+          9.0
+        ],
+        "rank0_data_digest": "812cbe6fe9584196dd4309b10307ea293e4e738b52e87b9c6630b857871fbdd3",
+        "rank0_data_counts": {
+          "residues": 2889189,
+          "positive_pairs": 2296585,
+          "proteins": 13280,
+          "afdb": 825,
+          "esm": 12455
+        }
+      },
+      "complete_scientific_validations": 0,
+      "service": "NRestarts=0\nActiveState=active\nSubState=running\n"
+    },
+    {
+      "model": "pf-n128-32gpu",
+      "hardware": "32 x H100 80GB",
+      "status": "running",
+      "latest_logged_step": 2600,
+      "checkpoint_step": 2500,
+      "last_training_metrics": {
+        "step": 2600,
+        "loss": 0.18822656571865082,
+        "grad_norm": 0.1324010044336319,
+        "lr": 3.466666666666667e-05,
+        "seconds": 11948.412577079027,
+        "seconds_per_step": 8.423951355495955,
+        "examples": 332800,
+        "peak_gpu_gb": 33.07204532623291,
+        "timestep_counts": [
+          17.0,
+          11.0,
+          18.0,
+          14.0,
+          11.0,
+          16.0,
+          22.0,
+          19.0
+        ],
+        "rank0_data_digest": "c204b4541fa90a7d277cdeee40e63da3a13cc978ee0a4ce0df8e64196bcbadbd",
+        "rank0_data_counts": {
+          "residues": 1218171,
+          "positive_pairs": 965208,
+          "proteins": 5600,
+          "afdb": 306,
+          "esm": 5294
+        }
+      },
+      "complete_scientific_validations": 0,
+      "pod_phase": "Running"
+    }
+  ]
+}

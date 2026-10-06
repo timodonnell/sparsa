@@ -1,5 +1,26 @@
 # Pairformer campaign status
 
+## October 6: 17:17 UTC update
+
+All five from-scratch Pairformer runs are actively training. These are latest
+**logged** steps; checkpoints are saved every 100 steps.
+
+| Run | Latest logged step | Hardware | Recent seconds/step |
+|---|---:|---|---:|
+| N128-32GPU | 2,600 | 32 H100 | 8.42 |
+| N128 | 1,470 | 8 dedicated A100 | 55.20 |
+| N256 | 830 | 8 dedicated A100 | 92.28 |
+| C128 | 1,630 | 8 H100 | 33.48 |
+| C256 | 920 | 8 H100 | 51.06 |
+
+No run has reached its first scheduled 10k-step scientific evaluation. The
+[Protenix transfer pilot](../protenix_transfer/RUNNING.md) is also training: step
+460 of its 1,000-step adapter/head warmup on 16 H100s. Its real branch/resume gates
+passed after automatic recovery from one cluster preemption. First transfer
+validation is at step 1,000; no transfer accuracy result is available yet.
+
+Current measurements: [latest status](latest-status.json).
+
 ## October 6: 32-GPU N128 comparison
 
 The **32-H100 N128 clone is training**, as of October 6, 14:00 UTC:
