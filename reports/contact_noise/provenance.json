@@ -1,0 +1,48 @@
+{
+  "config": "configs/protenix_v1_frozen.yaml",
+  "config_sha256": "1d1bba1c8b2118c2955c75b461dfa92a075abf89c517c2f8763b9957cf5fe315",
+  "seed": 20261006,
+  "proteins": [
+    "7y54_A",
+    "8baq_A",
+    "8daj_A"
+  ],
+  "split": "eval-val",
+  "held_out_used": false,
+  "selection": "Three fully resolved validation proteins at approximately 100, 200 and 300 residues; no model predictions used.",
+  "sampling": "Independent production BinaryDiffusion.sample_forward draw from q(x_t | x_0) at each t; not a connected forward trajectory.",
+  "alpha_bar": [
+    1.0,
+    0.9578046202659607,
+    0.8470121622085571,
+    0.6842265725135803,
+    0.49384358525276184,
+    0.3043949007987976,
+    0.1442721039056778,
+    0.037471953779459,
+    0.0
+  ],
+  "priors": [
+    0.02500000037252903,
+    0.01600000075995922,
+    0.004999999888241291
+  ],
+  "prior_separations": [
+    "6\u201311",
+    "12\u201323",
+    "24+"
+  ],
+  "contact_definition": "Native-amino-acid ConFind degree >= 0.001 and separation >= 6.",
+  "display": "Symmetric binary maps; gray excludes unresolved residues and separation < 6; blue shared with truth, orange absent from truth.",
+  "benchmark_sha256": {
+    "marinfold_baselines.csv": "0c0093b37d34935c089bc34cc7cdbfe9f546727bd37402a91817f7753bee9b2f",
+    "marinfold_step363000.provenance.json": "2daab040da16218563de58700cc37a3519ab6667571113a3f3fb60e668c007e0",
+    "gt_universe_scored.jsonl": "f30c23e3d2fbab245755fc01548388b41730ddfa45da87325539698cadb153e5",
+    "marinfold_step363000.csv": "6b2ba35d6b2c7be6333411fea807f921539211447280dfc8bbf7ce1b5929411c",
+    "provenance.json": "e30fff5c6aa76f23392b4f8104474117a8652e64f8349468d899ba53aff9bfd5",
+    "eval_sets.csv": "b13d060a091240921bc8466acecc9fa6ccbb45a56de4efda02cd903f6abf9861"
+  },
+  "script_sha256": "238692635c581c415c3cfd6048c0b50da83b90463f4e05f48283c8516f83c066",
+  "diffusion_code_sha256": "b859531e21417943a7e277e82ed0845004f3c4e5318b9bd046fcbb6f63b867b6",
+  "torch_version": "2.10.0+cu128"
+}
