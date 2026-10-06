@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import copy
+import fcntl
+import hashlib
 import io
 import json
 import math
@@ -71,6 +73,26 @@ def save_checkpoint(uri, state):
 
 def load_checkpoint(uri):
     fs, path = storage(uri)
+    cache = os.getenv("SPARSA_CHECKPOINT_CACHE")
+    if cache and uri.startswith("s3://"):
+        directory = Path(cache)
+        directory.mkdir(parents=True, exist_ok=True)
+        target = directory / (hashlib.sha256(uri.encode()).hexdigest() + ".pt")
+        # Eight local ranks share one download. Checkpoints are immutable URIs.
+        with (directory / ".download.lock").open("w") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            if not target.exists():
+                partial = target.with_suffix(".partial")
+                fs.get_file(path, str(partial))
+                os.replace(partial, target)
+            handle = target.open("rb")
+            for old in sorted(directory.glob("*.pt"), key=lambda p: p.stat().st_mtime)[
+                :-2
+            ]:
+                if old != target:
+                    old.unlink(missing_ok=True)
+        with handle:
+            return torch.load(handle, map_location="cpu", weights_only=False)
     with fs.open(path, "rb") as handle:
         return torch.load(handle, map_location="cpu", weights_only=False)
 
@@ -105,6 +127,74 @@ def training_configs_compatible(saved, current):
     saved.pop("checkpoint_every", None)
     current.pop("checkpoint_every", None)
     return saved == current
+
+
+def validate_parallel_fork(state, cfg, world):
+    """A new stochastic branch with unchanged model, optimizer recipe and batch."""
+    saved = state["training_config"]
+    runtime_keys = {
+        "logical_batch_size",
+        "data_root",
+        "execution_backend",
+        "stream_seed",
+        "ranking_group_size",
+    }
+    if {k: v for k, v in saved.items() if k not in runtime_keys} != {
+        k: v for k, v in cfg.items() if k not in runtime_keys
+    }:
+        raise ValueError("Parallel fork may change only runtime and stream settings")
+    if (
+        saved["logical_batch_size"] * state["world_size"]
+        != cfg["logical_batch_size"] * world
+    ):
+        raise ValueError("Parallel fork must preserve global batch size")
+    if saved["logical_batch_size"] * saved.get("ranking_group_size", 1) != cfg[
+        "logical_batch_size"
+    ] * cfg.get("ranking_group_size", 1):
+        raise ValueError("Parallel fork must preserve ranking normalization group size")
+    if cfg.get("stream_seed", cfg["seed"]) == saved.get("stream_seed", saved["seed"]):
+        raise ValueError("Parallel fork requires an explicit new stream seed")
+    if len(state["rng"]) != state["world_size"]:
+        raise ValueError("Incomplete parent checkpoint rank state")
+
+
+def inherited_counts(state):
+    counts = dict(state.get("inherited_data_counts", {}))
+    for rank in state["rng"]:
+        for key, value in rank["data_counts"].items():
+            counts[key] = counts.get(key, 0) + value
+    expected = (
+        state["step"]
+        * state["world_size"]
+        * state["training_config"]["logical_batch_size"]
+    )
+    if counts.get("proteins") != expected:
+        raise ValueError("Parent checkpoint data exposure mismatch")
+    return counts
+
+
+def relocate_sources(provenance, cfg):
+    old = (
+        provenance["training_config"]
+        .get("data_root", ROOT)
+        .removeprefix("file://")
+        .rstrip("/")
+    )
+    new = cfg.get("data_root", ROOT).rstrip("/")
+    result = {}
+    for source, paths in provenance["source_files"].items():
+        paths = [path.removeprefix("file://") for path in paths]
+        if not all(path.startswith(old + "/") for path in paths):
+            raise ValueError("Source file outside frozen parent data root")
+        result[source] = [new + path[len(old) :] for path in paths]
+    return result
+
+
+def ranking_normalization(positive_counts, rank, group_size, accumulation):
+    """Keep the original 16-protein ranking denominator after distributing micros."""
+    start = rank // group_size * group_size
+    count = sum(positive_counts[start : start + group_size])
+    return max(1, count) / group_size / accumulation
 
 
 def validation_prefix(out, step):
@@ -206,6 +296,10 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--auto-resume", action="store_true")
     parser.add_argument("--resume")
+    parser.add_argument(
+        "--fork-from",
+        help="Branch weights, EMA, optimizer and step; start fresh data/noise streams",
+    )
     parser.add_argument("--validate-on-resume", action="store_true")
     parser.add_argument(
         "--eval-every",
@@ -255,10 +349,17 @@ def main():
             raise ValueError(
                 "Existing pre-checkpoint run has a different configuration"
             )
+        if (
+            args.fork_from
+            and (existing.get("fork_metadata") or {}).get("parent_checkpoint")
+            != args.fork_from
+        ):
+            raise ValueError("Existing pre-checkpoint run has a different parent")
     elif provenance_exists and not args.resume:
         raise ValueError("Output run already exists; use auto-resume or a new name")
 
     seed = int(cfg.get("seed", 17))
+    stream_seed = int(cfg.get("stream_seed", seed))
     torch.manual_seed(seed)
     random.seed(seed + rank)
     np.random.seed(seed + rank)
@@ -276,9 +377,11 @@ def main():
         weight_decay=cfg.get("weight_decay", 0.01),
         fused=True,
     )
-    diffusion_rng = torch.Generator(device=device).manual_seed(seed + 7919 * rank + 101)
+    diffusion_rng = torch.Generator(device=device).manual_seed(
+        stream_seed + 7919 * rank + 101
+    )
     conditioning_rng = torch.Generator(device=device).manual_seed(
-        seed + 7919 * rank + 303
+        stream_seed + 7919 * rank + 303
     )
     self_condition_probability = float(cfg.get("self_condition_probability", 0.5))
     if not 0 <= self_condition_probability <= 1:
@@ -299,39 +402,72 @@ def main():
         "esm": 0,
     }
     frozen_shards = None
+    inherited_data_counts = {}
+    fork_metadata = None
     history = []
 
-    if args.resume:
-        state = load_checkpoint(args.resume)
+    checkpoint = args.resume or args.fork_from
+    if checkpoint:
+        state = load_checkpoint(checkpoint)
         if state.get("format_version") != 3:
             raise ValueError("Not a resumable diffusion checkpoint")
         if asdict(DiffusionModelConfig(**state["model_config"])) != asdict(
             model_config
         ):
             raise ValueError("Resume architecture mismatch")
-        if not training_configs_compatible(state["training_config"], cfg):
+        if args.resume and not training_configs_compatible(
+            state["training_config"], cfg
+        ):
             raise ValueError("Resume training configuration mismatch")
-        if state["world_size"] != world:
+        if args.resume and state["world_size"] != world:
             raise ValueError("Resume must preserve world size")
+        if not args.resume:
+            validate_parallel_fork(state, cfg, world)
         model.load_state_dict(state["model"])
         ema.load_state_dict(state["ema"])
         optimizer.load_state_dict(state["optimizer"])
         step = int(state["step"])
-        local_rng = state["rng"][rank]
-        data_states = local_rng["data_states"]
-        data_digest = local_rng["data_digest"]
-        data_counts = local_rng["data_counts"]
-        torch.set_rng_state(local_rng["cpu"])
-        torch.cuda.set_rng_state(local_rng["cuda"])
-        diffusion_rng.set_state(local_rng["diffusion"])
-        if "conditioning" in local_rng:
-            conditioning_rng.set_state(local_rng["conditioning"])
-        provenance_uri = args.resume.rsplit("/checkpoints/", 1)[0] + "/provenance.json"
+        if args.resume:
+            local_rng = state["rng"][rank]
+            data_states = local_rng["data_states"]
+            data_digest = local_rng["data_digest"]
+            data_counts = local_rng["data_counts"]
+            torch.set_rng_state(local_rng["cpu"])
+            torch.cuda.set_rng_state(local_rng["cuda"])
+            diffusion_rng.set_state(local_rng["diffusion"])
+            if "conditioning" in local_rng:
+                conditioning_rng.set_state(local_rng["conditioning"])
+            inherited_data_counts = state.get("inherited_data_counts", {})
+            fork_metadata = state.get("fork_metadata")
+        else:
+            inherited_data_counts = inherited_counts(state)
+            fork_metadata = {
+                "parent_checkpoint": checkpoint,
+                "parent_world_size": state["world_size"],
+                "parent_step": step,
+                "stream_seed": stream_seed,
+                "stochastic_streams_restarted": True,
+                "inherited_data_counts": inherited_data_counts,
+            }
+        provenance_uri = checkpoint.rsplit("/checkpoints/", 1)[0] + "/provenance.json"
         pfs, ppath = storage(provenance_uri)
         provenance = json.loads(pfs.cat_file(ppath))
-        frozen_shards = provenance["source_files"]
+        frozen_shards = (
+            provenance["source_files"]
+            if args.resume
+            else relocate_sources(provenance, cfg)
+        )
+        if (
+            not args.resume
+            and rank == 0
+            and inventory(cfg.get("data_root", ROOT)) != frozen_shards
+        ):
+            raise ValueError(
+                "Fork target inventory differs from frozen parent inventory"
+            )
         if fs.exists(out_path + "/training_log.json"):
             history = json.loads(fs.cat_file(out_path + "/training_log.json"))
+        del state
 
     shards = (
         (frozen_shards or inventory(cfg.get("data_root", ROOT))) if rank == 0 else None
@@ -366,6 +502,7 @@ def main():
             "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "selection_split": "eval-val",
             "held_out_used": False,
+            "fork_metadata": fork_metadata,
         }
         write_json(args.out + "/provenance.json", provenance)
         print(
@@ -380,6 +517,7 @@ def main():
             {
                 "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "resumed_from": args.resume,
+                "fork_metadata": fork_metadata,
                 "resumed_step": step,
                 "checkpoint_every": int(cfg.get("checkpoint_every", 1000)),
                 "world_size": world,
@@ -413,17 +551,21 @@ def main():
     if logical_size % micro_size:
         raise ValueError("Logical batch must divide into equal microbatches")
     accumulation = logical_size // micro_size
+    ranking_group_size = int(cfg.get("ranking_group_size", 1))
+    if ranking_group_size < 1 or world % ranking_group_size:
+        raise ValueError("Ranking groups must partition the distributed world")
     dataset = TeacherBatches(
         shards,
         logical_size,
         int(cfg["crop"]),
-        seed,
+        stream_seed,
         rank,
         world,
-        consumed=step,
+        consumed=step - (fork_metadata["parent_step"] if fork_metadata else 0),
         limit_shards=cfg.get("limit_shards", 0),
         states=data_states,
-        total_batches=int(cfg["steps"]),
+        total_batches=int(cfg["steps"])
+        - (fork_metadata["parent_step"] if fork_metadata else 0),
         afdb_probability=cfg.get("afdb_probability", 0.5),
     )
     loader = DataLoader(
@@ -475,12 +617,18 @@ def main():
         data_counts["proteins"] += len(logical["ids"])
         for source in ("afdb", "esm"):
             data_counts[source] += logical["sources"].count(source)
-        positive_proteins = max(
-            1,
-            int(
-                (((logical["targets"] > 0.5) & logical["mask"]).flatten(1).any(1)).sum()
-            ),
+        positive_proteins = int(
+            (((logical["targets"] > 0.5) & logical["mask"]).flatten(1).any(1)).sum()
         )
+        if ranking_group_size > 1:
+            counts = torch.tensor([positive_proteins], device=device, dtype=torch.long)
+            all_counts = torch.empty(world, device=device, dtype=torch.long)
+            dist.all_gather_into_tensor(all_counts, counts)
+            rank_normalizer = ranking_normalization(
+                all_counts.tolist(), rank, ranking_group_size, accumulation
+            )
+        else:
+            rank_normalizer = max(1, positive_proteins) / accumulation
         total_loss = torch.zeros((), device=device)
         timestep_counts = torch.zeros(model_config.diffusion_steps, device=device)
         for micro, batch in enumerate(microbatches(logical, micro_size)):
@@ -547,7 +695,7 @@ def main():
                         logits,
                         target,
                         mask,
-                        positive_proteins / accumulation,
+                        rank_normalizer,
                     )
                 loss = loss / accumulation
             loss.backward()
@@ -626,6 +774,8 @@ def main():
                         "training_config": cfg,
                         "world_size": world,
                         "rng": states,
+                        "inherited_data_counts": inherited_data_counts,
+                        "fork_metadata": fork_metadata,
                     },
                 )
                 write_json(args.out + "/latest.json", {"step": step, "checkpoint": uri})

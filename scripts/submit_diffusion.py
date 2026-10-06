@@ -13,6 +13,9 @@ def main():
     parser.add_argument("--config", required=True)
     parser.add_argument("--out")
     parser.add_argument("--gpus", type=int, default=8)
+    parser.add_argument("--nodes", type=int, default=1)
+    parser.add_argument("--fork-from")
+    parser.add_argument("--fork-step", type=int)
     parser.add_argument("--timeout", type=int, default=86400)
     parser.add_argument("--max-retries", type=int, default=2)
     parser.add_argument("--eval-every", type=int, default=10000)
@@ -27,6 +30,20 @@ def main():
     args = parser.parse_args()
     if args.gpus not in (1, 2, 4, 8):
         raise ValueError("Expected a single-node GPU count")
+    if args.nodes < 1:
+        raise ValueError("Node count must be positive")
+    if args.nodes > 1 and (not args.fork_from or args.fork_step is None):
+        raise ValueError(
+            "Multi-node experiments require a pinned fork checkpoint and step"
+        )
+    if args.nodes == 1 and (args.fork_from or args.fork_step is not None):
+        raise ValueError("Fork arguments require the multi-node launcher")
+    if args.nodes > 1 and (
+        args.pairformer_preflight
+        or args.smoke_validation_limit
+        or args.validate_on_resume
+    ):
+        raise ValueError("Multi-node experiments use their own fork/resume gate")
     root = Path(__file__).resolve().parents[1]
     out = args.out or (
         "s3://marin-us-east-02a/marin/protein-structure/sparsa/diffusion-v1/"
@@ -43,6 +60,8 @@ def main():
         "--enable-extra-resources",
         "--gpu",
         f"H100x{args.gpus}",
+        "--replicas",
+        str(args.nodes),
         "--cpu",
         str(args.gpus * 6),
         "--memory",
@@ -93,6 +112,25 @@ def main():
             "--eval-every",
             str(args.eval_every),
         ]
+    if args.nodes > 1:
+        command = command[: command.index("--") + 1] + [
+            "python",
+            "scripts/run_multinode_diffusion.py",
+            "--config",
+            args.config,
+            "--out",
+            out,
+            "--nodes",
+            str(args.nodes),
+            "--gpus-per-node",
+            str(args.gpus),
+            "--fork-from",
+            args.fork_from,
+            "--fork-step",
+            str(args.fork_step),
+            "--eval-every",
+            str(args.eval_every),
+        ]
     result = subprocess.run(
         command, cwd=root, check=False, capture_output=True, text=True
     )
@@ -103,6 +141,8 @@ def main():
         "output": out,
         "command": command,
         "priority": "batch",
+        "nodes": args.nodes,
+        "gpus_per_node": args.gpus,
         "submitted_utc": datetime.now(UTC).isoformat(),
         "stdout": result.stdout,
     }
