@@ -37,13 +37,13 @@ def iris_identity(environ):
     }
 
 
-def rendezvous(info, out):
+def rendezvous(info, out, stage):
     from sparsa.train import storage
     from sparsa.train_diffusion import write_json
 
     # Job-scoped and attempt-scoped: never join a previous gang's rank zero.
     job_key = hashlib.sha256(info["job"].encode()).hexdigest()[:16]
-    uri = out + f"/rendezvous/{job_key}-attempt-{info['attempt']}.json"
+    uri = out + f"/rendezvous/{job_key}-attempt-{info['attempt']}-{stage}.json"
     fs, path = storage(uri)
     if info["rank"] == 0:
         with socket.socket() as sock:
@@ -88,21 +88,28 @@ def main():
     os.environ.setdefault("NCCL_DEBUG", "WARN")
     os.environ.setdefault("TORCH_NCCL_ASYNC_ERROR_HANDLING", "1")
     os.environ.setdefault("OMP_NUM_THREADS", "4")
-    endpoint = rendezvous(info, args.out)
-    print(
-        "TORCH_RENDEZVOUS "
-        + json.dumps(
-            {
-                "node_rank": info["rank"],
-                "nodes": args.nodes,
-                "endpoint": endpoint,
-                "attempt": info["attempt"],
-            }
-        ),
-        flush=True,
-    )
-    launch = torchrun_command(args.nodes, args.gpus_per_node, info["rank"], endpoint)
-    train = launch + [
+
+    def run_stage(stage, arguments):
+        endpoint = rendezvous(info, args.out, stage)
+        print(
+            "TORCH_RENDEZVOUS "
+            + json.dumps(
+                {
+                    "stage": stage,
+                    "node_rank": info["rank"],
+                    "nodes": args.nodes,
+                    "endpoint": endpoint,
+                    "attempt": info["attempt"],
+                }
+            ),
+            flush=True,
+        )
+        launch = torchrun_command(
+            args.nodes, args.gpus_per_node, info["rank"], endpoint
+        )
+        subprocess.run(launch + arguments, check=True)
+
+    train = [
         "-m",
         "sparsa.train_diffusion",
         "--config",
@@ -117,20 +124,19 @@ def main():
     ]
     fs, root = storage(args.out)
     gate_complete = fs.exists(root + "/parallelism_preflight.json")
-    subprocess.run(
-        launch
-        + [
+    run_stage(
+        "collective",
+        [
             "scripts/check_distributed.py",
             "--world-size",
             str(args.nodes * args.gpus_per_node),
         ],
-        check=True,
     )
     # Every node uses the same stages even if rank zero publishes latest.json
     # before another launcher gets here. Completed boundaries safely no-op.
     if not gate_complete:
         for boundary in (args.fork_step + 2, args.fork_step + 4):
-            subprocess.run(train + ["--stop-after", str(boundary)], check=True)
+            run_stage(f"train-{boundary}", train + ["--stop-after", str(boundary)])
         if info["rank"] == 0:
             latest = json.loads(fs.cat_file(root + "/latest.json"))
             state = load_checkpoint(latest["checkpoint"])
@@ -164,7 +170,7 @@ def main():
     # Other torchrun nodes wait for rank zero during process-group init.
     if args.stop_after:
         train += ["--stop-after", str(args.stop_after)]
-    subprocess.run(train, check=True)
+    run_stage("long-training", train)
 
 
 if __name__ == "__main__":

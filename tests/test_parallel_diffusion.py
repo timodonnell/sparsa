@@ -5,7 +5,7 @@ import pytest
 import torch
 import yaml
 
-from scripts.run_multinode_diffusion import iris_identity, torchrun_command
+from scripts.run_multinode_diffusion import iris_identity, rendezvous, torchrun_command
 from sparsa.train import contact_loss, contact_ranking_loss
 from sparsa.train_diffusion import (
     inherited_counts,
@@ -147,3 +147,14 @@ def test_checkpoint_cache_downloads_once_and_recovers_partial(tmp_path, monkeypa
     for result in results:
         assert result["step"] == 1200
         torch.testing.assert_close(result["weight"], torch.arange(4))
+
+
+def test_rendezvous_isolates_stages_and_attempts(tmp_path):
+    info = {"job": "/user/example", "rank": 0, "attempt": 2, "host": "127.0.0.1"}
+    follower = dict(info, rank=1)
+    first = rendezvous(info, str(tmp_path), "collective")
+    second = rendezvous(info, str(tmp_path), "training")
+    assert rendezvous(follower, str(tmp_path), "collective") == first
+    assert rendezvous(follower, str(tmp_path), "training") == second
+    rendezvous(dict(info, attempt=3), str(tmp_path), "collective")
+    assert len(list((tmp_path / "rendezvous").glob("*.json"))) == 3
