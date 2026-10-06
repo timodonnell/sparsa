@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-05T21:52:16.567568+00:00",
+  "updated_utc": "2026-10-06T13:55:07.065376+00:00",
   "campaign": "pairformer_v1",
   "previous_series_retired": true,
   "runs": [
@@ -96,6 +96,34 @@
       "previous_service": "sparsa-pf-n256-s23",
       "restarted_from_step": 4,
       "restart_verified_utc": "2026-10-05T20:00:31.469766+00:00"
+    },
+    {
+      "conditioning": "noisy",
+      "pair_width": 128,
+      "pairformer_blocks": 48,
+      "parameters": 157211713,
+      "target_steps": 300000,
+      "checkpoint_every": 100,
+      "model": "pf-n128-32gpu",
+      "config": "configs/pairformer_noisy_128_32gpu.yaml",
+      "world_size": 32,
+      "nodes": 4,
+      "gpus_per_node": 8,
+      "source_commit": "0f83221143c2c4dc2ba3cc5ed4a9dc707a4419e2",
+      "backend": "iris",
+      "priority": "batch",
+      "gpu": "H100 80GB",
+      "job": "/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k-r1",
+      "output": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/pf-n128-32gpu-s23-300k",
+      "submitted_utc": "2026-10-06T13:53:28.517914+00:00",
+      "parent_model": "pf-n128",
+      "parent_step": 1200,
+      "global_batch_size": 128,
+      "microbatch_size": 4,
+      "gradient_accumulation": 1,
+      "stream_seed": 20261006,
+      "stochastic_streams_restarted": true,
+      "previous_job": "/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k"
     }
   ]
 }

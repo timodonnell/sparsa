@@ -1,0 +1,19 @@
+{
+  "observed_utc": "2026-10-06T13:55:07.065376+00:00",
+  "job": "/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k-r1",
+  "state": "queued_for_four_nodes",
+  "training_started": false,
+  "source_commit": "0f83221143c2c4dc2ba3cc5ed4a9dc707a4419e2",
+  "priority": "batch",
+  "nodes": 4,
+  "gpus_per_node": 8,
+  "gpu": "H100 80GB",
+  "global_batch_size": 128,
+  "gradient_accumulation": 1,
+  "parent_step": 1200,
+  "parent_sha256_verified": true,
+  "relevant_cpu_tests_passed": 35,
+  "gpu_startup_gate": "pending allocation",
+  "held_out_used": false,
+  "capacity_observation": "Only one fully free 8-H100 node; four required. Kueue reports insufficient topology capacity."
+}

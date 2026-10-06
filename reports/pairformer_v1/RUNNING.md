@@ -1,5 +1,53 @@
 # Pairformer campaign status
 
+## October 6: 32-GPU N128 comparison
+
+Submitted at **13:53 UTC**, at Iris **batch priority**:
+`/bizon/sparsa-pairformer-v1-pf-n128-32gpu-s23-300k-r1`. At 13:54 UTC it is
+**queued for four 8-H100 nodes**. Kueue could fit only one of four nodes; an
+independent allocation check also found only one fully free H100 node. No
+32-GPU training steps or throughput results are available yet.
+
+The original four runs have completed their launch validation and are training
+with the optimized implementation. The new run clones N128 at step **1,200**
+(153,600 historical crop exposures), preserving model, EMA, AdamW state and the
+300k learning-rate schedule. The archived checkpoint was verified by SHA-256.
+
+| | Original N128 | N128-32GPU |
+|---|---:|---:|
+| Hardware | 8 A100 80GB, dedicated | 32 H100 80GB, Iris batch |
+| Nodes | 1 | 4 |
+| Microbatch per GPU | 4 | 4 |
+| Accumulation | 4 | 1 |
+| Global batch | 128 | 128 |
+| LR / schedule | 2e-4 / 300k WSD | unchanged |
+
+The new world size uses fresh, explicitly seeded data/noise streams. It is a
+stochastic branch, not an exact RNG continuation. Ranking normalization still
+uses groups of 16 proteins, including zero-contact crops. CPU checks verify
+equivalent loss and gradients when a fixed batch is partitioned across 32 ranks.
+The hardware change also affects throughput, so any speedup against the A100
+baseline is not a pure GPU-count scaling result.
+
+Startup automatically checks a real 32-rank NCCL all-reduce, trains two steps,
+saves, resumes for two more, and audits all-rank data exposure before entering
+long training. The branch retains the fixed 97-protein validation split, 100
+rollouts and evaluations every 10k optimizer steps. Checkpoints remain every
+100 steps; recovery preserves 32-rank RNG and data cursors.
+
+Evidence: [parent checkpoint](n128_32gpu_parent.json),
+[submission](../jobs/pairformer-v1-pf-n128-32gpu-s23-300k-r1.json), and
+[active run manifest](active-runs.json). Implementation source: `0f83221`.
+**35 relevant CPU tests passed**, including loss partitioning, fork guardrails,
+exposure accounting and concurrent/interrupted checkpoint-cache downloads.
+The GPU startup gate is pending allocation.
+
+The [diffusion specification](diffusion_spec.md) documents the exact noise,
+loss, reverse sampler and scoring. The [Protenix assessment](../protenix_transfer/feasibility.md)
+recommends a v1 transfer pilot; no transfer training result is claimed.
+
+## Original launch evidence (October 5)
+
 As of **October 5, 2026, 16:32 UTC**, all four new jobs are running. Each has
 completed four optimizer steps, including checkpoint resume. All are now in the
 full **97 validation proteins × 100 rollouts** launch check. That check has not

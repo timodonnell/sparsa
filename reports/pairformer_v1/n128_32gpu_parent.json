@@ -21,5 +21,8 @@
     "rollouts": 100,
     "held_out_used": false,
     "metric_version": "fixed-r-v2"
-  }
+  },
+  "archived_checkpoint": "s3://marin-us-east-02a/marin/protein-structure/sparsa/pairformer-v1/n128-parallel-parent-1200/checkpoints/step-1200.pt",
+  "archive_sha256_verified": true,
+  "archive_verified_utc": "2026-10-06T13:50:40.185945+00:00"
 }

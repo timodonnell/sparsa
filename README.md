@@ -44,7 +44,10 @@ The current experiment uses a **4-layer sequence encoder and 48-block Pairformer
 Four arms compare pair width 128/256 and sequence-only cached conditioning versus
 injecting the noisy contact map before the first Pairformer block. Previous
 G2/G3/G4 runs were retired. See the [plan](reports/pairformer_v1/PLAN.md) and
-[live campaign status](reports/pairformer_v1/RUNNING.md).
+[live campaign status](reports/pairformer_v1/RUNNING.md). A 32-GPU N128 branch
+tests removing gradient accumulation at the same global batch of 128. See the
+[exact diffusion setup](reports/pairformer_v1/diffusion_spec.md) and
+[Protenix transfer assessment](reports/protenix_transfer/feasibility.md).
 
 ## Use
 
