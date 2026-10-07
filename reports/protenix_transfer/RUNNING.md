@@ -1,18 +1,32 @@
 # Protenix v1 transfer pilot
 
-**Observed October 6, 2026, 17:17 UTC:** the pilot recovered from its one
-cluster preemption and is training on 16 H100s at batch priority, with zero
-application failures. Latest logged warmup step **460 / 1,000** (58,880 teacher
-crop presentations); latest verified saved checkpoint **400**. Recent throughput
-is approximately **16.7 seconds/step**. Training loss declined from 0.414 at step
-4 to about 0.21–0.23 recently; this is not a validation-quality measurement.
+**Observed October 7, 2026, 13:38–13:41 UTC:** the pilot completed the shared
+1,000-step adapter/head warmup and is fully fine-tuning on 16 H100s at batch
+priority. Latest logged step **3,070 / 6,000** includes 1,000 warmup steps and
+2,070 full-backbone steps (392,960 total teacher crop presentations, not unique
+proteins); latest verified saved checkpoint **3,000**. Recent median throughput
+is approximately **18.9 seconds/step**, with mean training loss **0.112** across
+the latest ten logged batches. This loss is not a validation-quality measure.
+The job has recovered from three preemptions, with zero recorded application
+failures. The frozen-control branch has not started.
+
+The full warmup validation completed on all **97 fixed validation proteins ×
+100 rollouts**: probability-ranked oracle R-precision@100 **0.093689**, sampled
+frequency consensus **0.094307**, and mean-probability ensemble **0.098905**.
+These are weak results, well below the matched MarinFold oracle **0.524309** and
+consensus **0.552634**. They evaluate only adapter/head training with a frozen
+backbone; no validation result exists yet for full fine-tuning. The next pilot
+evaluation is at the full-fine-tuning endpoint, step 6,000, approximately 16 more
+training hours at the observed rate if uninterrupted, followed by validation.
+See the [summary](warmup-validation/summary.json) and
+[per-protein results](warmup-validation/per_protein.csv).
 
 All startup gates passed, including frozen and full-fine-tuning branches saved
 at step 5 and resumed to step 6. Their 16 rank data digests match exactly; optimizer
 state covers 17 adapter/head tensors in the frozen branch and 2,857 tensors in the
-full branch. See [branch/resume evidence](branch-resume.json). The first full
-97-protein × 100-rollout validation follows warmup step 1,000; neither long
-5,000-step branch has started yet.
+full branch. See [branch/resume evidence](branch-resume.json). Full fine-tuning
+branched from the shared step-1,000 checkpoint on October 7 at 02:33 UTC; the
+frozen control will use that same parent after full fine-tuning completes.
 
 The approved pilot transfers the native `protenix_base_default_v1.0.0` backbone
 (148,895,680 pretrained parameters), using a new contact/time adapter at its

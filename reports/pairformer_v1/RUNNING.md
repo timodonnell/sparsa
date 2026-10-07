@@ -1,5 +1,35 @@
 # Pairformer campaign status
 
+## October 7: 13:38–13:41 UTC update
+
+All five from-scratch runs are training. Latest logged steps and recent training
+speeds are below; durable checkpoints are saved every 100 steps.
+
+| Run | Latest logged step | Hardware | Recent seconds/step |
+|---|---:|---|---:|
+| N128-32GPU | 9,400 | 32 H100 | 8.51 |
+| N128 | 2,800 | 8 dedicated A100 | 55.23 |
+| N256 | 1,620 | 8 dedicated A100 | 92.38 |
+| C128 | 2,680 | 8 H100 | 33.43 |
+| C256 | 950 | 8 H100 | 51.06 |
+
+N128-32GPU has accumulated 1,203,200 teacher crop presentations including its
+inherited parent training. Its first 97-protein, 100-rollout validation starts
+at step 10,000, approximately 1.5 training hours away if uninterrupted. None of
+these five runs has a completed scientific validation checkpoint yet.
+
+Cluster interruptions dominate the cached runs' wall-clock progress: Iris
+records 23 preemptions for C128 and 24 for C256. C256 also has three recorded
+failures; both current attempts are advancing without errors in their recent
+logs. The dedicated A100 services have zero restarts.
+
+The [Protenix transfer pilot](../protenix_transfer/RUNNING.md) has completed
+warmup validation and reached full-fine-tuning step 3,070 on 16 H100s. Its frozen
+warmup result is weak: oracle R-precision@100 0.093689 and frequency consensus
+0.094307. Full-fine-tuning quality has not yet been evaluated.
+
+Current measurements: [latest status](latest-status.json).
+
 ## October 6: 17:17 UTC update
 
 All five from-scratch Pairformer runs are actively training. These are latest
