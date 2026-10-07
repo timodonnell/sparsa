@@ -1,5 +1,5 @@
 {
-  "observed_utc": "2026-10-05T15:59:36.532597+00:00",
+  "observed_utc": "2026-10-07T15:48:26.542439+00:00",
   "runs": [
     {
       "node_label": "a100-1",
@@ -28,6 +28,244 @@
         "SubState=failed"
       ],
       "gpu_processes": []
+    },
+    {
+      "model": "pf-n128",
+      "config": "configs/pairformer_noisy_128.yaml",
+      "conditioning": "noisy",
+      "pair_width": 128,
+      "pairformer_blocks": 48,
+      "parameters": 157211713,
+      "target_steps": 300000,
+      "world_size": 8,
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+      "backend": "dedicated",
+      "priority": "dedicated",
+      "gpu": "A100-SXM4-80GB",
+      "node_label": "a100-1",
+      "service": "sparsa-pf-n128-s23-opt1",
+      "output": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k",
+      "submitted_utc": "2026-10-05T16:27:36.604000+00:00",
+      "original_source_commit": "11373b7c3a41263f910534a74e0ae0e53f90a9a0",
+      "checkpoint_every": 100,
+      "relaunch_reason": "Numerically verified attention/chunk checkpoint optimization.",
+      "previous_service": "sparsa-pf-n128-s23",
+      "restarted_from_step": 4,
+      "restart_verified_utc": "2026-10-05T18:40:00.668934+00:00",
+      "observed_utc": "2026-10-07T15:47:17.832936+00:00",
+      "before": {
+        "Restart": "on-failure",
+        "MainPID": "256709",
+        "NRestarts": "0",
+        "KillMode": "control-group",
+        "TriggeredBy": "",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "transient",
+        "Transient": "yes"
+      },
+      "after": {
+        "Restart": "no",
+        "MainPID": "0",
+        "NRestarts": "0",
+        "KillMode": "control-group",
+        "TriggeredBy": "",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "",
+        "Transient": "no"
+      },
+      "disabled_autostart": false,
+      "latest_saved": {
+        "step": 2900,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k/checkpoints/step-2900.pt",
+        "file_exists": true,
+        "file_bytes": 2520289287
+      },
+      "latest_logged_step": 2940,
+      "gpu_processes": [],
+      "gpus": [
+        "0, NVIDIA A100-SXM4-80GB, 100 %, 0 MiB",
+        "1, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "2, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "3, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "4, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "5, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "6, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "7, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB"
+      ],
+      "returncode": 0,
+      "verification": {
+        "state": {
+          "MainPID": "0",
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "SubState": "dead"
+        },
+        "gpus": [
+          "0, 0, 0",
+          "1, 0, 0",
+          "2, 0, 0",
+          "3, 0, 0",
+          "4, 0, 0",
+          "5, 0, 0",
+          "6, 0, 0",
+          "7, 0, 0"
+        ],
+        "gpu_processes": [],
+        "last_training_metrics": {
+          "step": 2940,
+          "loss": 0.14781180024147034,
+          "grad_norm": 0.21549668908119202,
+          "lr": 3.9200000000000004e-05,
+          "seconds": 162371.271256698,
+          "seconds_per_step": 55.181945177499436,
+          "examples": 376320,
+          "peak_gpu_gb": 33.62103033065796,
+          "timestep_counts": [
+            16.0,
+            14.0,
+            24.0,
+            19.0,
+            19.0,
+            11.0,
+            14.0,
+            11.0
+          ],
+          "rank0_data_digest": "f7b5557d9101ace59ec827afbe60d8a466a251dbb3a7be391961a46ec8ea4521",
+          "rank0_data_counts": {
+            "residues": 10197482,
+            "positive_pairs": 8099508,
+            "proteins": 47040,
+            "afdb": 2855,
+            "esm": 44185
+          }
+        }
+      },
+      "verified_utc": "2026-10-07T15:48:26.487174+00:00",
+      "status": "stopped_by_user",
+      "reason": "Dedicated A100 nodes released for user workloads; do not restart without new authorization."
+    },
+    {
+      "model": "pf-n256",
+      "config": "configs/pairformer_noisy_256.yaml",
+      "conditioning": "noisy",
+      "pair_width": 256,
+      "pairformer_blocks": 48,
+      "parameters": 244826689,
+      "target_steps": 300000,
+      "world_size": 8,
+      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
+      "backend": "dedicated",
+      "priority": "dedicated",
+      "gpu": "A100-SXM4-80GB",
+      "node_label": "a100-2",
+      "service": "sparsa-pf-n256-s23-opt1",
+      "output": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k",
+      "submitted_utc": "2026-10-05T16:27:44.739454+00:00",
+      "original_source_commit": "11373b7c3a41263f910534a74e0ae0e53f90a9a0",
+      "checkpoint_every": 100,
+      "relaunch_reason": "Numerically verified attention/chunk checkpoint optimization.",
+      "previous_service": "sparsa-pf-n256-s23",
+      "restarted_from_step": 4,
+      "restart_verified_utc": "2026-10-05T20:00:31.469766+00:00",
+      "observed_utc": "2026-10-07T15:47:23.749185+00:00",
+      "before": {
+        "Restart": "on-failure",
+        "MainPID": "273596",
+        "NRestarts": "0",
+        "KillMode": "control-group",
+        "TriggeredBy": "",
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "transient",
+        "Transient": "yes"
+      },
+      "after": {
+        "Restart": "no",
+        "MainPID": "0",
+        "NRestarts": "0",
+        "KillMode": "control-group",
+        "TriggeredBy": "",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "",
+        "Transient": "no"
+      },
+      "disabled_autostart": false,
+      "latest_saved": {
+        "step": 1700,
+        "checkpoint": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k/checkpoints/step-1700.pt",
+        "file_exists": true,
+        "file_bytes": 3922154311
+      },
+      "latest_logged_step": 1700,
+      "gpu_processes": [],
+      "gpus": [
+        "0, NVIDIA A100-SXM4-80GB, 100 %, 0 MiB",
+        "1, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "2, NVIDIA A100-SXM4-80GB, 100 %, 0 MiB",
+        "3, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "4, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "5, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB",
+        "6, NVIDIA A100-SXM4-80GB, 99 %, 0 MiB",
+        "7, NVIDIA A100-SXM4-80GB, 0 %, 0 MiB"
+      ],
+      "returncode": 0,
+      "verification": {
+        "state": {
+          "MainPID": "0",
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "SubState": "dead"
+        },
+        "gpus": [
+          "0, 0, 0",
+          "1, 0, 0",
+          "2, 0, 0",
+          "3, 0, 0",
+          "4, 0, 0",
+          "5, 0, 0",
+          "6, 0, 0",
+          "7, 0, 0"
+        ],
+        "gpu_processes": [],
+        "last_training_metrics": {
+          "step": 1700,
+          "loss": 0.18377405405044556,
+          "grad_norm": 0.1121445894241333,
+          "lr": 2.2666666666666668e-05,
+          "seconds": 156812.767963945,
+          "seconds_per_step": 92.37774912840105,
+          "examples": 217600,
+          "peak_gpu_gb": 62.00266742706299,
+          "timestep_counts": [
+            15.0,
+            18.0,
+            15.0,
+            15.0,
+            12.0,
+            22.0,
+            14.0,
+            17.0
+          ],
+          "rank0_data_digest": "792391f83f59b184190ed71ce81a0272d4d63750b1dacf8e2602b3e511ae0d5c",
+          "rank0_data_counts": {
+            "residues": 5897140,
+            "positive_pairs": 4685371,
+            "proteins": 27200,
+            "afdb": 1685,
+            "esm": 25515
+          }
+        }
+      },
+      "verified_utc": "2026-10-07T15:48:26.436364+00:00",
+      "status": "stopped_by_user",
+      "reason": "Dedicated A100 nodes released for user workloads; do not restart without new authorization."
     }
   ]
 }

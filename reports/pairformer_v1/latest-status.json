@@ -86,76 +86,82 @@
     {
       "model": "pf-n128",
       "hardware": "8 x A100-SXM4-80GB",
-      "status": "running",
-      "latest_logged_step": 2800,
-      "checkpoint_step": 2800,
+      "status": "stopped_by_user",
+      "latest_logged_step": 2940,
+      "checkpoint_step": 2900,
       "last_training_metrics": {
-        "step": 2800,
-        "loss": 0.183353990316391,
-        "grad_norm": 0.20393505692481995,
-        "lr": 3.733333333333334e-05,
-        "seconds": 154626.723296898,
-        "seconds_per_step": 55.22524396709632,
-        "examples": 358400,
+        "step": 2940,
+        "loss": 0.14781180024147034,
+        "grad_norm": 0.21549668908119202,
+        "lr": 3.9200000000000004e-05,
+        "seconds": 162371.271256698,
+        "seconds_per_step": 55.181945177499436,
+        "examples": 376320,
         "peak_gpu_gb": 33.62103033065796,
         "timestep_counts": [
-          9.0,
-          21.0,
-          14.0,
           16.0,
           14.0,
-          17.0,
-          23.0,
-          14.0
+          24.0,
+          19.0,
+          19.0,
+          11.0,
+          14.0,
+          11.0
         ],
-        "rank0_data_digest": "53ab95d23af85af45bd8004a04406fc09b1af53d702592216f7463d6960a346f",
+        "rank0_data_digest": "f7b5557d9101ace59ec827afbe60d8a466a251dbb3a7be391961a46ec8ea4521",
         "rank0_data_counts": {
-          "residues": 9718546,
-          "positive_pairs": 7717311,
-          "proteins": 44800,
-          "afdb": 2713,
-          "esm": 42087
+          "residues": 10197482,
+          "positive_pairs": 8099508,
+          "proteins": 47040,
+          "afdb": 2855,
+          "esm": 44185
         }
       },
       "complete_scientific_validations": 0,
-      "service": "NRestarts=0\nActiveState=active\nSubState=running\n"
+      "service": "ActiveState=inactive\nSubState=dead\nMainPID=0\n",
+      "stopped_utc": "2026-10-07T15:47:17.832936+00:00",
+      "gpu_processes": [],
+      "restart_requires_user_authorization": true
     },
     {
       "model": "pf-n256",
       "hardware": "8 x A100-SXM4-80GB",
-      "status": "running",
-      "latest_logged_step": 1620,
-      "checkpoint_step": 1600,
+      "status": "stopped_by_user",
+      "latest_logged_step": 1700,
+      "checkpoint_step": 1700,
       "last_training_metrics": {
-        "step": 1620,
-        "loss": 0.1889166384935379,
-        "grad_norm": 0.12724778056144714,
-        "lr": 2.16e-05,
-        "seconds": 149425.590045075,
-        "seconds_per_step": 92.3820739156974,
-        "examples": 207360,
+        "step": 1700,
+        "loss": 0.18377405405044556,
+        "grad_norm": 0.1121445894241333,
+        "lr": 2.2666666666666668e-05,
+        "seconds": 156812.767963945,
+        "seconds_per_step": 92.37774912840105,
+        "examples": 217600,
         "peak_gpu_gb": 62.00266742706299,
         "timestep_counts": [
-          11.0,
-          10.0,
+          15.0,
           18.0,
-          17.0,
-          23.0,
-          20.0,
-          10.0,
-          19.0
+          15.0,
+          15.0,
+          12.0,
+          22.0,
+          14.0,
+          17.0
         ],
-        "rank0_data_digest": "e5a0846d0cf4ff2319ec9437413d421506133b94dd958b5b3e7dafb03ec75796",
+        "rank0_data_digest": "792391f83f59b184190ed71ce81a0272d4d63750b1dacf8e2602b3e511ae0d5c",
         "rank0_data_counts": {
-          "residues": 5621667,
-          "positive_pairs": 4466145,
-          "proteins": 25920,
-          "afdb": 1600,
-          "esm": 24320
+          "residues": 5897140,
+          "positive_pairs": 4685371,
+          "proteins": 27200,
+          "afdb": 1685,
+          "esm": 25515
         }
       },
       "complete_scientific_validations": 0,
-      "service": "NRestarts=0\nActiveState=active\nSubState=running\n"
+      "service": "ActiveState=inactive\nSubState=dead\nMainPID=0\n",
+      "stopped_utc": "2026-10-07T15:47:23.749185+00:00",
+      "gpu_processes": [],
+      "restart_requires_user_authorization": true
     },
     {
       "model": "pf-n128-32gpu",
@@ -195,5 +201,6 @@
       "pod_phase": "Running",
       "recent_median_seconds_per_step": 8.512478486899635
     }
-  ]
+  ],
+  "updated_utc": "2026-10-07T15:48:26.542439+00:00"
 }

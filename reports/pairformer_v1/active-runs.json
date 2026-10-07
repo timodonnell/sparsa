@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-06T14:00:25.842865+00:00",
+  "updated_utc": "2026-10-07T15:48:26.542439+00:00",
   "campaign": "pairformer_v1",
   "previous_series_retired": true,
   "runs": [
@@ -50,54 +50,6 @@
       "restart_verified_utc": "2026-10-05T18:18:34.410379+00:00"
     },
     {
-      "model": "pf-n128",
-      "config": "configs/pairformer_noisy_128.yaml",
-      "conditioning": "noisy",
-      "pair_width": 128,
-      "pairformer_blocks": 48,
-      "parameters": 157211713,
-      "target_steps": 300000,
-      "world_size": 8,
-      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
-      "backend": "dedicated",
-      "priority": "dedicated",
-      "gpu": "A100-SXM4-80GB",
-      "node_label": "a100-1",
-      "service": "sparsa-pf-n128-s23-opt1",
-      "output": "/home/ubuntu/sparsa-runs/pf-n128-s23-300k",
-      "submitted_utc": "2026-10-05T16:27:36.604000+00:00",
-      "original_source_commit": "11373b7c3a41263f910534a74e0ae0e53f90a9a0",
-      "checkpoint_every": 100,
-      "relaunch_reason": "Numerically verified attention/chunk checkpoint optimization.",
-      "previous_service": "sparsa-pf-n128-s23",
-      "restarted_from_step": 4,
-      "restart_verified_utc": "2026-10-05T18:40:00.668934+00:00"
-    },
-    {
-      "model": "pf-n256",
-      "config": "configs/pairformer_noisy_256.yaml",
-      "conditioning": "noisy",
-      "pair_width": 256,
-      "pairformer_blocks": 48,
-      "parameters": 244826689,
-      "target_steps": 300000,
-      "world_size": 8,
-      "source_commit": "6a5af016a24580103084b08c751ca86ab1a37125",
-      "backend": "dedicated",
-      "priority": "dedicated",
-      "gpu": "A100-SXM4-80GB",
-      "node_label": "a100-2",
-      "service": "sparsa-pf-n256-s23-opt1",
-      "output": "/home/ubuntu/sparsa-runs/pf-n256-s23-300k",
-      "submitted_utc": "2026-10-05T16:27:44.739454+00:00",
-      "original_source_commit": "11373b7c3a41263f910534a74e0ae0e53f90a9a0",
-      "checkpoint_every": 100,
-      "relaunch_reason": "Numerically verified attention/chunk checkpoint optimization.",
-      "previous_service": "sparsa-pf-n256-s23",
-      "restarted_from_step": 4,
-      "restart_verified_utc": "2026-10-05T20:00:31.469766+00:00"
-    },
-    {
       "conditioning": "noisy",
       "pair_width": 128,
       "pairformer_blocks": 48,
@@ -128,5 +80,13 @@
       "startup_verified_utc": "2026-10-06T14:00:25.842865+00:00",
       "parallelism_preflight_resumed_step": 1204
     }
-  ]
+  ],
+  "dedicated_nodes_released": {
+    "observed_utc": "2026-10-07T15:48:26.542439+00:00",
+    "nodes": [
+      "a100-1",
+      "a100-2"
+    ],
+    "restart_requires_user_authorization": true
+  }
 }

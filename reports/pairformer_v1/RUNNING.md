@@ -1,5 +1,20 @@
 # Pairformer campaign status
 
+## October 7: dedicated A100 nodes released at 15:47 UTC
+
+Stopped **N128 on a100-1** and **N256 on a100-2** at the user's request so the
+nodes can be used for other work. Both transient systemd services are inactive
+and removed; no automatic restart remains configured. Verified zero GPU compute
+processes and zero allocated GPU memory on all 16 A100s after shutdown.
+
+Retained checkpoints: **N128 step 2,900**, **N256 step 1,700**. Latest logged
+training steps before shutdown were 2,940 and 1,700, respectively. The runs were
+removed from the active manifest and archived in
+[retired A100 runs](retired-a100-runs.json). These nodes require new user
+authorization before any training is relaunched.
+
+The Iris runs, including N128-32GPU, remain in the active manifest.
+
 ## October 7: 13:38–13:41 UTC update
 
 All five from-scratch runs are training. Latest logged steps and recent training
